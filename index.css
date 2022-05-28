@@ -1,0 +1,72 @@
+.treeselect {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.treeselect-input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.treeselect-list {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.treeselect-group-container {
+
+}
+
+.treeselect-group {
+
+}
+
+.treeselect-group-icon {
+
+}
+
+.treeselect-group-icon::before {
+  content: '\25B2';
+  cursor: pointer;
+}
+
+.treeselect-group-closed .treeselect-group-icon::before {
+  content: '\25BC';
+}
+
+.treeselect-group-closed ~  * {
+  display: none;
+}
+
+.treeselect-group-item {
+
+}
+
+.treeselect-checkbox-partial-checked.treeselect-checkbox::after {
+  content: '\2212';
+  background-color: grey;
+}
+
+.treeselect-checkbox {
+  position: relative;
+  margin: 0;
+}
+
+.treeselect-checkbox::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid gray;
+  background-color: white;
+  box-sizing: border-box;
+  color: white;
+  text-align: center;
+  font-size: 10px;
+}
+
+input[type=checkbox]:checked::after {
+  content: "\2714";
+  border: none;
+  background-color: grey;
+}
