@@ -1,5 +1,4 @@
 class Treeselect {
-  #htmlList = []
   #checkedNodes = []
   #uncheckedNodes = []
   #groupIds = []
@@ -23,7 +22,6 @@ class Treeselect {
     this.emitOnInit = emitOnInit ?? false
 
     // State props
-    this.#htmlList = this.#getListHTML(this.options)
     this.#checkedNodes = []
     this.#uncheckedNodes = []
     this.#groupIds = []
@@ -67,7 +65,7 @@ class Treeselect {
   #createTreeselect () {
     // TODO add clear dom element
     const input = this.#createInput()
-    const list = this.#createList(this.#htmlList)
+    const list = this.#createList()
   
     this.DOMelement.append(input, list)
   }
@@ -85,31 +83,31 @@ class Treeselect {
   #createList () {
     const list = document.createElement('div')
     list.classList.add('treeselect-list')
-    list.append(...this.#htmlList)
+    const htmlTreeList = this.#getListHTML(this.options)
+    list.append(...htmlTreeList)
   
     return list
   }
 
   // Create a all list of html for options
-  #getListHTML (options, sublevel = 0) {
-    const items = []
-  
-    options.forEach(option => {
+  #getListHTML (options, sublevel = 0) {  
+    return options.reduce((acc, option) => {
       if (option.children?.length) {
+        this.#groupIds.push(option.value.toString())
         const groupContainer = this.#createGroupContainer(option, sublevel)
         const innerGroupsAndElements = this.#getListHTML(option.children, sublevel + 1)
   
         groupContainer.append(...innerGroupsAndElements)
-  
-        items.push(groupContainer)
-      } else {
-        const itemGroupElement = this.#createGroupItem(option, false, sublevel)
-  
-        items.push(itemGroupElement)
+        acc.push(groupContainer)
+
+        return acc
       }
-    })
-  
-    return items
+      
+      const itemGroupElement = this.#createGroupItem(option, false, sublevel)
+      acc.push(itemGroupElement)
+
+      return acc
+    }, [])
   }
 
   // Create a group containter component
@@ -137,6 +135,11 @@ class Treeselect {
       const arrow = this.#createArrow(option)
       itemElement.appendChild(arrow)
       itemElement.setAttribute('group-id', option.value)
+
+      if (sublevel >= this.openLevel) {
+        itemElement.classList.add('treeselect-group-closed')
+      }
+
     } else {
       itemElement.setAttribute('item-id', option.value)
     }
@@ -322,10 +325,18 @@ class Treeselect {
 
   // Emit this.value from state
   #updateValue () {
-    let newValue = this.value.filter(id => !this.#uncheckedNodes.includes(id))
-    newValue = newValue.concat([...this.#checkedNodes])
-    this.value = [...new Set(newValue)]
+    const value = [...this.value]
+    let newValue = value.concat([...this.#checkedNodes])
+    let filteredIds = this.#uncheckedNodes
+    
+    if (!this.isGroupSelectable) {
+      // TODO strange rule. Maybe we can use this prop for result leafs in input
+      // And disable a groups selection by value prop
+      filteredIds = filteredIds.concat(this.#groupIds)
+    }
 
+    newValue = newValue.filter(id => !filteredIds.includes(id))
+    this.value = [...new Set(newValue)]
     this.#checkedNodes = []
     this.#uncheckedNodes = []
   }

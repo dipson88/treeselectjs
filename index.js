@@ -64,12 +64,11 @@ const options = [
   ]
 },
 ]
-
 new Treeselect({
   DOMelement,
   options,
   value: ['7', '9'],
-  isGroupSelectable: true,
-  openLevel: 0,
+  isGroupSelectable: false,
+  openLevel: 5,
   emitOnInit: true
 })
