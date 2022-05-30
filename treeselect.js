@@ -318,8 +318,10 @@ class Treeselect {
   
     if (checked) {
       this.#checkedNodes.push(nodeId)
+      input.parentNode.classList.add('treeselect-group-item-checked')
     } else {
       this.#uncheckedNodes.push(nodeId)
+      input.parentNode.classList.remove('treeselect-group-item-checked')
     }
   }
 

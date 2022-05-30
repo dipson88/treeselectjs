@@ -1,6 +1,7 @@
 .treeselect {
   width: 100%;
   box-sizing: border-box;
+  position: relative;
 }
 
 .treeselect-input {
@@ -11,14 +12,40 @@
 .treeselect-list {
   width: 100%;
   box-sizing: border-box;
+  border: 1px solid black;
+  overflow-y: auto;
+  background-color: white;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  transform: translateY(100%);
 }
 
 .treeselect-group-container {
 
 }
 
+.treeselect-group:hover,
+.treeselect-group-item:hover {
+  background-color: bisque;
+}
+
+.treeselect-group,
+.treeselect-group-item {
+  display: flex;
+  align-items: center;
+}
+
 .treeselect-group {
 
+}
+
+.treeselect-group-item {
+
+}
+
+.treeselect-group-item-checked {
+  background-color: beige;
 }
 
 .treeselect-group-icon {
@@ -38,13 +65,14 @@
   display: none;
 }
 
-.treeselect-group-item {
-
-}
-
 .treeselect-checkbox-partial-checked.treeselect-checkbox::after {
   content: '\2212';
   background-color: grey;
+}
+
+.treeselect-checkbox-label {
+  width: 100%;
+  cursor: pointer;
 }
 
 .treeselect-checkbox {
@@ -63,6 +91,7 @@
   color: white;
   text-align: center;
   font-size: 10px;
+  cursor: pointer;
 }
 
 input[type=checkbox]:checked::after {
