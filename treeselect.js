@@ -2,6 +2,7 @@ class Treeselect {
   #checkedNodes = []
   #uncheckedNodes = []
   #groupIds = []
+  #listHTML = null
 
   constructor ({
     DOMelement,
@@ -9,7 +10,8 @@ class Treeselect {
     value,
     openLevel,
     isGroupSelectable,
-    emitOnInit
+    emitOnInit,
+    appendToBody
   }) {
     // User props
     this.DOMelement = DOMelement
@@ -25,6 +27,7 @@ class Treeselect {
     this.#checkedNodes = []
     this.#uncheckedNodes = []
     this.#groupIds = []
+    this.#listHTML = null
 
     this.render()
   }
@@ -66,8 +69,9 @@ class Treeselect {
     // TODO add clear dom element
     const input = this.#createInput()
     const list = this.#createList()
-  
-    this.DOMelement.append(input, list)
+
+    this.#listHTML = list
+    this.DOMelement.append(input, lsitCoordnates)
   }
 
   // Create input coponent
@@ -75,7 +79,32 @@ class Treeselect {
     const input = document.createElement('input')
     input.classList.add('treeselect-input')
     input.setAttribute('type', 'text')
+
+    input.addEventListener('focus', (event) => {
+      const spaceTop = input.getBoundingClientRect().y
+      const spaceBottom = window.innerHeight - input.getBoundingClientRect().y
+      const listHeight = this.#listHTML.clientHeight
+      const directionClass = spaceTop > spaceBottom && window.innerHeight - spaceTop < listHeight
+        ? 'top'
+        : 'bottom'
+      const directionRemoveClass = directionClass === 'top' ? 'bottom' : 'top'
+      this.#listHTML.classList.add(`treeselect-list-${directionClass}`)
+      this.#listHTML.classList.remove(`treeselect-list-${directionRemoveClass}`)
+      this.#listHTML.classList.remove('treeselect-list-hidden')
+
+      this.DOMelement.appendChild(this.#listHTML)
+
+      console.log(directionClass)
+    })
   
+    this.DOMelement.addEventListener('focusout', (e) => {
+      const isOutsideClick = !this.DOMelement.contains(e.relatedTarget)
+
+      if (isOutsideClick) {
+        this.#listHTML.classList.add('treeselect-list-hidden')
+        this.DOMelement.removeChild(this.#listHTML)
+      }
+    })
     return input
   }
 
@@ -129,6 +158,7 @@ class Treeselect {
     const clsassName = isGroup ? 'treeselect-group' : 'treeselect-group-item'
   
     itemElement.setAttribute('style', style)
+    itemElement.setAttribute('tabindex', '-1')
     itemElement.classList.add(clsassName)
   
     if (isGroup) {

@@ -70,5 +70,6 @@ new Treeselect({
   value: ['7', '9'],
   isGroupSelectable: false,
   openLevel: 5,
-  emitOnInit: true
+  emitOnInit: true,
+  appendToBody: true
 })

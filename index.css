@@ -16,10 +16,22 @@
   overflow-y: auto;
   background-color: white;
   position: absolute;
-  left: 0;
-  bottom: 0;
-  transform: translateY(100%);
 }
+
+.treeselect-list-bottom {
+  left: 0;
+  top: 100%;
+}
+
+.treeselect-list-top {
+  left: 0;
+  bottom: 100%;
+}
+
+.treeselect-list-hidden {
+  display: none;
+}
+
 
 .treeselect-group-container {
 
