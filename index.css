@@ -56,6 +56,10 @@
 
 }
 
+.treeselect-item-focused {
+  background-color: ghostwhite!important;
+}
+
 .treeselect-group-item-checked {
   background-color: beige;
 }

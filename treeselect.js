@@ -3,6 +3,7 @@ class Treeselect {
   #uncheckedNodes = []
   #groupIds = []
   #listHTML = null
+  #focused = false
 
   constructor ({
     DOMelement,
@@ -28,6 +29,8 @@ class Treeselect {
     this.#uncheckedNodes = []
     this.#groupIds = []
     this.#listHTML = null
+    this.blurEvent = this.blurWindowHandler.bind(this)
+    this.focusEvent = this.focusWindowHandler.bind(this)
 
     this.render()
   }
@@ -38,6 +41,35 @@ class Treeselect {
     if (isValid) {
       this.#createTreeselect()
       this.#updateComponentOnInit()
+    }
+  }
+
+  addOutsideListeners () {
+    document.addEventListener('click', this.focusEvent, true)
+    document.addEventListener('focus', this.focusEvent, true)
+    window.addEventListener('blur', this.blurEvent)
+  }
+
+  removeOutsideListeners () {
+    document.removeEventListener('click', this.focusEvent, true)
+    document.removeEventListener('focus', this.focusEvent, true)
+    window.removeEventListener('blur', this.blurEvent)
+  }
+
+  blurWindowHandler () {
+    if (this.#focused) {
+      this.#focused = false
+      this.#listHTML.classList.add('treeselect-list-hidden')
+      this.DOMelement.removeChild(this.#listHTML)
+      this.removeOutsideListeners()
+    }
+  }
+
+  focusWindowHandler (event) {
+    const isInsideClick = this.DOMelement.contains(event.target) || this.#listHTML.contains(event.target)
+
+    if (!isInsideClick) {
+      this.blurWindowHandler()
     }
   }
 
@@ -67,43 +99,81 @@ class Treeselect {
   // Create Treeselect component and attach to the DOM
   #createTreeselect () {
     // TODO add clear dom element
-    const input = this.#createInput()
+    const container = this.#createInput()
     const list = this.#createList()
 
     this.#listHTML = list
-    this.DOMelement.append(input, lsitCoordnates)
+    this.DOMelement.append(container)
   }
 
-  // Create input coponent
+  #updateDirectionList (containerHTML) {
+    const spaceTop = containerHTML.getBoundingClientRect().y
+    const spaceBottom = window.innerHeight - containerHTML.getBoundingClientRect().y
+    const listHeight = this.#listHTML.clientHeight
+    const directionClass = spaceTop > spaceBottom && window.innerHeight - spaceTop < listHeight
+      ? 'top'
+      : 'bottom'
+    const directionRemoveClass = directionClass === 'top' ? 'bottom' : 'top'
+    this.#listHTML.classList.add(`treeselect-list-${directionClass}`)
+    this.#listHTML.classList.remove(`treeselect-list-${directionRemoveClass}`)
+  }
+
+  #inputKeyActionsHandler (event) {
+    const itemFocused = this.#listHTML.querySelector('.treeselect-item-focused')
+
+    if (event.key === 'Enter' && itemFocused) {
+      const checkbox = itemFocused.querySelector('.treeselect-checkbox')
+      checkbox.checked = !checkbox.checked
+      checkbox.dispatchEvent(new Event('input'))
+    }
+
+    if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') {
+      return
+    }
+
+    const allCheckboxes = Array.from(this.#listHTML.querySelectorAll('.treeselect-checkbox'))
+
+    if (!allCheckboxes.length) {
+      return
+    }
+    
+    if (!itemFocused) {
+      const firstNode = allCheckboxes[0].parentNode
+      firstNode.classList.add('treeselect-item-focused')
+    } else {
+      const focusedCheckboxIndex = allCheckboxes.findIndex(el => el.parentNode.classList.contains('treeselect-item-focused'))
+      const focusedNode = allCheckboxes[focusedCheckboxIndex].parentNode
+      focusedNode.classList.remove('treeselect-item-focused')
+
+      const nextNodeIndex = event.key === 'ArrowDown' ? focusedCheckboxIndex + 1 : focusedCheckboxIndex -1
+      const defaultNodeIndex = event.key === 'ArrowDown' ? 0 : allCheckboxes.length - 1
+      const nextCheckbox = allCheckboxes[nextNodeIndex] ?? allCheckboxes[defaultNodeIndex]
+      const nextNodeToFocus = nextCheckbox.parentNode
+      nextNodeToFocus.classList.add('treeselect-item-focused')
+    }
+  }
+
+  // Create input component
   #createInput () {
+    const container = document.createElement('div')
     const input = document.createElement('input')
     input.classList.add('treeselect-input')
     input.setAttribute('type', 'text')
+    container.appendChild(input)
 
-    input.addEventListener('focus', (event) => {
-      const spaceTop = input.getBoundingClientRect().y
-      const spaceBottom = window.innerHeight - input.getBoundingClientRect().y
-      const listHeight = this.#listHTML.clientHeight
-      const directionClass = spaceTop > spaceBottom && window.innerHeight - spaceTop < listHeight
-        ? 'top'
-        : 'bottom'
-      const directionRemoveClass = directionClass === 'top' ? 'bottom' : 'top'
-      this.#listHTML.classList.add(`treeselect-list-${directionClass}`)
-      this.#listHTML.classList.remove(`treeselect-list-${directionRemoveClass}`)
-      this.#listHTML.classList.remove('treeselect-list-hidden')
-
+    container.addEventListener('focus', () => {
+      this.#focused = true
+      this.#updateDirectionList(container)
       this.DOMelement.appendChild(this.#listHTML)
+      this.#listHTML.classList.remove('treeselect-list-hidden')
+      this.addOutsideListeners()
+    }, true)
 
-      console.log(directionClass)
-    })
-  
-    this.DOMelement.addEventListener('focusout', (e) => {
-      const isOutsideClick = !this.DOMelement.contains(e.relatedTarget)
+    this.DOMelement.addEventListener('keydown', (event) => this.#inputKeyActionsHandler(event))
 
-      if (isOutsideClick) {
-        this.#listHTML.classList.add('treeselect-list-hidden')
-        this.DOMelement.removeChild(this.#listHTML)
-      }
+    return container
+
+  }
     })
     return input
   }
@@ -112,8 +182,14 @@ class Treeselect {
   #createList () {
     const list = document.createElement('div')
     list.classList.add('treeselect-list')
+    list.classList.add('treeselect-list-hidden')
     const htmlTreeList = this.#getListHTML(this.options)
     list.append(...htmlTreeList)
+
+    list.addEventListener('keydown', () => {
+      const input = this.DOMelement.querySelector('.treeselect-input')
+      input.focus()
+    })
   
     return list
   }
@@ -169,23 +245,45 @@ class Treeselect {
       if (sublevel >= this.openLevel) {
         itemElement.classList.add('treeselect-group-closed')
       }
-
     } else {
       itemElement.setAttribute('item-id', option.value)
     }
   
     const checkbox = this.#createCheckbox(option)
     const label = this.#createCheckboxLabel(option)
+
+    itemElement.addEventListener('mouseover', (event) => {
+      this.#groupMouseAction(true, itemElement)
+    }, true)
+    itemElement.addEventListener('mouseout', (event) => {
+      this.#groupMouseAction(false, itemElement)
+    }, true)
   
     itemElement.append(checkbox, label)
   
     return itemElement
   }
 
+  #groupMouseAction = (isMouseOver, itemElement) => {
+    const focusedClassName = 'treeselect-item-focused'
+
+    if (isMouseOver) {
+      const itemFocused = this.#listHTML.querySelector(`.${focusedClassName}`)
+
+      if (itemFocused) {
+        itemFocused.classList.remove(focusedClassName)
+      }
+
+      itemElement.classList.add(focusedClassName)
+    } else {
+      itemElement.classList.remove(focusedClassName)
+    }
+  }
+
   // Create a group's arrow component
   #createArrow (option) {
     const arrow = document.createElement('span')
-    arrow.setAttribute('tabindex', '0')
+    arrow.setAttribute('tabindex', '-1')
     arrow.classList.add('treeselect-group-icon')
     arrow.addEventListener('click', (event) => {
       this.#arrowClickEvent(event, option)
@@ -199,6 +297,7 @@ class Treeselect {
     const checkbox = document.createElement('input')
     checkbox.setAttribute('id', this.#getLabelInputId(option))
     checkbox.setAttribute('type', `checkbox`)
+    checkbox.setAttribute('tabindex', '-1')
     checkbox.classList.add('treeselect-checkbox')
     checkbox.addEventListener('input', (event) => {
       this.#checkboxClickEvent(event, option)
@@ -330,7 +429,7 @@ class Treeselect {
   
   // There we call all method that we need call after render
   #updateComponentOnInit = () => {
-    const allChilrenInputs = Array.from(this.DOMelement.querySelectorAll('input[type=checkbox]:checked.treeselect-checkbox'))
+    const allChilrenInputs = Array.from(this.#listHTML.querySelectorAll('input[type=checkbox]:checked.treeselect-checkbox'))
     allChilrenInputs.forEach(input => this.#updateCheckbox(input))
     this.#updateValue()
 
