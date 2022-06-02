@@ -71,5 +71,5 @@ new Treeselect({
   isGroupSelectable: false,
   openLevel: 5,
   emitOnInit: true,
-  appendToBody: true
+  appendToBody: false
 })

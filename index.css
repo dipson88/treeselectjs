@@ -37,11 +37,6 @@
 
 }
 
-.treeselect-group:hover,
-.treeselect-group-item:hover {
-  background-color: bisque;
-}
-
 .treeselect-group,
 .treeselect-group-item {
   display: flex;
@@ -61,7 +56,7 @@
 }
 
 .treeselect-group-item-checked {
-  background-color: beige;
+  background-color: whitesmoke;
 }
 
 .treeselect-group-icon {
@@ -69,12 +64,16 @@
 }
 
 .treeselect-group-icon::before {
-  content: '\25B2';
+  content: '\25BE';
   cursor: pointer;
 }
 
+.treeselect-group-icon:hover {
+  color: gray;
+}
+
 .treeselect-group-closed .treeselect-group-icon::before {
-  content: '\25BC';
+  content: '\25B8';
 }
 
 .treeselect-group-closed ~  * {

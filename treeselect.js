@@ -23,6 +23,7 @@ class Treeselect {
     this.isGroupSelectable = isGroupSelectable ?? false
     this.openLevel = openLevel ?? 0
     this.emitOnInit = emitOnInit ?? false
+    this.appendToBody = appendToBody ?? false
 
     // State props
     this.#checkedNodes = []
@@ -31,6 +32,7 @@ class Treeselect {
     this.#listHTML = null
     this.blurEvent = this.blurWindowHandler.bind(this)
     this.focusEvent = this.focusWindowHandler.bind(this)
+    this.scrollEvent = this.scrollWindowHandler.bind(this)
 
     this.render()
   }
@@ -44,33 +46,54 @@ class Treeselect {
     }
   }
 
-  addOutsideListeners () {
+  // Add liteners to the document and window 
+  #addOutsideListeners () {
+    window.addEventListener('scroll', this.scrollEvent, true)
     document.addEventListener('click', this.focusEvent, true)
     document.addEventListener('focus', this.focusEvent, true)
     window.addEventListener('blur', this.blurEvent)
   }
 
-  removeOutsideListeners () {
+  // Remove listeners form document and window.
+  #removeOutsideListeners () {
+    window.removeEventListener('scroll', this.scrollEvent, true)
     document.removeEventListener('click', this.focusEvent, true)
     document.removeEventListener('focus', this.focusEvent, true)
     window.removeEventListener('blur', this.blurEvent)
   }
 
+  // Remove list from DOM and reset styles
   blurWindowHandler () {
     if (this.#focused) {
       this.#focused = false
       this.#listHTML.classList.add('treeselect-list-hidden')
-      this.DOMelement.removeChild(this.#listHTML)
-      this.removeOutsideListeners()
+      this.#removeOutsideListeners()
+
+      if (this.appendToBody) {
+        document.body.removeChild(this.#listHTML)
+      } else {
+        this.DOMelement.removeChild(this.#listHTML)
+      }
+
+      this.#listHTML.style.transform = null;
+      this.#listHTML.style.position = null;
+      this.#listHTML.style.width = null;
     }
   }
 
+  // Focus handler for the document. Check inside treeselect click
   focusWindowHandler (event) {
     const isInsideClick = this.DOMelement.contains(event.target) || this.#listHTML.contains(event.target)
 
     if (!isInsideClick) {
       this.blurWindowHandler()
     }
+  }
+
+  scrollWindowHandler (event) {
+    // TODO think about performance
+    const container = this.DOMelement.querySelector('.treeselect-input-container')
+    this.updateListPosition(container, this.#listHTML)
   }
 
   // Validate props
@@ -106,18 +129,7 @@ class Treeselect {
     this.DOMelement.append(container)
   }
 
-  #updateDirectionList (containerHTML) {
-    const spaceTop = containerHTML.getBoundingClientRect().y
-    const spaceBottom = window.innerHeight - containerHTML.getBoundingClientRect().y
-    const listHeight = this.#listHTML.clientHeight
-    const directionClass = spaceTop > spaceBottom && window.innerHeight - spaceTop < listHeight
-      ? 'top'
-      : 'bottom'
-    const directionRemoveClass = directionClass === 'top' ? 'bottom' : 'top'
-    this.#listHTML.classList.add(`treeselect-list-${directionClass}`)
-    this.#listHTML.classList.remove(`treeselect-list-${directionRemoveClass}`)
-  }
-
+  // Handler for main Input. Helps with key navigation
   #inputKeyActionsHandler (event) {
     const itemFocused = this.#listHTML.querySelector('.treeselect-item-focused')
 
@@ -153,29 +165,66 @@ class Treeselect {
     }
   }
 
+  // Update direction of the list. Support appendToBody and standart mode
+  updateListPosition (container, list) {
+    const topClassName = 'treeselect-list-top'
+    const bottomClassName = 'treeselect-list-bottom'
+    const spaceTop = container.getBoundingClientRect().y
+    const spaceBottom = window.innerHeight - container.getBoundingClientRect().y
+    const listHeight = list.clientHeight
+    const directionClass = spaceTop > spaceBottom && window.innerHeight - spaceTop < listHeight
+      ? topClassName
+      : bottomClassName
+    const isTopDirection = directionClass === topClassName
+    const directionRemoveClass = isTopDirection ? bottomClassName : topClassName
+
+    this.#listHTML.classList.remove(directionRemoveClass)
+
+    if (this.appendToBody) {
+      const { x: listX, y: listY } = list.getBoundingClientRect()
+      const { x: containerX, y: containerY } = container.getBoundingClientRect()
+      const containerHeight = container.clientHeight
+
+      // TODO think about styles
+      this.#listHTML.style.width = `${container.clientWidth}px`;
+      this.#listHTML.style.maxHeight = `${window.innerHeight - containerHeight}px`;
+
+      if (isTopDirection) {
+        this.#listHTML.style.transform = `translate(${containerX - listX}px, ${containerY - listY - listHeight}px)`;
+      } else {
+        this.#listHTML.style.transform = `translate(${containerX - listX}px, ${containerY + containerHeight - listY}px)`;
+      }
+    } else {
+      this.#listHTML.classList.add(directionClass)
+    }
+  }
+
   // Create input component
   #createInput () {
     const container = document.createElement('div')
+    container.classList.add('treeselect-input-container')
     const input = document.createElement('input')
     input.classList.add('treeselect-input')
     input.setAttribute('type', 'text')
     container.appendChild(input)
 
     container.addEventListener('focus', () => {
+      if (this.appendToBody) {
+        document.body.appendChild(this.#listHTML)
+      } else {
+        this.DOMelement.appendChild(this.#listHTML)
+      }
+
       this.#focused = true
-      this.#updateDirectionList(container)
-      this.DOMelement.appendChild(this.#listHTML)
+      const list = document.querySelector('.treeselect-list')
       this.#listHTML.classList.remove('treeselect-list-hidden')
-      this.addOutsideListeners()
+      this.#addOutsideListeners()
+      this.updateListPosition(container, this.#listHTML)
     }, true)
 
     this.DOMelement.addEventListener('keydown', (event) => this.#inputKeyActionsHandler(event))
 
     return container
-
-  }
-    })
-    return input
   }
 
   // Create list container component
@@ -264,6 +313,7 @@ class Treeselect {
     return itemElement
   }
 
+  // Mouse action. Helps with key naviagation. Helps detect active element
   #groupMouseAction = (isMouseOver, itemElement) => {
     const focusedClassName = 'treeselect-item-focused'
 
