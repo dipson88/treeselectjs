@@ -460,12 +460,13 @@ class Treeselect {
       groupItem.classList.add(closedClassName)
     }
 
-    // We need to update direction like on init, because height was changed
-    if (this.appendToBody) {
-      this.#listHTML.removeAttribute('direction')
-      const container = this.DOMelement.querySelector('.treeselect-input-container')
-      this.updateListPosition(container, this.#listHTML)
-    }
+    // TODO check and remove
+    // if (this.appendToBody) {
+    //   // this.#listHTML.removeAttribute('direction')
+    // }
+
+    const container = this.DOMelement.querySelector('.treeselect-input-container')
+    this.updateListPosition(container, this.#listHTML)
   }
 
   // Update checkbox tree by checkbox
