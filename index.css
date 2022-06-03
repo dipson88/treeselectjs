@@ -76,7 +76,7 @@
   content: '\25B8';
 }
 
-.treeselect-group-closed ~  * {
+.treeselect-group-closed ~ * {
   display: none;
 }
 
