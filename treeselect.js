@@ -8,6 +8,7 @@ class Treeselect {
   #transform = { top: null, bottom: null }
   #treeselectInitPosition = null
   #isMouseEventAvailable = false
+  #containerResizer = null
 
   constructor ({
     DOMelement,
@@ -79,6 +80,7 @@ class Treeselect {
 
       if (this.appendToBody) {
         document.body.removeChild(this.#listHTML)
+        this.#containerResizer?.disconnect()
       } else {
         this.DOMelement.removeChild(this.#listHTML)
       }
@@ -129,7 +131,8 @@ class Treeselect {
 
   // Create Treeselect component and attach to the DOM
   #createTreeselect () {
-    // TODO add clear dom element
+    // TODO Recheck that we can call render() and update component
+    this.DOMelement.innerHTML = ''
     const container = this.#createInput()
     const list = this.#createList()
 
@@ -170,8 +173,6 @@ class Treeselect {
     const allCheckboxes = Array.from(this.#listHTML.querySelectorAll('.treeselect-checkbox'))
       .filter(checkbox => window.getComputedStyle(checkbox).display !== "none")
 
-    console.log(allCheckboxes)
-
     if (!allCheckboxes.length) {
       return
     }
@@ -193,7 +194,7 @@ class Treeselect {
   }
 
   // Update direction of the list. Support appendToBody and standart mode
-  updateListPosition (container, list) {
+  updateListPosition (container, list, isNeedForceUpdate) {
     const spaceTop = container.getBoundingClientRect().y
     const spaceBottom = window.innerHeight - container.getBoundingClientRect().y
     const listHeight = list.clientHeight
@@ -224,7 +225,8 @@ class Treeselect {
     }
 
     // Append to body handler
-    if (!this.#treeselectInitPosition) {
+    if (!this.#treeselectInitPosition || isNeedForceUpdate) {
+      list.style.transform = null
       const { x: listX, y: listY } = list.getBoundingClientRect()
       const { x: containerX, y: containerY } = container.getBoundingClientRect()
 
@@ -237,7 +239,7 @@ class Treeselect {
     list.style.width = `${container.clientWidth}px`
     list.style.maxHeight = `${window.innerHeight - containerHeight}px`
 
-    if (!currentAttr) {
+    if (!currentAttr || isNeedForceUpdate) {
       this.#transform.top = `translate(${containerX - listX}px, ${containerY - listY - listHeight}px)`
       this.#transform.bottom = `translate(${containerX - listX}px, ${containerY + containerHeight - listY}px)`
     }
@@ -257,6 +259,11 @@ class Treeselect {
     this.#listHTML.classList.remove('treeselect-list-hidden')
     this.#addOutsideListeners()
     this.updateListPosition(container, this.#listHTML)
+
+    // We need to check height of the container to update list position
+    if (this.appendToBody) {
+      this.#containerResizer.observe(container)
+    }
   }
 
   // Create input component
@@ -460,13 +467,8 @@ class Treeselect {
       groupItem.classList.add(closedClassName)
     }
 
-    // TODO check and remove
-    // if (this.appendToBody) {
-    //   // this.#listHTML.removeAttribute('direction')
-    // }
-
     const container = this.DOMelement.querySelector('.treeselect-input-container')
-    this.updateListPosition(container, this.#listHTML)
+    this.updateListPosition(container, this.#listHTML, true)
   }
 
   // Update checkbox tree by checkbox
@@ -564,8 +566,13 @@ class Treeselect {
       this.#emitInput()
     }
 
+    const container = this.DOMelement.querySelector('.treeselect-input-container')
+
+    if (this.appendToBody) {
+      this.#containerResizer = new ResizeObserver(() => this.updateListPosition(container, this.#listHTML, true))
+    }
+
     if (this.alwaysOpen) {
-      const container = this.DOMelement.querySelector('.treeselect-input-container')
       this.focusInputHandler(container)
     }
   }
