@@ -3,6 +3,7 @@ class Treeselect {
   #checkedNodes = []
   #uncheckedNodes = []
   #groupIds = []
+  #containerHTML = null
   #listHTML = null
   #isFocused = false
   #transform = { top: null, bottom: null }
@@ -101,9 +102,7 @@ class Treeselect {
   }
 
   scrollWindowHandler (event) {
-    // TODO think about create a container class field
-    const container = this.DOMelement.querySelector('.treeselect-input-container')
-    this.updateListPosition(container, this.#listHTML)
+    this.updateListPosition(this.#containerHTML, this.#listHTML)
   }
 
   // Validate props
@@ -136,6 +135,7 @@ class Treeselect {
     const container = this.#createInput()
     const list = this.#createList()
 
+    this.#containerHTML = container
     this.#listHTML = list
     this.DOMelement.append(container)
   }
@@ -467,8 +467,7 @@ class Treeselect {
       groupItem.classList.add(closedClassName)
     }
 
-    const container = this.DOMelement.querySelector('.treeselect-input-container')
-    this.updateListPosition(container, this.#listHTML, true)
+    this.updateListPosition(this.#containerHTML, this.#listHTML, true)
   }
 
   // Update checkbox tree by checkbox
@@ -566,14 +565,12 @@ class Treeselect {
       this.#emitInput()
     }
 
-    const container = this.DOMelement.querySelector('.treeselect-input-container')
-
     if (this.appendToBody) {
-      this.#containerResizer = new ResizeObserver(() => this.updateListPosition(container, this.#listHTML, true))
+      this.#containerResizer = new ResizeObserver(() => this.updateListPosition(this.#containerHTML, this.#listHTML, true))
     }
 
     if (this.alwaysOpen) {
-      this.focusInputHandler(container)
+      this.focusInputHandler(this.#containerHTML)
     }
   }
 
