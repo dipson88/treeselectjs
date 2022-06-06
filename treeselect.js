@@ -340,6 +340,7 @@ class Treeselect {
     itemElement.setAttribute('style', style)
     itemElement.setAttribute('tabindex', '-1')
     itemElement.classList.add(clsassName)
+    itemElement.setAttribute('name', option.name)
   
     if (isGroup) {
       const arrow = this.#createArrow(option)
@@ -614,6 +615,5 @@ class Treeselect {
     console.log(this.value)
   }
 }
-
 
 export default Treeselect

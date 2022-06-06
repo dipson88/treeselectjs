@@ -1,4 +1,5 @@
 import Treeselect from "./treeselect.js";
+import TreeselectInput from "./input.js";
 
 const DOMelement = document.querySelector('.treeselect')
 const options = [
@@ -71,6 +72,13 @@ new Treeselect({
   isGroupSelectable: false,
   openLevel: 5,
   emitOnInit: true,
-  appendToBody: true,
-  alwaysOpen: false
+  appendToBody: false,
+  alwaysOpen: true
+})
+
+
+const DOMelementInput = document.querySelector('.treeselect-input-test')
+new TreeselectInput({
+  DOMelement: DOMelementInput,
+  value: [{ id: '1', name: 'test name' }, { id: '2', name: 'test name 2' }]
 })

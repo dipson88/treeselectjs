@@ -2,6 +2,11 @@
   width: 100%;
   box-sizing: border-box;
   position: relative;
+  margin-top: 900px;
+}
+
+.treeselect-input-container {
+  
 }
 
 .treeselect-input {
@@ -34,7 +39,6 @@
 
 
 .treeselect-group-container {
-
 }
 
 .treeselect-group,
@@ -114,3 +118,74 @@ input[type=checkbox]:checked::after {
   border: none;
   background-color: grey;
 }
+
+
+
+/* TODO INPUT */
+.input-container {
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 2px 4px;
+}
+
+.input-container-focused {
+  outline: 1px solid black;
+}
+
+.input-container-tags {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.input-container-edit {
+  flex: 1;
+  min-width: 30px;
+  border: none;
+  font-size: 12px;
+}
+
+.input-container-edit:focus {
+  outline: none;
+}
+
+.input-container-element {
+  display: inline-flex;
+  align-items: center;
+  background-color: gainsboro;
+  cursor: pointer;
+  padding: 0 4px;
+  border-radius: 2px;
+  font-size: 12px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.input-container-element:hover {
+  background-color: lavender;
+}
+
+.input-container-element-name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.input-container-element-cross {
+  margin-left: 2px;
+}
+
+.input-container-element:hover .input-container-element-cross {
+  color: red;
+}
+
+.input-container-element-cross::before {
+  content: "\00d7";
+  font-size: 9px;
+}
+
