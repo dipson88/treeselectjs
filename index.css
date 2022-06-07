@@ -39,6 +39,7 @@
 
 
 .treeselect-group-container {
+  
 }
 
 .treeselect-group,
@@ -48,11 +49,11 @@
 }
 
 .treeselect-group {
-
+  cursor: pointer;
 }
 
 .treeselect-group-item {
-
+  cursor: pointer;
 }
 
 .treeselect-item-focused {
@@ -92,6 +93,10 @@
 .treeselect-checkbox-label {
   width: 100%;
   cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: keep-all;
+  white-space: nowrap;
 }
 
 .treeselect-checkbox {
@@ -128,6 +133,8 @@ input[type=checkbox]:checked::after {
   align-items: center;
   flex-wrap: wrap;
   padding: 2px 4px;
+  padding-right: 35px;
+  position: relative;
 }
 
 .input-container-focused {
@@ -152,6 +159,11 @@ input[type=checkbox]:checked::after {
 
 .input-container-edit:focus {
   outline: none;
+}
+
+.input-container-edit-unsearchable {
+  caret-color: transparent;
+  cursor: default;
 }
 
 .input-container-element {
@@ -189,3 +201,83 @@ input[type=checkbox]:checked::after {
   font-size: 9px;
 }
 
+.input-container-operators {
+  display: flex;
+  width: 30px;
+  position: absolute;
+  right: 0;
+}
+
+.input-container-clear {
+  width: 12px;
+  height: 12px;
+  position: relative;
+  background-color: gainsboro;
+  border-radius: 50%;
+}
+
+.input-container-clear::before {
+  content: "\00d7";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+}
+
+.input-container-clear:hover {
+  cursor: pointer;
+  background-color: gray;
+}
+
+.input-container-clear-hidden {
+  display: none;
+}
+
+.input-container-arrow {
+  height: 12px;
+  width: 15px;
+  line-height: 12px;
+  position: relative;
+  font-size: 25px;
+}
+
+.input-container-arrow-closed::after {
+  content: '\25BE';
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.input-container-arrow-opened::after {
+  content: '\25B4';
+  position: absolute;
+  top: -1px;
+  left: 0;
+}
+
+/* Empty List Element */
+.treeselect-empty-list {
+  display: flex;
+  align-items: center;
+}
+
+.treeselect-empty-list-icon {
+  height: 20px;
+  width: 20px;
+  text-align: center;
+  line-height: 20px;
+  color: orange;
+}
+
+.treeselect-empty-list-icon::before {
+  content: '\26A0';
+}
+
+.treeselect-empty-list-text {
+  font-size: 12px;
+}
+
+.treeselect-empty-list-hidden {
+  display: none;
+}

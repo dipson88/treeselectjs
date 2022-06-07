@@ -1,5 +1,3 @@
-import TreeselectInput from "./input.js"
-
 class Treeselect {
   // Inner State props
   #checkedNodes = []
@@ -12,7 +10,6 @@ class Treeselect {
   #treeselectInitPosition = null
   #isMouseEventAvailable = false
   #containerResizer = null
-  #emptyListHTML = null
 
   constructor ({
     DOMelement,
@@ -28,8 +25,6 @@ class Treeselect {
     this.DOMelement = DOMelement
     this.value = value
     this.options = options
-    this.selectedNodes = []
-    this.inputElement = null
 
     // Additional user settings props
     this.isGroupSelectable = isGroupSelectable ?? false
@@ -53,38 +48,6 @@ class Treeselect {
       this.#createTreeselect()
       this.#updateComponentOnInit()
     }
-  }
-
-  upadeValue (value) {
-    // TODO
-  }
-
-  updateParams (params) {
-    // TODO
-  }
-
-  #updateValueByInput (event) {
-    const value = event.detail.map(node => node.id)
-    const valuesToRemove = this.value.filter(nodeId => !value.includes(nodeId))
-    const allChilrenInputs = Array.from(this.#listHTML.querySelectorAll('input[type=checkbox]:checked.treeselect-checkbox'))
-    const uncheckCeckboxes = allChilrenInputs.filter(checkbox => {
-      const { nodeId } = this.#getNodeInfoByInput(checkbox)
-
-      return valuesToRemove.includes(nodeId)
-    })
-
-    uncheckCeckboxes.forEach(checkbox => {
-      checkbox.checked = false
-      this.#updateCheckbox(checkbox)
-    })
-    this.#updateValue()
-    this.#emitInput()
-
-    this.filterSearch('')
-  }
-
-  updateInputByValue () {
-    this.inputElement.updateValue(this.selectedNodes)
   }
 
   // Add liteners to the document and window 
@@ -174,7 +137,6 @@ class Treeselect {
 
     this.#containerHTML = container
     this.#listHTML = list
-    
     this.DOMelement.append(container)
   }
 
@@ -308,31 +270,14 @@ class Treeselect {
   #createInput () {
     const container = document.createElement('div')
     container.classList.add('treeselect-input-container')
-    this.inputElement = new TreeselectInput({
-      value: this.selectedNodes,
-      opened: this.alwaysOpen
-    })
+    const input = document.createElement('input')
+    input.classList.add('treeselect-input')
+    input.setAttribute('type', 'text')
+    container.appendChild(input)
 
-    const srcElement = this.inputElement.srcElement
-    srcElement.addEventListener('clear', (event) => {
-      console.log('clear LIST', event)
-    })
-    srcElement.addEventListener('input', (event) => {
-      this.#updateValueByInput(event)
-    })
-    srcElement.addEventListener('search', (event) => {
-      console.log('search LIST', event)
-      this.filterSearch(event.detail)
-    })
-    srcElement.addEventListener('focus', (event) => {
-      this.focusInputHandler(container)
-    }, true)
+    container.addEventListener('focus', () => this.focusInputHandler(container) ,true)
 
-    srcElement.addEventListener('keydown', (event) => this.#inputKeyActionsHandler(event))
-
-    container.appendChild(srcElement)
-
-    // this.DOMelement.addEventListener('keydown', (event) => this.#inputKeyActionsHandler(event))
+    this.DOMelement.addEventListener('keydown', (event) => this.#inputKeyActionsHandler(event))
 
     return container
   }
@@ -343,19 +288,13 @@ class Treeselect {
     list.classList.add('treeselect-list')
     list.classList.add('treeselect-list-hidden')
     const htmlTreeList = this.#getListHTML(this.options)
-    const emptyList = this.#createEmptyList()
-    this.#emptyListHTML = emptyList
-
-    list.append(...htmlTreeList, emptyList)
+    list.append(...htmlTreeList)
 
     list.addEventListener('keydown', () => {
-      // TODO
-      // const input = this.DOMelement.querySelector('.input-container-edit')
-      const input = this.inputElement.srcElement.querySelector('.input-container-edit')
-      // this.inputElement.srcElement.focus()
+      const input = this.DOMelement.querySelector('.treeselect-input')
       input.focus()
     })
-
+  
     return list
   }
 
@@ -400,7 +339,6 @@ class Treeselect {
   
     itemElement.setAttribute('style', style)
     itemElement.setAttribute('tabindex', '-1')
-    itemElement.setAttribute('title', option.name)
     itemElement.classList.add(clsassName)
     itemElement.setAttribute('name', option.name)
   
@@ -478,10 +416,6 @@ class Treeselect {
       this.#checkboxClickEvent(event, option)
     })
     checkbox.checked = this.value.includes(option.value.toString())
-
-    if (checkbox.checked) {
-      this.selectedNodes.push({ id: option.value, name: option.name })
-    }
   
     return checkbox
   }
@@ -505,7 +439,6 @@ class Treeselect {
   #checkboxClickEvent (event, option) {
     this.#updateCheckbox(event.target)
     this.#updateValue()
-    this.updateInputByValue()
     this.#emitInput()
   }
   
@@ -615,13 +548,11 @@ class Treeselect {
     const groupId = node.getAttribute('group-id')
     const itemId = node.getAttribute('item-id')
     const nodeId = groupId || itemId
-    const name = node.getAttribute('name')
   
     return {
       nodeId,
       checked: input.checked,
-      isGroup: !!groupId,
-      name
+      isGroup: !!groupId
     }
   }
   
@@ -630,7 +561,6 @@ class Treeselect {
     const allChilrenInputs = Array.from(this.#listHTML.querySelectorAll('input[type=checkbox]:checked.treeselect-checkbox'))
     allChilrenInputs.forEach(input => this.#updateCheckbox(input))
     this.#updateValue()
-    this.updateInputByValue()
 
     if (this.emitOnInit) {
       this.#emitInput()
@@ -650,22 +580,22 @@ class Treeselect {
   // We can move all manipulations inide updateValue
   // But it is too many array itirations
   #updateCheckedStateByInput = (input) => {
-    const { nodeId, checked, name } = this.#getNodeInfoByInput(input)
+    const { nodeId, checked } = this.#getNodeInfoByInput(input)
   
     if (checked) {
-      this.#checkedNodes.push({ id: nodeId, name })
+      this.#checkedNodes.push(nodeId)
       input.parentNode.classList.add('treeselect-group-item-checked')
     } else {
-      this.#uncheckedNodes.push({ id: nodeId, name })
+      this.#uncheckedNodes.push(nodeId)
       input.parentNode.classList.remove('treeselect-group-item-checked')
     }
   }
 
   // Emit this.value from state
   #updateValue () {
-    const value = [...this.selectedNodes]
+    const value = [...this.value]
     let newValue = value.concat([...this.#checkedNodes])
-    let filteredIds = this.#uncheckedNodes.map(node => node.id)
+    let filteredIds = this.#uncheckedNodes
     
     if (!this.isGroupSelectable) {
       // TODO strange rule. Maybe we can use this prop for result leafs in input
@@ -673,117 +603,16 @@ class Treeselect {
       filteredIds = filteredIds.concat(this.#groupIds)
     }
 
-    newValue = newValue.filter(node => !filteredIds.includes(node.id))
-    this.value = [...new Set(newValue.map(node => node.id))]
-    this.selectedNodes = this.value.map(id => newValue.find(node => node.id === id))
+    newValue = newValue.filter(id => !filteredIds.includes(id))
+    this.value = [...new Set(newValue)]
     this.#checkedNodes = []
     this.#uncheckedNodes = []
-
-    // Update InputElement values
-    // if (!isNeedToUpdateInput) {
-    //   this.inputElement.updateValue(this.selectedNodes)
-    // }
   }
 
   // Emit this.value
   #emitInput () {
     // TODO add emit
-    console.log(this.value, 'value emit')
-    console.log(this.selectedNodes, 'nodes emit')
-  }
-
-  filterSearch (search) {
-    const ids = this.getFilteredIds(this.options, search)
-
-    if (!ids.length && search.length) {
-      this.#emptyListHTML.classList.remove('treeselect-empty-list-hidden')
-    } else {
-      this.#emptyListHTML.classList.add('treeselect-empty-list-hidden')
-    }
-
-    const checkboxes = Array.from(this.#listHTML.querySelectorAll('.treeselect-checkbox'))
-
-    checkboxes.forEach(checkbox => {
-      const { nodeId, isGroup } = this.#getNodeInfoByInput(checkbox)
-
-      const isVisible = ids.includes(nodeId) || !search
-
-      if (isGroup) {
-        // group container
-        checkbox.parentNode.parentNode.style.display = isVisible ? '' : 'none'
-
-        if (isVisible) {
-          checkbox.parentNode.classList.remove('treeselect-group-closed')
-        }
-      }
-
-      checkbox.style.display = isVisible ? '' : 'none'
-      checkbox.parentNode.style.display = isVisible ? '' : 'none'
-
-      // TODO make dispaly none and remove dispaly none 
-    })
-  }
-
-  getChildrenIds (children) {
-    return children.reduce((acc, curr) => {
-      if (curr?.children?.length) {
-        acc = acc.concat(this.getChildrenIds(curr.children))
-      }
-
-      acc.push(curr.value)
-
-      return acc
-    }, [])
-  }
-
-  getFilteredIds (options, search) {
-    let visibleNodes = []
-
-    options.forEach(option => {
-      if (option?.children?.length) {
-        if (option.name.includes(search)) {
-          visibleNodes.push(option.value)
-          visibleNodes = visibleNodes.concat(this.getChildrenIds(option.children))
-        } else {
-          const childrenVisibleNodes = this.getFilteredIds(option.children, search)
-          const isAnyVisisble = !!childrenVisibleNodes.length
-  
-          if (isAnyVisisble) {
-            visibleNodes.push(option.value)
-          }
-  
-          visibleNodes = visibleNodes.concat(childrenVisibleNodes)
-        }
-
-      } else {
-        const isVisible = option.name.includes(search)
-
-        if (isVisible) {
-          visibleNodes.push(option.value)
-        }
-      }
-    })
-
-    return visibleNodes
-  }
-
-  #createEmptyList () {
-    const emptyList = document.createElement('div')
-    emptyList.classList.add('treeselect-empty-list')
-
-    if (this.options.length) {
-      emptyList.classList.add('treeselect-empty-list-hidden')
-    }
-
-    const icon = document.createElement('span')
-    icon.classList.add('treeselect-empty-list-icon')
-    const text = document.createElement('span')
-    text.classList.add('treeselect-empty-list-text')
-    text.innerHTML = 'No results found...'
-
-    emptyList.append(icon, text)
-
-    return emptyList
+    console.log(this.value)
   }
 }
 
