@@ -1,57 +1,72 @@
 class TreeselectInput {
-  constructor ({ value, showOnlyNumberMode, clearable, opened, searchable }) {
+  #isOpenMode = false
+  #inputElement = null
+  #inputElementArrow = null
+  #tagsSection = null
+
+  constructor ({ value, showOnlyNumberMode, clearable, opened, searchable, placeholder }) {
     // Main params
     this.value = value ?? []
+    this.searchText = ''
 
     // Settings params
     this.showOnlyNumberMode = showOnlyNumberMode ?? false
     this.clearable = clearable ?? true
     this.opened = opened ?? false
     this.searchable = searchable ?? true
+    this.placeholder = placeholder ?? 'Search...'
 
-    // Elements
-    this.srcElement = null
+    // SubElements
+    this.#inputElement = this.#createInput()
+    this.#inputElementArrow = this.#createInputArrow()
+    this.#tagsSection = this.#createTagsSection()
 
-    // Create
-    this.#init()
-  }
-
-  #init () {
-    const container = this.#createContainer()
-    this.srcElement = container
+    // Main Element
+    this.srcElement = this.#createContainer()
   }
 
   #createContainer () {
     const container = document.createElement('div')
     container.classList.add('input-container')
-    const tags = this.#createTagsSection()
-    const input = this.#createInput()
-    const operators = this.#createOperators()
+    container.setAttribute('tabindex', '-1')
+    this.#setContainerClasses(container)
 
     container.addEventListener('focus', () => {
-      container.classList.add('input-container-focused')
-
-      if (!this.opened) {
-        inputArrow.classList.add('input-container-arrow-opened')
-        inputArrow.classList.remove('input-container-arrow-closed')
-      }
-    }, true)
-    container.addEventListener('blur', () => {
-      container.classList.remove('input-container-focused')
-
-      if (!this.opened) {
-        inputArrow.classList.remove('input-container-arrow-opened')
-        inputArrow.classList.add('input-container-arrow-closed')
-      }
-    }, true)
-    container.addEventListener('click', () => {
-      const input = this.srcElement.querySelector('.input-container-edit')
-      input.focus()
+      this.#inputElement.focus()
     })
 
-    container.append(tags, input, operators)
+    container.addEventListener('click', () => {
+      this.#inputElement.focus()
+      this.#openCloseUpdate()
+    })
+
+    const operators = this.#createOperators()
+
+    container.append(this.#tagsSection, this.#inputElement, operators)
 
     return container
+  }
+
+  #setContainerClasses (container) {
+    if (!this.searchable) {
+      container.classList.add('input-container--unsearchable')
+    }
+
+    if (this.opened) {
+      container.classList.add('input-container--opened')
+    }
+
+    if (!this.clearable) {
+      container.classList.add('input-container--without-clear')
+    }
+
+    if (this.opened && !this.clearable) {
+      container.classList.add('input-container--without-operators')
+    }
+
+    if ((this.opened && this.clearable) || (!this.opened && !this.clearable)) {
+      container.classList.add('input-container--with-one-operators')
+    }
   }
 
   #createTagsSection () {
@@ -81,7 +96,9 @@ class TreeselectInput {
     const crossElement = this.#createElementCross()
     const tagElement = this.#createElementTag(name)
 
-    element.addEventListener('click', () => {
+    element.addEventListener('click', (event) => {
+      event.stopPropagation()
+      this.#inputElement.focus()
       this.removeElement(id)
     })
 
@@ -123,14 +140,19 @@ class TreeselectInput {
   #createInput () {
     const input = document.createElement('input')
     input.classList.add('input-container-edit')
+    input.setAttribute('placeholder', this.placeholder)
 
-    if (!this.searchable) {
-      input.classList.add('input-container-edit-unsearchable')
-    }
+    input.addEventListener('focus', () => {
+      this.srcElement.classList.add('input-container--focused')
+    })
 
     input.addEventListener('keydown', (event) => {
-      if (event.code === 'Backspace' && input.value === '' && this.value.length) {
+      if (event.code === 'Backspace' && !this.searchText.length && this.value.length) {
         this.removeElement(this.value[this.value.length - 1].id)
+      }
+
+      if (event.code === 'Space' && (!this.searchText || !this.searchable)) {
+        this.#openCloseUpdate()
       }
     })
 
@@ -142,6 +164,8 @@ class TreeselectInput {
       } else {
         input.value = ''
       }
+
+      this.searchText = input.value
     })
 
     return input
@@ -151,9 +175,7 @@ class TreeselectInput {
     const operators = document.createElement('div')
     operators.classList.add('input-container-operators')
     const clearBtn = this.#createClearButton()
-    const inputArrow = this.#createInputArrow()
-
-    operators.append(clearBtn, inputArrow)
+    operators.append(clearBtn, this.#inputElementArrow)
 
     return operators
   }
@@ -161,12 +183,11 @@ class TreeselectInput {
   #createClearButton () {
     const clear = document.createElement('span')
     clear.classList.add('input-container-clear')
+    clear.setAttribute('tabindex', "-1")
 
-    if (!this.clearable) {
-      clear.classList.add('input-container-clear-hidden')
-    }
-
-    clear.addEventListener('click', () => {
+    clear.addEventListener('click', (event) => {
+      event.stopPropagation()
+      this.#inputElement.focus()
       this.clear()
     })
 
@@ -177,12 +198,28 @@ class TreeselectInput {
     const inputArrow = document.createElement('span')
     inputArrow.classList.add('input-container-arrow')
 
-    const initClass = this.opened ? 'input-container-arrow-opened' : 'input-container-arrow-closed'
-    inputArrow.classList.add(initClass)
+    inputArrow.addEventListener('click', (event) => {
+      event.stopPropagation()
+      this.#inputElement.focus()
+      this.#openCloseUpdate()
+    })
 
     return inputArrow
   }
 
+  #openCloseUpdate () {
+    if (this.#isOpenMode) {
+      this.#emitClose()
+    } else {
+      this.#emitOpen()
+    }
+  }
+
+  #placeHolderUpdate () {
+    // TODO
+  }
+
+  // Emits
   #emitInput () {
     this.srcElement.dispatchEvent(new CustomEvent('input', { detail: this.value }))
   }
@@ -191,12 +228,42 @@ class TreeselectInput {
     this.srcElement.dispatchEvent(new CustomEvent('search', { detail: value }))
   }
 
+  #emitOpen () {
+    if (!this.#isOpenMode) {
+      this.srcElement.dispatchEvent(new CustomEvent('open'))
+      this.#isOpenMode = true
+
+      if (!this.opened) {
+        this.#inputElementArrow.classList.add('input-container-arrow-opened')
+      }
+    }
+  }
+
+  #emitClose () {
+    if (this.#isOpenMode) {
+      this.srcElement.dispatchEvent(new CustomEvent('close'))
+      this.#isOpenMode = false
+
+      if (!this.opened) {
+        this.#inputElementArrow.classList.remove('input-container-arrow-opened')
+      }
+    }
+  }
+
   // Public methods
+  focus () {
+    this.#inputElement.focus()
+  }
+
+  blur () {
+    this.srcElement.classList.remove('input-container--focused')
+    this.#emitClose()
+  }
+
   updateValue (value, isTriggeredInput) {
     this.value = value
-    const tags = this.srcElement.querySelector('.input-container-tags')
-    tags.innerHTML = ''
-    this.#addTagsByValue(tags)
+    this.#tagsSection.innerHTML = ''
+    this.#addTagsByValue(this.#tagsSection)
 
     if (isTriggeredInput) {
       this.#emitInput()
@@ -205,26 +272,22 @@ class TreeselectInput {
 
   clear () {
     this.value = []
-    const input = this.srcElement.querySelector('.input-container-edit')
-    input.value = ''
-    const tags = this.srcElement.querySelector('.input-container-tags')
-    tags.innerHTML = ''
-    this.updateValue([])
-    this.#emitInput()
+    this.#inputElement.value = ''
+    this.#tagsSection.innerHTML = ''
+    this.updateValue([], true)
   }
 
   clearSearchValue () {
-    const input = this.srcElement.querySelector('.input-container-edit')
-    input.value = ''
+    this.#inputElement.value = ''
+    this.searchText = ''
   }
 
   removeElement (id) {
     this.value = this.value.filter(v => v.id !== id)
-    const tags = this.srcElement.querySelector('.input-container-tags')
-    const el = tags.querySelector(`[element-id="${id}"]`)
+    const el = this.#tagsSection.querySelector(`[element-id="${id}"]`)
 
     if (el) {
-      tags.removeChild(el)
+      this.#tagsSection.removeChild(el)
       this.#emitInput()
     }
   }

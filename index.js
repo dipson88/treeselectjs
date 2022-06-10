@@ -73,12 +73,13 @@ new Treeselect({
   openLevel: 5,
   emitOnInit: true,
   appendToBody: false,
-  alwaysOpen: true
+  alwaysOpen: false
 })
 
-
 const DOMelementInput = document.querySelector('.treeselect-input-test')
-new TreeselectInput({
+const input = new TreeselectInput({
   DOMelement: DOMelementInput,
   value: [{ id: '1', name: 'test name' }, { id: '2', name: 'test name 2' }]
 })
+
+DOMelementInput.appendChild(input.srcElement)
