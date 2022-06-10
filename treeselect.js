@@ -5,13 +5,15 @@ class Treeselect {
   #checkedNodes = []
   #uncheckedNodes = []
   #groupIds = []
-  #containerHTML = null
-  #listHTML = null
   #isFocused = false
   #transform = { top: null, bottom: null }
   #treeselectInitPosition = null
   #isMouseEventAvailable = false
   #containerResizer = null
+
+  // Components
+  #containerHTML = null
+  #listHTML = null
   #emptyListHTML = null
 
   constructor ({
@@ -61,6 +63,60 @@ class Treeselect {
 
   updateParams (params) {
     // TODO
+  }
+
+  // Create Treeselect component and attach to the DOM
+  #createTreeselect () {
+    this.DOMelement.innerHTML = ''
+    const container = this.#createInput()
+    const list = this.#createList()
+
+    this.#containerHTML = container
+    this.#listHTML = list
+    
+    this.DOMelement.append(container)
+  }
+
+  // Create input component
+  #createInput () {
+    const container = document.createElement('div')
+    container.classList.add('treeselect-input-container')
+    this.inputElement = new TreeselectInput({
+      value: this.selectedNodes,
+      opened: this.alwaysOpen
+    })
+
+    const srcElement = this.inputElement.srcElement
+
+    srcElement.addEventListener('clear', (event) => {
+      console.log('clear LIST', event)
+    })
+    srcElement.addEventListener('input', (event) => {
+      this.#updateValueByInput(event)
+    })
+    srcElement.addEventListener('search', (event) => {
+      console.log('search LIST', event)
+      this.filterSearch(event.detail)
+    })
+    // srcElement.addEventListener('focus', (event) => {
+    //   this.focusInputHandler(container)
+    // }, true)
+    srcElement.addEventListener('open', (event) => {
+      if (!this.#isFocused) {
+        this.focusInputHandler(container)
+      }
+
+      this.#listHTML.classList.remove('treeselect-list-hidden')
+    }, true)
+    srcElement.addEventListener('close', (event) => {
+      this.#listHTML.classList.add('treeselect-list-hidden')
+    }, true)
+
+    srcElement.addEventListener('keydown', (event) => this.#inputKeyActionsHandler(event))
+
+    container.appendChild(srcElement)
+
+    return container
   }
 
   #updateValueByInput (event) {
@@ -126,6 +182,8 @@ class Treeselect {
       this.#listHTML.style.transform = null;
       this.#listHTML.style.position = null;
       this.#listHTML.style.width = null;
+
+      this.inputElement.blur()
     }
   }
 
@@ -163,19 +221,6 @@ class Treeselect {
     }
 
     return true
-  }
-
-  // Create Treeselect component and attach to the DOM
-  #createTreeselect () {
-    // TODO Recheck that we can call render() and update component
-    this.DOMelement.innerHTML = ''
-    const container = this.#createInput()
-    const list = this.#createList()
-
-    this.#containerHTML = container
-    this.#listHTML = list
-    
-    this.DOMelement.append(container)
   }
 
   // Handler for main Input. Helps with key navigation
@@ -302,39 +347,6 @@ class Treeselect {
     if (this.appendToBody) {
       this.#containerResizer.observe(container)
     }
-  }
-
-  // Create input component
-  #createInput () {
-    const container = document.createElement('div')
-    container.classList.add('treeselect-input-container')
-    this.inputElement = new TreeselectInput({
-      value: this.selectedNodes,
-      opened: this.alwaysOpen
-    })
-
-    const srcElement = this.inputElement.srcElement
-    srcElement.addEventListener('clear', (event) => {
-      console.log('clear LIST', event)
-    })
-    srcElement.addEventListener('input', (event) => {
-      this.#updateValueByInput(event)
-    })
-    srcElement.addEventListener('search', (event) => {
-      console.log('search LIST', event)
-      this.filterSearch(event.detail)
-    })
-    srcElement.addEventListener('focus', (event) => {
-      this.focusInputHandler(container)
-    }, true)
-
-    srcElement.addEventListener('keydown', (event) => this.#inputKeyActionsHandler(event))
-
-    container.appendChild(srcElement)
-
-    // this.DOMelement.addEventListener('keydown', (event) => this.#inputKeyActionsHandler(event))
-
-    return container
   }
 
   // Create list container component
@@ -641,7 +653,7 @@ class Treeselect {
     }
 
     if (this.alwaysOpen) {
-      this.focusInputHandler(this.#containerHTML)
+      // this.focusInputHandler(this.#containerHTML)
     }
   }
 

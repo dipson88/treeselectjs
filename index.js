@@ -1,5 +1,7 @@
 import Treeselect from "./treeselect.js";
 import TreeselectInput from "./input.js";
+import TreeselectList from "./list.js";
+import RootTreeselect from "./root.js";
 
 const DOMelement = document.querySelector('.treeselect')
 const options = [
@@ -73,13 +75,31 @@ new Treeselect({
   openLevel: 5,
   emitOnInit: true,
   appendToBody: false,
-  alwaysOpen: false
+  alwaysOpen: true
 })
 
-const DOMelementInput = document.querySelector('.treeselect-input-test')
-const input = new TreeselectInput({
-  DOMelement: DOMelementInput,
-  value: [{ id: '1', name: 'test name' }, { id: '2', name: 'test name 2' }]
+// const DOMelementInput = document.querySelector('.treeselect-input-test')
+// const input = new TreeselectInput({
+//   DOMelement: DOMelementInput,
+//   value: [{ id: '1', name: 'test name' }, { id: '2', name: 'test name 2' }]
+// })
+// DOMelementInput.appendChild(input.srcElement)
+
+// const DOMelementList = document.querySelector('.treeselect-list-test')
+// const list = new TreeselectList({
+//   options,
+//   value: ['7', '9']
+// })
+// DOMelementList.appendChild(list.srcElement)
+
+// setTimeout (() => {
+//   list.updateValue(['2', '6'])
+// }, 2000)
+
+const DOMelementRoot = document.querySelector('.treeselect-root-test')
+const root = new RootTreeselect({
+  options,
+  value: ['7', '9', '2']
 })
 
-DOMelementInput.appendChild(input.srcElement)
+DOMelementRoot.appendChild(root.srcElement)
