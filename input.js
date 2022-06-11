@@ -4,7 +4,14 @@ class TreeselectInput {
   #inputElementArrow = null
   #tagsSection = null
 
-  constructor ({ value, showOnlyNumberMode, clearable, opened, searchable, placeholder }) {
+  constructor ({
+    value,
+    showOnlyNumberMode,
+    clearable,
+    opened,
+    searchable,
+    placeholder
+  }) {
     // Main params
     this.value = value ?? []
     this.searchText = ''
@@ -23,6 +30,10 @@ class TreeselectInput {
 
     // Main Element
     this.srcElement = this.#createContainer()
+
+    // Init calls
+    this.#showHideOnlyNuberModeUpdate()
+    this.#showHidePlaceholderUpdate()
   }
 
   #createContainer () {
@@ -140,13 +151,16 @@ class TreeselectInput {
   #createInput () {
     const input = document.createElement('input')
     input.classList.add('input-container-edit')
-    input.setAttribute('placeholder', this.placeholder)
 
     input.addEventListener('focus', () => {
       this.srcElement.classList.add('input-container--focused')
     })
 
     input.addEventListener('keydown', (event) => {
+      if (event.code === 'Backspace' && !this.searchText.length && this.value.length && this.showOnlyNumberMode) {
+        this.clear()
+      }
+
       if (event.code === 'Backspace' && !this.searchText.length && this.value.length) {
         this.removeElement(this.value[this.value.length - 1].id)
       }
@@ -215,8 +229,23 @@ class TreeselectInput {
     }
   }
 
-  #placeHolderUpdate () {
-    // TODO
+  #showHideOnlyNuberModeUpdate () {
+    if (this.showOnlyNumberMode) {
+      const dispalyValue = this.value?.length ? '' : 'none'
+      this.#tagsSection.style.display = dispalyValue
+    }
+  }
+
+  #showHidePlaceholderUpdate () {
+    if (!this.placeholder) {
+      return
+    }
+
+    if (this.value?.length) {
+      this.#inputElement.removeAttribute('placeholder')
+    } else {
+      this.#inputElement.setAttribute('placeholder', this.placeholder)
+    }
   }
 
   // Emits
@@ -234,7 +263,7 @@ class TreeselectInput {
       this.#isOpenMode = true
 
       if (!this.opened) {
-        this.#inputElementArrow.classList.add('input-container-arrow-opened')
+        this.#inputElementArrow.classList.add('input-container-arrow--opened')
       }
     }
   }
@@ -245,7 +274,7 @@ class TreeselectInput {
       this.#isOpenMode = false
 
       if (!this.opened) {
-        this.#inputElementArrow.classList.remove('input-container-arrow-opened')
+        this.#inputElementArrow.classList.remove('input-container-arrow--opened')
       }
     }
   }
@@ -264,6 +293,8 @@ class TreeselectInput {
     this.value = value
     this.#tagsSection.innerHTML = ''
     this.#addTagsByValue(this.#tagsSection)
+    this.#showHideOnlyNuberModeUpdate()
+    this.#showHidePlaceholderUpdate()
 
     if (isTriggeredInput) {
       this.#emitInput()
@@ -274,12 +305,9 @@ class TreeselectInput {
     this.value = []
     this.#inputElement.value = ''
     this.#tagsSection.innerHTML = ''
-    this.updateValue([], true)
-  }
-
-  clearSearchValue () {
-    this.#inputElement.value = ''
     this.searchText = ''
+    this.updateValue([], true)
+    this.#emitSearch('')
   }
 
   removeElement (id) {
@@ -288,8 +316,13 @@ class TreeselectInput {
 
     if (el) {
       this.#tagsSection.removeChild(el)
+      this.#showHidePlaceholderUpdate()
       this.#emitInput()
     }
+  }
+
+  updateOpenCloseStatus () {
+    this.#openCloseUpdate()
   }
 }
 

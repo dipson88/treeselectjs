@@ -102,4 +102,8 @@ const root = new RootTreeselect({
   value: ['7', '9', '2']
 })
 
+root.srcElement.addEventListener('input', (event) => {
+  console.log(event.detail, 'INPUT')
+})
+
 DOMelementRoot.appendChild(root.srcElement)

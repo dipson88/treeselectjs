@@ -17,13 +17,19 @@ class RootTreeselect {
     options,
     openLevel,
     appendToBody,
-    alwaysOpen
+    alwaysOpen,
+    showTags,
+    clearable,
+    searchable
   }) {
     this.value = value
     this.options = options
-    this.openLevel = openLevel ?? 0
+    this.openLevel = openLevel ?? 5
     this.appendToBody = appendToBody ?? true
-    this.alwaysOpen = alwaysOpen ?? false
+    this.alwaysOpen = alwaysOpen ?? true
+    this.showTags = showTags ?? true
+    this.clearable = clearable ?? true
+    this.searchable = searchable ?? true
 
     // Src element
     this.srcElement = this.#createContainer()
@@ -32,6 +38,11 @@ class RootTreeselect {
     this.scrollEvent = this.scrollWindowHandler.bind(this)
     this.focusEvent = this.focusWindowHandler.bind(this)
     this.blurEvent = this.blurWindowHandler.bind(this)
+
+    // Init calls
+    if (this.alwaysOpen) {
+      this.#treeselectInput.updateOpenCloseStatus()
+    }
   }
 
   #createContainer () {
@@ -40,9 +51,16 @@ class RootTreeselect {
 
     const list = new TreeselectList({
       options: this.options,
-      value: this.value
+      value: this.value,
+      openLevel: this.openLevel
     })
-    const input = new TreeselectInput({ value: list.selectedNodes })
+    const input = new TreeselectInput({
+      value: list.selectedNodes,
+      showOnlyNumberMode: !this.showTags,
+      clearable: this.clearable,
+      opened: this.alwaysOpen,
+      searchable: this.searchable
+    })
 
     if (this.appendToBody) {
       this.#containerResizer = new ResizeObserver(() => this.updateListPosition(container, list.srcElement, true))
@@ -50,7 +68,10 @@ class RootTreeselect {
 
     // Input events
     input.srcElement.addEventListener('input', (event) => {
-      list.updateValue(event.detail.map(item => item.id))
+      const ids = event.detail.map(item => item.id)
+      list.updateValue(ids)
+      this.value = ids
+      this.#emitInput()
     })
     input.srcElement.addEventListener('open', (event) => {
       window.addEventListener('scroll', this.scrollEvent, true)
@@ -68,27 +89,32 @@ class RootTreeselect {
         this.#containerResizer.observe(container)
       }
     })
-    input.srcElement.addEventListener('close', () => {
-      this.#closeList()
-    })
     input.srcElement.addEventListener('keydown', (event) => {
       // TODO call if input.isOpenMode
       list.callKeyAction(event.key)
     })
-    input.srcElement.addEventListener('focus', () => {
-      document.addEventListener('click', this.focusEvent, true)
-      document.addEventListener('focus', this.focusEvent, true)
-      window.addEventListener('blur', this.blurEvent)
-    }, true)
     input.srcElement.addEventListener('search', (event) => {
       list.updateSearchValue(event.detail)
       this.updateListPosition(container, list.srcElement, true)
     })
 
+    if (!this.alwaysOpen) {
+      input.srcElement.addEventListener('close', () => {
+        this.#closeList()
+      })
+      input.srcElement.addEventListener('focus', () => {
+        document.addEventListener('click', this.focusEvent, true)
+        document.addEventListener('focus', this.focusEvent, true)
+        window.addEventListener('blur', this.blurEvent)
+      }, true)
+    }
+
     // List events
     list.srcElement.addEventListener('input', (event) => {
       input.updateValue(event.detail.nodes)
       input.srcElement.focus()
+      this.value = event.detail.ids
+      this.#emitInput()
     })
     list.srcElement.addEventListener('arrow-click', () => {
       this.updateListPosition(container, list.srcElement, true)
@@ -194,6 +220,14 @@ class RootTreeselect {
     } else {
       container.removeChild(this.#htmlList)
     }
+  }
+
+  // Emits
+  #emitInput () {
+    this.srcElement.dispatchEvent(new CustomEvent('input', { detail: {
+      ids: this.value,
+      nodes: this.#treeselectInput.value
+    }}))
   }
 }
 

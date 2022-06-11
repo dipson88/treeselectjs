@@ -10,17 +10,21 @@ class TreeselectList {
 
   constructor ({
     options,
-    value
+    value,
+    openLevel
   }) {
     // User props
     this.options = options
     this.value = value
+    this.openLevel = openLevel
 
     // Inner State
     this.selectedNodes = []
 
     // Element
     this.srcElement = this.#createList()
+
+    // Init calls
     this.updateValue(value)
   }
 

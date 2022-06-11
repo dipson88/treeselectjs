@@ -700,8 +700,6 @@ class Treeselect {
   // Emit this.value
   #emitInput () {
     // TODO add emit
-    console.log(this.value, 'value emit')
-    console.log(this.selectedNodes, 'nodes emit')
   }
 
   filterSearch (search) {

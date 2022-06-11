@@ -334,7 +334,7 @@ input[type=checkbox]:checked::after {
   left: 0;
 }
 
-.input-container-arrow-opened::after {
+.input-container-arrow--opened::after {
   content: '\25B4';
   position: absolute;
   top: -1px;
