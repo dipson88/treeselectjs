@@ -1,11 +1,8 @@
 // add delta to list height (some data sometimes hidden at the bottom) mb innerHeight of the window??
-// celar and arrow input should be aligned
-// overflow text for list elements
-// click on left side of item inside list
-// make min-height: 37 instead height 37
+// should we show space for input on new line (unsearchable mode check)
+// 
+// click on left side of item inside list (click on the whole list item instead of only label)
 
-// NOTES REFACTORING:
-// List:
-// isGroupSelect (merge groups if all items select) (and save opportunities without groups)
-
-// Refactor css classes
+// No fount on space
+// To body width
+// arrows detect hidden checkboxes

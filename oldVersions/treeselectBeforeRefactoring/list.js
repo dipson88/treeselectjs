@@ -1,3 +1,172 @@
+const mergeIds = (options, selectedIds) => {
+  return options.reduce((acc, curr) => {
+    const isSelected = selectedIds.includes(curr.value)
+
+    if (isSelected) {
+      acc.push({ id: curr.value, name: curr.name })
+
+      return acc
+    }
+
+    const isGroup = curr?.children?.length
+
+    if (isGroup) {
+      const childrenMergedIds = mergeIds(curr.children, selectedIds)
+      acc = acc.concat(childrenMergedIds)
+    }
+
+    return acc
+  }, [])
+}
+
+const unmergeIds = (options, mergedIds) => {
+  return options.reduce((acc, curr) => {
+    const isSelected = mergedIds.includes(curr.value)
+    const isGroup = curr?.children?.length
+    
+    if (isSelected) {
+      acc.push({ id: curr.value, name: curr.name })
+
+      if (isGroup) {
+        const allChildren = getAllChildrenNodes(curr.children)
+        acc = acc.concat(allChildren)
+      }
+    } else {
+      if (isGroup) {
+        const childrenUnmergedIds = unmergeIds(curr.children, mergedIds)
+        acc = acc.concat(childrenUnmergedIds)
+      }
+    }
+
+
+    return acc
+  }, [])
+}
+
+const getAllChildrenNodes = (children) => {
+  return children.reduce((acc, curr) => {
+    acc.push({ id: curr.value, name: curr.name })
+    const isGroup = curr.children?.length
+
+    if (isGroup) {
+      const allChildren = getAllChildrenNodes(curr.children)
+      acc = acc.concat(allChildren)
+    }
+
+    return acc
+  }, [])
+}
+
+const getFlatOptons = (options, groupId = 0, level = 1) => {
+  return options.reduce((acc, curr) => {
+    const isGroup = !!curr.children?.length
+    acc.push({ id: curr.value, name: curr.name, childOf: groupId, isGroup, checked: false, level })
+
+    if (isGroup) {
+      const children = getFlatOptons(curr.children, curr.value, level + 1)
+      acc = acc.concat(children)
+    }
+
+    return acc
+  }, [])
+}
+
+const checkAllChildrenInputs = ({ id, checked }, flatOptions) => {
+  flatOptions.forEach(option => {
+    if (option.childOf === id) {
+      option.checked = checked
+
+      if (option.isGroup) {
+        checkAllChildrenInputs(option, flatOptions)
+      }
+    }
+  })
+}
+
+const checkAllParentInputs = (childOf, flatOptions) => {
+  const parent = flatOptions.find(option => option.id === childOf)
+  const allParentChildren = flatOptions.filter(option => option.childOf === parent.id)
+
+  const isAllChecked = allParentChildren.every(option => option.checked)
+  const isAnyChecked = allParentChildren.some(option => option.checked) && !isAllChecked
+  const isPartialChecked = allParentChildren.some(option => option.isPartialChecked)
+  const isUnchecked = !isAllChecked && !isAnyChecked && !isPartialChecked
+
+  if (isAllChecked) {
+    parent.checked = true
+    parent.isPartialChecked = false
+  }
+
+  if (isAnyChecked || isPartialChecked) {
+    parent.checked = false
+    parent.isPartialChecked = true
+  }
+
+  if (isUnchecked) {
+    parent.checked = false
+    parent.isPartialChecked = false
+  }
+
+  if (parent.childOf) {
+    checkAllParentInputs(parent.childOf, flatOptions)
+  }
+}
+
+const checkInput = ({ id, isGroup, childOf, checked }, flatOptions) => {
+  if (isGroup) {
+    checkAllChildrenInputs({ id, checked }, flatOptions)
+  }
+
+  if (childOf) {
+    checkAllParentInputs(childOf, flatOptions)
+  }
+}
+
+const getMerged = (flatOptions) => {
+  const { onlyGroupsIds, allItems } = flatOptions.reduce((acc, curr) => {
+    if (!curr.checked) {
+      return acc
+    }
+
+    if (curr.isGroup) {
+      acc.onlyGroupsIds.push(curr.id)
+    }
+  
+    acc.allItems.push(curr)
+
+    return acc
+  }, {
+    onlyGroupsIds: [],
+    allItems: []
+  })
+
+  return allItems.filter(item => !onlyGroupsIds.includes(item.childOf))
+}
+
+const getUnmerged = (flatOptions) => {
+  return flatOptions.filter(option => option.checked && !option.isGroup)
+}
+
+const updateDOM = (flatOptions, srcElement) => {
+  flatOptions.forEach(option => {
+    const input = srcElement.querySelector(`[input-id="${option.id}"]`)
+    const listItem = input.parentNode
+    input.checked = option.checked
+
+    if (option.checked) {
+      listItem.classList.add('treeselect-list-item--checked')
+    } else {
+      listItem.classList.remove('treeselect-list-item--checked')
+    }
+
+    if (option.isPartialChecked) {
+      listItem.classList.add('treeselect-item--partial-checked')
+    } else {
+      listItem.classList.add('treeselect-item--partial-checked')
+    }
+  })
+}
+
 class TreeselectList {
   // Checkboxes value state
   #checkedNodes = []
@@ -26,10 +195,49 @@ class TreeselectList {
 
     // Init calls
     this.updateValue(value)
+
+    // TEST
+    const ids = ['8', '12', '11', '10', '9', '6']
+    const mIds = mergeIds(this.options, ids)
+    const unmIds = unmergeIds(this.options, mIds.map(i => i.id))
+
+    console.log(ids, mIds, unmIds, 'm/unm ids')
+
+    const flat = getFlatOptons(this.options)
+
+    console.log(flat, 'flat')
+
+    const checkNodes = flat.filter(option => ids.includes(option.id))
+    checkNodes.forEach(node => {
+      node.checked = true
+      checkInput(node, flat)
+    })
+
+    console.log(flat)
+
+    console.log(getMerged(flat), getUnmerged(flat), 'MER/UNMER')
   }
 
   // Public Methods
   updateValue (value) {
+    const groupIds = value.filter(v => this.#groupIds.includes(v))
+    const itmesIds = value.filter(v => !this.#groupIds.includes(v))
+
+    itmesIds.forEach(id => {
+      const elem = this.srcElement.querySelector(`[item-id="${id}"]`)
+      const input = elem.querySelector('.treeselect-checkbox')
+      input.checked = value.includes(id)
+      this.#updateCheckbox(input)
+      this.#updateValue()
+    })
+    groupIds.forEach(id => {
+      const elem = this.srcElement.querySelector(`[group-id="${id}"]`)
+      const input = elem.querySelector('.treeselect-checkbox')
+      input.checked = value.includes(id)
+      this.#updateCheckbox(input)
+      this.#updateValue()
+    })
+
     const allChilrenInputs = Array.from(this.srcElement.querySelectorAll('.treeselect-checkbox'))
     allChilrenInputs.forEach(input => {
       const { nodeId } = this.#getNodeInfoByInput(input)
@@ -98,8 +306,8 @@ class TreeselectList {
         const focusedNode = allCheckboxes[focusedCheckboxIndex].parentNode
         focusedNode.classList.remove('treeselect-item-focused')
   
-        const nextNodeIndex = event.key === 'ArrowDown' ? focusedCheckboxIndex + 1 : focusedCheckboxIndex -1
-        const defaultNodeIndex = event.key === 'ArrowDown' ? 0 : allCheckboxes.length - 1
+        const nextNodeIndex = key === 'ArrowDown' ? focusedCheckboxIndex + 1 : focusedCheckboxIndex -1
+        const defaultNodeIndex = key === 'ArrowDown' ? 0 : allCheckboxes.length - 1
         const nextCheckbox = allCheckboxes[nextNodeIndex] ?? allCheckboxes[defaultNodeIndex]
         const nextNodeToFocus = nextCheckbox.parentNode
         nextNodeToFocus.classList.add('treeselect-item-focused')
@@ -403,7 +611,7 @@ class TreeselectList {
     if (!this.isGroupSelectable) {
       // TODO strange rule. Maybe we can use this prop for result leafs in input
       // And disable a groups selection by value prop
-      filteredIds = filteredIds.concat(this.#groupIds)
+      // filteredIds = filteredIds.concat(this.#groupIds)
     }
 
     newValue = newValue.filter(node => !filteredIds.includes(node.id))
@@ -412,6 +620,45 @@ class TreeselectList {
     this.selectedNodes = this.value.map(id => newValue.find(node => node.id === id))
     this.#checkedNodes = []
     this.#uncheckedNodes = []
+    this.mergedSelectedNodes = this.#getMergedIds(this.options, this.selectedNodes)
+    // console.log(this.#getMergedIds(this.options, this.selectedNodes))
+  }
+
+  #getMergedIds (options, selectedNodes) {
+    // const selectedNodes = []
+    // const groupNodes = nodes.filter(node => this.#groupIds.includes(node.id))
+    // groupNodes.forEach(node => {
+    //   selectedNodes.push(id)
+    //   const container = this.srcElement.querySelector(`[group-container-id="${id}"]`)
+    //   this.srcElement.querySelectorAll('')
+    // })
+
+    return options.reduce((acc, curr) => {
+      const isGroup = !!curr.children?.length
+      const isSelected = selectedNodes.some(node => node.id === curr.value)
+
+      if (isSelected) {
+        acc.checkNodes.push(curr)
+
+        if (isGroup) {
+          const children = this.#getChildrenIds(curr.children)
+          acc.uncheckNodes = acc.uncheckNodes.concat(children)
+        }
+      } else {
+        acc.uncheckNodes.push(curr)
+
+        if (isGroup) {
+          const data = this.#getMergedIds(curr.children, selectedNodes)
+          acc.uncheckNodes = acc.uncheckNodes.concat(data.uncheckNodes)
+          acc.checkNodes = acc.checkNodes.concat(data.checkNodes)
+        }
+      }
+
+      return acc
+    }, {
+      checkNodes: [],
+      uncheckNodes: []
+    })
   }
 
   // Get base info of input (checkbox)

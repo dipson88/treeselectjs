@@ -170,7 +170,7 @@ input[type=checkbox]:checked::after {
   padding: 2px 4px;
   padding-right: 35px;
   position: relative;
-  height: 37px;
+  min-height: 37px;
   box-sizing: border-box;
   background-color: #ffffff;
 }

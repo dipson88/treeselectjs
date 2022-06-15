@@ -98,23 +98,23 @@ const options = [
 // DOMelementRoot.appendChild(root.srcElement)
 
 
-// const doomNewList = document.querySelector('.treeselect-list-test')
+const doomNewList = document.querySelector('.treeselect-list-test')
 
-// const list = new TreeselectList({
-//   options,
-//   value: ['7', '9', '2']
-// })
+const list = new TreeselectList({
+  options,
+  value: ['7', '9', '2']
+})
 
-// doomNewList.appendChild(list.srcElement)
+doomNewList.appendChild(list.srcElement)
 
-// list.srcElement.addEventListener('input', (e) => {
-//   console.log(e.detail)
-// })
-// list.srcElement.addEventListener('arrow-click', (e) => {
-//   console.log(e.detail)
-// })
+list.srcElement.addEventListener('input', (e) => {
+  console.log(e.detail)
+})
+list.srcElement.addEventListener('arrow-click', (e) => {
+  console.log(e.detail)
+})
 
-// list.updateValue(['6', '7'])
+list.updateValue(['6', '7'])
 
 // list.updateSearchValue('7')
 // setTimeout(() => {
@@ -127,26 +127,26 @@ const options = [
 //   list.callKeyAction('Enter')
 // }, 3000)
 
-// const doomNewInput = document.querySelector('.treeselect-input-test')
+const doomNewInput = document.querySelector('.treeselect-input-test')
 
-// const input = new TreeselectInput({
-//   value: [{ name: 'first', id: '1' }, { name: 'second', id: '2' }]
-// })
+const input = new TreeselectInput({
+  value: [{ name: 'first', id: '1' }, { name: 'second', id: '2' }]
+})
 
-// doomNewInput.appendChild(input.srcElement)
+doomNewInput.appendChild(input.srcElement)
 
-// input.srcElement.addEventListener('close', () => {
-//   console.log('close')
-// })
-// input.srcElement.addEventListener('open', () => {
-//   console.log('open')
-// })
-// input.srcElement.addEventListener('search', (e) => {
-//   console.log('search', e.detail)
-// })
-// input.srcElement.addEventListener('input', (e) => {
-//   console.log('input', e.detail)
-// })
+input.srcElement.addEventListener('close', () => {
+  console.log('close')
+})
+input.srcElement.addEventListener('open', () => {
+  console.log('open')
+})
+input.srcElement.addEventListener('search', (e) => {
+  console.log('search', e.detail)
+})
+input.srcElement.addEventListener('input', (e) => {
+  console.log('input', e.detail)
+})
 
 // input.updateValue([{ name: '4', id: '4' }])
 
