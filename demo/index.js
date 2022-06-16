@@ -1,4 +1,4 @@
-import Treeselect from "../src/treeselect.js";
+import Treeselect from "../dist/js/index.js";
 
 const options = [
 {

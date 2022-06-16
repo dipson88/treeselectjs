@@ -205,7 +205,6 @@ class TreeselectList {
     this.srcElement = this.#createList()
 
     this.updateValue(this.value)
-    console.log(this.flattedOptions)
   }
 
   // Public methods
