@@ -98,12 +98,12 @@ class Treeselect {
     list.srcElement.addEventListener('input', (e) => {
       input.updateValue(e.detail.groupedIds)
       this.value = e.detail.ids
-      input.srcElement.focus()
+      input.focus()
       this.#emitInput()
     })
     list.srcElement.addEventListener('arrow-click', () => {
+      input.focus()
       this.updateListPosition(container, list.srcElement, true)
-      input.srcElement.focus()
     })
 
     this.#htmlContainer = container
