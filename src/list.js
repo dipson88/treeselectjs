@@ -376,7 +376,7 @@ class TreeselectList {
     itemElement.addEventListener('mouseout', () => {
       this.#groupMouseAction(false, itemElement)
     }, true)
-    itemElement.addEventListener('mousedown', (e) => {
+    itemElement.addEventListener('click', (e) => {
       e.stopPropagation()
       const checkbox = e.target.querySelector('.treeselect-list__item-checkbox')
       checkbox.checked = !checkbox.checked

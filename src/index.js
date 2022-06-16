@@ -211,7 +211,8 @@ class Treeselect {
     const spaceTop = container.getBoundingClientRect().y
     const spaceBottom = window.innerHeight - container.getBoundingClientRect().y
     const listHeight = list.clientHeight
-    const isTopDirection = spaceTop > spaceBottom && window.innerHeight - spaceTop < listHeight
+    const spaceDelta = 45
+    const isTopDirection = spaceTop > spaceBottom && window.innerHeight - spaceTop < listHeight + spaceDelta
     const attributeToAdd = isTopDirection ? 'top' : 'buttom'
     const currentAttr = list.getAttribute('direction')
 

@@ -144,7 +144,9 @@ class TreeselectInput {
     this.#htmlEditControl = this.#createControl()
     this.#htmlOperators = this.#createOperators()
 
-    container.addEventListener('mousedown', () => {
+    container.addEventListener('mousedown', (e) => {
+      e.preventDefault()
+
       if (!this.isOpened) {
         this.#updateOpenClose()
       }
@@ -239,9 +241,22 @@ class TreeselectInput {
     })
     input.addEventListener('input', (event) => {
       event.stopPropagation()
+      const oldValue = this.searchText
+      const newValue = input.value.trim()
+
+      // If try to enter only spaces
+      if (oldValue.length === 0 && newValue.length === 0) {
+        input.value = ''
+
+        return
+      }
 
       if (this.searchable) {
         this.#emitSearch(event.target.value)
+
+        if (!this.isOpened) {
+          this.#updateOpenClose()
+        }
       } else {
         input.value = ''
       }
@@ -268,7 +283,10 @@ class TreeselectInput {
     clear.addEventListener('click', (e) => {
       e.stopPropagation()
       this.#htmlEditControl.focus()
-      this.clear()
+
+      if (this.searchText.length || this.value.length) {
+        this.clear()
+      }
     })
 
     return clear
@@ -279,7 +297,7 @@ class TreeselectInput {
     this.#htmlArrow.classList.add('treeselect-input__arrow')
     this.#htmlArrow.innerHTML = isOpen ? svg.arrowUp : svg.arrowDown
 
-    inputArrow.addEventListener('click', (e) => {
+    this.#htmlArrow.addEventListener('click', (e) => {
       e.stopPropagation()
       this.focus()
       this.#updateOpenClose()
