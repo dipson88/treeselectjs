@@ -1,0 +1,342 @@
+.treeselect {
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  margin-top: 900px;
+}
+
+.treeselect-input-container {
+  
+}
+
+.treeselect-input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.treeselect-list {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d7dde4;
+  overflow-y: auto;
+  background-color: #ffffff;
+  position: absolute;
+}
+
+.treeselect-list-bottom {
+  left: 0;
+  top: 100%;
+}
+
+.treeselect-list-top {
+  left: 0;
+  bottom: 100%;
+}
+
+.treeselect-list-hidden {
+  display: none;
+}
+
+
+.treeselect-group-container {
+  
+}
+
+.treeselect-group,
+.treeselect-group-item {
+  display: flex;
+  align-items: center;
+}
+
+.treeselect-group {
+  cursor: pointer;
+  height: 25px;
+}
+
+.treeselect-group-item {
+  cursor: pointer;
+  height: 25px;
+}
+
+.treeselect-item-focused {
+  background-color: #f0ffff!important;
+}
+
+.treeselect-group-item-checked {
+  background-color: #f5f5f7;
+}
+
+.treeselect-group-icon {
+  color: #3e92d6;
+  font-size: 25px;
+}
+
+.treeselect-group-icon::before {
+  content: '\25BE';
+  cursor: pointer;
+}
+
+.treeselect-group-icon:hover {
+  color: #4887bb;
+}
+
+.treeselect-group-closed .treeselect-group-icon::before {
+  content: '\25B8';
+}
+
+.treeselect-group-closed ~ * {
+  display: none;
+}
+
+.treeselect-checkbox-partial-checked.treeselect-checkbox::after {
+  content: '\2212';
+  background-color: #52c67e;
+  border: none;
+}
+
+.treeselect-checkbox-label {
+  width: 100%;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: keep-all;
+  white-space: nowrap;
+  font-size: 14px;
+  padding-left: 5px;
+}
+
+.treeselect-checkbox {
+  position: relative;
+  margin: 0;
+  height: 18px;
+  width: 18px;
+}
+
+.treeselect-checkbox::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #d7dde4;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  color: #ffffff;
+  text-align: center;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+input[type=checkbox]:checked::after {
+  content: "\2714";
+  border: none;
+  background-color: #52c67e;
+}
+
+
+/* Empty List Element */
+.treeselect-empty-list {
+  display: flex;
+  align-items: center;
+}
+
+.treeselect-empty-list-icon {
+  height: 20px;
+  width: 20px;
+  text-align: center;
+  line-height: 20px;
+  color: orange;
+}
+
+.treeselect-empty-list-icon::before {
+  content: '\26A0';
+}
+
+.treeselect-empty-list-text {
+  font-size: 12px;
+}
+
+.treeselect-empty-list-hidden {
+  display: none;
+}
+
+
+/* input-container START */
+.input-container {
+  border: 1px solid #d7dde4;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 2px 4px;
+  padding-right: 35px;
+  position: relative;
+  min-height: 37px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+.input-container:hover {
+  cursor: text;
+}
+
+/* unsearchable */
+.input-container--unsearchable:hover {
+  cursor: default;
+}
+
+.input-container--unsearchable .input-container-edit {
+  z-index: -1;
+  caret-color: transparent;
+  cursor: default;
+}
+
+/* .input-container--unsearchable .input-container-edit::placeholder {
+  color: transparent;
+} */
+
+/* opened  */
+.input-container--opened .input-container-arrow {
+  display: none;
+}
+
+/* without-clear */
+.input-container--without-clear .input-container-clear {
+  display: none;
+}
+
+/* without-operators */
+.input-container--without-operators {
+  padding-right: 4px;
+}
+
+.input-container--without-operators .input-container-operators {
+  display: none;
+}
+
+/* with-one-operators */
+.input-container--with-one-operators {
+  padding-right: 25px;
+}
+
+.input-container--with-one-operators .input-container-operators {
+  width: 20px;
+}
+
+/* focused */
+.input-container--focused {
+  outline: 1px solid black;
+}
+/* input-container END */
+
+.input-container-tags {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.input-container-element {
+  display: inline-flex;
+  align-items: center;
+  background-color: #f5f5f7;
+  cursor: pointer;
+  padding: 2px 5px;
+  border-radius: 2px;
+  font-size: 14px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.input-container-element:hover {
+  background-color: #b3b5ba;
+}
+
+.input-container-element-name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.input-container-element-cross {
+  margin-left: 2px;
+}
+
+.input-container-element:hover .input-container-element-cross {
+  color: #eb4c42;
+}
+
+.input-container-element-cross::before {
+  content: "\00d7";
+  font-size: 16px;
+}
+
+.input-container-edit {
+  flex: 1;
+  min-width: 30px;
+  border: none;
+  font-size: 12px;
+}
+
+.input-container-edit:focus {
+  outline: none;
+}
+
+.input-container-operators {
+  display: flex;
+  width: 30px;
+  position: absolute;
+  right: 0;
+}
+
+.input-container-clear {
+  width: 12px;
+  height: 12px;
+  position: relative;
+  background-color: #c5c7cb;
+  border-radius: 50%;
+}
+
+.input-container-clear::before {
+  content: "\00d7";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  color: #ffffff;
+}
+
+.input-container-clear:hover {
+  cursor: pointer;
+  background-color: #b3b5ba;
+}
+
+.input-container-arrow {
+  height: 12px;
+  width: 15px;
+  line-height: 12px;
+  position: relative;
+  font-size: 25px;
+  color: #3e92d6;
+}
+
+.input-container-arrow:hover {
+  color: #4887bb;
+  cursor: pointer;
+}
+
+.input-container-arrow::after {
+  content: '\25BE';
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.input-container-arrow--opened::after {
+  content: '\25B4';
+  position: absolute;
+  top: -1px;
+  left: 0;
+}
