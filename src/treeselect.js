@@ -1,5 +1,5 @@
-import TreeselectInput from "./input.2.0.js"
-import TreeselectList from "./list2.0.js"
+import TreeselectInput from "./input.js"
+import TreeselectList from "./list.js"
 
 class Treeselect {
   // Components

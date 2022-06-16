@@ -28,7 +28,7 @@
 }
 
 .treeselect-input--opened.treeselect-input--bottom {
-  border-top-color: gainsboro;
+  border-bottom-color: gainsboro;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
