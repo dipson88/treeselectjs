@@ -1,4 +1,4 @@
-import Treeselect from "../dist/js/index.js";
+import Treeselect from "../src/index.js";
 
 const options = [
 {
@@ -71,3 +71,10 @@ const treeselect = new Treeselect({
 })
 
 domEl.appendChild(treeselect.srcElement)
+
+const btn = document.querySelector('.btn')
+
+btn.addEventListener('click', (e) => {
+  e.stopPropagation()
+  console.log('btn')
+})

@@ -1,6 +1,13 @@
 import svg from './svgIcons.js'
 
 class TreeselectInput {
+  #htmlTagsSecton = null
+  #htmlEditControl = null
+  #htmlOperators = null
+  #htmlArrow = null
+  #openEvent = new CustomEvent('open')
+  #closeEvent = new CustomEvent('close')
+
   constructor ({
     value,
     showTags,
@@ -19,15 +26,14 @@ class TreeselectInput {
 
     this.isOpened = false
     this.searchText = ''
-    this.srcElement =  this.#createTreeselectInput()
+    this.srcElement = this.#createTreeselectInput()
 
     this.#updateDOM()
   }
 
   // Public
   focus () {
-    const editControl = this.srcElement.querySelector('.treeselect-input__edit')
-    editControl.focus()
+    this.#htmlEditControl.focus()
   }
 
   blur () {
@@ -69,36 +75,42 @@ class TreeselectInput {
   }
 
   #updateTags () {
-    const tagsSection = this.srcElement.querySelector('.treeselect-input__tags')
-    tagsSection.innerHTML = ''
+    this.#htmlTagsSecton.innerHTML = ''
 
     if (this.showTags) {
-      tagsSection.append(...this.#createTags())
+      this.#htmlTagsSecton.append(...this.#createTags())
     } else {
-      tagsSection.appendChild(this.#createCountElement())
+      this.#htmlTagsSecton.appendChild(this.#createCountElement())
     }
   }
 
   #updateOperators () {
-    const operators = this.srcElement.querySelector('.treeselect-input__operators')
-    operators.innerHTML = ''
+    const elements = []
+    this.#htmlOperators.innerHTML = ''
 
     if (this.clearable) {
-      operators.appendChild(this.#createClearButton()) 
+      elements.push(this.#createClearButton())
     }
 
     if (!this.isAlwaysOpened) {
-      operators.appendChild(this.#createInputArrow(this.isOpened))
+      elements.push(this.#createInputArrow(this.isOpened))
+    }
+
+    if (elements.length) {
+      this.#htmlOperators.append(...elements)
     }
   }
 
-  #updateEditControl () {
-    const editControl = this.srcElement.querySelector('.treeselect-input__edit')
+  #updateArrowDirection () {
+    const arrowSvg = this.isOpened ? svg.arrowUp : svg.arrowDown
+    this.#htmlArrow.innerHTML = arrowSvg
+  }
 
+  #updateEditControl () {
     if (this.value?.length) {
-      editControl.removeAttribute('placeholder')
+      this.#htmlEditControl.removeAttribute('placeholder')
     } else {
-      editControl.setAttribute('placeholder', this.placeholder)
+      this.#htmlEditControl.setAttribute('placeholder', this.placeholder)
     }
 
     if (!this.searchable) {
@@ -107,18 +119,18 @@ class TreeselectInput {
       this.srcElement.classList.remove('treeselect-input--unsearchable')
     }
 
-    editControl.value = this.searchText
+    this.#htmlEditControl.value = this.searchText
   }
 
   #updateOpenClose () {
-    if (this.isOpened) {
+    this.isOpened = !this.isOpened
+    this.#updateArrowDirection()
+
+    if (!this.isOpened) {
       this.#emitClose()
     } else {
       this.#emitOpen()
     }
-
-    this.isOpened = !this.isOpened
-    this.#updateOperators()
   }
 
   #createTreeselectInput () {
@@ -126,16 +138,19 @@ class TreeselectInput {
     container.classList.add('treeselect-input')
     container.setAttribute('tabindex', '-1')
 
-    const tagsSection = this.#createTagsSection()
-    const editControl = this.#createControl()
-    const operators = this.#createOperators()
+    this.#htmlTagsSecton = this.#createTagsSection()
+    this.#htmlEditControl = this.#createControl()
+    this.#htmlOperators = this.#createOperators()
 
     container.addEventListener('click', () => {
+      if (!this.isOpened) {
+        this.#updateOpenClose()
+      }
+
       this.focus()
-      this.#updateOpenClose()
     })
 
-    container.append(tagsSection, editControl, operators)
+    container.append(this.#htmlTagsSecton, this.#htmlEditControl, this.#htmlOperators)
 
     return container
   }
@@ -250,8 +265,7 @@ class TreeselectInput {
 
     clear.addEventListener('click', (e) => {
       e.stopPropagation()
-      const editControl = this.srcElement.querySelector('.treeselect-input__edit')
-      editControl.focus()
+      this.#htmlEditControl.focus()
       this.clear()
     })
 
@@ -269,6 +283,8 @@ class TreeselectInput {
       this.#updateOpenClose()
     })
 
+    this.#htmlArrow = inputArrow
+
     return inputArrow
   }
 
@@ -282,11 +298,11 @@ class TreeselectInput {
   }
 
   #emitOpen () {
-    this.srcElement.dispatchEvent(new CustomEvent('open'))
+    this.srcElement.dispatchEvent(this.#openEvent)
   }
 
   #emitClose () {
-    this.srcElement.dispatchEvent(new CustomEvent('close'))
+    this.srcElement.dispatchEvent(this.#closeEvent)
   }
 }
 
