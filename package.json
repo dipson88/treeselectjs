@@ -1,0 +1,29 @@
+{
+  "name": "treeselectjs",
+  "version": "0.1.0",
+  "description": "Treeselect JS",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dipson88/treeselectjs.git"
+  },
+  "keywords": [
+    "treeselect",
+    "select",
+    "js"
+  ],
+  "author": "Dzmitry Zhuraukou",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dipson88/treeselectjs/issues"
+  },
+  "homepage": "https://github.com/dipson88/treeselectjs#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-uglify": "^3.0.2",
+    "gulp-uglifycss": "^1.1.0"
+  }
+}
