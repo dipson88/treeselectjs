@@ -83,7 +83,7 @@ class Treeselect {
     })
     input.srcElement.addEventListener('focus', () => {
       this.#updateFocusClasses(true)
-      document.addEventListener('click', this.focusEvent, true)
+      document.addEventListener('mousedown', this.focusEvent, true)
       document.addEventListener('focus', this.focusEvent, true)
       window.addEventListener('blur', this.blurEvent)
     }, true)
