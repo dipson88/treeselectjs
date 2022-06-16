@@ -82,10 +82,10 @@ class Treeselect {
       this.updateListPosition(container, list.srcElement, true)
     })
     input.srcElement.addEventListener('focus', () => {
+      this.#updateFocusClasses(true)
       document.addEventListener('click', this.focusEvent, true)
       document.addEventListener('focus', this.focusEvent, true)
       window.addEventListener('blur', this.blurEvent)
-      this.#updateFocusClasses(true)
     }, true)
 
     if (!this.alwaysOpen) {

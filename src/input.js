@@ -102,8 +102,10 @@ class TreeselectInput {
   }
 
   #updateArrowDirection () {
-    const arrowSvg = this.isOpened ? svg.arrowUp : svg.arrowDown
-    this.#htmlArrow.innerHTML = arrowSvg
+    if (!this.isAlwaysOpened) {
+      const arrowSvg = this.isOpened ? svg.arrowUp : svg.arrowDown
+      this.#htmlArrow.innerHTML = arrowSvg
+    }
   }
 
   #updateEditControl () {
@@ -142,7 +144,7 @@ class TreeselectInput {
     this.#htmlEditControl = this.#createControl()
     this.#htmlOperators = this.#createOperators()
 
-    container.addEventListener('click', () => {
+    container.addEventListener('mousedown', () => {
       if (!this.isOpened) {
         this.#updateOpenClose()
       }
@@ -273,9 +275,9 @@ class TreeselectInput {
   }
 
   #createInputArrow (isOpen) {
-    const inputArrow = document.createElement('span')
-    inputArrow.classList.add('treeselect-input__arrow')
-    inputArrow.innerHTML = isOpen ? svg.arrowUp : svg.arrowDown
+    this.#htmlArrow = document.createElement('span')
+    this.#htmlArrow.classList.add('treeselect-input__arrow')
+    this.#htmlArrow.innerHTML = isOpen ? svg.arrowUp : svg.arrowDown
 
     inputArrow.addEventListener('click', (e) => {
       e.stopPropagation()
@@ -283,9 +285,7 @@ class TreeselectInput {
       this.#updateOpenClose()
     })
 
-    this.#htmlArrow = inputArrow
-
-    return inputArrow
+    return this.#htmlArrow
   }
 
   // Emits
