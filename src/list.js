@@ -294,7 +294,7 @@ class TreeselectList {
 
     if (key === 'ArrowDown' || key === 'ArrowUp') {
       const allCheckboxes = Array.from(this.srcElement.querySelectorAll('.treeselect-list__item-checkbox'))
-        .filter(checkbox => window.getComputedStyle(checkbox).display !== "none")
+        .filter(checkbox => window.getComputedStyle(checkbox.parentNode).display !== 'none')
 
       if (!allCheckboxes.length) {
         return
@@ -376,6 +376,12 @@ class TreeselectList {
     itemElement.addEventListener('mouseout', () => {
       this.#groupMouseAction(false, itemElement)
     }, true)
+    itemElement.addEventListener('click', (e) => {
+      e.stopPropagation()
+      const checkbox = e.target.querySelector('.treeselect-list__item-checkbox')
+      checkbox.checked = !checkbox.checked
+      this.#checkboxClickEvent(checkbox, option)
+    })
     
     const checkbox = this.#createCheckbox(option)
     const label = this.#createCheckboxLabel(option)
@@ -404,11 +410,6 @@ class TreeselectList {
     checkbox.setAttribute('type', `checkbox`)
     checkbox.setAttribute('input-id', option.value)
     checkbox.classList.add('treeselect-list__item-checkbox')
-
-    checkbox.addEventListener('input', (e) => {
-      e.stopPropagation()
-      this.#checkboxClickEvent(e, option)
-    })
   
     return checkbox
   }
@@ -439,9 +440,9 @@ class TreeselectList {
   }
 
   // Actions
-  #checkboxClickEvent(e, option) {
+  #checkboxClickEvent(target, option) {
     const flattedOption = this.flattedOptions.find(fo => fo.id === option.value)
-    flattedOption.checked = e.target.checked
+    flattedOption.checked = target.checked
     checkInput(flattedOption, this.flattedOptions)
     updateDOM(this.flattedOptions, this.srcElement)
 

@@ -82,10 +82,10 @@ class Treeselect {
       this.updateListPosition(container, list.srcElement, true)
     })
     input.srcElement.addEventListener('focus', () => {
-      document.addEventListener('click', this.focusEvent, true)
+      this.#updateFocusClasses(true)
+      document.addEventListener('mousedown', this.focusEvent, true)
       document.addEventListener('focus', this.focusEvent, true)
       window.addEventListener('blur', this.blurEvent)
-      this.#updateFocusClasses(true)
     }, true)
 
     if (!this.alwaysOpen) {
@@ -98,12 +98,12 @@ class Treeselect {
     list.srcElement.addEventListener('input', (e) => {
       input.updateValue(e.detail.groupedIds)
       this.value = e.detail.ids
-      input.srcElement.focus()
+      input.focus()
       this.#emitInput()
     })
     list.srcElement.addEventListener('arrow-click', () => {
+      input.focus()
       this.updateListPosition(container, list.srcElement, true)
-      input.srcElement.focus()
     })
 
     this.#htmlContainer = container
@@ -211,7 +211,8 @@ class Treeselect {
     const spaceTop = container.getBoundingClientRect().y
     const spaceBottom = window.innerHeight - container.getBoundingClientRect().y
     const listHeight = list.clientHeight
-    const isTopDirection = spaceTop > spaceBottom && window.innerHeight - spaceTop < listHeight
+    const spaceDelta = 45
+    const isTopDirection = spaceTop > spaceBottom && window.innerHeight - spaceTop < listHeight + spaceDelta
     const attributeToAdd = isTopDirection ? 'top' : 'buttom'
     const currentAttr = list.getAttribute('direction')
 

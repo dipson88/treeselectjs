@@ -16,6 +16,7 @@
   align-items: center;
   padding: 2px 5px;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .treeselect-list__item--focused {
@@ -56,17 +57,18 @@
   margin: 0;
   width: 15px;
   height: 15px;
+  pointer-events: none;
 }
 
 .treeselect-list__item-label {
   width: 100%;
-  cursor: pointer;
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: keep-all;
   white-space: nowrap;
   font-size: 14px;
   padding-left: 5px;
+  pointer-events: none;
 }
 
 .treeselect-list__empty {
