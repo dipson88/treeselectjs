@@ -177,7 +177,9 @@ class TreeselectInput {
       const name = this.#createTagName(value.name)
       const cross = this.#createTagCross()
 
-      element.addEventListener('click', (e) => {
+      element.addEventListener('mousedown', (e) => {
+        // Two methods help to prevent mousedown on main container
+        e.preventDefault()
         e.stopPropagation()
         this.focus()
         this.removeItem(value.id)
@@ -280,7 +282,9 @@ class TreeselectInput {
     clear.setAttribute('tabindex', '-1')
     clear.innerHTML = svg.clear
 
-    clear.addEventListener('click', (e) => {
+    clear.addEventListener('mousedown', (e) => {
+      // Two methods help to prevent mousedown on main container
+      e.preventDefault()
       e.stopPropagation()
       this.#htmlEditControl.focus()
 
@@ -297,8 +301,11 @@ class TreeselectInput {
     this.#htmlArrow.classList.add('treeselect-input__arrow')
     this.#htmlArrow.innerHTML = isOpen ? svg.arrowUp : svg.arrowDown
 
-    this.#htmlArrow.addEventListener('click', (e) => {
+    this.#htmlArrow.addEventListener('mousedown', (e) => {
+      // Two methods help to prevent mousedown on main container
       e.stopPropagation()
+      e.preventDefault()
+      console.log('c')
       this.focus()
       this.#updateOpenClose()
     })
