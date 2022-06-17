@@ -246,7 +246,15 @@ class TreeselectList {
     }
 
     if (this.searchText === '') {
-      this.flattedOptions = JSON.parse(JSON.stringify(this.flattedOptionsBeforeSearch))
+      // This loop need to save a isClose state before searching
+      this.flattedOptions = this.flattedOptionsBeforeSearch.map(option => {
+        const newOptionData = this.flattedOptions.find(newOption => newOption.id === option.id)
+        newOptionData.isClosed = option.isClosed
+        newOptionData.hidden = option.hidden
+        
+        return newOptionData
+      })
+
       this.flattedOptionsBeforeSearch = []
       updateDOM(this.flattedOptions, this.srcElement)
 

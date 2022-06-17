@@ -72,9 +72,6 @@ const treeselect = new Treeselect({
 
 domEl.appendChild(treeselect.srcElement)
 
-const btn = document.querySelector('.btn')
-
-btn.addEventListener('click', (e) => {
-  e.stopPropagation()
-  console.log('btn')
+treeselect.srcElement.addEventListener('input', (e) => {
+  console.log(e.detail)
 })
