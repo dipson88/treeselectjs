@@ -225,6 +225,7 @@ class TreeselectList {
     this.openLevel = openLevel ?? 0
     this.flattedOptions = getFlatOptons(this.options, this.openLevel)
     this.flattedOptionsBeforeSearch = this.flattedOptions
+    this.selectedNodes = { ids: [], groupedIds: [] }
     this.srcElement = this.#createList()
 
     this.updateValue(this.value)
@@ -233,6 +234,7 @@ class TreeselectList {
   // Public methods
   updateValue (value) {
     updateValue(value, this.flattedOptions, this.srcElement)
+    this.#updateSelectedNodes()
   }
 
   updateSearchValue (searchText) {
@@ -508,16 +510,21 @@ class TreeselectList {
     }
   }
 
+  #updateSelectedNodes () {
+    this.selectedNodes = {
+      ids: getCheckedValues(this.flattedOptions),
+      groupedIds: getGroupedValues(this.flattedOptions)
+    }
+  }
+
   // Emits
   #emitArrrowClick () {
     this.srcElement.dispatchEvent(new CustomEvent('arrow-click'))
   }
 
   #emitInput () {
-    this.srcElement.dispatchEvent(new CustomEvent('input', { detail: {
-      ids: getCheckedValues(this.flattedOptions),
-      groupedIds: getGroupedValues(this.flattedOptions)
-    }}))
+    this.#updateSelectedNodes()
+    this.srcElement.dispatchEvent(new CustomEvent('input', { detail: this.selectedNodes}))
   }
 }
 

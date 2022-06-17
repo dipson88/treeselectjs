@@ -21,17 +21,19 @@ class Treeselect {
     showTags,
     clearable,
     searchable,
-    placeholder
+    placeholder,
+    grouped
   }) {
     this.value = value
     this.options = options
     this.openLevel = openLevel ?? 5
     this.appendToBody = appendToBody ?? true
-    this.alwaysOpen = alwaysOpen ?? false
+    this.alwaysOpen = alwaysOpen ?? true
     this.showTags = showTags ?? true
     this.clearable = clearable ?? true
     this.searchable = searchable ?? true
     this.placeholder = placeholder ?? 'Search...'
+    this.grouped = grouped ?? true
 
     this.srcElement = this.#createTreeselect()
 
@@ -55,8 +57,9 @@ class Treeselect {
       openLevel: this.openLevel
     })
 
+    const {groupedIds, ids } = list.selectedNodes
     const input = new TreeselectInput({
-      value: [],
+      value: this.grouped ? groupedIds : ids,
       showTags: this.showTags,
       clearable: this.clearable,
       isAlwaysOpened: this.alwaysOpen,
@@ -70,7 +73,7 @@ class Treeselect {
 
     // Input events
     input.srcElement.addEventListener('input', (e) => {
-      const ids = e.detail.map(option => option.id)
+      const ids = e.detail.ids.map(({ id }) => id)
       this.value = ids
       list.updateValue(ids)
       this.#emitInput()
@@ -96,8 +99,10 @@ class Treeselect {
 
     // List events
     list.srcElement.addEventListener('input', (e) => {
-      input.updateValue(e.detail.groupedIds)
-      this.value = e.detail.ids
+      const {groupedIds, ids } = e.detail
+      const inputIds = this.grouped ? groupedIds : ids
+      input.updateValue(inputIds)
+      this.value = ids.map(({ id }) => id)
       input.focus()
       this.#emitInput()
     })
