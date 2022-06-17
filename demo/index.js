@@ -66,11 +66,10 @@ const options = [
 
 const domEl = document.querySelector('.treeselect-test')
 const treeselect = new Treeselect({
+  parentHtmlContainer: domEl,
   value: ['2', '3'],
   options
 })
-
-domEl.appendChild(treeselect.srcElement)
 
 treeselect.srcElement.addEventListener('input', (e) => {
   console.log(e.detail)

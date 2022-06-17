@@ -3,6 +3,4 @@
 // (DONE) add event listener scroll only on y scroll if it is possible (probably it is not possible)
 // (DONE) to body width (fixed but looks like TODO)
 // should we show space for input on new line (unsearchable mode check) on RESIZE
-// make a first element as a default focused
-// use parent div as a container (DOMelement)
-
+// Recheck performance

@@ -13,6 +13,7 @@ class Treeselect {
   #containerResizer = null
 
   constructor ({
+    parentHtmlContainer,
     value,
     options,
     openLevel,
@@ -24,11 +25,12 @@ class Treeselect {
     placeholder,
     grouped
   }) {
+    this.parentHtmlContainer = parentHtmlContainer
     this.value = value
     this.options = options
     this.openLevel = openLevel ?? 5
     this.appendToBody = appendToBody ?? true
-    this.alwaysOpen = alwaysOpen ?? true
+    this.alwaysOpen = alwaysOpen ?? false
     this.showTags = showTags ?? true
     this.clearable = clearable ?? true
     this.searchable = searchable ?? true
@@ -48,7 +50,7 @@ class Treeselect {
   }
 
   #createTreeselect () {
-    const container = document.createElement('div')
+    const container = this.parentHtmlContainer
     container.classList.add('treeselect')
 
     const list = new TreeselectList({
@@ -73,7 +75,7 @@ class Treeselect {
 
     // Input events
     input.srcElement.addEventListener('input', (e) => {
-      const ids = e.detail.ids.map(({ id }) => id)
+      const ids = e.detail.map(({ id }) => id)
       this.value = ids
       list.updateValue(ids)
       this.#emitInput()
@@ -132,6 +134,7 @@ class Treeselect {
 
     this.updateListPosition(this.#htmlContainer, this.#treeselectList.srcElement, false)
     this.#updateOpenCloseClasses(true)
+    this.#treeselectList.focusFirstListElement()
   }
 
   #closeList () {

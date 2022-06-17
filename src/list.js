@@ -214,6 +214,8 @@ const getListItemByCheckbox = (checkbox) => {
 }
 
 class TreeselectList {
+  #lastFocusedItem = null
+
   constructor({
     options,
     value,
@@ -257,6 +259,7 @@ class TreeselectList {
 
       this.flattedOptionsBeforeSearch = []
       updateDOM(this.flattedOptions, this.srcElement)
+      this.focusFirstListElement()
 
       return
     }
@@ -295,6 +298,7 @@ class TreeselectList {
       }
     })
     updateDOM(this.flattedOptions, this.srcElement)
+    this.focusFirstListElement()
   }
 
   callKeyAction (key) {
@@ -350,12 +354,35 @@ class TreeselectList {
     }
   }
 
+  focusFirstListElement () {
+    const focusedCalss = 'treeselect-list__item--focused'
+    const itemFocused = this.srcElement.querySelector(`.${focusedCalss}`)
+    const allCheckboxes = Array.from(this.srcElement.querySelectorAll('.treeselect-list__item-checkbox'))
+      .filter(checkbox => window.getComputedStyle(getListItemByCheckbox(checkbox)).display !== 'none')
+  
+    if (!allCheckboxes.length) {
+      return
+    }
+  
+    if (itemFocused) {
+      itemFocused.classList.remove(focusedCalss)
+    }
+  
+    const firstItem = getListItemByCheckbox(allCheckboxes[0])
+    firstItem.classList.add(focusedCalss)
+  }
+
   // Private methods
   #createList () {
     const list = document.createElement('div')
     list.classList.add('treeselect-list')
     const htmlTreeList = this.#getListHTML(this.options)
     const emptyList = this.#createEmptyList()
+
+    list.addEventListener('mouseout', (e) => {
+      e.stopPropagation()
+      this.#lastFocusedItem.classList.add('treeselect-list__item--focused')
+    })
 
     list.append(...htmlTreeList, emptyList)
 
@@ -408,6 +435,7 @@ class TreeselectList {
     }, true)
     itemElement.addEventListener('mouseout', () => {
       this.#groupMouseAction(false, itemElement)
+      this.#lastFocusedItem = itemElement
     }, true)
     itemElement.addEventListener('click', (e) => {
       e.stopPropagation()
