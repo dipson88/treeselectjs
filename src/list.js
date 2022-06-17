@@ -33,16 +33,15 @@ const checkAllParentInputs = (childOf, flatOptions) => {
   const allParentChildren = flatOptions.filter(option => option.childOf === parent.id)
 
   const isAllChecked = allParentChildren.every(option => option.checked)
-  const isAnyChecked = allParentChildren.some(option => option.checked) && !isAllChecked
-  const isPartialChecked = allParentChildren.some(option => option.isPartialChecked)
-  const isUnchecked = !isAllChecked && !isAnyChecked && !isPartialChecked
+  const isPartialChecked = allParentChildren.some(option => option.isPartialChecked || option.checked) && !isAllChecked
+  const isUnchecked = !isAllChecked && !isPartialChecked
 
   if (isAllChecked) {
     parent.checked = true
     parent.isPartialChecked = false
   }
 
-  if (isAnyChecked || isPartialChecked) {
+  if (isPartialChecked) {
     parent.checked = false
     parent.isPartialChecked = true
   }
@@ -72,6 +71,7 @@ const updateValue = (newValue, flatOptions, srcElement) => {
   const toCheck = flatOptions.filter(option => newValue.includes(option.id))
   toCheck.forEach(option => {
     option.checked = true
+    option.isPartialChecked = false
     checkInput(option, flatOptions)
   })
   updateDOM(flatOptions, srcElement)
@@ -92,7 +92,7 @@ const hideShowChildren = (flattedOptions, { id, isClosed }) => {
 const updateDOM = (flatOptions, srcElement) => {
   flatOptions.forEach(option => {
     const input = srcElement.querySelector(`[input-id="${option.id}"]`)
-    const listItem = input.parentNode
+    const listItem = getListItemByCheckbox(input)
     input.checked = option.checked
 
     if (option.checked) {
@@ -108,7 +108,8 @@ const updateDOM = (flatOptions, srcElement) => {
     }
 
     if (option.isGroup) {
-      const icon = input.parentNode.querySelector('.treeselect-list__item-icon')
+      const icon = getListItemByCheckbox(input).querySelector('.treeselect-list__item-icon')
+
       if (option.isClosed) {
         listItem.classList.add('treeselect-list__item--closed')
         icon.innerHTML = svg.arrowRight
@@ -125,6 +126,7 @@ const updateDOM = (flatOptions, srcElement) => {
     }
 
     listItem.style.paddingLeft = `${option.level * 30}px`
+    updateCheckboxClasses(option, input)
   })
 
   const isNotEmpty = flatOptions.some(option => !option.hidden)
@@ -134,6 +136,20 @@ const updateDOM = (flatOptions, srcElement) => {
     emptyList.classList.add('treeselect-list__empty--hidden')
   } else {
     emptyList.classList.remove('treeselect-list__empty--hidden')
+  }
+}
+
+// Updates classes
+const updateCheckboxClasses = (option, input) => {
+  const inputContainer = input.parentNode
+  const icon = inputContainer.querySelector('.treeselect-list__item-checkbox-icon')
+  
+  if (option.checked)  {
+    icon.innerHTML = svg.check
+  } else if (option.isPartialChecked) {
+    icon.innerHTML = svg.partialCheck
+  } else {
+    icon.innerHTML = ''
   }
 }
 
@@ -188,6 +204,13 @@ const getGroupedValues = (flatOptions) => {
 
 const getCheckedValues = (flatOptions) => {
   return flatOptions.filter(option => option.checked && !option.isGroup)
+}
+
+const getListItemByCheckbox = (checkbox) => {
+  const checkboxContainer = checkbox.parentNode
+  const listItem = checkboxContainer.parentNode
+
+  return listItem
 }
 
 class TreeselectList {
@@ -294,24 +317,24 @@ class TreeselectList {
 
     if (key === 'ArrowDown' || key === 'ArrowUp') {
       const allCheckboxes = Array.from(this.srcElement.querySelectorAll('.treeselect-list__item-checkbox'))
-        .filter(checkbox => window.getComputedStyle(checkbox.parentNode).display !== 'none')
+        .filter(checkbox => window.getComputedStyle(getListItemByCheckbox(checkbox)).display !== 'none')
 
       if (!allCheckboxes.length) {
         return
       }
 
       if (!itemFocused) {
-        const firstNode = allCheckboxes[0].parentNode
+        const firstNode = getListItemByCheckbox(allCheckboxes[0])
         firstNode.classList.add('treeselect-list__item--focused')
       } else {
-        const focusedCheckboxIndex = allCheckboxes.findIndex(el => el.parentNode.classList.contains('treeselect-list__item--focused'))
-        const focusedNode = allCheckboxes[focusedCheckboxIndex].parentNode
+        const focusedCheckboxIndex = allCheckboxes.findIndex(el => getListItemByCheckbox(el).classList.contains('treeselect-list__item--focused'))
+        const focusedNode = getListItemByCheckbox(allCheckboxes[focusedCheckboxIndex])
         focusedNode.classList.remove('treeselect-list__item--focused')
   
         const nextNodeIndex = key === 'ArrowDown' ? focusedCheckboxIndex + 1 : focusedCheckboxIndex - 1
         const defaultNodeIndex = key === 'ArrowDown' ? 0 : allCheckboxes.length - 1
         const nextCheckbox = allCheckboxes[nextNodeIndex] ?? allCheckboxes[defaultNodeIndex]
-        const nextNodeToFocus = nextCheckbox.parentNode
+        const nextNodeToFocus = getListItemByCheckbox(nextCheckbox)
         nextNodeToFocus.classList.add('treeselect-list__item--focused')
       }
     }
@@ -405,13 +428,21 @@ class TreeselectList {
   }
 
   #createCheckbox (option) {
+    const checkboxContainer = document.createElement('div')
+    checkboxContainer.classList.add('treeselect-list__item-checkbox-container')
+    const ico = document.createElement('span')
+    ico.classList.add('treeselect-list__item-checkbox-icon')
+    ico.innerHTML = ''
+
     const checkbox = document.createElement('input')
     checkbox.setAttribute('tabindex', '-1')
     checkbox.setAttribute('type', `checkbox`)
     checkbox.setAttribute('input-id', option.value)
     checkbox.classList.add('treeselect-list__item-checkbox')
+
+    checkboxContainer.append(ico, checkbox)
   
-    return checkbox
+    return checkboxContainer
   }
 
   #createCheckboxLabel (option) {
@@ -443,6 +474,7 @@ class TreeselectList {
   #checkboxClickEvent(target, option) {
     const flattedOption = this.flattedOptions.find(fo => fo.id === option.value)
     flattedOption.checked = target.checked
+    flattedOption.isPartialChecked = false
     checkInput(flattedOption, this.flattedOptions)
     updateDOM(this.flattedOptions, this.srcElement)
 
