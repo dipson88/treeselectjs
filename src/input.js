@@ -305,7 +305,6 @@ class TreeselectInput {
       // Two methods help to prevent mousedown on main container
       e.stopPropagation()
       e.preventDefault()
-      console.log('c')
       this.focus()
       this.#updateOpenClose()
     })

@@ -108,7 +108,7 @@ const updateDOM = (flatOptions, srcElement) => {
     }
 
     if (option.isGroup) {
-      const icon = getListItemByCheckbox(input).querySelector('.treeselect-list__item-icon')
+      const icon = listItem.querySelector('.treeselect-list__item-icon')
 
       if (option.isClosed) {
         listItem.classList.add('treeselect-list__item--closed')
@@ -125,7 +125,10 @@ const updateDOM = (flatOptions, srcElement) => {
       listItem.classList.remove('treeselect-list__item--hidden')
     }
 
-    listItem.style.paddingLeft = `${option.level * 40}px`
+    listItem.style.paddingLeft = !option.childOf && !option.isGroup
+      ? `${20}px`
+      : `${option.level * 40}px`
+
     updateCheckboxClasses(option, input)
   })
 

@@ -4,3 +4,4 @@
 // (DONE) to body width (fixed but looks like TODO)
 // should we show space for input on new line (unsearchable mode check) on RESIZE
 // Recheck performance
+// Search toLowerCase

@@ -28,7 +28,7 @@ class Treeselect {
     this.parentHtmlContainer = parentHtmlContainer
     this.value = value
     this.options = options
-    this.openLevel = openLevel ?? 5
+    this.openLevel = openLevel ?? 0
     this.appendToBody = appendToBody ?? true
     this.alwaysOpen = alwaysOpen ?? false
     this.showTags = showTags ?? true
