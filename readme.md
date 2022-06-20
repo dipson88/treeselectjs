@@ -2,6 +2,9 @@
 
 A multi-select js component with nested options.
 
+- Full key support (ArrowUp, ArrowDown, Space, ArrowLeft, ArrowRight, Enter)
+- Screen sensitive direction
+
 ![Example img](treeselectjs.png)
 
 ### Getting Started
