@@ -11,6 +11,7 @@ class Treeselect {
   #transform = { top: null, bottom: null }
   #treeselectInitPosition = null
   #containerResizer = null
+  #containerWidth = 0
 
   constructor ({
     parentHtmlContainer,
@@ -109,7 +110,11 @@ class Treeselect {
     })
 
     if (this.appendToBody) {
-      this.#containerResizer = new ResizeObserver(() => this.updateListPosition(container, list.srcElement, true))
+      this.#containerResizer = new ResizeObserver(() => {
+        const { width } = this.srcElement.getBoundingClientRect()
+        this.#containerWidth = width
+        this.updateListPosition(container, list.srcElement, true)
+      })
     }
 
     // Input events
@@ -301,7 +306,7 @@ class Treeselect {
 
     list.style.transform = isTopDirection ? this.#transform.top : this.#transform.bottom
     this.#updateDirectionClasses(isTopDirection, true)
-    list.style.width = `${container.offsetWidth}px`
+    list.style.width = `${this.#containerWidth}px`
   }
 
   // Emits

@@ -218,6 +218,7 @@ const getListItemByCheckbox = (checkbox) => {
 
 class TreeselectList {
   #lastFocusedItem = null
+  #isMouseActionsAvailable = true
 
   constructor({
     options,
@@ -310,12 +311,11 @@ class TreeselectList {
   }
 
   callKeyAction (key) {
+    this.#isMouseActionsAvailable = false
     const itemFocused = this.srcElement.querySelector('.treeselect-list__item--focused')
 
     if (key === 'Enter' && itemFocused) {
-      const checkbox = itemFocused.querySelector('.treeselect-list__item-checkbox')
-      checkbox.checked = !checkbox.checked
-      checkbox.dispatchEvent(new Event('input'))
+      itemFocused.dispatchEvent(new Event('click'))
     }
 
     if (key === 'ArrowLeft' || key === 'ArrowRight') {
@@ -356,8 +356,36 @@ class TreeselectList {
         const nextNodeIndex = key === 'ArrowDown' ? focusedCheckboxIndex + 1 : focusedCheckboxIndex - 1
         const defaultNodeIndex = key === 'ArrowDown' ? 0 : allCheckboxes.length - 1
         const nextCheckbox = allCheckboxes[nextNodeIndex] ?? allCheckboxes[defaultNodeIndex]
+        const isDefaultIndex = !allCheckboxes[nextNodeIndex]
         const nextNodeToFocus = getListItemByCheckbox(nextCheckbox)
         nextNodeToFocus.classList.add('treeselect-list__item--focused')
+
+        const listCoord = this.srcElement.getBoundingClientRect()
+        const nextCoord = nextNodeToFocus.getBoundingClientRect()
+
+        if (isDefaultIndex && key === 'ArrowDown') {
+          this.srcElement.scroll(0, 0)
+          
+          return
+        }
+
+        if (isDefaultIndex && key === 'ArrowUp') {
+          this.srcElement.scroll(0, this.srcElement.scrollHeight)
+
+          return
+        }
+
+        if (listCoord.y + listCoord.height < nextCoord.y + nextCoord.height) {
+          this.srcElement.scroll(0, this.srcElement.scrollTop + nextCoord.height)
+
+          return
+        }
+
+        if (listCoord.y > nextCoord.y) {
+          this.srcElement.scroll(0, this.srcElement.scrollTop - nextCoord.height)
+
+          return
+        }
       }
     }
   }
@@ -402,9 +430,13 @@ class TreeselectList {
 
     list.addEventListener('mouseout', (e) => {
       e.stopPropagation()
-      if (this.#lastFocusedItem) {
+
+      if (this.#lastFocusedItem && this.#isMouseActionsAvailable) {
         this.#lastFocusedItem.classList.add('treeselect-list__item--focused')
       }
+    })
+    list.addEventListener('mousemove', () => {
+      this.#isMouseActionsAvailable = true
     })
 
     list.append(...elementsToCreate)
@@ -454,11 +486,15 @@ class TreeselectList {
     }
 
     itemElement.addEventListener('mouseover', () => {
-      this.#groupMouseAction(true, itemElement)
+      if (this.#isMouseActionsAvailable) {
+        this.#groupMouseAction(true, itemElement)
+      }
     }, true)
     itemElement.addEventListener('mouseout', () => {
-      this.#groupMouseAction(false, itemElement)
-      this.#lastFocusedItem = itemElement
+      if (this.#isMouseActionsAvailable) {
+        this.#groupMouseAction(false, itemElement)
+        this.#lastFocusedItem = itemElement
+      }
     }, true)
     itemElement.addEventListener('click', (e) => {
       e.stopPropagation()
@@ -558,10 +594,10 @@ class TreeselectList {
     const focusedClassName = 'treeselect-list__item--focused'
 
     if (isMouseOver) {
-      const itemFocused = this.srcElement.querySelector(`.${focusedClassName}`)
+      const itemsFocused = Array.from(this.srcElement.querySelectorAll(`.${focusedClassName}`))
 
-      if (itemFocused) {
-        itemFocused.classList.remove(focusedClassName)
+      if (itemsFocused.length) {
+        itemsFocused.forEach(el => el.classList.remove(focusedClassName))
       }
 
       itemElement.classList.add(focusedClassName)
