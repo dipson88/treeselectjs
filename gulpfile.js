@@ -5,7 +5,7 @@ const uglifycss = require('gulp-uglifycss');
 function uglifyJs () {
   return gulp.src('./src/*.js')
     .pipe(uglify())
-    .pipe(gulp.dest('dist/js'))
+    .pipe(gulp.dest('dist'))
 }
 
 function uglifyCss () {
@@ -14,7 +14,7 @@ function uglifyCss () {
       "maxLineLen": 80,
       "uglyComments": true
     }))
-    .pipe(gulp.dest('dist/css'));
+    .pipe(gulp.dest('dist'));
 }
 
 exports.default = gulp.parallel(uglifyJs, uglifyCss);

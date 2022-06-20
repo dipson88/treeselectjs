@@ -15,11 +15,11 @@ npm install --save treeselectjs
 ```
 You should import treeselectjs
 ```
-import Treeselect from 'treeselectjs/dist/index.js'
+import Treeselect from 'treeselectjs'
 ```
 and css file with styles
 ```
-@import 'treeselectjs/dist/index.css'
+@import 'treeselectjs/dist/treeselect-js.css'
 ```
 
 Example

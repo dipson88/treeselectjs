@@ -2,7 +2,7 @@
   "name": "treeselectjs",
   "version": "0.1.0",
   "description": "Treeselect JS",
-  "main": "src/index.js",
+  "main": "dist/treeselect-js.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,5 +25,6 @@
     "gulp": "^4.0.2",
     "gulp-uglify": "^3.0.2",
     "gulp-uglifycss": "^1.1.0"
-  }
+  },
+  "files": ["dist", "src"]
 }
