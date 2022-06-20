@@ -33,16 +33,15 @@ const checkAllParentInputs = (childOf, flatOptions) => {
   const allParentChildren = flatOptions.filter(option => option.childOf === parent.id)
 
   const isAllChecked = allParentChildren.every(option => option.checked)
-  const isAnyChecked = allParentChildren.some(option => option.checked) && !isAllChecked
-  const isPartialChecked = allParentChildren.some(option => option.isPartialChecked)
-  const isUnchecked = !isAllChecked && !isAnyChecked && !isPartialChecked
+  const isPartialChecked = allParentChildren.some(option => option.isPartialChecked || option.checked) && !isAllChecked
+  const isUnchecked = !isAllChecked && !isPartialChecked
 
   if (isAllChecked) {
     parent.checked = true
     parent.isPartialChecked = false
   }
 
-  if (isAnyChecked || isPartialChecked) {
+  if (isPartialChecked) {
     parent.checked = false
     parent.isPartialChecked = true
   }
@@ -72,6 +71,7 @@ const updateValue = (newValue, flatOptions, srcElement) => {
   const toCheck = flatOptions.filter(option => newValue.includes(option.id))
   toCheck.forEach(option => {
     option.checked = true
+    option.isPartialChecked = false
     checkInput(option, flatOptions)
   })
   updateDOM(flatOptions, srcElement)
@@ -92,7 +92,7 @@ const hideShowChildren = (flattedOptions, { id, isClosed }) => {
 const updateDOM = (flatOptions, srcElement) => {
   flatOptions.forEach(option => {
     const input = srcElement.querySelector(`[input-id="${option.id}"]`)
-    const listItem = input.parentNode
+    const listItem = getListItemByCheckbox(input)
     input.checked = option.checked
 
     if (option.checked) {
@@ -108,7 +108,8 @@ const updateDOM = (flatOptions, srcElement) => {
     }
 
     if (option.isGroup) {
-      const icon = input.parentNode.querySelector('.treeselect-list__item-icon')
+      const icon = listItem.querySelector('.treeselect-list__item-icon')
+
       if (option.isClosed) {
         listItem.classList.add('treeselect-list__item--closed')
         icon.innerHTML = svg.arrowRight
@@ -124,7 +125,13 @@ const updateDOM = (flatOptions, srcElement) => {
       listItem.classList.remove('treeselect-list__item--hidden')
     }
 
-    listItem.style.paddingLeft = `${option.level * 30}px`
+    if (!option.childOf && !option.isGroup) {
+      listItem.style.paddingLeft = `${20}px`
+    } else {
+      listItem.style.paddingLeft = option.isGroup ? `${option.level * 40}px` : `${option.level * 60}px`
+    }
+
+    updateCheckboxClasses(option, input)
   })
 
   const isNotEmpty = flatOptions.some(option => !option.hidden)
@@ -134,6 +141,20 @@ const updateDOM = (flatOptions, srcElement) => {
     emptyList.classList.add('treeselect-list__empty--hidden')
   } else {
     emptyList.classList.remove('treeselect-list__empty--hidden')
+  }
+}
+
+// Updates classes
+const updateCheckboxClasses = (option, input) => {
+  const inputContainer = input.parentNode
+  const icon = inputContainer.querySelector('.treeselect-list__item-checkbox-icon')
+  
+  if (option.checked)  {
+    icon.innerHTML = svg.check
+  } else if (option.isPartialChecked) {
+    icon.innerHTML = svg.partialCheck
+  } else {
+    icon.innerHTML = ''
   }
 }
 
@@ -190,18 +211,34 @@ const getCheckedValues = (flatOptions) => {
   return flatOptions.filter(option => option.checked && !option.isGroup)
 }
 
+const getListItemByCheckbox = (checkbox) => {
+  const checkboxContainer = checkbox.parentNode
+  const listItem = checkboxContainer.parentNode
+
+  return listItem
+}
+
 class TreeselectList {
+  #lastFocusedItem = null
+  #isMouseActionsAvailable = true
+
   constructor({
     options,
     value,
-    openLevel
+    openLevel,
+    listSlotHtmlComponent,
+    emptyText
   }) {
     this.options = options
     this.value = value
     this.searchText = ''
     this.openLevel = openLevel ?? 0
+    this.listSlotHtmlComponent = listSlotHtmlComponent
+    this.emptyText = emptyText ?? 'No results found...'
+
     this.flattedOptions = getFlatOptons(this.options, this.openLevel)
     this.flattedOptionsBeforeSearch = this.flattedOptions
+    this.selectedNodes = { ids: [], groupedIds: [] }
     this.srcElement = this.#createList()
 
     this.updateValue(this.value)
@@ -210,6 +247,7 @@ class TreeselectList {
   // Public methods
   updateValue (value) {
     updateValue(value, this.flattedOptions, this.srcElement)
+    this.#updateSelectedNodes()
   }
 
   updateSearchValue (searchText) {
@@ -221,15 +259,24 @@ class TreeselectList {
     }
 
     if (this.searchText === '') {
-      this.flattedOptions = JSON.parse(JSON.stringify(this.flattedOptionsBeforeSearch))
+      // This loop need to save a isClose state before searching
+      this.flattedOptions = this.flattedOptionsBeforeSearch.map(option => {
+        const newOptionData = this.flattedOptions.find(newOption => newOption.id === option.id)
+        newOptionData.isClosed = option.isClosed
+        newOptionData.hidden = option.hidden
+        
+        return newOptionData
+      })
+
       this.flattedOptionsBeforeSearch = []
       updateDOM(this.flattedOptions, this.srcElement)
+      this.focusFirstListElement()
 
       return
     }
 
     const allOptions = this.flattedOptions.reduce((acc, curr) => {
-      const isSerched = curr.name.includes(searchText)
+      const isSerched = curr.name.toLowerCase().includes(searchText.toLowerCase())
 
       if (isSerched) {
         acc.push(curr)
@@ -262,15 +309,15 @@ class TreeselectList {
       }
     })
     updateDOM(this.flattedOptions, this.srcElement)
+    this.focusFirstListElement()
   }
 
   callKeyAction (key) {
+    this.#isMouseActionsAvailable = false
     const itemFocused = this.srcElement.querySelector('.treeselect-list__item--focused')
 
     if (key === 'Enter' && itemFocused) {
-      const checkbox = itemFocused.querySelector('.treeselect-list__item-checkbox')
-      checkbox.checked = !checkbox.checked
-      checkbox.dispatchEvent(new Event('input'))
+      itemFocused.dispatchEvent(new Event('click'))
     }
 
     if (key === 'ArrowLeft' || key === 'ArrowRight') {
@@ -294,37 +341,107 @@ class TreeselectList {
 
     if (key === 'ArrowDown' || key === 'ArrowUp') {
       const allCheckboxes = Array.from(this.srcElement.querySelectorAll('.treeselect-list__item-checkbox'))
-        .filter(checkbox => window.getComputedStyle(checkbox.parentNode).display !== 'none')
+        .filter(checkbox => window.getComputedStyle(getListItemByCheckbox(checkbox)).display !== 'none')
 
       if (!allCheckboxes.length) {
         return
       }
 
       if (!itemFocused) {
-        const firstNode = allCheckboxes[0].parentNode
+        const firstNode = getListItemByCheckbox(allCheckboxes[0])
         firstNode.classList.add('treeselect-list__item--focused')
       } else {
-        const focusedCheckboxIndex = allCheckboxes.findIndex(el => el.parentNode.classList.contains('treeselect-list__item--focused'))
-        const focusedNode = allCheckboxes[focusedCheckboxIndex].parentNode
+        const focusedCheckboxIndex = allCheckboxes.findIndex(el => getListItemByCheckbox(el).classList.contains('treeselect-list__item--focused'))
+        const focusedNode = getListItemByCheckbox(allCheckboxes[focusedCheckboxIndex])
         focusedNode.classList.remove('treeselect-list__item--focused')
   
         const nextNodeIndex = key === 'ArrowDown' ? focusedCheckboxIndex + 1 : focusedCheckboxIndex - 1
         const defaultNodeIndex = key === 'ArrowDown' ? 0 : allCheckboxes.length - 1
         const nextCheckbox = allCheckboxes[nextNodeIndex] ?? allCheckboxes[defaultNodeIndex]
-        const nextNodeToFocus = nextCheckbox.parentNode
+        const isDefaultIndex = !allCheckboxes[nextNodeIndex]
+        const nextNodeToFocus = getListItemByCheckbox(nextCheckbox)
         nextNodeToFocus.classList.add('treeselect-list__item--focused')
+
+        const listCoord = this.srcElement.getBoundingClientRect()
+        const nextCoord = nextNodeToFocus.getBoundingClientRect()
+
+        if (isDefaultIndex && key === 'ArrowDown') {
+          this.srcElement.scroll(0, 0)
+          
+          return
+        }
+
+        if (isDefaultIndex && key === 'ArrowUp') {
+          this.srcElement.scroll(0, this.srcElement.scrollHeight)
+
+          return
+        }
+
+        if (listCoord.y + listCoord.height < nextCoord.y + nextCoord.height) {
+          this.srcElement.scroll(0, this.srcElement.scrollTop + nextCoord.height)
+
+          return
+        }
+
+        if (listCoord.y > nextCoord.y) {
+          this.srcElement.scroll(0, this.srcElement.scrollTop - nextCoord.height)
+
+          return
+        }
       }
     }
   }
 
+  focusFirstListElement () {
+    const focusedCalss = 'treeselect-list__item--focused'
+    const itemFocused = this.srcElement.querySelector(`.${focusedCalss}`)
+    const allCheckboxes = Array.from(this.srcElement.querySelectorAll('.treeselect-list__item-checkbox'))
+      .filter(checkbox => window.getComputedStyle(getListItemByCheckbox(checkbox)).display !== 'none')
+  
+    if (!allCheckboxes.length) {
+      return
+    }
+  
+    if (itemFocused) {
+      itemFocused.classList.remove(focusedCalss)
+    }
+  
+    const firstItem = getListItemByCheckbox(allCheckboxes[0])
+    firstItem.classList.add(focusedCalss)
+  }
+
   // Private methods
   #createList () {
+    const elementsToCreate = []
+
     const list = document.createElement('div')
     list.classList.add('treeselect-list')
     const htmlTreeList = this.#getListHTML(this.options)
-    const emptyList = this.#createEmptyList()
+    elementsToCreate.push(...htmlTreeList)
+    
 
-    list.append(...htmlTreeList, emptyList)
+    if (this.listSlotHtmlComponent) {
+      const slot = document.createElement('div')
+      slot.classList.add('treeselect-list__slot')
+      slot.appendChild(this.listSlotHtmlComponent)
+      elementsToCreate.push(slot)
+    }
+
+    const emptyList = this.#createEmptyList()
+    elementsToCreate.push(emptyList)
+
+    list.addEventListener('mouseout', (e) => {
+      e.stopPropagation()
+
+      if (this.#lastFocusedItem && this.#isMouseActionsAvailable) {
+        this.#lastFocusedItem.classList.add('treeselect-list__item--focused')
+      }
+    })
+    list.addEventListener('mousemove', () => {
+      this.#isMouseActionsAvailable = true
+    })
+
+    list.append(...elementsToCreate)
 
     return list
   }
@@ -371,10 +488,15 @@ class TreeselectList {
     }
 
     itemElement.addEventListener('mouseover', () => {
-      this.#groupMouseAction(true, itemElement)
+      if (this.#isMouseActionsAvailable) {
+        this.#groupMouseAction(true, itemElement)
+      }
     }, true)
     itemElement.addEventListener('mouseout', () => {
-      this.#groupMouseAction(false, itemElement)
+      if (this.#isMouseActionsAvailable) {
+        this.#groupMouseAction(false, itemElement)
+        this.#lastFocusedItem = itemElement
+      }
     }, true)
     itemElement.addEventListener('click', (e) => {
       e.stopPropagation()
@@ -405,13 +527,21 @@ class TreeselectList {
   }
 
   #createCheckbox (option) {
+    const checkboxContainer = document.createElement('div')
+    checkboxContainer.classList.add('treeselect-list__item-checkbox-container')
+    const ico = document.createElement('span')
+    ico.classList.add('treeselect-list__item-checkbox-icon')
+    ico.innerHTML = ''
+
     const checkbox = document.createElement('input')
     checkbox.setAttribute('tabindex', '-1')
     checkbox.setAttribute('type', `checkbox`)
     checkbox.setAttribute('input-id', option.value)
     checkbox.classList.add('treeselect-list__item-checkbox')
+
+    checkboxContainer.append(ico, checkbox)
   
-    return checkbox
+    return checkboxContainer
   }
 
   #createCheckboxLabel (option) {
@@ -425,6 +555,7 @@ class TreeselectList {
   #createEmptyList () {
     const emptyList = document.createElement('div')
     emptyList.classList.add('treeselect-list__empty')
+    emptyList.setAttribute('title', this.emptyText)
 
     const icon = document.createElement('span')
     icon.classList.add('treeselect-list__empty-icon')
@@ -432,7 +563,7 @@ class TreeselectList {
 
     const text = document.createElement('span')
     text.classList.add('treeselect-list__empty-text')
-    text.innerHTML = 'No results found...'
+    text.innerHTML = this.emptyText
 
     emptyList.append(icon, text)
 
@@ -443,6 +574,7 @@ class TreeselectList {
   #checkboxClickEvent(target, option) {
     const flattedOption = this.flattedOptions.find(fo => fo.id === option.value)
     flattedOption.checked = target.checked
+    flattedOption.isPartialChecked = false
     checkInput(flattedOption, this.flattedOptions)
     updateDOM(this.flattedOptions, this.srcElement)
 
@@ -464,15 +596,22 @@ class TreeselectList {
     const focusedClassName = 'treeselect-list__item--focused'
 
     if (isMouseOver) {
-      const itemFocused = this.srcElement.querySelector(`.${focusedClassName}`)
+      const itemsFocused = Array.from(this.srcElement.querySelectorAll(`.${focusedClassName}`))
 
-      if (itemFocused) {
-        itemFocused.classList.remove(focusedClassName)
+      if (itemsFocused.length) {
+        itemsFocused.forEach(el => el.classList.remove(focusedClassName))
       }
 
       itemElement.classList.add(focusedClassName)
     } else {
       itemElement.classList.remove(focusedClassName)
+    }
+  }
+
+  #updateSelectedNodes () {
+    this.selectedNodes = {
+      ids: getCheckedValues(this.flattedOptions),
+      groupedIds: getGroupedValues(this.flattedOptions)
     }
   }
 
@@ -482,10 +621,8 @@ class TreeselectList {
   }
 
   #emitInput () {
-    this.srcElement.dispatchEvent(new CustomEvent('input', { detail: {
-      ids: getCheckedValues(this.flattedOptions),
-      groupedIds: getGroupedValues(this.flattedOptions)
-    }}))
+    this.#updateSelectedNodes()
+    this.srcElement.dispatchEvent(new CustomEvent('input', { detail: this.selectedNodes}))
   }
 }
 

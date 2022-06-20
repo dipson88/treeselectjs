@@ -7,10 +7,15 @@
   box-sizing: border-box;
 }
 
+.treeselect--disabled {
+  pointer-events: none;
+}
+
 .treeselect-list {
   position: absolute;
   left: 0;
   border-radius: 4px;
+  box-sizing: border-box;
 }
 
 .treeselect .treeselect-list {

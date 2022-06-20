@@ -14,7 +14,8 @@ class TreeselectInput {
     clearable,
     isAlwaysOpened,
     searchable,
-    placeholder
+    placeholder,
+    disabled
   }) {
     this.value = value
 
@@ -23,6 +24,7 @@ class TreeselectInput {
     this.placeholder = placeholder ?? 'Search...'
     this.clearable = clearable ?? true
     this.isAlwaysOpened = isAlwaysOpened ?? false
+    this.disabled = disabled ?? false
 
     this.isOpened = false
     this.searchText = ''
@@ -177,7 +179,9 @@ class TreeselectInput {
       const name = this.#createTagName(value.name)
       const cross = this.#createTagCross()
 
-      element.addEventListener('click', (e) => {
+      element.addEventListener('mousedown', (e) => {
+        // Two methods help to prevent mousedown on main container
+        e.preventDefault()
         e.stopPropagation()
         this.focus()
         this.removeItem(value.id)
@@ -225,6 +229,10 @@ class TreeselectInput {
   #createControl () {
     const input = document.createElement('input')
     input.classList.add('treeselect-input__edit')
+
+    if (this.disabled) {
+      input.setAttribute('tabindex', '-1')
+    }
 
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Backspace' && !this.searchText.length && this.value.length && !this.showTags) {
@@ -280,7 +288,9 @@ class TreeselectInput {
     clear.setAttribute('tabindex', '-1')
     clear.innerHTML = svg.clear
 
-    clear.addEventListener('click', (e) => {
+    clear.addEventListener('mousedown', (e) => {
+      // Two methods help to prevent mousedown on main container
+      e.preventDefault()
       e.stopPropagation()
       this.#htmlEditControl.focus()
 
@@ -297,8 +307,10 @@ class TreeselectInput {
     this.#htmlArrow.classList.add('treeselect-input__arrow')
     this.#htmlArrow.innerHTML = isOpen ? svg.arrowUp : svg.arrowDown
 
-    this.#htmlArrow.addEventListener('click', (e) => {
+    this.#htmlArrow.addEventListener('mousedown', (e) => {
+      // Two methods help to prevent mousedown on main container
       e.stopPropagation()
+      e.preventDefault()
       this.focus()
       this.#updateOpenClose()
     })

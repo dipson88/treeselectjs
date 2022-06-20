@@ -7,7 +7,7 @@
   align-items: center;
   flex-wrap: wrap;
   padding: 2px 4px;
-  padding-right: 35px;
+  padding-right: 40px;
   position: relative;
   min-height: 37px;
   background-color: #ffffff;
@@ -36,7 +36,7 @@
 .treeselect-input__tags-element {
   display: inline-flex;
   align-items: center;
-  background-color: #f5f5f7;
+  background-color: #d7dde4;
   cursor: pointer;
   padding: 2px 5px;
   border-radius: 2px;
@@ -46,7 +46,7 @@
 }
 
 .treeselect-input__tags-element:hover {
-  background-color: #b3b5ba;
+  background-color: #c5c7cb;
 }
 
 .treeselect-input__tags-element:hover .treeselect-input__tags-cross svg {
@@ -89,7 +89,7 @@
 
 .treeselect-input__operators {
   display: flex;
-  max-width: 30px;
+  max-width: 40px;
   position: absolute;
   right: 2px;
 }
@@ -99,8 +99,15 @@
   cursor: pointer;
 }
 
+.treeselect-input__clear svg {
+  stroke: #c5c7cb;
+  width: 17px;
+  min-width: 17px;
+  height: 20px;
+}
+
 .treeselect-input__clear:hover svg {
-  stroke: #b3b5ba;
+  stroke: #838790;
 }
 
 .treeselect-input__arrow {
@@ -108,6 +115,13 @@
   cursor: pointer;
 }
 
+.treeselect-input__arrow svg {
+  stroke: #c5c7cb;
+  width: 20px;
+  min-width: 20px;
+  height: 20px;
+}
+
 .treeselect-input__arrow:hover svg {
-  stroke: #b3b5ba;
+  stroke: #838790;
 }
