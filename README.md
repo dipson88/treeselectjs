@@ -1,4 +1,4 @@
-# Treeselect js component
+# Treeselect JS component
 
 A multi-select js component with nested options.
 
@@ -24,7 +24,7 @@ and css file with styles
 
 Example
 ```
-import Treeselect from 'treeselectjs/dist/index.js'
+import Treeselect from 'treeselectjs'
 
 const options = [
   {
@@ -75,10 +75,10 @@ const options = [
 const slot = document.createElement('div')
 slot.innerHTML='<a class="test" href="">Slot example text</a>'
 
-const domEl = document.querySelector('.treeselect-test')
+const domElement = document.querySelector('.treeselect-test')
 const treeselect = new Treeselect({
-  parentHtmlContainer: domEl,
-  value: ['7', '12'],
+  parentHtmlContainer: domElement,
+  value: ['West End', 'Paris', 'Lyon'],
   options: options,
   alwaysOpen: true,
   appendToBody: true,
