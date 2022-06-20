@@ -1,74 +1,64 @@
-import Treeselect from "../src/index.js";
+import Treeselect from '../dist/js/index.js';
 
 const options = [
-{
-  value: '1',
-  name: '1',
-  children: [
-    {
-      value: '2',
-      name: '2',
-      children: []
-    }
-  ]
-},
-{
-  value: '3',
-  name: '3',
-  children: [
-    {
-      value: '4',
-      name: '4',
-      children: [
-        {
-          name: '5',
-          value: '5',
-          children: [
-            {
-              name: '6',
-              value: '6',
-              children: []
-            },
-            {
-              name: '7',
-              value: '7',
-              children: []
-            }
-          ]
-        }
-      ]
-    }
-  ]
-},
-{
-  value: '8',
-  name: '8',
-  children: [
-    {
-      value: '9',
-      name: '9',
-      children: [{
-        value: '10',
-        name: '1032ce2c21ce2c312c21c3213'
-      }]
-    },
-    {
-      value: '11',
-      name: '11',
-      children: [{
-        value: '12',
-        name: '12'
-      }]
-    }
-  ]
-},
+  {
+    name: 'England',
+    value: 'England',
+    children: [
+      {
+        name: 'London',
+        value: 'London',
+        children: [
+          {
+          name: 'Chelsea',
+          value: 'Chelsea',
+          children: []
+          },
+          {
+          name: 'West End',
+          value: 'West End',
+          children: []
+          }
+        ]
+      },
+      {
+        name: 'Brighton',
+        value: 'Brighton',
+        children: []
+      }
+    ]
+  },
+  {
+    name: 'France',
+    value: 'France',
+    children: [
+      {
+        name: 'Paris',
+        value: 'Paris',
+        children: []
+      },
+      {
+        name: 'Lyon',
+        value: 'Lyon',
+        children: []
+      }
+    ]
+  }
 ]
+
+const slot = document.createElement('div')
+slot.innerHTML='<a class="test" href="">Add new element</a>'
 
 const domEl = document.querySelector('.treeselect-test')
 const treeselect = new Treeselect({
   parentHtmlContainer: domEl,
-  value: ['2', '3'],
-  options
+  value: [],
+  options: options,
+  alwaysOpen: false,
+  appendToBody: true,
+  listSlotHtmlComponent: null,
+  disabled: false,
+  emptyText: 'No data text'
 })
 
 treeselect.srcElement.addEventListener('input', (e) => {

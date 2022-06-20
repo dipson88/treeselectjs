@@ -125,9 +125,11 @@ const updateDOM = (flatOptions, srcElement) => {
       listItem.classList.remove('treeselect-list__item--hidden')
     }
 
-    listItem.style.paddingLeft = !option.childOf && !option.isGroup
-      ? `${20}px`
-      : `${option.level * 40}px`
+    if (!option.childOf && !option.isGroup) {
+      listItem.style.paddingLeft = `${20}px`
+    } else {
+      listItem.style.paddingLeft = option.isGroup ? `${option.level * 40}px` : `${option.level * 60}px`
+    }
 
     updateCheckboxClasses(option, input)
   })
