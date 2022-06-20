@@ -3,9 +3,6 @@
   "version": "0.2.0",
   "description": "Treeselect JS",
   "main": "dist/treeselect-js.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dipson88/treeselectjs.git"
@@ -16,7 +13,7 @@
     "js"
   ],
   "author": "Dzmitry Zhuraukou",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/dipson88/treeselectjs/issues"
   },
