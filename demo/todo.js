@@ -4,4 +4,8 @@
 // (DONE) to body width (fixed but looks like TODO)
 // should we show space for input on new line (unsearchable mode check) on RESIZE
 // Recheck performance
-// Search toLowerCase
+// list scroll overlaps border 
+
+// README
+// move scroll on keyboard arrow change 
+// updateDisabled methods to avoid a remount

@@ -112,6 +112,19 @@
 .treeselect-list__empty-text {
   font-size: 14px;
   padding-left: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: keep-all;
+  white-space: nowrap;
+}
+
+.treeselect-list__slot {
+  position: sticky;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  bottom: 0;
+  background-color: #ffffff;
 }
 
 /* checked styles */

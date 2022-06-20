@@ -14,7 +14,8 @@ class TreeselectInput {
     clearable,
     isAlwaysOpened,
     searchable,
-    placeholder
+    placeholder,
+    disabled
   }) {
     this.value = value
 
@@ -23,6 +24,7 @@ class TreeselectInput {
     this.placeholder = placeholder ?? 'Search...'
     this.clearable = clearable ?? true
     this.isAlwaysOpened = isAlwaysOpened ?? false
+    this.disabled = disabled ?? false
 
     this.isOpened = false
     this.searchText = ''
@@ -227,6 +229,10 @@ class TreeselectInput {
   #createControl () {
     const input = document.createElement('input')
     input.classList.add('treeselect-input__edit')
+
+    if (this.disabled) {
+      input.setAttribute('tabindex', '-1')
+    }
 
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Backspace' && !this.searchText.length && this.value.length && !this.showTags) {

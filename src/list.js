@@ -222,12 +222,17 @@ class TreeselectList {
   constructor({
     options,
     value,
-    openLevel
+    openLevel,
+    listSlotHtmlComponent,
+    emptyText
   }) {
     this.options = options
     this.value = value
     this.searchText = ''
     this.openLevel = openLevel ?? 0
+    this.listSlotHtmlComponent = listSlotHtmlComponent
+    this.emptyText = emptyText ?? 'No results found...'
+
     this.flattedOptions = getFlatOptons(this.options, this.openLevel)
     this.flattedOptionsBeforeSearch = this.flattedOptions
     this.selectedNodes = { ids: [], groupedIds: [] }
@@ -268,7 +273,7 @@ class TreeselectList {
     }
 
     const allOptions = this.flattedOptions.reduce((acc, curr) => {
-      const isSerched = curr.name.includes(searchText)
+      const isSerched = curr.name.toLowerCase().includes(searchText.toLowerCase())
 
       if (isSerched) {
         acc.push(curr)
@@ -377,17 +382,32 @@ class TreeselectList {
 
   // Private methods
   #createList () {
+    const elementsToCreate = []
+
     const list = document.createElement('div')
     list.classList.add('treeselect-list')
     const htmlTreeList = this.#getListHTML(this.options)
+    elementsToCreate.push(...htmlTreeList)
+    
+
+    if (this.listSlotHtmlComponent) {
+      const slot = document.createElement('div')
+      slot.classList.add('treeselect-list__slot')
+      slot.appendChild(this.listSlotHtmlComponent)
+      elementsToCreate.push(slot)
+    }
+
     const emptyList = this.#createEmptyList()
+    elementsToCreate.push(emptyList)
 
     list.addEventListener('mouseout', (e) => {
       e.stopPropagation()
-      this.#lastFocusedItem.classList.add('treeselect-list__item--focused')
+      if (this.#lastFocusedItem) {
+        this.#lastFocusedItem.classList.add('treeselect-list__item--focused')
+      }
     })
 
-    list.append(...htmlTreeList, emptyList)
+    list.append(...elementsToCreate)
 
     return list
   }
@@ -497,6 +517,7 @@ class TreeselectList {
   #createEmptyList () {
     const emptyList = document.createElement('div')
     emptyList.classList.add('treeselect-list__empty')
+    emptyList.setAttribute('title', this.emptyText)
 
     const icon = document.createElement('span')
     icon.classList.add('treeselect-list__empty-icon')
@@ -504,7 +525,7 @@ class TreeselectList {
 
     const text = document.createElement('span')
     text.classList.add('treeselect-list__empty-text')
-    text.innerHTML = 'No results found...'
+    text.innerHTML = this.emptyText
 
     emptyList.append(icon, text)
 

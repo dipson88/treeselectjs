@@ -23,23 +23,47 @@ class Treeselect {
     clearable,
     searchable,
     placeholder,
-    grouped
+    grouped,
+    listSlotHtmlComponent,
+    disabled,
+    emptyText
   }) {
     this.parentHtmlContainer = parentHtmlContainer
-    this.value = value
-    this.options = options
+    this.value = value ?? []
+    this.options = options ?? []
     this.openLevel = openLevel ?? 0
     this.appendToBody = appendToBody ?? true
-    this.alwaysOpen = alwaysOpen ?? false
+    this.alwaysOpen = alwaysOpen && !disabled
     this.showTags = showTags ?? true
     this.clearable = clearable ?? true
     this.searchable = searchable ?? true
     this.placeholder = placeholder ?? 'Search...'
     this.grouped = grouped ?? true
+    this.listSlotHtmlComponent = listSlotHtmlComponent ?? null
+    this.disabled = disabled ?? false
+    this.emptyText = emptyText
+
+    this.srcElement = null
+
+    // Outside listeners
+    this.scrollEvent = null
+    this.focusEvent = null
+    this.blurEvent = null
+
+    this.mount()
+  }
+
+  // Public methods
+  mount () {
+    if (this.srcElement) {
+      this.#closeList()
+      this.srcElement.innerHTML = ''
+      this.srcElement = null
+      this.#removeOutsideListeners()
+    }
 
     this.srcElement = this.#createTreeselect()
 
-    // Outside listeners
     this.scrollEvent = this.scrollWindowHandler.bind(this)
     this.focusEvent = this.focusWindowHandler.bind(this)
     this.blurEvent = this.blurWindowHandler.bind(this)
@@ -47,6 +71,18 @@ class Treeselect {
     if (this.alwaysOpen) {
       this.#treeselectInput.openClose()
     }
+
+    if (this.disabled) {
+      this.srcElement.classList.add('treeselect--disabled')
+    }
+  }
+
+  updateValue (newValue) {
+    const list = this.#treeselectList
+    list.updateValue(newValue)
+    const {groupedIds, ids } = list.selectedNodes
+    const inputNewValue = this.grouped ? groupedIds : ids
+    this.#treeselectInput.updateValue(inputNewValue)
   }
 
   #createTreeselect () {
@@ -56,7 +92,9 @@ class Treeselect {
     const list = new TreeselectList({
       options: this.options,
       value: this.value,
-      openLevel: this.openLevel
+      openLevel: this.openLevel,
+      listSlotHtmlComponent: this.listSlotHtmlComponent,
+      emptyText: this.emptyText
     })
 
     const {groupedIds, ids } = list.selectedNodes
@@ -66,7 +104,8 @@ class Treeselect {
       clearable: this.clearable,
       isAlwaysOpened: this.alwaysOpen,
       searchable: this.searchable,
-      placeholder: this.placeholder
+      placeholder: this.placeholder,
+      disabled: this.disabled
     })
 
     if (this.appendToBody) {
@@ -242,10 +281,6 @@ class Treeselect {
     // Append to body handler
     if (!this.#treeselectInitPosition || isNeedForceUpdate) {
       list.style.transform = null
-      // We need to use display none for width because there is a problem with scroll
-      list.style.display = 'none'
-      list.style.width = `${container.clientWidth}px`
-      list.style.display = ''
 
       const { x: listX, y: listY } = list.getBoundingClientRect()
       const { x: containerX, y: containerY } = container.getBoundingClientRect()
@@ -255,8 +290,9 @@ class Treeselect {
 
     const { listX, listY, containerX, containerY } = this.#treeselectInitPosition
     const containerHeight = container.clientHeight
-
-    list.style.maxHeight = `${window.innerHeight - containerHeight}px`
+    
+    // TODO you should use css max-height
+    // list.style.maxHeight = `${window.innerHeight - containerHeight}px`
 
     if (!currentAttr || isNeedForceUpdate) {
       this.#transform.top = `translate(${containerX - listX}px, ${containerY - listY - listHeight}px)`
@@ -265,6 +301,7 @@ class Treeselect {
 
     list.style.transform = isTopDirection ? this.#transform.top : this.#transform.bottom
     this.#updateDirectionClasses(isTopDirection, true)
+    list.style.width = `${container.offsetWidth}px`
   }
 
   // Emits
