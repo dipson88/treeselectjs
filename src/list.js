@@ -125,12 +125,7 @@ const updateDOM = (flatOptions, srcElement) => {
       listItem.classList.remove('treeselect-list__item--hidden')
     }
 
-    if (!option.childOf && !option.isGroup) {
-      listItem.style.paddingLeft = `${20}px`
-    } else {
-      listItem.style.paddingLeft = option.isGroup ? `${option.level * 40}px` : `${option.level * 60}px`
-    }
-
+    updateLeftPaddingItems(option, listItem, flatOptions)
     updateCheckboxClasses(option, input)
   })
 
@@ -142,6 +137,25 @@ const updateDOM = (flatOptions, srcElement) => {
   } else {
     emptyList.classList.remove('treeselect-list__empty--hidden')
   }
+}
+
+const updateLeftPaddingItems = (option, listItem, flatOptions) => {
+  const isZeroLevel = option.level === 0
+  const defaultPadding = 20
+
+  if (isZeroLevel) {
+    const isGroupsExistOnLevel = flatOptions.some(item => item.isGroup && item.level === option.level)
+    const itemPadding = !option.isGroup && isGroupsExistOnLevel ? `${defaultPadding}px` : '0'
+    listItem.style.paddingLeft = option.isGroup ? '0' : itemPadding
+  } else {
+    listItem.style.paddingLeft = option.isGroup
+      ? `${option.level * defaultPadding}px`
+      : `${(option.level * defaultPadding) + defaultPadding}px`
+  }
+
+  // You can use css selectors to reset params with !important
+  listItem.setAttribute('level', option.level)
+  listItem.setAttribute('group', option.isGroup)
 }
 
 // Updates classes

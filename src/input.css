@@ -78,13 +78,14 @@
 
 .treeselect-input__edit {
   flex: 1;
-  min-width: 30px;
+  min-width: 0;
   border: none;
   font-size: 14px;
 }
 
 .treeselect-input__edit:focus {
   outline: none;
+  min-width: 30px;
 }
 
 .treeselect-input__operators {
