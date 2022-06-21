@@ -120,3 +120,8 @@ Name  | Params | Discription
 ------------- | ------------- | -------------
 updateValue  | Array[String] | Update selected values.
 mount  | None | Helps to remount and update settings.
+
+### Notes
+1) If you want to change the padding of the element you can use CSS selector. I've added 'group' and 'level' attributes, but you have to use !important.
+2) If you want to update props, set props to the entity of the class and then call mount() method.
+3) Use updateValue method to update only the value.

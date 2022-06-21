@@ -6,7 +6,7 @@
 .treeselect-input__tags-name{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .treeselect-input__tags-cross{display:flex;margin-left:2px}.treeselect-input__tags-cross svg{width:12px;height:12px}
 .treeselect-input__tags-count{font-size:14px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-.treeselect-input__edit{flex:1;min-width:30px;border:0;font-size:14px}.treeselect-input__edit:focus{outline:0}
+.treeselect-input__edit{flex:1;min-width:0;border:0;font-size:14px}.treeselect-input__edit:focus{outline:0;min-width:30px}
 .treeselect-input__operators{display:flex;max-width:40px;position:absolute;right:2px}
 .treeselect-input__clear{display:flex;cursor:pointer}.treeselect-input__clear svg{stroke:#c5c7cb;width:17px;min-width:17px;height:20px}
 .treeselect-input__clear:hover svg{stroke:#838790}.treeselect-input__arrow{display:flex;cursor:pointer}
