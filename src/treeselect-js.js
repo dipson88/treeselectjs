@@ -153,6 +153,9 @@ class Treeselect {
     }
 
     // List events
+    list.srcElement.addEventListener('mouseup', () => {
+      input.focus()
+    }, true)
     list.srcElement.addEventListener('input', (e) => {
       const {groupedIds, ids } = e.detail
       const inputIds = this.grouped ? groupedIds : ids
@@ -316,13 +319,14 @@ class Treeselect {
     // list.style.maxHeight = `${window.innerHeight - containerHeight}px`
 
     if (!currentAttr || isNeedForceUpdate) {
-      this.#transform.top = `translate(${containerX - listX}px, ${containerY - listY - listHeight}px)`
-      this.#transform.bottom = `translate(${containerX - listX}px, ${containerY + containerHeight - listY}px)`
+      this.#transform.top = `translateY(${containerY - listY - listHeight}px)`
+      this.#transform.bottom = `translateY(${containerY + containerHeight - listY}px)`
     }
 
     list.style.transform = isTopDirection ? this.#transform.top : this.#transform.bottom
     this.#updateDirectionClasses(isTopDirection, true)
     list.style.width = `${this.#containerWidth}px`
+    list.style.left = `${containerX}px`
   }
 
   // Emits

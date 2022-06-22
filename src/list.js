@@ -332,7 +332,7 @@ class TreeselectList {
     const itemFocused = this.srcElement.querySelector('.treeselect-list__item--focused')
 
     if (key === 'Enter' && itemFocused) {
-      itemFocused.dispatchEvent(new Event('click'))
+      itemFocused.dispatchEvent(new Event('mousedown'))
     }
 
     if (key === 'ArrowLeft' || key === 'ArrowRight') {
@@ -346,11 +346,11 @@ class TreeselectList {
       const arrow = itemFocused.querySelector('.treeselect-list__item-icon')
 
       if (key === 'ArrowLeft' && !option.isClosed) {
-        arrow.dispatchEvent(new Event('click'))
+        arrow.dispatchEvent(new Event('mousedown'))
       }
 
       if (key === 'ArrowRight' && option.isClosed) {
-        arrow.dispatchEvent(new Event('click'))
+        arrow.dispatchEvent(new Event('mousedown'))
       }
     }
 
@@ -513,7 +513,7 @@ class TreeselectList {
         this.#lastFocusedItem = itemElement
       }
     }, true)
-    itemElement.addEventListener('click', (e) => {
+    itemElement.addEventListener('mousedown', (e) => {
       e.stopPropagation()
       const checkbox = e.target.querySelector('.treeselect-list__item-checkbox')
       checkbox.checked = !checkbox.checked
@@ -533,7 +533,7 @@ class TreeselectList {
     arrow.classList.add('treeselect-list__item-icon')
     arrow.innerHTML = svg.arrowDown
 
-    arrow.addEventListener('click', (e) => {
+    arrow.addEventListener('mousedown', (e) => {
       e.stopPropagation()
       this.#arrowClickEvent(e)
     })
