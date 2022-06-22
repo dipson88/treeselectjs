@@ -142,10 +142,11 @@ const updateDOM = (flatOptions, srcElement) => {
 const updateLeftPaddingItems = (option, listItem, flatOptions) => {
   const isZeroLevel = option.level === 0
   const defaultPadding = 20
+  const zeroLevelItemPadding = 5
 
   if (isZeroLevel) {
     const isGroupsExistOnLevel = flatOptions.some(item => item.isGroup && item.level === option.level)
-    const itemPadding = !option.isGroup && isGroupsExistOnLevel ? `${defaultPadding}px` : '0'
+    const itemPadding = !option.isGroup && isGroupsExistOnLevel ? `${defaultPadding}px` : `${zeroLevelItemPadding}px`
     listItem.style.paddingLeft = option.isGroup ? '0' : itemPadding
   } else {
     listItem.style.paddingLeft = option.isGroup

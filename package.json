@@ -1,6 +1,6 @@
 {
   "name": "treeselectjs",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Treeselect JS",
   "main": "dist/treeselect-js.js",
   "repository": {

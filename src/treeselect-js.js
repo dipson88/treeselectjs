@@ -13,6 +13,11 @@ class Treeselect {
   #containerResizer = null
   #containerWidth = 0
 
+  // Outside listeners
+  #scrollEvent = null
+  #focusEvent = null
+  #blurEvent = null
+
   constructor ({
     parentHtmlContainer,
     value,
@@ -42,14 +47,9 @@ class Treeselect {
     this.grouped = grouped ?? true
     this.listSlotHtmlComponent = listSlotHtmlComponent ?? null
     this.disabled = disabled ?? false
-    this.emptyText = emptyText
+    this.emptyText = emptyText ?? 'No results found...'
 
     this.srcElement = null
-
-    // Outside listeners
-    this.scrollEvent = null
-    this.focusEvent = null
-    this.blurEvent = null
 
     this.mount()
   }
@@ -65,9 +65,9 @@ class Treeselect {
 
     this.srcElement = this.#createTreeselect()
 
-    this.scrollEvent = this.scrollWindowHandler.bind(this)
-    this.focusEvent = this.focusWindowHandler.bind(this)
-    this.blurEvent = this.blurWindowHandler.bind(this)
+    this.#scrollEvent = this.scrollWindowHandler.bind(this)
+    this.#focusEvent = this.focusWindowHandler.bind(this)
+    this.#blurEvent = this.blurWindowHandler.bind(this)
 
     if (this.alwaysOpen) {
       this.#treeselectInput.openClose()
@@ -84,6 +84,15 @@ class Treeselect {
     const {groupedIds, ids } = list.selectedNodes
     const inputNewValue = this.grouped ? groupedIds : ids
     this.#treeselectInput.updateValue(inputNewValue)
+  }
+
+  destroy () {
+    if (this.srcElement) {
+      this.#closeList()
+      this.srcElement.innerHTML = ''
+      this.srcElement = null
+      this.#removeOutsideListeners()
+    }
   }
 
   #createTreeselect () {
@@ -132,9 +141,9 @@ class Treeselect {
     })
     input.srcElement.addEventListener('focus', () => {
       this.#updateFocusClasses(true)
-      document.addEventListener('mousedown', this.focusEvent, true)
-      document.addEventListener('focus', this.focusEvent, true)
-      window.addEventListener('blur', this.blurEvent)
+      document.addEventListener('mousedown', this.#focusEvent, true)
+      document.addEventListener('focus', this.#focusEvent, true)
+      window.addEventListener('blur', this.#blurEvent)
     }, true)
 
     if (!this.alwaysOpen) {
@@ -167,7 +176,7 @@ class Treeselect {
   }
 
   #openList () {
-    window.addEventListener('scroll', this.scrollEvent, true)
+    window.addEventListener('scroll', this.#scrollEvent, true)
 
     if (this.appendToBody) {
       document.body.appendChild(this.#treeselectList.srcElement)
@@ -182,7 +191,14 @@ class Treeselect {
   }
 
   #closeList () {
-    window.removeEventListener('scroll', this.scrollEvent, true)
+    window.removeEventListener('scroll', this.#scrollEvent, true)
+    const isElementExist = this.appendToBody
+      ? document.body.contains(this.#treeselectList.srcElement)
+      : this.#htmlContainer.contains(this.#treeselectList.srcElement)
+
+    if (!isElementExist) {
+      return
+    }
 
     if (this.appendToBody) {
       document.body.removeChild(this.#treeselectList.srcElement)
@@ -230,16 +246,16 @@ class Treeselect {
   }
 
   #removeOutsideListeners () {
-    window.removeEventListener('scroll', this.scrollEvent, true)
+    window.removeEventListener('scroll', this.#scrollEvent, true)
 
-    document.removeEventListener('click', this.focusEvent, true)
-    document.removeEventListener('focus', this.focusEvent, true)
-    window.removeEventListener('blur', this.blurEvent)
+    document.removeEventListener('click', this.#focusEvent, true)
+    document.removeEventListener('focus', this.#focusEvent, true)
+    window.removeEventListener('blur', this.#blurEvent)
   }
 
   // Outside Listeners
   scrollWindowHandler () {
-    this.updateListPosition(this.#htmlContainer, this.#treeselectList.srcElement, false)
+    this.updateListPosition(this.#htmlContainer, this.#treeselectList.srcElement, true)
   }
 
   focusWindowHandler (e) {

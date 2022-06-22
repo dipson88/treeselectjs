@@ -120,8 +120,10 @@ Name  | Params | Discription
 ------------- | ------------- | -------------
 updateValue  | Array[String] | Update selected values.
 mount  | None | Helps to remount and update settings.
+destroy  | None | Deletes elements from the DOM and clears all the data. Call mount() to recreate.
 
 ### Notes
-1) If you want to change the padding of the element you can use CSS selector. I've added 'group' and 'level' attributes, but you have to use !important.
-2) If you want to update props, set props to the entity of the class and then call mount() method.
-3) Use updateValue method to update only the value.
+1) If you want to change the padding of the element you can use CSS selector. I've added **'group'** and **'level'** attributes, but you have to use **!important**.
+2) If you want to update props, set props to the entity of the class and then call **mount()** method.
+3) Use **updateValue()** method to update only the value.
+4) If you need to delete List from the DOM when you don't need treeselect anymore - call **destroy()**.

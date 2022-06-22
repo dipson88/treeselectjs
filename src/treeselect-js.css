@@ -16,6 +16,7 @@
   left: 0;
   border-radius: 4px;
   box-sizing: border-box;
+  z-index: 1010;
 }
 
 .treeselect .treeselect-list {
