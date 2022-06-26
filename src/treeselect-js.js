@@ -8,10 +8,7 @@ class Treeselect {
   #treeselectInput = null
 
   // Resize props
-  #transform = { top: null, bottom: null }
-  #treeselectInitPosition = null
   #containerResizer = null
-  #containerWidth = 0
 
   // Outside listeners
   #scrollEvent = null
@@ -120,9 +117,7 @@ class Treeselect {
 
     if (this.appendToBody) {
       this.#containerResizer = new ResizeObserver(() => {
-        const { width } = this.srcElement.getBoundingClientRect()
-        this.#containerWidth = width
-        this.updateListPosition(container, list.srcElement, true)
+        this.updateListPosition()
       })
     }
 
@@ -137,7 +132,7 @@ class Treeselect {
     input.srcElement.addEventListener('keydown', (e) => list.callKeyAction(e.key))
     input.srcElement.addEventListener('search', (e) => {
       list.updateSearchValue(e.detail)
-      this.updateListPosition(container, list.srcElement, true)
+      this.updateListPosition()
     })
     input.srcElement.addEventListener('focus', () => {
       this.#updateFocusClasses(true)
@@ -166,7 +161,7 @@ class Treeselect {
     })
     list.srcElement.addEventListener('arrow-click', () => {
       input.focus()
-      this.updateListPosition(container, list.srcElement, true)
+      this.updateListPosition()
     })
 
     this.#htmlContainer = container
@@ -188,7 +183,7 @@ class Treeselect {
       this.#htmlContainer.appendChild(this.#treeselectList.srcElement)
     }
 
-    this.updateListPosition(this.#htmlContainer, this.#treeselectList.srcElement, false)
+    this.updateListPosition()
     this.#updateOpenCloseClasses(true)
     this.#treeselectList.focusFirstListElement()
   }
@@ -258,7 +253,7 @@ class Treeselect {
 
   // Outside Listeners
   scrollWindowHandler () {
-    this.updateListPosition(this.#htmlContainer, this.#treeselectList.srcElement, true)
+    this.updateListPosition()
   }
 
   focusWindowHandler (e) {
@@ -278,55 +273,34 @@ class Treeselect {
   }
 
   // Update direction of the list. Support appendToBody and standart mode with absolute
-  updateListPosition (container, list, isNeedForceUpdate) {
-    const spaceTop = container.getBoundingClientRect().y
-    const spaceBottom = window.innerHeight - container.getBoundingClientRect().y
-    const listHeight = list.clientHeight
-    const spaceDelta = 45
-    const isTopDirection = spaceTop > spaceBottom && window.innerHeight - spaceTop < listHeight + spaceDelta
+  updateListPosition () {
+    const container = this.#htmlContainer
+    const list = this.#treeselectList.srcElement
+
+    list.style.transform = null
+    const { y: listY, height: listHeight } = list.getBoundingClientRect()
+    const { x: containerX, y: containerY, height: containerHeight, width: containerWidth } = container.getBoundingClientRect()
+    const windowHeight = window.innerHeight
+
+    const spaceTop = containerY
+    const spaceBottom = windowHeight - containerY - containerHeight
+    const isTopDirection = spaceTop > spaceBottom && spaceTop >= listHeight && spaceBottom < listHeight
+    
+    if (this.appendToBody) {
+      list.style.transform = isTopDirection
+        ? `translateY(${containerY - listY - listHeight}px)`
+        : `translateY(${containerY + containerHeight - listY}px)`
+      list.style.width = `${containerWidth}px`
+      list.style.left = `${containerX}px`
+    }
+
     const attributeToAdd = isTopDirection ? 'top' : 'buttom'
     const currentAttr = list.getAttribute('direction')
 
-    this.#htmlContainer.setAttribute('direction', attributeToAdd)
-
-    // Standart class handler handler with absolute position
-    if (!this.appendToBody) {
-      const isNoNeedToUpdate = currentAttr === attributeToAdd
-
-      if (isNoNeedToUpdate) {
-        return
-      }
-
-      this.#updateDirectionClasses(isTopDirection, false)
-
-      return
+    if (currentAttr !== attributeToAdd) {
+      list.setAttribute('direction', attributeToAdd)
+      this.#updateDirectionClasses(isTopDirection, this.appendToBody)
     }
-
-    // Append to body handler
-    if (!this.#treeselectInitPosition || isNeedForceUpdate) {
-      list.style.transform = null
-
-      const { x: listX, y: listY } = list.getBoundingClientRect()
-      const { x: containerX, y: containerY } = container.getBoundingClientRect()
-
-      this.#treeselectInitPosition = { containerX, containerY, listX, listY }
-    }
-
-    const { listX, listY, containerX, containerY } = this.#treeselectInitPosition
-    const containerHeight = container.clientHeight
-    
-    // TODO you should use css max-height
-    // list.style.maxHeight = `${window.innerHeight - containerHeight}px`
-
-    if (!currentAttr || isNeedForceUpdate) {
-      this.#transform.top = `translateY(${containerY - listY - listHeight}px)`
-      this.#transform.bottom = `translateY(${containerY + containerHeight - listY}px)`
-    }
-
-    list.style.transform = isTopDirection ? this.#transform.top : this.#transform.bottom
-    this.#updateDirectionClasses(isTopDirection, true)
-    list.style.width = `${this.#containerWidth}px`
-    list.style.left = `${containerX}px`
   }
 
   // Emits
