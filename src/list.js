@@ -67,7 +67,10 @@ const checkInput = ({ id, isGroup, childOf, checked }, flatOptions) => {
 }
 
 const updateValue = (newValue, flatOptions, srcElement) => {
-  flatOptions.forEach(option => option.checked = false)
+  flatOptions.forEach(option => {
+    option.checked = false
+    option.isPartialChecked = false
+  })
   const toCheck = flatOptions.filter(option => newValue.includes(option.id))
   toCheck.forEach(option => {
     option.checked = true
