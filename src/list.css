@@ -19,6 +19,10 @@
   height: 30px;
 }
 
+.treeselect-list__item:focus {
+  outline: none;
+}
+
 .treeselect-list__item--focused {
   background-color: #f0ffff!important;
 }

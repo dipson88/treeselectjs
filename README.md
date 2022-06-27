@@ -97,7 +97,7 @@ Name  | Type (default) | Discription
 ------------- | ------------- | -------------
 parentHtmlContainer  | HTMLElement | It sould be a HTML element (div), it will be changed to the list container.
 value  | Array[String] ([]) | It is an array with ids.
-options  | Array[Object] ([]) | It is an array of objects { name: String, value: String, children: [] }, where children are the same array of objects.
+options  | Array[Object] ([]) | It is an array of objects { name: String, value: String, children: [] }, where children are the same array of objects. Do not use duplicated values.
 openLevel  | Number (0) | All groups will be opened to this level.
 appendToBody  | Boolean (false) | List will be appended to the body instead of the input container.
 alwaysOpen  | Boolean (false) | List will be always opened.
@@ -119,11 +119,13 @@ input  | Array[String] | Returns selected ids without groups, only leafs.
 Name  | Params | Discription
 ------------- | ------------- | -------------
 updateValue  | Array[String] | Update selected values.
-mount  | None | Helps to remount and update settings.
-destroy  | None | Deletes elements from the DOM and clears all the data. Call mount() to recreate.
+mount  | None | Helps to remount and update settings. Change settings that you need (treeselect.appendToBody = true), then call mount().
+destroy  | None | Deletes elements from the DOM. Call mount() to add treeselect to the DOM with previously saved internal data. If you need to recreate treeselect with default params - call **new Treeselect(options)**.
 
 ### Notes
 1) If you want to change the padding of the element you can use CSS selector. I've added **'group'** and **'level'** attributes, but you have to use **!important**.
 2) If you want to update props, set props to the entity of the class and then call **mount()** method.
 3) Use **updateValue()** method to update only the value.
 4) If you need to delete List from the DOM when you don't need treeselect anymore - call **destroy()**.
+5) Do not use **duplicated** values for the options. You will see a error with duplicated values.
+6) **Value** inside the **options** prop should be a **String**.
