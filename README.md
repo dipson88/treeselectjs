@@ -120,7 +120,7 @@ Name  | Params | Discription
 ------------- | ------------- | -------------
 updateValue  | Array[String] | Update selected values.
 mount  | None | Helps to remount and update settings. Change settings that you need (treeselect.appendToBody = true), then call mount().
-destroy  | None | Deletes elements from the DOM. Call mount() to add treeselect to the DOM with saved inner data. If you need to recreate treeselect with default params - call new Treeselect(options).
+destroy  | None | Deletes elements from the DOM. Call mount() to add treeselect to the DOM with previously saved internal data. If you need to recreate treeselect with default params - call **new Treeselect(options)**.
 
 ### Notes
 1) If you want to change the padding of the element you can use CSS selector. I've added **'group'** and **'level'** attributes, but you have to use **!important**.
