@@ -97,7 +97,7 @@ Name  | Type (default) | Discription
 ------------- | ------------- | -------------
 parentHtmlContainer  | HTMLElement | It sould be a HTML element (div), it will be changed to the list container.
 value  | Array[String] ([]) | It is an array with ids.
-options  | Array[Object] ([]) | It is an array of objects { name: String, value: String, children: [] }, where children are the same array of objects.
+options  | Array[Object] ([]) | It is an array of objects { name: String, value: String, children: [] }, where children are the same array of objects. Do not use duplicated values.
 openLevel  | Number (0) | All groups will be opened to this level.
 appendToBody  | Boolean (false) | List will be appended to the body instead of the input container.
 alwaysOpen  | Boolean (false) | List will be always opened.
@@ -127,3 +127,5 @@ destroy  | None | Deletes elements from the DOM and clears all the data. Call mo
 2) If you want to update props, set props to the entity of the class and then call **mount()** method.
 3) Use **updateValue()** method to update only the value.
 4) If you need to delete List from the DOM when you don't need treeselect anymore - call **destroy()**.
+5) Do not use **duplicated** values for the options. You will see a error with duplicated values.
+6) **Value** inside the **options** prop should be a **String**.
