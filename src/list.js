@@ -236,6 +236,26 @@ const getListItemByCheckbox = (checkbox) => {
   return listItem
 }
 
+const validateOptions = (flattedOption) => {
+  const { duplications } = flattedOption.reduce((acc, curr) => {
+    if (acc.allItems.includes(curr.id)) {
+      acc.duplications.push(curr.id)
+    }
+
+    acc.allItems.push(curr.id)
+
+    return acc
+  }, {
+    duplications: [],
+    allItems: []
+  })
+
+  
+  if (duplications.length) {
+    console.error(`You have duplicated values: ${duplications.join(', ')}! You should use unique values.`)
+  }
+}
+
 class TreeselectList {
   #lastFocusedItem = null
   #isMouseActionsAvailable = true
@@ -260,6 +280,7 @@ class TreeselectList {
     this.srcElement = this.#createList()
 
     this.updateValue(this.value)
+    validateOptions(this.flattedOptions)
   }
 
   // Public methods
