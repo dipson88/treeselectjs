@@ -53,12 +53,7 @@ class Treeselect {
 
   // Public methods
   mount () {
-    if (this.srcElement) {
-      this.#closeList()
-      this.srcElement.innerHTML = ''
-      this.srcElement = null
-      this.#removeOutsideListeners()
-    }
+    this.destroy()
 
     this.srcElement = this.#createTreeselect()
 
@@ -88,7 +83,7 @@ class Treeselect {
       this.#closeList()
       this.srcElement.innerHTML = ''
       this.srcElement = null
-      this.#removeOutsideListeners()
+      this.#removeOutsideListeners(true)
     }
   }
 
@@ -243,8 +238,10 @@ class Treeselect {
     }
   }
 
-  #removeOutsideListeners () {
-    window.removeEventListener('scroll', this.#scrollEvent, true)
+  #removeOutsideListeners (isDestroy) {
+    if (!this.alwaysOpen || isDestroy) {
+      window.removeEventListener('scroll', this.#scrollEvent, true)
+    }
 
     document.removeEventListener('click', this.#focusEvent, true)
     document.removeEventListener('focus', this.#focusEvent, true)
@@ -274,10 +271,11 @@ class Treeselect {
 
   // Update direction of the list. Support appendToBody and standart mode with absolute
   updateListPosition () {
-    const container = this.#htmlContainer
     const list = this.#treeselectList.srcElement
-
+    // We need to reset position
     list.style.transform = null
+    const container = this.#htmlContainer
+
     const { y: listY, height: listHeight } = list.getBoundingClientRect()
     const { x: containerX, y: containerY, height: containerHeight, width: containerWidth } = container.getBoundingClientRect()
     const windowHeight = window.innerHeight

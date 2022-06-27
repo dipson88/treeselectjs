@@ -8,3 +8,4 @@
 // updateDisabled methods to avoid a remount
 // create update function for the list to avoid a remount
 // use _ instead private class #
+// disable change focused element on fast scroll appendToBody
