@@ -5,6 +5,8 @@ A multi-select js component with nested options.
 - Full key support (ArrowUp, ArrowDown, Space, ArrowLeft, ArrowRight, Enter)
 - Screen sensitive direction
 
+**Live Demo:** https://dipson88.github.io/treeselectjs/
+
 ![Example img](https://github.com/dipson88/treeselectjs/blob/main/treeselectjs.png?raw=true)
 
 ### Getting Started
@@ -21,7 +23,6 @@ and css file with styles
 ```
 @import 'treeselectjs/dist/treeselect-js.css'
 ```
-**Live Demo:** https://dipson88.github.io/treeselectjs/
 
 Example
 ```
