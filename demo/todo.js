@@ -9,3 +9,4 @@
 // create update function for the list to avoid a remount
 // use _ instead private class #
 // disable change focused element on fast scroll appendToBody
+// Investigate an ability to add a diff names but the same values, and check them.
