@@ -49,7 +49,7 @@ const options = [
 const slot = document.createElement('div')
 slot.innerHTML='<a class="test" href="">Add new element</a>'
 
-const domEl = document.querySelector('.treeselect-test')
+const domEl = document.querySelector('.treeselect-demo')
 const treeselect = new Treeselect({
   parentHtmlContainer: domEl,
   value: [],

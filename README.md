@@ -75,7 +75,7 @@ const options = [
 const slot = document.createElement('div')
 slot.innerHTML='<a class="test" href="">Slot example text</a>'
 
-const domElement = document.querySelector('.treeselect-test')
+const domElement = document.querySelector('.treeselect-demo')
 const treeselect = new Treeselect({
   parentHtmlContainer: domElement,
   value: ['West End', 'Paris', 'Lyon'],
