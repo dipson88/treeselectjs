@@ -21,6 +21,7 @@ and css file with styles
 ```
 @import 'treeselectjs/dist/treeselect-js.css'
 ```
+**Live Demo:** https://dipson88.github.io/treeselectjs/
 
 Example
 ```
