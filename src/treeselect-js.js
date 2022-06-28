@@ -292,7 +292,7 @@ class Treeselect {
       list.style.left = `${containerX}px`
     }
 
-    const attributeToAdd = isTopDirection ? 'top' : 'buttom'
+    const attributeToAdd = isTopDirection ? 'top' : 'bottom'
     const currentAttr = list.getAttribute('direction')
 
     if (currentAttr !== attributeToAdd) {
