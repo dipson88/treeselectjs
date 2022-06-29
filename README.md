@@ -95,9 +95,9 @@ treeselect.srcElement.addEventListener('input', (e) => {
 ```
 
 ### Props
-Name  | Type (default) | Discription
+Name  | Type (default) | Description
 ------------- | ------------- | -------------
-parentHtmlContainer  | HTMLElement | It sould be a HTML element (div), it will be changed to the list container.
+parentHtmlContainer  | HTMLElement (required!) | It should be a HTML element (div), it will be changed to the list container.
 value  | Array[String] ([]) | It is an array with ids.
 options  | Array[Object] ([]) | It is an array of objects { name: String, value: String, children: [] }, where children are the same array of objects. Do not use duplicated values.
 openLevel  | Number (0) | All groups will be opened to this level.
@@ -107,18 +107,19 @@ showTags  | Boolean (true) | Selected values look like tags. The false value sho
 clearable  | Boolean (true) | Clear icon is available.
 searchable  | Boolean (true) | Search is available.
 placeholder  | String ('Search...') | Placeholder text.
-grouped | Boolean (true) | Show groups in the input and group lefs if all group selected.
+grouped | Boolean (true) | Show groups in the input and group leafs if all group selected.
 listSlotHtmlComponent | HTMLElement (null) | It should be a HTML element, it will be append to the end of the list.
 disabled | Boolean (false) | List will be disabled.
 emptyText | String ('No results found...') | A empty list text.
+staticList | Boolean (false) | Add the list as a static DOM element. List doesn't overlap content. This prop will be ignored if you use `appendToBody`.
 
 ### Emits
-Name  | Return Type | Discription
+Name  | Return Type | Description
 ------------- | ------------- | -------------
 input  | Array[String] | Returns selected ids without groups, only leafs.
 
 ### Methods
-Name  | Params | Discription
+Name  | Params | Description
 ------------- | ------------- | -------------
 updateValue  | Array[String] | Update selected values.
 mount  | None | Helps to remount and update settings. Change settings that you need (treeselect.appendToBody = true), then call mount().

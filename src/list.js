@@ -1,6 +1,6 @@
 import svg from './svgIcons.js'
 
-const getFlatOptons = (options, openLevel, groupId = 0, level = 0) => {
+const getFlatOptions = (options, openLevel, groupId = 0, level = 0) => {
   return options.reduce((acc, curr) => {
     const isGroup = !!curr.children?.length
     const isClosed = level >= openLevel && isGroup
@@ -8,7 +8,7 @@ const getFlatOptons = (options, openLevel, groupId = 0, level = 0) => {
     acc.push({ id: curr.value, name: curr.name, childOf: groupId, isGroup, checked: false, level, isClosed, hidden })
 
     if (isGroup) {
-      const children = getFlatOptons(curr.children, openLevel, curr.value, level + 1)
+      const children = getFlatOptions(curr.children, openLevel, curr.value, level + 1)
       acc.push(...children)
     }
 
@@ -190,13 +190,13 @@ const getAllFlattedChildren = (childOf, flattedOption) => {
   }, [])
 }
 
-const getAllFlattendParents = (childOf, flatOptions) => {
+const getAllFlattenParents = (childOf, flatOptions) => {
   return flatOptions.reduce((acc, curr) => {
     if (curr.id === childOf) {
       acc.push(curr)
 
       if (curr.childOf) {
-        acc.push(...getAllFlattendParents(curr.childOf, flatOptions))
+        acc.push(...getAllFlattenParents(curr.childOf, flatOptions))
       }
     }
 
@@ -252,7 +252,7 @@ const validateOptions = (flattedOption) => {
 
   
   if (duplications.length) {
-    console.error(`You have duplicated values: ${duplications.join(', ')}! You should use unique values.`)
+    console.error(`Validation: You have duplicated values: ${duplications.join(', ')}! You should use unique values.`)
   }
 }
 
@@ -274,7 +274,7 @@ class TreeselectList {
     this.listSlotHtmlComponent = listSlotHtmlComponent
     this.emptyText = emptyText ?? 'No results found...'
 
-    this.flattedOptions = getFlatOptons(this.options, this.openLevel)
+    this.flattedOptions = getFlatOptions(this.options, this.openLevel)
     this.flattedOptionsBeforeSearch = this.flattedOptions
     this.selectedNodes = { ids: [], groupedIds: [] }
     this.srcElement = this.#createList()
@@ -315,9 +315,9 @@ class TreeselectList {
     }
 
     const allOptions = this.flattedOptions.reduce((acc, curr) => {
-      const isSerched = curr.name.toLowerCase().includes(searchText.toLowerCase())
+      const isSearched = curr.name.toLowerCase().includes(searchText.toLowerCase())
 
-      if (isSerched) {
+      if (isSearched) {
         acc.push(curr)
 
         if (curr.isGroup) {
@@ -326,7 +326,7 @@ class TreeselectList {
         }
 
         if (curr.childOf) {
-          const flattedParents = getAllFlattendParents(curr.childOf, this.flattedOptions)
+          const flattedParents = getAllFlattenParents(curr.childOf, this.flattedOptions)
           acc.push(...flattedParents)
         }
       }
@@ -432,8 +432,8 @@ class TreeselectList {
   }
 
   focusFirstListElement () {
-    const focusedCalss = 'treeselect-list__item--focused'
-    const itemFocused = this.srcElement.querySelector(`.${focusedCalss}`)
+    const focusedClass = 'treeselect-list__item--focused'
+    const itemFocused = this.srcElement.querySelector(`.${focusedClass}`)
     const allCheckboxes = Array.from(this.srcElement.querySelectorAll('.treeselect-list__item-checkbox'))
       .filter(checkbox => window.getComputedStyle(getListItemByCheckbox(checkbox)).display !== 'none')
   
@@ -442,11 +442,11 @@ class TreeselectList {
     }
   
     if (itemFocused) {
-      itemFocused.classList.remove(focusedCalss)
+      itemFocused.classList.remove(focusedClass)
     }
   
     const firstItem = getListItemByCheckbox(allCheckboxes[0])
-    firstItem.classList.add(focusedCalss)
+    firstItem.classList.add(focusedClass)
   }
 
   // Private methods
@@ -628,7 +628,7 @@ class TreeselectList {
     hideShowChildren(this.flattedOptions, flattedOption)
     updateDOM(this.flattedOptions, this.srcElement)
 
-    this.#emitArrrowClick()
+    this.#emitArrowClick()
   }
 
   #groupMouseAction (isMouseOver, itemElement) {
@@ -655,7 +655,7 @@ class TreeselectList {
   }
 
   // Emits
-  #emitArrrowClick () {
+  #emitArrowClick () {
     this.srcElement.dispatchEvent(new CustomEvent('arrow-click'))
   }
 

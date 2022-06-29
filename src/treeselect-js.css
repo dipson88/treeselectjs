@@ -23,6 +23,10 @@
   position: absolute;
 }
 
+.treeselect .treeselect-list--static {
+  position: static;
+}
+
 .treeselect-input--focused {
   border-color: #101010;
 }

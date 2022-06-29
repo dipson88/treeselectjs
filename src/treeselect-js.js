@@ -1,6 +1,17 @@
 import TreeselectInput from "./input.js"
 import TreeselectList from "./list.js"
 
+
+const validateProps = ({ parentHtmlContainer, staticList, appendToBody }) => {
+  if (!parentHtmlContainer) {
+    console.error('Validation: parentHtmlContainer prop is required!')
+  }
+
+  if (staticList && appendToBody) {
+    console.error('Validation: You should set staticList to false if you use appendToBody!')
+  }
+}
+
 class Treeselect {
   // Components
   #htmlContainer = null
@@ -29,8 +40,15 @@ class Treeselect {
     grouped,
     listSlotHtmlComponent,
     disabled,
-    emptyText
+    emptyText,
+    staticList
   }) {
+    validateProps({
+      parentHtmlContainer,
+      staticList,
+      appendToBody
+    })
+
     this.parentHtmlContainer = parentHtmlContainer
     this.value = value ?? []
     this.options = options ?? []
@@ -45,6 +63,7 @@ class Treeselect {
     this.listSlotHtmlComponent = listSlotHtmlComponent ?? null
     this.disabled = disabled ?? false
     this.emptyText = emptyText ?? 'No results found...'
+    this.staticList = staticList && !this.appendToBody
 
     this.srcElement = null
 
@@ -236,6 +255,12 @@ class Treeselect {
     } else {
       this.#treeselectInput.srcElement.classList.remove('treeselect-input--opened')
     }
+
+    if (this.staticList) {
+      this.#treeselectList.srcElement.classList.add('treeselect-list--static')
+    } else {
+      this.#treeselectList.srcElement.classList.remove('treeselect-list--static')
+    }
   }
 
   #removeOutsideListeners (isDestroy) {
@@ -269,7 +294,7 @@ class Treeselect {
     this.#updateFocusClasses(false)
   }
 
-  // Update direction of the list. Support appendToBody and standart mode with absolute
+  // Update direction of the list. Support appendToBody and standard mode with absolute
   updateListPosition () {
     const list = this.#treeselectList.srcElement
     // We need to reset position
@@ -289,10 +314,10 @@ class Treeselect {
         ? `translateY(${containerY - listY - listHeight}px)`
         : `translateY(${containerY + containerHeight - listY}px)`
       list.style.width = `${containerWidth}px`
-      list.style.left = `${containerX}px`
+      list.style.left = `${containerX + window.scrollX}px`
     }
 
-    const attributeToAdd = isTopDirection ? 'top' : 'buttom'
+    const attributeToAdd = isTopDirection ? 'top' : 'bottom'
     const currentAttr = list.getAttribute('direction')
 
     if (currentAttr !== attributeToAdd) {
