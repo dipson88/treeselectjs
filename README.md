@@ -5,6 +5,8 @@ A multi-select js component with nested options.
 - Full key support (ArrowUp, ArrowDown, Space, ArrowLeft, ArrowRight, Enter)
 - Screen sensitive direction
 
+**Live Demo:** https://dipson88.github.io/treeselectjs/
+
 ![Example img](https://github.com/dipson88/treeselectjs/blob/main/treeselectjs.png?raw=true)
 
 ### Getting Started
@@ -24,7 +26,7 @@ and css file with styles
 
 Example
 ```
-import Treeselect from 'treeselectjs'
+import Treeselect from '../dist/treeselect-js.js';
 
 const options = [
   {
@@ -73,22 +75,23 @@ const options = [
 ]
 
 const slot = document.createElement('div')
-slot.innerHTML='<a class="test" href="">Slot example text</a>'
+slot.innerHTML='<a class="treeselect-demo__slot" href="">Click!</a>'
 
-const domElement = document.querySelector('.treeselect-test')
+const domElement = document.querySelector('.treeselect-demo')
 const treeselect = new Treeselect({
   parentHtmlContainer: domElement,
   value: ['West End', 'Paris', 'Lyon'],
   options: options,
-  alwaysOpen: true,
-  appendToBody: true,
-  listSlotHtmlComponent: slot,
-  disabled: false,
-  emptyText: 'No data text'
+  listSlotHtmlComponent: slot
 })
 
 treeselect.srcElement.addEventListener('input', (e) => {
-  console.log(e.detail)
+  console.log('Selected value:', e.detail)
+})
+
+slot.addEventListener('click', (e) => {
+  e.preventDefault()
+  alert('Slot click!')
 })
 ```
 
