@@ -5,6 +5,8 @@ A multi-select js component with nested options.
 - Full key support (ArrowUp, ArrowDown, Space, ArrowLeft, ArrowRight, Enter)
 - Screen sensitive direction
 
+**Live Demo:** https://dipson88.github.io/treeselectjs/
+
 ![Example img](https://github.com/dipson88/treeselectjs/blob/main/treeselectjs.png?raw=true)
 
 ### Getting Started
@@ -24,7 +26,7 @@ and css file with styles
 
 Example
 ```
-import Treeselect from 'treeselectjs'
+import Treeselect from '../dist/treeselect-js.js';
 
 const options = [
   {
@@ -73,50 +75,52 @@ const options = [
 ]
 
 const slot = document.createElement('div')
-slot.innerHTML='<a class="test" href="">Slot example text</a>'
+slot.innerHTML='<a class="treeselect-demo__slot" href="">Click!</a>'
 
-const domElement = document.querySelector('.treeselect-test')
+const domElement = document.querySelector('.treeselect-demo')
 const treeselect = new Treeselect({
   parentHtmlContainer: domElement,
   value: ['West End', 'Paris', 'Lyon'],
   options: options,
-  alwaysOpen: true,
-  appendToBody: true,
-  listSlotHtmlComponent: slot,
-  disabled: false,
-  emptyText: 'No data text'
+  listSlotHtmlComponent: slot
 })
 
 treeselect.srcElement.addEventListener('input', (e) => {
-  console.log(e.detail)
+  console.log('Selected value:', e.detail)
+})
+
+slot.addEventListener('click', (e) => {
+  e.preventDefault()
+  alert('Slot click!')
 })
 ```
 
 ### Props
-Name  | Type (default) | Discription
+Name  | Type (default) | Description
 ------------- | ------------- | -------------
-parentHtmlContainer  | HTMLElement | It sould be a HTML element (div), it will be changed to the list container.
+parentHtmlContainer  | HTMLElement (required!) | It should be a HTML element (div), it will be changed to the list container.
 value  | Array[String] ([]) | It is an array with ids.
 options  | Array[Object] ([]) | It is an array of objects { name: String, value: String, children: [] }, where children are the same array of objects. Do not use duplicated values.
 openLevel  | Number (0) | All groups will be opened to this level.
 appendToBody  | Boolean (false) | List will be appended to the body instead of the input container.
-alwaysOpen  | Boolean (false) | List will be always opened.
+alwaysOpen  | Boolean (false) | List will be always opened. You can use it for comfortable style changing. If you what to use it as an opened list, turn `staticList' to `true`.
 showTags  | Boolean (true) | Selected values look like tags. The false value shows results as '{count} elements selected'.
 clearable  | Boolean (true) | Clear icon is available.
 searchable  | Boolean (true) | Search is available.
 placeholder  | String ('Search...') | Placeholder text.
-grouped | Boolean (true) | Show groups in the input and group lefs if all group selected.
+grouped | Boolean (true) | Show groups in the input and group leafs if all group selected.
 listSlotHtmlComponent | HTMLElement (null) | It should be a HTML element, it will be append to the end of the list.
 disabled | Boolean (false) | List will be disabled.
 emptyText | String ('No results found...') | A empty list text.
+staticList | Boolean (false) | Add the list as a static DOM element. List doesn't overlap content. This prop will be ignored if you use `appendToBody`.
 
 ### Emits
-Name  | Return Type | Discription
+Name  | Return Type | Description
 ------------- | ------------- | -------------
 input  | Array[String] | Returns selected ids without groups, only leafs.
 
 ### Methods
-Name  | Params | Discription
+Name  | Params | Description
 ------------- | ------------- | -------------
 updateValue  | Array[String] | Update selected values.
 mount  | None | Helps to remount and update settings. Change settings that you need (treeselect.appendToBody = true), then call mount().

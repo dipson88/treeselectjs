@@ -47,20 +47,21 @@ const options = [
 ]
 
 const slot = document.createElement('div')
-slot.innerHTML='<a class="test" href="">Add new element</a>'
+slot.innerHTML='<a class="treeselect-demo__slot" href="">Click!</a>'
 
-const domEl = document.querySelector('.treeselect-test')
+const domElement = document.querySelector('.treeselect-demo')
 const treeselect = new Treeselect({
-  parentHtmlContainer: domEl,
-  value: [],
+  parentHtmlContainer: domElement,
+  value: ['West End', 'Paris', 'Lyon'],
   options: options,
-  alwaysOpen: false,
-  appendToBody: true,
-  listSlotHtmlComponent: null,
-  disabled: false,
-  emptyText: 'No data text'
+  listSlotHtmlComponent: slot
 })
 
 treeselect.srcElement.addEventListener('input', (e) => {
-  console.log(e.detail)
+  console.log('Selected value:', e.detail)
+})
+
+slot.addEventListener('click', (e) => {
+  e.preventDefault()
+  alert('Slot click!')
 })

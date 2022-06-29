@@ -16,11 +16,15 @@
   left: 0;
   border-radius: 4px;
   box-sizing: border-box;
-  z-index: 1050;
+  z-index: 1000;
 }
 
 .treeselect .treeselect-list {
   position: absolute;
+}
+
+.treeselect .treeselect-list--static {
+  position: static;
 }
 
 .treeselect-input--focused {

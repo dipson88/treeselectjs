@@ -1,6 +1,17 @@
 import TreeselectInput from "./input.js"
 import TreeselectList from "./list.js"
 
+
+const validateProps = ({ parentHtmlContainer, staticList, appendToBody }) => {
+  if (!parentHtmlContainer) {
+    console.error('Validation: parentHtmlContainer prop is required!')
+  }
+
+  if (staticList && appendToBody) {
+    console.error('Validation: You should set staticList to false if you use appendToBody!')
+  }
+}
+
 class Treeselect {
   // Components
   #htmlContainer = null
@@ -12,6 +23,7 @@ class Treeselect {
 
   // Outside listeners
   #scrollEvent = null
+  #resizeEvent = null
   #focusEvent = null
   #blurEvent = null
 
@@ -29,8 +41,15 @@ class Treeselect {
     grouped,
     listSlotHtmlComponent,
     disabled,
-    emptyText
+    emptyText,
+    staticList
   }) {
+    validateProps({
+      parentHtmlContainer,
+      staticList,
+      appendToBody
+    })
+
     this.parentHtmlContainer = parentHtmlContainer
     this.value = value ?? []
     this.options = options ?? []
@@ -45,6 +64,7 @@ class Treeselect {
     this.listSlotHtmlComponent = listSlotHtmlComponent ?? null
     this.disabled = disabled ?? false
     this.emptyText = emptyText ?? 'No results found...'
+    this.staticList = staticList && !this.appendToBody
 
     this.srcElement = null
 
@@ -58,6 +78,7 @@ class Treeselect {
     this.srcElement = this.#createTreeselect()
 
     this.#scrollEvent = this.scrollWindowHandler.bind(this)
+    this.#resizeEvent = this.scrollWindowHandler.bind(this)
     this.#focusEvent = this.focusWindowHandler.bind(this)
     this.#blurEvent = this.blurWindowHandler.bind(this)
 
@@ -170,6 +191,7 @@ class Treeselect {
 
   #openList () {
     window.addEventListener('scroll', this.#scrollEvent, true)
+    window.addEventListener('resize', this.#resizeEvent)
 
     if (this.appendToBody) {
       document.body.appendChild(this.#treeselectList.srcElement)
@@ -185,6 +207,7 @@ class Treeselect {
 
   #closeList () {
     window.removeEventListener('scroll', this.#scrollEvent, true)
+    window.removeEventListener('resize', this.#resizeEvent)
     const isElementExist = this.appendToBody
       ? document.body.contains(this.#treeselectList.srcElement)
       : this.#htmlContainer.contains(this.#treeselectList.srcElement)
@@ -236,11 +259,18 @@ class Treeselect {
     } else {
       this.#treeselectInput.srcElement.classList.remove('treeselect-input--opened')
     }
+
+    if (this.staticList) {
+      this.#treeselectList.srcElement.classList.add('treeselect-list--static')
+    } else {
+      this.#treeselectList.srcElement.classList.remove('treeselect-list--static')
+    }
   }
 
   #removeOutsideListeners (isDestroy) {
     if (!this.alwaysOpen || isDestroy) {
       window.removeEventListener('scroll', this.#scrollEvent, true)
+      window.removeEventListener('resize', this.#resizeEvent)
     }
 
     document.removeEventListener('click', this.#focusEvent, true)
@@ -269,7 +299,7 @@ class Treeselect {
     this.#updateFocusClasses(false)
   }
 
-  // Update direction of the list. Support appendToBody and standart mode with absolute
+  // Update direction of the list. Support appendToBody and standard mode with absolute
   updateListPosition () {
     const list = this.#treeselectList.srcElement
     // We need to reset position
@@ -289,10 +319,10 @@ class Treeselect {
         ? `translateY(${containerY - listY - listHeight}px)`
         : `translateY(${containerY + containerHeight - listY}px)`
       list.style.width = `${containerWidth}px`
-      list.style.left = `${containerX}px`
+      list.style.left = `${containerX + window.scrollX}px`
     }
 
-    const attributeToAdd = isTopDirection ? 'top' : 'buttom'
+    const attributeToAdd = isTopDirection ? 'top' : 'bottom'
     const currentAttr = list.getAttribute('direction')
 
     if (currentAttr !== attributeToAdd) {
