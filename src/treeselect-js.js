@@ -289,7 +289,7 @@ class Treeselect {
         ? `translateY(${containerY - listY - listHeight}px)`
         : `translateY(${containerY + containerHeight - listY}px)`
       list.style.width = `${containerWidth}px`
-      list.style.left = `${containerX}px`
+      list.style.left = `${containerX + window.scrollX}px`
     }
 
     const attributeToAdd = isTopDirection ? 'top' : 'bottom'
