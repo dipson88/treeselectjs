@@ -7,7 +7,7 @@
 // create update function for the list to avoid a remount
 // use _ instead private class #
 // disable change focused element on fast scroll appendToBody
+// Should we add a list direction if we use staticList prop?
 
 // REQUESTS
 // Investigate an ability to add a diff names but the same values, and check them.
-// Add a static behavior for the list during always open usage.
