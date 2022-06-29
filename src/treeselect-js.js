@@ -23,6 +23,7 @@ class Treeselect {
 
   // Outside listeners
   #scrollEvent = null
+  #resizeEvent = null
   #focusEvent = null
   #blurEvent = null
 
@@ -77,6 +78,7 @@ class Treeselect {
     this.srcElement = this.#createTreeselect()
 
     this.#scrollEvent = this.scrollWindowHandler.bind(this)
+    this.#resizeEvent = this.scrollWindowHandler.bind(this)
     this.#focusEvent = this.focusWindowHandler.bind(this)
     this.#blurEvent = this.blurWindowHandler.bind(this)
 
@@ -189,6 +191,7 @@ class Treeselect {
 
   #openList () {
     window.addEventListener('scroll', this.#scrollEvent, true)
+    window.addEventListener('resize', this.#resizeEvent)
 
     if (this.appendToBody) {
       document.body.appendChild(this.#treeselectList.srcElement)
@@ -204,6 +207,7 @@ class Treeselect {
 
   #closeList () {
     window.removeEventListener('scroll', this.#scrollEvent, true)
+    window.removeEventListener('resize', this.#resizeEvent)
     const isElementExist = this.appendToBody
       ? document.body.contains(this.#treeselectList.srcElement)
       : this.#htmlContainer.contains(this.#treeselectList.srcElement)
@@ -266,6 +270,7 @@ class Treeselect {
   #removeOutsideListeners (isDestroy) {
     if (!this.alwaysOpen || isDestroy) {
       window.removeEventListener('scroll', this.#scrollEvent, true)
+      window.removeEventListener('resize', this.#resizeEvent)
     }
 
     document.removeEventListener('click', this.#focusEvent, true)
