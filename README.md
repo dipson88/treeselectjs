@@ -103,7 +103,7 @@ value  | Array[String] ([]) | It is an array with ids.
 options  | Array[Object] ([]) | It is an array of objects { name: String, value: String, children: [] }, where children are the same array of objects. Do not use duplicated values.
 openLevel  | Number (0) | All groups will be opened to this level.
 appendToBody  | Boolean (false) | List will be appended to the body instead of the input container.
-alwaysOpen  | Boolean (false) | List will be always opened.
+alwaysOpen  | Boolean (false) | List will be always opened. You can use it for comfortable style changing. If you what to use it as an opened list, turn `staticList' to `true`.
 showTags  | Boolean (true) | Selected values look like tags. The false value shows results as '{count} elements selected'.
 clearable  | Boolean (true) | Clear icon is available.
 searchable  | Boolean (true) | Search is available.
