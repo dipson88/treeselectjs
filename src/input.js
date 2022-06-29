@@ -1,7 +1,7 @@
 import svg from './svgIcons.js'
 
 class TreeselectInput {
-  #htmlTagsSecton = null
+  #htmlTagsSection = null
   #htmlEditControl = null
   #htmlOperators = null
   #htmlArrow = null
@@ -77,12 +77,12 @@ class TreeselectInput {
   }
 
   #updateTags () {
-    this.#htmlTagsSecton.innerHTML = ''
+    this.#htmlTagsSection.innerHTML = ''
 
     if (this.showTags) {
-      this.#htmlTagsSecton.append(...this.#createTags())
+      this.#htmlTagsSection.append(...this.#createTags())
     } else {
-      this.#htmlTagsSecton.appendChild(this.#createCountElement())
+      this.#htmlTagsSection.appendChild(this.#createCountElement())
     }
   }
 
@@ -142,7 +142,7 @@ class TreeselectInput {
     container.classList.add('treeselect-input')
     container.setAttribute('tabindex', '-1')
 
-    this.#htmlTagsSecton = this.#createTagsSection()
+    this.#htmlTagsSection = this.#createTagsSection()
     this.#htmlEditControl = this.#createControl()
     this.#htmlOperators = this.#createOperators()
 
@@ -156,7 +156,7 @@ class TreeselectInput {
       this.focus()
     })
 
-    container.append(this.#htmlTagsSecton, this.#htmlEditControl, this.#htmlOperators)
+    container.append(this.#htmlTagsSection, this.#htmlEditControl, this.#htmlOperators)
 
     return container
   }
