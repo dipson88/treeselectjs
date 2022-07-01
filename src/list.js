@@ -20,6 +20,7 @@ const checkAllChildrenInputs = ({ id, checked }, flatOptions) => {
   flatOptions.forEach(option => {
     if (option.childOf === id) {
       option.checked = checked
+      option.isPartialChecked = false
 
       if (option.isGroup) {
         checkAllChildrenInputs(option, flatOptions)
