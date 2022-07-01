@@ -290,6 +290,10 @@ class TreeselectList {
   }
 
   updateSearchValue (searchText) {
+    if (searchText === this.searchText) {
+      return
+    }
+
     const isStartOfSearching = this.searchText === '' && searchText !== ''
     this.searchText = searchText
 
