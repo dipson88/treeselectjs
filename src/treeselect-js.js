@@ -27,9 +27,6 @@ class Treeselect {
   #focusEvent = null
   #blurEvent = null
 
-  // State
-  #isListOpened = false
-
   constructor ({
     parentHtmlContainer,
     value,
@@ -69,6 +66,8 @@ class Treeselect {
     this.emptyText = emptyText ?? 'No results found...'
     this.staticList = staticList && !this.appendToBody
 
+    // State
+    this.isListOpened = false
     this.srcElement = null
 
     this.mount()
@@ -111,6 +110,19 @@ class Treeselect {
     }
   }
 
+  focus () {
+    if (this.#treeselectInput) {
+      this.#treeselectInput.focus()
+    }
+  }
+
+  toggleOpenClose () {
+    if (this.#treeselectInput) {
+      this.#treeselectInput.openClose()
+      this.#treeselectInput.focus()
+    }
+  }
+
   #createTreeselect () {
     const container = this.parentHtmlContainer
     container.classList.add('treeselect')
@@ -150,7 +162,7 @@ class Treeselect {
     })
     input.srcElement.addEventListener('open', () => this.#openList())
     input.srcElement.addEventListener('keydown', (e) => {
-      if (this.#isListOpened) {
+      if (this.isListOpened) {
         list.callKeyAction(e.key)
       }
     })
@@ -198,7 +210,7 @@ class Treeselect {
   }
 
   #openList () {
-    this.#isListOpened = true
+    this.isListOpened = true
 
     window.addEventListener('scroll', this.#scrollEvent, true)
     window.addEventListener('resize', this.#resizeEvent)
@@ -216,7 +228,7 @@ class Treeselect {
   }
 
   #closeList () {
-    this.#isListOpened = false
+    this.isListOpened = false
 
     window.removeEventListener('scroll', this.#scrollEvent, true)
     window.removeEventListener('resize', this.#resizeEvent)
