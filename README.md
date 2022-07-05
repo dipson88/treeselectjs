@@ -99,7 +99,7 @@ slot.addEventListener('click', (e) => {
 Name  | Type (default) | Description
 ------------- | ------------- | -------------
 parentHtmlContainer  | HTMLElement (required!) | It should be a HTML element (div), it will be changed to the list container.
-value  | Array[String] ([]) | It is an array with ids.
+value  | Array[String] ([]) | An array of `value` from `options` prop. This value will be selected on load of the treeselect. You can call `updateValue` to update prop or set value `treeselect.value` and call `mount`. The `value` changes if you check/uncheck checkboxes or remove tags from the input.
 options  | Array[Object] ([]) | It is an array of objects { name: String, value: String, children: [] }, where children are the same array of objects. Do not use duplicated values.
 openLevel  | Number (0) | All groups will be opened to this level.
 appendToBody  | Boolean (false) | List will be appended to the body instead of the input container.
@@ -125,6 +125,8 @@ Name  | Params | Description
 updateValue  | Array[String] | Update selected values.
 mount  | None | Helps to remount and update settings. Change settings that you need (treeselect.appendToBody = true), then call mount().
 destroy  | None | Deletes elements from the DOM. Call mount() to add treeselect to the DOM with previously saved internal data. If you need to recreate treeselect with default params - call **new Treeselect(options)**.
+focus  | None | Focuses treeselect input without open/close state changes.
+toggleOpenClose  | None | Open or close treeselect list and focus treeselect input.
 
 ### Notes
 1) If you want to change the padding of the element you can use CSS selector. I've added **'group'** and **'level'** attributes, but you have to use **!important**.
