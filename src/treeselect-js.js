@@ -12,6 +12,8 @@ const validateProps = ({ parentHtmlContainer, staticList, appendToBody }) => {
   }
 }
 
+const getOnlyIds = (nodes) => nodes.map(node => node.id)
+
 class Treeselect {
   // Components
   #htmlContainer = null
@@ -96,8 +98,8 @@ class Treeselect {
   updateValue (newValue) {
     const list = this.#treeselectList
     list.updateValue(newValue)
-    const {groupedIds, ids } = list.selectedNodes
-    const inputNewValue = this.grouped ? groupedIds : ids
+    const {groupedNodes, nodes } = list.selectedNodes
+    const inputNewValue = this.grouped ? groupedNodes : nodes
     this.#treeselectInput.updateValue(inputNewValue)
   }
 
@@ -135,9 +137,9 @@ class Treeselect {
       emptyText: this.emptyText
     })
 
-    const {groupedIds, ids } = list.selectedNodes
+    const {groupedNodes, nodes } = list.selectedNodes
     const input = new TreeselectInput({
-      value: this.grouped ? groupedIds : ids,
+      value: this.grouped ? groupedNodes : nodes,
       showTags: this.showTags,
       clearable: this.clearable,
       isAlwaysOpened: this.alwaysOpen,
@@ -154,10 +156,10 @@ class Treeselect {
 
     // Input events
     input.srcElement.addEventListener('input', (e) => {
-      const idsToSelect = e.detail.map(({ id }) => id)
-      list.updateValue(idsToSelect)
-      const { ids } = list.selectedNodes
-      this.value = ids
+      const inputIds = getOnlyIds(e.detail)
+      list.updateValue(inputIds)
+      const { nodes } = list.selectedNodes
+      this.value = getOnlyIds(nodes)
       this.#emitInput()
     })
     input.srcElement.addEventListener('open', () => this.#openList())
@@ -188,10 +190,10 @@ class Treeselect {
       input.focus()
     }, true)
     list.srcElement.addEventListener('input', (e) => {
-      const {groupedIds, ids } = e.detail
-      const inputIds = this.grouped ? groupedIds : ids
+      const {groupedNodes, nodes } = e.detail
+      const inputIds = this.grouped ? groupedNodes : nodes
       input.updateValue(inputIds)
-      this.value = ids.map(({ id }) => id)
+      this.value = getOnlyIds(nodes)
       input.focus()
       this.#emitInput()
     })

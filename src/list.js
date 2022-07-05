@@ -277,7 +277,7 @@ class TreeselectList {
 
     this.flattedOptions = getFlatOptions(this.options, this.openLevel)
     this.flattedOptionsBeforeSearch = this.flattedOptions
-    this.selectedNodes = { ids: [], groupedIds: [] }
+    this.selectedNodes = { nodes: [], groupedNodes: [] }
     this.srcElement = this.#createList()
 
     this.updateValue(this.value)
@@ -654,8 +654,8 @@ class TreeselectList {
 
   #updateSelectedNodes () {
     this.selectedNodes = {
-      ids: getCheckedValues(this.flattedOptions),
-      groupedIds: getGroupedValues(this.flattedOptions)
+      nodes: getCheckedValues(this.flattedOptions),
+      groupedNodes: getGroupedValues(this.flattedOptions)
     }
   }
 
