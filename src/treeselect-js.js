@@ -142,9 +142,10 @@ class Treeselect {
 
     // Input events
     input.srcElement.addEventListener('input', (e) => {
-      const ids = e.detail.map(({ id }) => id)
+      const idsToSelect = e.detail.map(({ id }) => id)
+      list.updateValue(idsToSelect)
+      const { ids } = list.selectedNodes
       this.value = ids
-      list.updateValue(ids)
       this.#emitInput()
     })
     input.srcElement.addEventListener('open', () => this.#openList())
