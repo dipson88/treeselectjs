@@ -11,6 +11,7 @@ class TreeselectInput {
   constructor ({
     value,
     showTags,
+    tagsCountText,
     clearable,
     isAlwaysOpened,
     searchable,
@@ -20,6 +21,7 @@ class TreeselectInput {
     this.value = value
 
     this.showTags = showTags ?? true
+    this.tagsCountText = tagsCountText ?? 'elements selected'
     this.searchable = searchable ?? true
     this.placeholder = placeholder ?? 'Search...'
     this.clearable = clearable ?? true
@@ -221,7 +223,7 @@ class TreeselectInput {
 
     countEl.innerHTML = this.value.length === 1
       ? this.value[0].name
-      : `${this.value.length} elements selected`
+      : `${this.value.length} ${this.tagsCountText}`
 
     return countEl
   }

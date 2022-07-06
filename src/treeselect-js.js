@@ -37,6 +37,7 @@ class Treeselect {
     appendToBody,
     alwaysOpen,
     showTags,
+    tagsCountText,
     clearable,
     searchable,
     placeholder,
@@ -59,6 +60,7 @@ class Treeselect {
     this.appendToBody = appendToBody ?? true
     this.alwaysOpen = alwaysOpen && !disabled
     this.showTags = showTags ?? true
+    this.tagsCountText = tagsCountText ?? 'elements selected'
     this.clearable = clearable ?? true
     this.searchable = searchable ?? true
     this.placeholder = placeholder ?? 'Search...'
@@ -141,6 +143,7 @@ class Treeselect {
     const input = new TreeselectInput({
       value: this.grouped ? groupedNodes : nodes,
       showTags: this.showTags,
+      tagsCountText: this.tagsCountText,
       clearable: this.clearable,
       isAlwaysOpened: this.alwaysOpen,
       searchable: this.searchable,

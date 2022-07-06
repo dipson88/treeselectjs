@@ -103,8 +103,9 @@ value  | Array[String] ([]) | An array of `value` from `options` prop. This valu
 options  | Array[Object] ([]) | It is an array of objects { name: String, value: String, children: [] }, where children are the same array of objects. Do not use duplicated values.
 openLevel  | Number (0) | All groups will be opened to this level.
 appendToBody  | Boolean (false) | List will be appended to the body instead of the input container.
-alwaysOpen  | Boolean (false) | List will be always opened. You can use it for comfortable style changing. If you what to use it as an opened list, turn `staticList' to `true`.
-showTags  | Boolean (true) | Selected values look like tags. The false value shows results as '{count} elements selected'.
+alwaysOpen  | Boolean (false) | List will be always opened. You can use it for comfortable style changing. If you what to use it as an opened list, turn `staticList` to `true`.
+showTags  | Boolean (true) | Selected values look like tags. The false value shows results as '{count} elements selected'. You can change text if you use `tagsCountText` prop. For one selected element, you will see a name of this element.
+tagsCountText  | String ('elements selected') | This text will be shown if you use 'showTags'. This text will be inserted after the count of the selected elements - ```'{count} {tagsCountText}'```.
 clearable  | Boolean (true) | Clear icon is available.
 searchable  | Boolean (true) | Search is available.
 placeholder  | String ('Search...') | Placeholder text.
