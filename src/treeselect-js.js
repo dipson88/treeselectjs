@@ -12,6 +12,8 @@ const validateProps = ({ parentHtmlContainer, staticList, appendToBody }) => {
   }
 }
 
+const getOnlyIds = (nodes) => nodes.map(node => node.id)
+
 class Treeselect {
   // Components
   #htmlContainer = null
@@ -27,9 +29,6 @@ class Treeselect {
   #focusEvent = null
   #blurEvent = null
 
-  // State
-  #isListOpened = false
-
   constructor ({
     parentHtmlContainer,
     value,
@@ -38,6 +37,7 @@ class Treeselect {
     appendToBody,
     alwaysOpen,
     showTags,
+    tagsCountText,
     clearable,
     searchable,
     placeholder,
@@ -60,6 +60,7 @@ class Treeselect {
     this.appendToBody = appendToBody ?? true
     this.alwaysOpen = alwaysOpen && !disabled
     this.showTags = showTags ?? true
+    this.tagsCountText = tagsCountText ?? 'elements selected'
     this.clearable = clearable ?? true
     this.searchable = searchable ?? true
     this.placeholder = placeholder ?? 'Search...'
@@ -69,6 +70,8 @@ class Treeselect {
     this.emptyText = emptyText ?? 'No results found...'
     this.staticList = staticList && !this.appendToBody
 
+    // State
+    this.isListOpened = false
     this.srcElement = null
 
     this.mount()
@@ -97,8 +100,8 @@ class Treeselect {
   updateValue (newValue) {
     const list = this.#treeselectList
     list.updateValue(newValue)
-    const {groupedIds, ids } = list.selectedNodes
-    const inputNewValue = this.grouped ? groupedIds : ids
+    const {groupedNodes, nodes } = list.selectedNodes
+    const inputNewValue = this.grouped ? groupedNodes : nodes
     this.#treeselectInput.updateValue(inputNewValue)
   }
 
@@ -108,6 +111,19 @@ class Treeselect {
       this.srcElement.innerHTML = ''
       this.srcElement = null
       this.#removeOutsideListeners(true)
+    }
+  }
+
+  focus () {
+    if (this.#treeselectInput) {
+      this.#treeselectInput.focus()
+    }
+  }
+
+  toggleOpenClose () {
+    if (this.#treeselectInput) {
+      this.#treeselectInput.openClose()
+      this.#treeselectInput.focus()
     }
   }
 
@@ -123,10 +139,11 @@ class Treeselect {
       emptyText: this.emptyText
     })
 
-    const {groupedIds, ids } = list.selectedNodes
+    const {groupedNodes, nodes } = list.selectedNodes
     const input = new TreeselectInput({
-      value: this.grouped ? groupedIds : ids,
+      value: this.grouped ? groupedNodes : nodes,
       showTags: this.showTags,
+      tagsCountText: this.tagsCountText,
       clearable: this.clearable,
       isAlwaysOpened: this.alwaysOpen,
       searchable: this.searchable,
@@ -142,14 +159,15 @@ class Treeselect {
 
     // Input events
     input.srcElement.addEventListener('input', (e) => {
-      const ids = e.detail.map(({ id }) => id)
-      this.value = ids
-      list.updateValue(ids)
+      const inputIds = getOnlyIds(e.detail)
+      list.updateValue(inputIds)
+      const { nodes } = list.selectedNodes
+      this.value = getOnlyIds(nodes)
       this.#emitInput()
     })
     input.srcElement.addEventListener('open', () => this.#openList())
     input.srcElement.addEventListener('keydown', (e) => {
-      if (this.#isListOpened) {
+      if (this.isListOpened) {
         list.callKeyAction(e.key)
       }
     })
@@ -175,10 +193,10 @@ class Treeselect {
       input.focus()
     }, true)
     list.srcElement.addEventListener('input', (e) => {
-      const {groupedIds, ids } = e.detail
-      const inputIds = this.grouped ? groupedIds : ids
+      const {groupedNodes, nodes } = e.detail
+      const inputIds = this.grouped ? groupedNodes : nodes
       input.updateValue(inputIds)
-      this.value = ids.map(({ id }) => id)
+      this.value = getOnlyIds(nodes)
       input.focus()
       this.#emitInput()
     })
@@ -197,7 +215,7 @@ class Treeselect {
   }
 
   #openList () {
-    this.#isListOpened = true
+    this.isListOpened = true
 
     window.addEventListener('scroll', this.#scrollEvent, true)
     window.addEventListener('resize', this.#resizeEvent)
@@ -215,7 +233,7 @@ class Treeselect {
   }
 
   #closeList () {
-    this.#isListOpened = false
+    this.isListOpened = false
 
     window.removeEventListener('scroll', this.#scrollEvent, true)
     window.removeEventListener('resize', this.#resizeEvent)
