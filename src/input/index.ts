@@ -1,6 +1,6 @@
-import svg from '../svgIcons.js'
-import { HTMLElementOrNA } from '../treeselectTypes.js'
-import { ITreeselectInputParams, ITreeselectInput, InputValueType } from './inputTypes.js'
+import svg from '../svgIcons'
+import { HTMLElementOrNA } from '../treeselectTypes'
+import { ITreeselectInputParams, ITreeselectInput, InputValueType } from './inputTypes'
 
 export class TreeselectInput implements ITreeselectInput {
   // Props

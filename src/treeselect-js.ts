@@ -1,9 +1,9 @@
-import { ITreeselectInput } from './input/inputTypes.js'
-import { ITreeselectList } from './list/listTypes.js'
+import { ITreeselectInput } from './input/inputTypes'
+import { ITreeselectList } from './list/listTypes'
 import { OptionType } from './treeselectTypes'
-import TreeselectInput from './input/index.js'
-import TreeselectList from './list/index.js'
-import { ITreeslect, ITreeslectParams, HTMLElementOrNA } from './treeselectTypes.js'
+import TreeselectInput from './input/index'
+import TreeselectList from './list/index'
+import { ITreeslect, ITreeslectParams, HTMLElementOrNA } from './treeselectTypes'
 
 const validateProps = ({ parentHtmlContainer, staticList, appendToBody }: Partial<ITreeslectParams>) => {
   if (!parentHtmlContainer) {

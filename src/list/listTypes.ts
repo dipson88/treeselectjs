@@ -1,4 +1,4 @@
-import { FlattedOptionType, OptionType, HTMLElementOrNA } from '../treeselectTypes.js'
+import { FlattedOptionType, OptionType, HTMLElementOrNA } from '../treeselectTypes'
 
 export type SelectedNodesType = {
   nodes: FlattedOptionType[]

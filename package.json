@@ -2,9 +2,47 @@
   "name": "treeselectjs",
   "version": "0.2.9",
   "description": "Treeselect JS",
-  "main": "dist/treeselect-js.js",
+  "main": "dist/treeselect-js.cjs.js",
+  "module": "dist/treeselect-js.mjs.js",
+  "types": "dist/treeselect-js.d.ts",
+  "targets": {
+    "main": {
+      "context": "node",
+      "source": "src/treeselect-js.ts",
+      "outputFormat": "commonjs",
+      "isLibrary": true,
+      "optimize": true,
+      "sourceMap": false,
+      "engines": {
+        "browsers": "> 0.5%, last 2 versions, not dead"
+      }
+    },
+    "module": {
+      "context": "node",
+      "source": "src/treeselect-js.ts",
+      "outputFormat": "esmodule",
+      "isLibrary": true,
+      "optimize": true,
+      "sourceMap": false,
+      "engines": {
+        "browsers": "> 0.5%, last 2 versions, not dead"
+      }
+    },
+    "types": {
+      "isLibrary": true,
+      "context": "node",
+      "source": "src/treeselect-js.ts",
+      "sourceMap": false
+    },
+    "css": {
+      "source": "src/treeselect-js.css",
+      "distDir": "dist",
+      "sourceMap": false
+    }
+  },
   "scripts": {
-    "build": "tsc"
+    "build": "parcel build",
+    "watch": "parcel watch"
   },
   "repository": {
     "type": "git",
@@ -22,14 +60,13 @@
   },
   "homepage": "https://github.com/dipson88/treeselectjs#readme",
   "devDependencies": {
-    "gulp": "^4.0.2",
-    "gulp-uglify": "^3.0.2",
-    "gulp-uglifycss": "^1.1.0",
+    "@parcel/packager-ts": "^2.6.2",
+    "@parcel/transformer-typescript-types": "^2.6.2",
+    "parcel": "^2.6.2",
     "prettier": "^2.7.1",
     "typescript": "^4.7.4"
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ]
 }

@@ -1,6 +1,6 @@
-import svg from '../svgIcons.js'
-import { FlattedOptionType, OptionType, HTMLElementOrNA } from '../treeselectTypes.js'
-import { ITreeslectListParams, ITreeselectList, SelectedNodesType } from './listTypes.js'
+import svg from '../svgIcons'
+import { FlattedOptionType, OptionType, HTMLElementOrNA } from '../treeselectTypes'
+import { ITreeslectListParams, ITreeselectList, SelectedNodesType } from './listTypes'
 import {
   getFlattedOptions,
   updateCheckStateFlattedOption,
@@ -9,7 +9,7 @@ import {
   getUnGroupedCheckedFlattedOptions,
   hideShowChildrenFlattedOptions,
   updateFlattedOptionsByValue
-} from './listHelper.js'
+} from './listHelper'
 
 const validateOptions = (flatOptions: FlattedOptionType[]) => {
   const { duplications } = flatOptions.reduce(
