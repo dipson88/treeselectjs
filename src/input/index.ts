@@ -1,14 +1,30 @@
-import svg from './svgIcons.js'
+import svg from '../svgIcons.js'
+import { HTMLElementOrNA } from '../treeselectTypes.js'
+import { ITreeselectInputParams, ITreeselectInput, InputValueType } from './inputTypes.js'
 
-class TreeselectInput {
-  #htmlTagsSection = null
-  #htmlEditControl = null
-  #htmlOperators = null
-  #htmlArrow = null
-  #openEvent = new CustomEvent('open')
-  #closeEvent = new CustomEvent('close')
+export class TreeselectInput implements ITreeselectInput {
+  // Props
+  value: InputValueType
+  showTags: boolean
+  tagsCountText: string
+  clearable: boolean
+  isAlwaysOpened: boolean
+  searchable: boolean
+  placeholder: string
+  disabled: boolean
 
-  constructor ({
+  // InnerState
+  isOpened: boolean
+  searchText: string
+  srcElement: HTMLElement | Element
+
+  // PrivateInnerState
+  #htmlTagsSection: HTMLElementOrNA = null
+  #htmlEditControl: HTMLInputElement | null = null
+  #htmlOperators: HTMLElementOrNA = null
+  #htmlArrow: HTMLElementOrNA = null
+
+  constructor({
     value,
     showTags,
     tagsCountText,
@@ -17,7 +33,7 @@ class TreeselectInput {
     searchable,
     placeholder,
     disabled
-  }) {
+  }: ITreeselectInputParams) {
     this.value = value
 
     this.showTags = showTags ?? true
@@ -36,30 +52,30 @@ class TreeselectInput {
   }
 
   // Public
-  focus () {
-    this.#htmlEditControl.focus()
+  focus() {
+    this.#htmlEditControl?.focus()
   }
 
-  blur () {
+  blur() {
     if (this.isOpened) {
       this.#updateOpenClose()
     }
   }
 
-  updateValue (newValue) {
+  updateValue(newValue: InputValueType) {
     this.value = newValue
     this.#updateTags()
     this.#updateEditControl()
   }
 
-  removeItem (id) {
-    this.value = this.value.filter(v => v.id !== id)
+  removeItem(id: string) {
+    this.value = this.value.filter((v) => v.id !== id)
     this.#emitInput()
     this.#updateTags()
     this.#updateEditControl()
   }
 
-  clear () {
+  clear() {
     this.value = []
     this.searchText = ''
     this.#emitSearch('')
@@ -68,17 +84,21 @@ class TreeselectInput {
     this.#updateEditControl()
   }
 
-  openClose () {
+  openClose() {
     this.#updateOpenClose()
   }
 
-  #updateDOM () {
+  #updateDOM() {
     this.#updateTags()
     this.#updateEditControl()
     this.#updateOperators()
   }
 
-  #updateTags () {
+  #updateTags() {
+    if (!this.#htmlTagsSection) {
+      return
+    }
+
     this.#htmlTagsSection.innerHTML = ''
 
     if (this.showTags) {
@@ -88,7 +108,11 @@ class TreeselectInput {
     }
   }
 
-  #updateOperators () {
+  #updateOperators() {
+    if (!this.#htmlOperators) {
+      return
+    }
+
     const elements = []
     this.#htmlOperators.innerHTML = ''
 
@@ -105,14 +129,18 @@ class TreeselectInput {
     }
   }
 
-  #updateArrowDirection () {
-    if (!this.isAlwaysOpened) {
+  #updateArrowDirection() {
+    if (!this.isAlwaysOpened && this.#htmlArrow) {
       const arrowSvg = this.isOpened ? svg.arrowUp : svg.arrowDown
       this.#htmlArrow.innerHTML = arrowSvg
     }
   }
 
-  #updateEditControl () {
+  #updateEditControl() {
+    if (!this.#htmlEditControl) {
+      return
+    }
+
     if (this.value?.length) {
       this.#htmlEditControl.removeAttribute('placeholder')
     } else {
@@ -128,7 +156,7 @@ class TreeselectInput {
     this.#htmlEditControl.value = this.searchText
   }
 
-  #updateOpenClose () {
+  #updateOpenClose() {
     this.isOpened = !this.isOpened
     this.#updateArrowDirection()
 
@@ -139,7 +167,7 @@ class TreeselectInput {
     }
   }
 
-  #createTreeselectInput () {
+  #createTreeselectInput() {
     const container = document.createElement('div')
     container.classList.add('treeselect-input')
     container.setAttribute('tabindex', '-1')
@@ -163,15 +191,15 @@ class TreeselectInput {
     return container
   }
 
-  #createTagsSection () {
+  #createTagsSection() {
     const tagsSection = document.createElement('div')
     tagsSection.classList.add('treeselect-input__tags')
 
     return tagsSection
   }
 
-  #createTags () {
-    return this.value.map(value => {
+  #createTags() {
+    return this.value.map((value) => {
       const element = document.createElement('div')
       element.classList.add('treeselect-input__tags-element')
       element.setAttribute('tabindex', '-1')
@@ -195,7 +223,7 @@ class TreeselectInput {
     })
   }
 
-  #createTagName (name) {
+  #createTagName(name: string) {
     const elementTag = document.createElement('span')
     elementTag.classList.add('treeselect-input__tags-name')
     elementTag.innerHTML = name
@@ -203,7 +231,7 @@ class TreeselectInput {
     return elementTag
   }
 
-  #createTagCross () {
+  #createTagCross() {
     const elementCross = document.createElement('span')
     elementCross.classList.add('treeselect-input__tags-cross')
     elementCross.innerHTML = svg.cross
@@ -211,7 +239,7 @@ class TreeselectInput {
     return elementCross
   }
 
-  #createCountElement () {
+  #createCountElement() {
     const countEl = document.createElement('span')
     countEl.classList.add('treeselect-input__tags-count')
 
@@ -221,14 +249,12 @@ class TreeselectInput {
       return countEl
     }
 
-    countEl.innerHTML = this.value.length === 1
-      ? this.value[0].name
-      : `${this.value.length} ${this.tagsCountText}`
+    countEl.innerHTML = this.value.length === 1 ? this.value[0].name : `${this.value.length} ${this.tagsCountText}`
 
     return countEl
   }
 
-  #createControl () {
+  #createControl() {
     const input = document.createElement('input')
     input.classList.add('treeselect-input__edit')
 
@@ -262,7 +288,8 @@ class TreeselectInput {
       }
 
       if (this.searchable) {
-        this.#emitSearch(event.target.value)
+        const searchValue = (event.target as HTMLInputElement).value
+        this.#emitSearch(searchValue)
 
         if (!this.isOpened) {
           this.#updateOpenClose()
@@ -277,14 +304,14 @@ class TreeselectInput {
     return input
   }
 
-  #createOperators () {
+  #createOperators() {
     const operators = document.createElement('div')
     operators.classList.add('treeselect-input__operators')
 
     return operators
   }
 
-  #createClearButton () {
+  #createClearButton() {
     const clear = document.createElement('span')
     clear.classList.add('treeselect-input__clear')
     clear.setAttribute('tabindex', '-1')
@@ -294,7 +321,7 @@ class TreeselectInput {
       // Two methods help to prevent mousedown on main container
       e.preventDefault()
       e.stopPropagation()
-      this.#htmlEditControl.focus()
+      this.#htmlEditControl?.focus()
 
       if (this.searchText.length || this.value.length) {
         this.clear()
@@ -304,7 +331,7 @@ class TreeselectInput {
     return clear
   }
 
-  #createInputArrow (isOpen) {
+  #createInputArrow(isOpen: boolean) {
     this.#htmlArrow = document.createElement('span')
     this.#htmlArrow.classList.add('treeselect-input__arrow')
     this.#htmlArrow.innerHTML = isOpen ? svg.arrowUp : svg.arrowDown
@@ -321,20 +348,20 @@ class TreeselectInput {
   }
 
   // Emits
-  #emitInput () {
+  #emitInput() {
     this.srcElement.dispatchEvent(new CustomEvent('input', { detail: this.value }))
   }
 
-  #emitSearch (value) {
+  #emitSearch(value: string) {
     this.srcElement.dispatchEvent(new CustomEvent('search', { detail: value }))
   }
 
-  #emitOpen () {
-    this.srcElement.dispatchEvent(this.#openEvent)
+  #emitOpen() {
+    this.srcElement.dispatchEvent(new CustomEvent('open'))
   }
 
-  #emitClose () {
-    this.srcElement.dispatchEvent(this.#closeEvent)
+  #emitClose() {
+    this.srcElement.dispatchEvent(new CustomEvent('close'))
   }
 }
 

@@ -3,6 +3,9 @@
   "version": "0.2.9",
   "description": "Treeselect JS",
   "main": "dist/treeselect-js.js",
+  "scripts": {
+    "build": "tsc"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dipson88/treeselectjs.git"
@@ -21,7 +24,12 @@
   "devDependencies": {
     "gulp": "^4.0.2",
     "gulp-uglify": "^3.0.2",
-    "gulp-uglifycss": "^1.1.0"
+    "gulp-uglifycss": "^1.1.0",
+    "prettier": "^2.7.1",
+    "typescript": "^4.7.4"
   },
-  "files": ["dist", "src"]
+  "files": [
+    "dist",
+    "src"
+  ]
 }

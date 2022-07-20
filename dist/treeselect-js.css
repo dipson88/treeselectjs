@@ -1,8 +1,0 @@
-@import './input.css';@import './list.css';.treeselect{width:100%;position:relative;box-sizing:border-box}
-.treeselect--disabled{pointer-events:none}.treeselect-list{position:absolute;left:0;border-radius:4px;box-sizing:border-box;z-index:1000}
-.treeselect .treeselect-list{position:absolute}.treeselect .treeselect-list--static{position:static}
-.treeselect-input--focused{border-color:#101010}.treeselect-input--opened.treeselect-input--top{border-top-color:transparent;border-top-left-radius:0;border-top-right-radius:0}
-.treeselect-input--opened.treeselect-input--bottom{border-bottom-color:transparent;border-bottom-left-radius:0;border-bottom-right-radius:0}
-.treeselect-list--focused{border-color:#101010}.treeselect-list--top,.treeselect-list--top-to-body{border-bottom-color:#d7dde4;border-bottom-left-radius:0;border-bottom-right-radius:0}
-.treeselect-list--bottom,.treeselect-list--bottom-to-body{border-top-color:#d7dde4;border-top-left-radius:0;border-top-right-radius:0}
-.treeselect-list--top{left:0;bottom:100%}.treeselect-list--bottom{left:0;top:100%}
