@@ -105,7 +105,7 @@ class Treeselect implements ITreeslect {
   mount() {
     this.destroy()
 
-    const { container, list, input  } = this.#createTreeselect()
+    const { container, list, input } = this.#createTreeselect()
 
     this.srcElement = container
     this.#treeselectList = list
@@ -183,9 +183,7 @@ class Treeselect implements ITreeslect {
     })
 
     if (this.appendToBody) {
-      this.#containerResizer = new ResizeObserver(() => {
-        this.updateListPosition()
-      })
+      this.#containerResizer = new ResizeObserver(() => this.updateListPosition())
     }
 
     // Input events

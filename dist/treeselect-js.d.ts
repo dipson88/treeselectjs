@@ -3,7 +3,6 @@ type OptionType = {
     name: string;
     children: OptionType[];
 };
-type HTMLElementOrNA = HTMLElement | Element | null;
 interface ITreeslect {
     parentHtmlContainer: HTMLElement;
     value: string[];
@@ -17,12 +16,12 @@ interface ITreeslect {
     searchable: boolean;
     placeholder: string;
     grouped: boolean;
-    listSlotHtmlComponent: HTMLElementOrNA;
+    listSlotHtmlComponent: HTMLElement | null;
     disabled: boolean;
     emptyText: string;
     staticList: boolean;
     isListOpened: boolean;
-    srcElement: HTMLElementOrNA;
+    srcElement: HTMLElement | null;
     mount: () => void;
     updateValue: (newValue: string[]) => void;
     destroy: () => void;
@@ -42,7 +41,7 @@ interface ITreeslectParams {
     searchable?: boolean;
     placeholder?: string;
     grouped?: boolean;
-    listSlotHtmlComponent?: HTMLElementOrNA;
+    listSlotHtmlComponent?: HTMLElement | null;
     disabled?: boolean;
     emptyText?: string;
     staticList?: boolean;
@@ -61,12 +60,12 @@ export default class Treeselect implements ITreeslect {
     searchable: boolean;
     placeholder: string;
     grouped: boolean;
-    listSlotHtmlComponent: HTMLElementOrNA;
+    listSlotHtmlComponent: HTMLElement | null;
     disabled: boolean;
     emptyText: string;
     staticList: boolean;
     isListOpened: boolean;
-    srcElement: HTMLElementOrNA;
+    srcElement: HTMLElement | null;
     constructor({ parentHtmlContainer, value, options, openLevel, appendToBody, alwaysOpen, showTags, tagsCountText, clearable, searchable, placeholder, grouped, listSlotHtmlComponent, disabled, emptyText, staticList }: ITreeslectParams);
     mount(): void;
     updateValue(newValue: string[]): void;
