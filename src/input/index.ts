@@ -1,5 +1,4 @@
 import svg from '../svgIcons'
-import { HTMLElementOrNA } from '../treeselectTypes'
 import { ITreeselectInputParams, ITreeselectInput, InputValueType } from './inputTypes'
 
 export class TreeselectInput implements ITreeselectInput {
@@ -19,10 +18,10 @@ export class TreeselectInput implements ITreeselectInput {
   srcElement: HTMLElement | Element
 
   // PrivateInnerState
-  #htmlTagsSection: HTMLElementOrNA = null
-  #htmlEditControl: HTMLInputElement | null = null
-  #htmlOperators: HTMLElementOrNA = null
-  #htmlArrow: HTMLElementOrNA = null
+  #htmlTagsSection: HTMLDivElement
+  #htmlEditControl: HTMLInputElement
+  #htmlOperators: HTMLDivElement
+  #htmlArrow: HTMLElement | null
 
   constructor({
     value,
@@ -35,25 +34,28 @@ export class TreeselectInput implements ITreeselectInput {
     disabled
   }: ITreeselectInputParams) {
     this.value = value
-
-    this.showTags = showTags ?? true
-    this.tagsCountText = tagsCountText ?? 'elements selected'
-    this.searchable = searchable ?? true
-    this.placeholder = placeholder ?? 'Search...'
-    this.clearable = clearable ?? true
-    this.isAlwaysOpened = isAlwaysOpened ?? false
-    this.disabled = disabled ?? false
+    this.showTags = showTags
+    this.tagsCountText = tagsCountText
+    this.searchable = searchable
+    this.placeholder = placeholder
+    this.clearable = clearable
+    this.isAlwaysOpened = isAlwaysOpened
+    this.disabled = disabled
 
     this.isOpened = false
     this.searchText = ''
-    this.srcElement = this.#createTreeselectInput()
+
+    this.#htmlTagsSection = this.#createTagsSection()
+    this.#htmlEditControl = this.#createControl()
+    this.#htmlOperators = this.#createOperators()
+    this.#htmlArrow = null
+    this.srcElement = this.#createTreeselectInput(this.#htmlTagsSection, this.#htmlEditControl, this.#htmlOperators)
 
     this.#updateDOM()
   }
 
-  // Public
   focus() {
-    this.#htmlEditControl?.focus()
+    this.#htmlEditControl.focus()
   }
 
   blur() {
@@ -95,10 +97,6 @@ export class TreeselectInput implements ITreeselectInput {
   }
 
   #updateTags() {
-    if (!this.#htmlTagsSection) {
-      return
-    }
-
     this.#htmlTagsSection.innerHTML = ''
 
     if (this.showTags) {
@@ -109,10 +107,6 @@ export class TreeselectInput implements ITreeselectInput {
   }
 
   #updateOperators() {
-    if (!this.#htmlOperators) {
-      return
-    }
-
     const elements = []
     this.#htmlOperators.innerHTML = ''
 
@@ -137,10 +131,6 @@ export class TreeselectInput implements ITreeselectInput {
   }
 
   #updateEditControl() {
-    if (!this.#htmlEditControl) {
-      return
-    }
-
     if (this.value?.length) {
       this.#htmlEditControl.removeAttribute('placeholder')
     } else {
@@ -167,28 +157,26 @@ export class TreeselectInput implements ITreeselectInput {
     }
   }
 
-  #createTreeselectInput() {
+  #createTreeselectInput(htmlTagsSection: HTMLElement, htmlEditControl: HTMLElement, htmlOperators: HTMLElement) {
     const container = document.createElement('div')
     container.classList.add('treeselect-input')
     container.setAttribute('tabindex', '-1')
 
-    this.#htmlTagsSection = this.#createTagsSection()
-    this.#htmlEditControl = this.#createControl()
-    this.#htmlOperators = this.#createOperators()
+    container.addEventListener('mousedown', (e) => this.#containerMousedown(e))
 
-    container.addEventListener('mousedown', (e) => {
-      e.preventDefault()
-
-      if (!this.isOpened) {
-        this.#updateOpenClose()
-      }
-
-      this.focus()
-    })
-
-    container.append(this.#htmlTagsSection, this.#htmlEditControl, this.#htmlOperators)
+    container.append(htmlTagsSection, htmlEditControl, htmlOperators)
 
     return container
+  }
+
+  #containerMousedown(e: Event) {
+    e.preventDefault()
+
+    if (!this.isOpened) {
+      this.#updateOpenClose()
+    }
+
+    this.focus()
   }
 
   #createTagsSection() {
@@ -209,18 +197,20 @@ export class TreeselectInput implements ITreeselectInput {
       const name = this.#createTagName(value.name)
       const cross = this.#createTagCross()
 
-      element.addEventListener('mousedown', (e) => {
-        // Two methods help to prevent mousedown on main container
-        e.preventDefault()
-        e.stopPropagation()
-        this.focus()
-        this.removeItem(value.id)
-      })
+      element.addEventListener('mousedown', (e) => this.#tagsMousedown(e, value.id))
 
       element.append(name, cross)
 
       return element
     })
+  }
+
+  #tagsMousedown(e: Event, id: string) {
+    // Two methods help to prevent mousedown on main container
+    e.preventDefault()
+    e.stopPropagation()
+    this.focus()
+    this.removeItem(id)
   }
 
   #createTagName(name: string) {
@@ -262,46 +252,50 @@ export class TreeselectInput implements ITreeselectInput {
       input.setAttribute('tabindex', '-1')
     }
 
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Backspace' && !this.searchText.length && this.value.length && !this.showTags) {
-        this.clear()
-      }
-
-      if (e.key === 'Backspace' && !this.searchText.length && this.value.length) {
-        this.removeItem(this.value[this.value.length - 1].id)
-      }
-
-      if (e.code === 'Space' && (!this.searchText || !this.searchable)) {
-        this.#updateOpenClose()
-      }
-    })
-    input.addEventListener('input', (event) => {
-      event.stopPropagation()
-      const oldValue = this.searchText
-      const newValue = input.value.trim()
-
-      // If try to enter only spaces
-      if (oldValue.length === 0 && newValue.length === 0) {
-        input.value = ''
-
-        return
-      }
-
-      if (this.searchable) {
-        const searchValue = (event.target as HTMLInputElement).value
-        this.#emitSearch(searchValue)
-
-        if (!this.isOpened) {
-          this.#updateOpenClose()
-        }
-      } else {
-        input.value = ''
-      }
-
-      this.searchText = input.value
-    })
+    input.addEventListener('keydown', (e) => this.#controlKeydown(e))
+    input.addEventListener('input', (e) => this.#controlInput(e, input))
 
     return input
+  }
+
+  #controlKeydown(e: KeyboardEvent) {
+    if (e.key === 'Backspace' && !this.searchText.length && this.value.length && !this.showTags) {
+      this.clear()
+    }
+
+    if (e.key === 'Backspace' && !this.searchText.length && this.value.length) {
+      this.removeItem(this.value[this.value.length - 1].id)
+    }
+
+    if (e.code === 'Space' && (!this.searchText || !this.searchable)) {
+      this.#updateOpenClose()
+    }
+  }
+
+  #controlInput(e: Event, input: HTMLInputElement) {
+    e.stopPropagation()
+    const oldValue = this.searchText
+    const newValue = input.value.trim()
+
+    // If try to enter only spaces
+    if (oldValue.length === 0 && newValue.length === 0) {
+      input.value = ''
+
+      return
+    }
+
+    if (this.searchable) {
+      const searchValue = (e.target as HTMLInputElement).value
+      this.#emitSearch(searchValue)
+
+      if (!this.isOpened) {
+        this.#updateOpenClose()
+      }
+    } else {
+      input.value = ''
+    }
+
+    this.searchText = input.value
   }
 
   #createOperators() {
@@ -317,18 +311,19 @@ export class TreeselectInput implements ITreeselectInput {
     clear.setAttribute('tabindex', '-1')
     clear.innerHTML = svg.clear
 
-    clear.addEventListener('mousedown', (e) => {
-      // Two methods help to prevent mousedown on main container
-      e.preventDefault()
-      e.stopPropagation()
-      this.#htmlEditControl?.focus()
-
-      if (this.searchText.length || this.value.length) {
-        this.clear()
-      }
-    })
+    clear.addEventListener('mousedown', (e) => this.#clearButtonMousedown(e))
 
     return clear
+  }
+
+  #clearButtonMousedown(e: Event) {
+    e.preventDefault()
+    e.stopPropagation()
+    this.#htmlEditControl?.focus()
+
+    if (this.searchText.length || this.value.length) {
+      this.clear()
+    }
   }
 
   #createInputArrow(isOpen: boolean) {
@@ -336,15 +331,17 @@ export class TreeselectInput implements ITreeselectInput {
     this.#htmlArrow.classList.add('treeselect-input__arrow')
     this.#htmlArrow.innerHTML = isOpen ? svg.arrowUp : svg.arrowDown
 
-    this.#htmlArrow.addEventListener('mousedown', (e) => {
-      // Two methods help to prevent mousedown on main container
-      e.stopPropagation()
-      e.preventDefault()
-      this.focus()
-      this.#updateOpenClose()
-    })
+    this.#htmlArrow.addEventListener('mousedown', (e) => this.#inputArrowMousedown(e))
 
     return this.#htmlArrow
+  }
+
+  #inputArrowMousedown(e: Event) {
+    // Two methods help to prevent mousedown on main container
+    e.stopPropagation()
+    e.preventDefault()
+    this.focus()
+    this.#updateOpenClose()
   }
 
   // Emits

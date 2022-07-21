@@ -2,13 +2,13 @@ export type InputValueType = { id: string; name: string }[]
 
 export interface ITreeselectInputParams {
   value: InputValueType
-  showTags?: boolean
-  tagsCountText?: string
-  clearable?: boolean
-  isAlwaysOpened?: boolean
-  searchable?: boolean
-  placeholder?: string
-  disabled?: boolean
+  showTags: boolean
+  tagsCountText: string
+  clearable: boolean
+  isAlwaysOpened: boolean
+  searchable: boolean
+  placeholder: string
+  disabled: boolean
 }
 
 export interface ITreeselectInput {

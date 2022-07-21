@@ -32,11 +32,14 @@
       "isLibrary": true,
       "context": "node",
       "source": "src/treeselect-js.ts",
+      "optimize": true,
       "sourceMap": false
     },
     "css": {
       "source": "src/treeselect-js.css",
       "distDir": "dist",
+      "isLibrary": true,
+      "optimize": true,
       "sourceMap": false
     }
   },
