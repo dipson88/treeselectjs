@@ -31,7 +31,7 @@ export interface ITreeslect {
   searchable: boolean
   placeholder: string
   grouped: boolean
-  listSlotHtmlComponent: HTMLElementOrNA
+  listSlotHtmlComponent: HTMLElement | null
   disabled: boolean
   emptyText: string
   staticList: boolean
@@ -57,7 +57,7 @@ export interface ITreeslectParams {
   searchable?: boolean
   placeholder?: string
   grouped?: boolean
-  listSlotHtmlComponent?: HTMLElementOrNA
+  listSlotHtmlComponent?: HTMLElement | null
   disabled?: boolean
   emptyText?: string
   staticList?: boolean

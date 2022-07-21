@@ -31,7 +31,7 @@ class Treeselect implements ITreeslect {
   searchable: boolean
   placeholder: string
   grouped: boolean
-  listSlotHtmlComponent: HTMLElementOrNA
+  listSlotHtmlComponent: HTMLElement | null
   disabled: boolean
   emptyText: string
   staticList: boolean

@@ -49,11 +49,13 @@ export class TreeselectInput implements ITreeselectInput {
     this.#htmlEditControl = this.#createControl()
     this.#htmlOperators = this.#createOperators()
     this.#htmlArrow = null
+
     this.srcElement = this.#createTreeselectInput(this.#htmlTagsSection, this.#htmlEditControl, this.#htmlOperators)
 
     this.#updateDOM()
   }
 
+  // Public methods
   focus() {
     this.#htmlEditControl.focus()
   }
@@ -90,6 +92,7 @@ export class TreeselectInput implements ITreeselectInput {
     this.#updateOpenClose()
   }
 
+  // Private methods
   #updateDOM() {
     this.#updateTags()
     this.#updateEditControl()

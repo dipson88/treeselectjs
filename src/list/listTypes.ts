@@ -1,4 +1,4 @@
-import { FlattedOptionType, OptionType, HTMLElementOrNA } from '../treeselectTypes'
+import { FlattedOptionType, OptionType } from '../treeselectTypes'
 
 export type SelectedNodesType = {
   nodes: FlattedOptionType[]
@@ -9,7 +9,7 @@ export interface ITreeslectListParams {
   options: OptionType[]
   value: string[]
   openLevel: number
-  listSlotHtmlComponent: HTMLElementOrNA
+  listSlotHtmlComponent: HTMLElement | null
   emptyText: string
 }
 
@@ -18,7 +18,7 @@ export interface ITreeselectList extends ITreeslectListParams {
   flattedOptions: FlattedOptionType[]
   flattedOptionsBeforeSearch: FlattedOptionType[]
   selectedNodes: SelectedNodesType
-  srcElement: HTMLElement | Element
+  srcElement: HTMLElement
   updateValue: (value: string[]) => void
   updateSearchValue: (searchText: string) => void
   callKeyAction: (key: string) => void
