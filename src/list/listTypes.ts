@@ -1,4 +1,16 @@
-import { FlattedOptionType, OptionType } from '../treeselectTypes'
+import { OptionType } from '../treeselectTypes'
+
+export type FlattedOptionType = {
+  id: string
+  name: string
+  childOf: string
+  isGroup: boolean
+  checked: boolean
+  isPartialChecked: boolean
+  level: number
+  isClosed: boolean
+  hidden: boolean
+}
 
 export type SelectedNodesType = {
   nodes: FlattedOptionType[]

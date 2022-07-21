@@ -1,6 +1,6 @@
 import svg from '../svgIcons'
-import { FlattedOptionType, OptionType } from '../treeselectTypes'
-import { ITreeslectListParams, ITreeselectList, SelectedNodesType } from './listTypes'
+import { OptionType } from '../treeselectTypes'
+import { ITreeslectListParams, ITreeselectList, SelectedNodesType, FlattedOptionType } from './listTypes'
 import {
   getFlattedOptions,
   updateCheckStateFlattedOption,

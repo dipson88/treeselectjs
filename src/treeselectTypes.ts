@@ -4,20 +4,6 @@ export type OptionType = {
   children: OptionType[]
 }
 
-export type FlattedOptionType = {
-  id: string
-  name: string
-  childOf: string
-  isGroup: boolean
-  checked: boolean
-  isPartialChecked: boolean
-  level: number
-  isClosed: boolean
-  hidden: boolean
-}
-
-export type HTMLElementOrNA = HTMLElement | Element | null
-
 export interface ITreeslect {
   parentHtmlContainer: HTMLElement
   value: string[]
@@ -36,7 +22,7 @@ export interface ITreeslect {
   emptyText: string
   staticList: boolean
   isListOpened: boolean
-  srcElement: HTMLElementOrNA
+  srcElement: HTMLElement | null
   mount: () => void
   updateValue: (newValue: string[]) => void
   destroy: () => void

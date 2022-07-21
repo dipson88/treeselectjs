@@ -1,4 +1,5 @@
-import { FlattedOptionType, OptionType } from '../treeselectTypes'
+import { OptionType } from '../treeselectTypes'
+import { FlattedOptionType } from './listTypes'
 
 const getFlattedOptions = (options: OptionType[], openLevel: number, groupId: string = '', level: number = 0) => {
   return options.reduce((acc, curr) => {
