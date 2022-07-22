@@ -24,6 +24,7 @@ export interface ITreeslect {
   emptyText: string
   staticList: boolean
   id: string
+  iconElements: IconsType, 
   isListOpened: boolean
   srcElement: HTMLElement | null
   mount: () => void
@@ -50,7 +51,8 @@ export interface ITreeslectParams {
   disabled?: boolean
   emptyText?: string
   staticList?: boolean
-  id?: string
+  id?: string,
+  iconElements?: Partial<IconsType> 
 }
 
 export type FlattedOptionType = {
@@ -63,4 +65,15 @@ export type FlattedOptionType = {
   level: number
   isClosed: boolean
   hidden: boolean
+}
+
+export type IconsType = {
+  arrowUp: string | HTMLElement
+  arrowDown: string | HTMLElement
+  arrowRight: string | HTMLElement
+  attention: string | HTMLElement
+  clear: string | HTMLElement
+  cross: string | HTMLElement
+  check: string | HTMLElement
+  partialCheck: string | HTMLElement
 }

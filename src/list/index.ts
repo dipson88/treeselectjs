@@ -1,5 +1,4 @@
-import svg from '../svgIcons'
-import { OptionType, ValueOptionType, FlattedOptionType } from '../treeselectTypes'
+import { OptionType, ValueOptionType, FlattedOptionType, IconsType } from '../treeselectTypes'
 import { ITreeslectListParams, ITreeselectList, SelectedNodesType } from './listTypes'
 import {
   getFlattedOptions,
@@ -10,6 +9,7 @@ import {
   hideShowChildrenFlattedOptions,
   updateFlattedOptionsByValue
 } from './listHelper'
+import { appendIconToElement } from '../svgIcons'
 
 const validateOptions = (flatOptions: FlattedOptionType[]) => {
   const { duplications } = flatOptions.reduce(
@@ -36,13 +36,14 @@ const validateOptions = (flatOptions: FlattedOptionType[]) => {
 const updateValue = (
   newValue: ValueOptionType[],
   flattedOptions: FlattedOptionType[],
-  srcElement: HTMLElement | Element
+  srcElement: HTMLElement | Element,
+  iconElements: IconsType
 ) => {
   updateFlattedOptionsByValue(newValue, flattedOptions)
-  updateDOM(flattedOptions, srcElement)
+  updateDOM(flattedOptions, srcElement, iconElements)
 }
 
-const updateDOM = (flattedOptions: FlattedOptionType[], srcElement: HTMLElement | Element) => {
+const updateDOM = (flattedOptions: FlattedOptionType[], srcElement: HTMLElement | Element, iconElements: IconsType) => {
   flattedOptions.forEach((option) => {
     const input = srcElement.querySelector(`[input-id="${option.id}"]`) as HTMLInputElement
     const listItem = getListItemByCheckbox(input)
@@ -51,11 +52,11 @@ const updateDOM = (flattedOptions: FlattedOptionType[], srcElement: HTMLElement 
 
     updateCheckedClass(option, listItem)
     updatePartialCheckedClass(option, listItem)
-    updateClosedClass(option, listItem)
+    updateClosedClass(option, listItem, iconElements)
     updateHiddenClass(option, listItem)
 
     updateLeftPaddingItems(option, listItem, flattedOptions)
-    updateCheckboxClass(option, input)
+    updateCheckboxClass(option, input, iconElements)
   })
 
   updateEmptyListClass(flattedOptions, srcElement)
@@ -77,16 +78,16 @@ const updatePartialCheckedClass = (option: FlattedOptionType, listItem: HTMLElem
   }
 }
 
-const updateClosedClass = (option: FlattedOptionType, listItem: HTMLElement) => {
+const updateClosedClass = (option: FlattedOptionType, listItem: HTMLElement, iconElements: IconsType) => {
   if (option.isGroup) {
     const icon = listItem.querySelector('.treeselect-list__item-icon') as HTMLElement
+    const iconInnerElement = option.isClosed ? iconElements.arrowRight : iconElements.arrowDown
+    appendIconToElement(iconInnerElement, icon)
 
     if (option.isClosed) {
       listItem.classList.add('treeselect-list__item--closed')
-      icon.innerHTML = svg.arrowRight
     } else {
       listItem.classList.remove('treeselect-list__item--closed')
-      icon.innerHTML = svg.arrowDown
     }
   }
 }
@@ -99,14 +100,14 @@ const updateHiddenClass = (option: FlattedOptionType, listItem: HTMLElement) => 
   }
 }
 
-const updateCheckboxClass = (option: FlattedOptionType, input: HTMLInputElement) => {
+const updateCheckboxClass = (option: FlattedOptionType, input: HTMLInputElement, iconElements: IconsType) => {
   const inputContainer = input.parentNode as HTMLElement
   const icon = inputContainer.querySelector('.treeselect-list__item-checkbox-icon') as HTMLElement
 
   if (option.checked) {
-    icon.innerHTML = svg.check
+    appendIconToElement(iconElements.check, icon)
   } else if (option.isPartialChecked) {
-    icon.innerHTML = svg.partialCheck
+    appendIconToElement(iconElements.partialCheck, icon)
   } else {
     icon.innerHTML = ''
   }
@@ -165,6 +166,7 @@ class TreeselectList implements ITreeselectList {
   openLevel: number
   listSlotHtmlComponent: HTMLElement | null
   emptyText: string
+  iconElements: IconsType
 
   // InnerState
   searchText: string
@@ -177,12 +179,13 @@ class TreeselectList implements ITreeselectList {
   #lastFocusedItem: HTMLElement | null = null
   #isMouseActionsAvailable = true
 
-  constructor({ options, value, openLevel, listSlotHtmlComponent, emptyText }: ITreeslectListParams) {
+  constructor({ options, value, openLevel, listSlotHtmlComponent, emptyText, iconElements }: ITreeslectListParams) {
     this.options = options
     this.value = value
     this.openLevel = openLevel ?? 0
     this.listSlotHtmlComponent = listSlotHtmlComponent ?? null
     this.emptyText = emptyText ?? 'No results found...'
+    this.iconElements = iconElements
 
     this.searchText = ''
     this.flattedOptions = getFlattedOptions(this.options, this.openLevel)
@@ -196,7 +199,7 @@ class TreeselectList implements ITreeselectList {
 
   // Public methods
   updateValue(value: ValueOptionType[]) {
-    updateValue(value, this.flattedOptions, this.srcElement)
+    updateValue(value, this.flattedOptions, this.srcElement, this.iconElements)
     this.#updateSelectedNodes()
   }
 
@@ -229,7 +232,7 @@ class TreeselectList implements ITreeselectList {
       updateVisibleBySearchFlattedOptions(this.flattedOptions, searchText)
     }
 
-    updateDOM(this.flattedOptions, this.srcElement)
+    updateDOM(this.flattedOptions, this.srcElement, this.iconElements)
     this.focusFirstListElement()
   }
 
@@ -420,7 +423,7 @@ class TreeselectList implements ITreeselectList {
 
     const icon = document.createElement('span')
     icon.classList.add('treeselect-list__empty-icon')
-    icon.innerHTML = svg.attention
+    appendIconToElement(this.iconElements.attention, icon)
 
     const text = document.createElement('span')
     text.classList.add('treeselect-list__empty-text')
@@ -494,7 +497,7 @@ class TreeselectList implements ITreeselectList {
     const arrow = document.createElement('span')
     arrow.setAttribute('tabindex', '-1')
     arrow.classList.add('treeselect-list__item-icon')
-    arrow.innerHTML = svg.arrowDown
+    appendIconToElement(this.iconElements.arrowDown, arrow)
 
     arrow.addEventListener('mousedown', (e) => this.#arrowMousedown(e))
 
@@ -540,7 +543,7 @@ class TreeselectList implements ITreeselectList {
       flattedOption.checked = target.checked
       flattedOption.isPartialChecked = false
       updateCheckStateFlattedOption(flattedOption, this.flattedOptions)
-      updateDOM(this.flattedOptions, this.srcElement)
+      updateDOM(this.flattedOptions, this.srcElement, this.iconElements)
       this.#emitInput()
     }
   }
@@ -553,7 +556,7 @@ class TreeselectList implements ITreeselectList {
     if (flattedOption) {
       flattedOption.isClosed = !flattedOption.isClosed
       hideShowChildrenFlattedOptions(this.flattedOptions, flattedOption)
-      updateDOM(this.flattedOptions, this.srcElement)
+      updateDOM(this.flattedOptions, this.srcElement, this.iconElements)
 
       this.#emitArrowClick()
     }

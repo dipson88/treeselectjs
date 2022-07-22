@@ -1,6 +1,11 @@
 import { OptionType, ValueOptionType, FlattedOptionType } from '../treeselectTypes'
 
-const getFlattedOptions = (options: OptionType[], openLevel: number, groupId: ValueOptionType = '', level: number = 0) => {
+const getFlattedOptions = (
+  options: OptionType[],
+  openLevel: number,
+  groupId: ValueOptionType = '',
+  level: number = 0
+) => {
   return options.reduce((acc, curr) => {
     const isGroup = !!curr.children?.length
     const isClosed = level >= openLevel && isGroup

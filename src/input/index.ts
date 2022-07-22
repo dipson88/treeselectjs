@@ -1,6 +1,6 @@
-import svg from '../svgIcons'
-import { ValueOptionType, FlattedOptionType } from '../treeselectTypes'
+import { ValueOptionType, FlattedOptionType, IconsType } from '../treeselectTypes'
 import { ITreeselectInputParams, ITreeselectInput } from './inputTypes'
+import { appendIconToElement } from '../svgIcons'
 
 export class TreeselectInput implements ITreeselectInput {
   // Props
@@ -13,6 +13,7 @@ export class TreeselectInput implements ITreeselectInput {
   placeholder: string
   disabled: boolean
   id: string
+  iconElements: IconsType
 
   // InnerState
   isOpened: boolean
@@ -34,7 +35,8 @@ export class TreeselectInput implements ITreeselectInput {
     searchable,
     placeholder,
     disabled,
-    id
+    id,
+    iconElements
   }: ITreeselectInputParams) {
     this.value = value
     this.showTags = showTags
@@ -45,6 +47,7 @@ export class TreeselectInput implements ITreeselectInput {
     this.isAlwaysOpened = isAlwaysOpened
     this.disabled = disabled
     this.id = id
+    this.iconElements = iconElements
 
     this.isOpened = false
     this.searchText = ''
@@ -132,8 +135,8 @@ export class TreeselectInput implements ITreeselectInput {
 
   #updateArrowDirection() {
     if (!this.isAlwaysOpened && this.#htmlArrow) {
-      const arrowSvg = this.isOpened ? svg.arrowUp : svg.arrowDown
-      this.#htmlArrow.innerHTML = arrowSvg
+      const icon = this.isOpened ? this.iconElements.arrowUp : this.iconElements.arrowDown
+      appendIconToElement(icon, this.#htmlArrow)
     }
   }
 
@@ -231,7 +234,7 @@ export class TreeselectInput implements ITreeselectInput {
   #createTagCross() {
     const elementCross = document.createElement('span')
     elementCross.classList.add('treeselect-input__tags-cross')
-    elementCross.innerHTML = svg.cross
+    appendIconToElement(this.iconElements.cross, elementCross)
 
     return elementCross
   }
@@ -317,7 +320,7 @@ export class TreeselectInput implements ITreeselectInput {
     const clear = document.createElement('span')
     clear.classList.add('treeselect-input__clear')
     clear.setAttribute('tabindex', '-1')
-    clear.innerHTML = svg.clear
+    appendIconToElement(this.iconElements.clear, clear)
 
     clear.addEventListener('mousedown', (e) => this.#clearButtonMousedown(e))
 
@@ -337,7 +340,8 @@ export class TreeselectInput implements ITreeselectInput {
   #createInputArrow(isOpen: boolean) {
     this.#htmlArrow = document.createElement('span')
     this.#htmlArrow.classList.add('treeselect-input__arrow')
-    this.#htmlArrow.innerHTML = isOpen ? svg.arrowUp : svg.arrowDown
+    const icon = isOpen ? this.iconElements.arrowUp : this.iconElements.arrowDown
+    appendIconToElement(icon, this.#htmlArrow)
 
     this.#htmlArrow.addEventListener('mousedown', (e) => this.#inputArrowMousedown(e))
 

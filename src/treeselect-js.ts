@@ -1,9 +1,16 @@
 import { ITreeselectInput } from './input/inputTypes'
 import { ITreeselectList } from './list/listTypes'
-import { OptionType, ValueOptionType, FlattedOptionType } from './treeselectTypes'
 import TreeselectInput from './input/index'
 import TreeselectList from './list/index'
-import { ITreeslect, ITreeslectParams } from './treeselectTypes'
+import {
+  ITreeslect,
+  ITreeslectParams,
+  OptionType,
+  ValueOptionType,
+  FlattedOptionType,
+  IconsType
+} from './treeselectTypes'
+import { getDefaultIcons } from './svgIcons'
 
 const validateProps = ({ parentHtmlContainer, staticList, appendToBody }: Partial<ITreeslectParams>) => {
   if (!parentHtmlContainer) {
@@ -36,6 +43,7 @@ class Treeselect implements ITreeslect {
   emptyText: string
   staticList: boolean
   id: string
+  iconElements: IconsType
 
   // InnerState
   isListOpened: boolean
@@ -71,7 +79,8 @@ class Treeselect implements ITreeslect {
     disabled,
     emptyText,
     staticList,
-    id
+    id,
+    iconElements
   }: ITreeslectParams) {
     validateProps({
       parentHtmlContainer,
@@ -96,6 +105,7 @@ class Treeselect implements ITreeslect {
     this.emptyText = emptyText ?? 'No results found...'
     this.staticList = !!(staticList && !this.appendToBody)
     this.id = id ?? ''
+    this.iconElements = getDefaultIcons(iconElements)
 
     this.isListOpened = false
     this.srcElement = null
@@ -169,7 +179,8 @@ class Treeselect implements ITreeslect {
       value: this.value,
       openLevel: this.openLevel,
       listSlotHtmlComponent: this.listSlotHtmlComponent,
-      emptyText: this.emptyText
+      emptyText: this.emptyText,
+      iconElements: this.iconElements
     })
 
     const { groupedNodes, nodes } = list.selectedNodes
@@ -182,7 +193,8 @@ class Treeselect implements ITreeslect {
       searchable: this.searchable,
       placeholder: this.placeholder,
       disabled: this.disabled,
-      id: this.id
+      id: this.id,
+      iconElements: this.iconElements
     })
 
     if (this.appendToBody) {

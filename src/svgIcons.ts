@@ -1,4 +1,6 @@
-export default {
+import { IconsType } from './treeselectTypes'
+
+export const icons: IconsType = {
   arrowUp:
     '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>',
   arrowDown:
@@ -15,4 +17,34 @@ export default {
     '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>',
   partialCheck:
     '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>'
+}
+
+export const appendIconToElement = (icon: string | HTMLElement, element: HTMLElement) => {
+  element.innerHTML = ''
+
+  if (typeof icon === 'string') {
+    element.innerHTML = icon
+  } else {
+    const insertedIcon = icon.cloneNode(true)
+    element.appendChild(insertedIcon)
+  }
+}
+
+export const getDefaultIcons = (iconsFromProps: Partial<IconsType> | undefined) => {
+  const newIcons = iconsFromProps ? { ...iconsFromProps } : {}
+
+  Object.keys(icons).forEach((key) => {
+    const iconValue = newIcons[key as keyof IconsType]
+
+    if (!iconValue) {
+      newIcons[key as keyof IconsType] = icons[key as keyof IconsType]
+    }
+  })
+
+  return newIcons as IconsType
+}
+
+export default {
+  icons,
+  appendIconToElement
 }

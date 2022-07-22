@@ -1,4 +1,4 @@
-import { FlattedOptionType } from "../treeselectTypes";
+import { FlattedOptionType, IconsType } from '../treeselectTypes'
 
 export interface ITreeselectInputParams {
   value: FlattedOptionType[]
@@ -10,6 +10,7 @@ export interface ITreeselectInputParams {
   placeholder: string
   disabled: boolean
   id: string
+  iconElements: IconsType
 }
 
 export interface ITreeselectInput extends ITreeselectInputParams {

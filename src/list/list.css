@@ -47,6 +47,10 @@
   stroke: #c5c7cb;
 }
 
+.treeselect-list__item-icon * {
+  pointer-events: none;
+}
+
 .treeselect-list__item-icon:hover svg {
   stroke: #838790;
 }
