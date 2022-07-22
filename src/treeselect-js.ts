@@ -35,6 +35,7 @@ class Treeselect implements ITreeslect {
   disabled: boolean
   emptyText: string
   staticList: boolean
+  id: string
 
   // InnerState
   isListOpened: boolean
@@ -69,7 +70,8 @@ class Treeselect implements ITreeslect {
     listSlotHtmlComponent,
     disabled,
     emptyText,
-    staticList
+    staticList,
+    id
   }: ITreeslectParams) {
     validateProps({
       parentHtmlContainer,
@@ -93,8 +95,8 @@ class Treeselect implements ITreeslect {
     this.disabled = disabled ?? false
     this.emptyText = emptyText ?? 'No results found...'
     this.staticList = !!(staticList && !this.appendToBody)
+    this.id = id ?? ''
 
-    // State
     this.isListOpened = false
     this.srcElement = null
 
@@ -179,7 +181,8 @@ class Treeselect implements ITreeslect {
       isAlwaysOpened: this.alwaysOpen,
       searchable: this.searchable,
       placeholder: this.placeholder,
-      disabled: this.disabled
+      disabled: this.disabled,
+      id: this.id
     })
 
     if (this.appendToBody) {

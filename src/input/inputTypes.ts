@@ -9,17 +9,10 @@ export interface ITreeselectInputParams {
   searchable: boolean
   placeholder: string
   disabled: boolean
+  id: string
 }
 
-export interface ITreeselectInput {
-  value: InputValueType
-  showTags: boolean
-  tagsCountText: string
-  clearable: boolean
-  isAlwaysOpened: boolean
-  searchable: boolean
-  placeholder: string
-  disabled: boolean
+export interface ITreeselectInput extends ITreeselectInputParams {
   isOpened: boolean
   searchText: string
   srcElement: HTMLElement | Element

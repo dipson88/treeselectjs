@@ -11,6 +11,7 @@ export class TreeselectInput implements ITreeselectInput {
   searchable: boolean
   placeholder: string
   disabled: boolean
+  id: string
 
   // InnerState
   isOpened: boolean
@@ -31,7 +32,8 @@ export class TreeselectInput implements ITreeselectInput {
     isAlwaysOpened,
     searchable,
     placeholder,
-    disabled
+    disabled,
+    id
   }: ITreeselectInputParams) {
     this.value = value
     this.showTags = showTags
@@ -41,6 +43,7 @@ export class TreeselectInput implements ITreeselectInput {
     this.clearable = clearable
     this.isAlwaysOpened = isAlwaysOpened
     this.disabled = disabled
+    this.id = id
 
     this.isOpened = false
     this.searchText = ''
@@ -250,6 +253,7 @@ export class TreeselectInput implements ITreeselectInput {
   #createControl() {
     const input = document.createElement('input')
     input.classList.add('treeselect-input__edit')
+    input.setAttribute('id', this.id)
 
     if (this.disabled) {
       input.setAttribute('tabindex', '-1')

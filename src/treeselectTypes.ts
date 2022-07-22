@@ -21,6 +21,7 @@ export interface ITreeslect {
   disabled: boolean
   emptyText: string
   staticList: boolean
+  id: string
   isListOpened: boolean
   srcElement: HTMLElement | null
   mount: () => void
@@ -47,4 +48,5 @@ export interface ITreeslectParams {
   disabled?: boolean
   emptyText?: string
   staticList?: boolean
+  id?: string
 }
