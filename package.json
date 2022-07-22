@@ -1,6 +1,6 @@
 {
   "name": "treeselectjs",
-  "version": "0.2.9",
+  "version": "0.3.0",
   "description": "Treeselect JS",
   "main": "dist/treeselect-js.cjs.js",
   "module": "dist/treeselect-js.mjs.js",
@@ -54,7 +54,11 @@
   "keywords": [
     "treeselect",
     "select",
-    "js"
+    "groupselect",
+    "js",
+    "ts",
+    "typescript",
+    "vanilla"
   ],
   "author": "Dzmitry Zhuraukou",
   "license": "MIT",
