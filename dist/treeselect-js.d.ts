@@ -1,11 +1,12 @@
+type ValueOptionType = string | number;
 type OptionType = {
-    value: string;
+    value: ValueOptionType;
     name: string;
     children: OptionType[];
 };
 interface ITreeslect {
     parentHtmlContainer: HTMLElement;
-    value: string[];
+    value: ValueOptionType[];
     options: OptionType[];
     openLevel: number;
     appendToBody: boolean;
@@ -20,17 +21,19 @@ interface ITreeslect {
     disabled: boolean;
     emptyText: string;
     staticList: boolean;
+    id: string;
+    iconElements: IconsType;
     isListOpened: boolean;
     srcElement: HTMLElement | null;
     mount: () => void;
-    updateValue: (newValue: string[]) => void;
+    updateValue: (newValue: ValueOptionType[]) => void;
     destroy: () => void;
     focus: () => void;
     toggleOpenClose: () => void;
 }
 interface ITreeslectParams {
     parentHtmlContainer: HTMLElement;
-    value?: string[];
+    value?: ValueOptionType[];
     options?: OptionType[];
     openLevel?: number;
     appendToBody?: boolean;
@@ -45,11 +48,23 @@ interface ITreeslectParams {
     disabled?: boolean;
     emptyText?: string;
     staticList?: boolean;
+    id?: string;
+    iconElements?: Partial<IconsType>;
 }
+type IconsType = {
+    arrowUp: string | HTMLElement;
+    arrowDown: string | HTMLElement;
+    arrowRight: string | HTMLElement;
+    attention: string | HTMLElement;
+    clear: string | HTMLElement;
+    cross: string | HTMLElement;
+    check: string | HTMLElement;
+    partialCheck: string | HTMLElement;
+};
 export default class Treeselect implements ITreeslect {
     #private;
     parentHtmlContainer: HTMLElement;
-    value: string[];
+    value: ValueOptionType[];
     options: OptionType[];
     openLevel: number;
     appendToBody: boolean;
@@ -64,11 +79,13 @@ export default class Treeselect implements ITreeslect {
     disabled: boolean;
     emptyText: string;
     staticList: boolean;
+    id: string;
+    iconElements: IconsType;
     isListOpened: boolean;
     srcElement: HTMLElement | null;
-    constructor({ parentHtmlContainer, value, options, openLevel, appendToBody, alwaysOpen, showTags, tagsCountText, clearable, searchable, placeholder, grouped, listSlotHtmlComponent, disabled, emptyText, staticList }: ITreeslectParams);
+    constructor({ parentHtmlContainer, value, options, openLevel, appendToBody, alwaysOpen, showTags, tagsCountText, clearable, searchable, placeholder, grouped, listSlotHtmlComponent, disabled, emptyText, staticList, id, iconElements }: ITreeslectParams);
     mount(): void;
-    updateValue(newValue: string[]): void;
+    updateValue(newValue: ValueOptionType[]): void;
     destroy(): void;
     focus(): void;
     toggleOpenClose(): void;
