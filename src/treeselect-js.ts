@@ -1,6 +1,6 @@
 import { ITreeselectInput } from './input/inputTypes'
 import { ITreeselectList } from './list/listTypes'
-import { OptionType } from './treeselectTypes'
+import { OptionType, ValueOptionType, FlattedOptionType } from './treeselectTypes'
 import TreeselectInput from './input/index'
 import TreeselectList from './list/index'
 import { ITreeslect, ITreeslectParams } from './treeselectTypes'
@@ -15,12 +15,12 @@ const validateProps = ({ parentHtmlContainer, staticList, appendToBody }: Partia
   }
 }
 
-const getOnlyIds = (nodes: { id: string }[]) => nodes.map((node) => node.id)
+const getOnlyIds = (nodes: FlattedOptionType[]) => nodes.map((node) => node.id)
 
 class Treeselect implements ITreeslect {
   // Props
   parentHtmlContainer: HTMLElement
-  value: string[]
+  value: ValueOptionType[]
   options: OptionType[]
   openLevel: number
   appendToBody: boolean
@@ -127,7 +127,7 @@ class Treeselect implements ITreeslect {
     }
   }
 
-  updateValue(newValue: string[]) {
+  updateValue(newValue: ValueOptionType[]) {
     const list = this.#treeselectList
 
     if (list) {

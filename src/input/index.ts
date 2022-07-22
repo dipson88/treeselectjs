@@ -1,9 +1,10 @@
 import svg from '../svgIcons'
-import { ITreeselectInputParams, ITreeselectInput, InputValueType } from './inputTypes'
+import { ValueOptionType, FlattedOptionType } from '../treeselectTypes'
+import { ITreeselectInputParams, ITreeselectInput } from './inputTypes'
 
 export class TreeselectInput implements ITreeselectInput {
   // Props
-  value: InputValueType
+  value: FlattedOptionType[]
   showTags: boolean
   tagsCountText: string
   clearable: boolean
@@ -69,13 +70,13 @@ export class TreeselectInput implements ITreeselectInput {
     }
   }
 
-  updateValue(newValue: InputValueType) {
+  updateValue(newValue: FlattedOptionType[]) {
     this.value = newValue
     this.#updateTags()
     this.#updateEditControl()
   }
 
-  removeItem(id: string) {
+  removeItem(id: ValueOptionType) {
     this.value = this.value.filter((v) => v.id !== id)
     this.#emitInput()
     this.#updateTags()
@@ -197,7 +198,7 @@ export class TreeselectInput implements ITreeselectInput {
       const element = document.createElement('div')
       element.classList.add('treeselect-input__tags-element')
       element.setAttribute('tabindex', '-1')
-      element.setAttribute('tag-id', value.id)
+      element.setAttribute('tag-id', value.id.toString())
       element.setAttribute('title', value.name)
 
       const name = this.#createTagName(value.name)
@@ -211,7 +212,7 @@ export class TreeselectInput implements ITreeselectInput {
     })
   }
 
-  #tagsMousedown(e: Event, id: string) {
+  #tagsMousedown(e: Event, id: ValueOptionType) {
     // Two methods help to prevent mousedown on main container
     e.preventDefault()
     e.stopPropagation()

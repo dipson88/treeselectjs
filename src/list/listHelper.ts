@@ -1,7 +1,6 @@
-import { OptionType } from '../treeselectTypes'
-import { FlattedOptionType } from './listTypes'
+import { OptionType, ValueOptionType, FlattedOptionType } from '../treeselectTypes'
 
-const getFlattedOptions = (options: OptionType[], openLevel: number, groupId: string = '', level: number = 0) => {
+const getFlattedOptions = (options: OptionType[], openLevel: number, groupId: ValueOptionType = '', level: number = 0) => {
   return options.reduce((acc, curr) => {
     const isGroup = !!curr.children?.length
     const isClosed = level >= openLevel && isGroup
@@ -40,7 +39,7 @@ const checkAllChildrenOptions = ({ id, checked }: Partial<FlattedOptionType>, fl
   })
 }
 
-const checkAllParentOptions = (childOf: string, flattedOptions: FlattedOptionType[]) => {
+const checkAllParentOptions = (childOf: ValueOptionType, flattedOptions: FlattedOptionType[]) => {
   const parent = flattedOptions.find((option) => option.id === childOf)
   const allParentChildren = flattedOptions.filter((option) => option.childOf === parent?.id)
 
@@ -86,7 +85,7 @@ const updateCheckStateFlattedOption = (
   }
 }
 
-const getAllFlattedChildren = (childOf: string, flattedOption: FlattedOptionType[]) => {
+const getAllFlattedChildren = (childOf: ValueOptionType, flattedOption: FlattedOptionType[]) => {
   return flattedOption.reduce((acc, curr) => {
     if (curr.childOf === childOf) {
       acc.push(curr)
@@ -100,7 +99,7 @@ const getAllFlattedChildren = (childOf: string, flattedOption: FlattedOptionType
   }, [] as FlattedOptionType[])
 }
 
-const getAllFlattenParents = (childOf: string, flatOptions: FlattedOptionType[]) => {
+const getAllFlattenParents = (childOf: ValueOptionType, flatOptions: FlattedOptionType[]) => {
   return flatOptions.reduce((acc, curr) => {
     if (curr.id === childOf) {
       acc.push(curr)
@@ -130,7 +129,7 @@ const getGroupedCheckedFlattedOptions = (flattedOptions: FlattedOptionType[]) =>
       return acc
     },
     {
-      onlyGroupsIds: [] as string[],
+      onlyGroupsIds: [] as ValueOptionType[],
       allItems: [] as FlattedOptionType[]
     }
   )
@@ -205,7 +204,7 @@ const resetCheckedState = (flattedOptions: FlattedOptionType[]) => {
   })
 }
 
-const updateFlattedOptionsByValue = (newValue: string[], flattedOptions: FlattedOptionType[]) => {
+const updateFlattedOptionsByValue = (newValue: ValueOptionType[], flattedOptions: FlattedOptionType[]) => {
   resetCheckedState(flattedOptions)
 
   const toCheck = flattedOptions.filter((option) => newValue.some((id) => id === option.id))

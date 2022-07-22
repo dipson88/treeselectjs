@@ -1,7 +1,7 @@
-export type InputValueType = { id: string; name: string }[]
+import { FlattedOptionType } from "../treeselectTypes";
 
 export interface ITreeselectInputParams {
-  value: InputValueType
+  value: FlattedOptionType[]
   showTags: boolean
   tagsCountText: string
   clearable: boolean
@@ -18,7 +18,7 @@ export interface ITreeselectInput extends ITreeselectInputParams {
   srcElement: HTMLElement | Element
   focus: () => void
   blur: () => void
-  updateValue: (newValue: InputValueType) => void
+  updateValue: (newValue: FlattedOptionType[]) => void
   removeItem: (id: string) => void
   clear: () => void
   openClose: () => void

@@ -1,6 +1,6 @@
 import svg from '../svgIcons'
-import { OptionType } from '../treeselectTypes'
-import { ITreeslectListParams, ITreeselectList, SelectedNodesType, FlattedOptionType } from './listTypes'
+import { OptionType, ValueOptionType, FlattedOptionType } from '../treeselectTypes'
+import { ITreeslectListParams, ITreeselectList, SelectedNodesType } from './listTypes'
 import {
   getFlattedOptions,
   updateCheckStateFlattedOption,
@@ -14,7 +14,7 @@ import {
 const validateOptions = (flatOptions: FlattedOptionType[]) => {
   const { duplications } = flatOptions.reduce(
     (acc, curr) => {
-      if (acc.allItems.some((id) => id === curr.id)) {
+      if (acc.allItems.some((id) => id.toString() === curr.id.toString())) {
         acc.duplications.push(curr.id)
       }
 
@@ -23,8 +23,8 @@ const validateOptions = (flatOptions: FlattedOptionType[]) => {
       return acc
     },
     {
-      duplications: [] as string[],
-      allItems: [] as string[]
+      duplications: [] as ValueOptionType[],
+      allItems: [] as ValueOptionType[]
     }
   )
 
@@ -33,7 +33,11 @@ const validateOptions = (flatOptions: FlattedOptionType[]) => {
   }
 }
 
-const updateValue = (newValue: string[], flattedOptions: FlattedOptionType[], srcElement: HTMLElement | Element) => {
+const updateValue = (
+  newValue: ValueOptionType[],
+  flattedOptions: FlattedOptionType[],
+  srcElement: HTMLElement | Element
+) => {
   updateFlattedOptionsByValue(newValue, flattedOptions)
   updateDOM(flattedOptions, srcElement)
 }
@@ -150,10 +154,14 @@ const getListItemByCheckbox = (checkbox: HTMLElement | Element) => {
   return listItem
 }
 
+const getFlattedOptionByInputId = (inputId: string | null, flattedOptions: FlattedOptionType[]) => {
+  return flattedOptions.find((fo) => fo.id.toString() === inputId)
+}
+
 class TreeselectList implements ITreeselectList {
   // Props
   options: OptionType[]
-  value: string[]
+  value: ValueOptionType[]
   openLevel: number
   listSlotHtmlComponent: HTMLElement | null
   emptyText: string
@@ -187,7 +195,7 @@ class TreeselectList implements ITreeselectList {
   }
 
   // Public methods
-  updateValue(value: string[]) {
+  updateValue(value: ValueOptionType[]) {
     updateValue(value, this.flattedOptions, this.srcElement)
     this.#updateSelectedNodes()
   }
@@ -269,7 +277,7 @@ class TreeselectList implements ITreeselectList {
 
     const checkbox = itemFocused.querySelector('.treeselect-list__item-checkbox')!
     const inputId = checkbox.getAttribute('input-id')
-    const option = this.flattedOptions.find((option) => option.id === inputId)!
+    const option = getFlattedOptionByInputId(inputId, this.flattedOptions)!
     const arrow = itemFocused.querySelector('.treeselect-list__item-icon')!
 
     if (key === 'ArrowLeft' && !option.isClosed) {
@@ -425,7 +433,7 @@ class TreeselectList implements ITreeselectList {
 
   #createGroupContainer(option: OptionType) {
     const groupContainerElement = document.createElement('div')
-    groupContainerElement.setAttribute('group-container-id', option.value)
+    groupContainerElement.setAttribute('group-container-id', option.value.toString())
     groupContainerElement.classList.add('treeselect-list__group-container')
 
     const groupItemElement = this.#createGroupItem(option, true)
@@ -508,7 +516,7 @@ class TreeselectList implements ITreeselectList {
     const checkbox = document.createElement('input')
     checkbox.setAttribute('tabindex', '-1')
     checkbox.setAttribute('type', `checkbox`)
-    checkbox.setAttribute('input-id', option.value)
+    checkbox.setAttribute('input-id', option.value.toString())
     checkbox.classList.add('treeselect-list__item-checkbox')
 
     checkboxContainer.append(ico, checkbox)
@@ -539,8 +547,8 @@ class TreeselectList implements ITreeselectList {
 
   #arrowClickEvent(e: Event) {
     const input = (e.target as HTMLElement)?.parentNode?.querySelector('[input-id]')
-    const id = input?.getAttribute('input-id')
-    const flattedOption = this.flattedOptions.find((fo) => fo.id === id)
+    const inputId = input?.getAttribute('input-id') ?? null
+    const flattedOption = getFlattedOptionByInputId(inputId, this.flattedOptions)
 
     if (flattedOption) {
       flattedOption.isClosed = !flattedOption.isClosed
