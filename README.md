@@ -4,22 +4,25 @@ A multi-select js component with nested options.
 
 - Full key support (ArrowUp, ArrowDown, Space, ArrowLeft, ArrowRight, Enter)
 - Screen sensitive direction
+- Typescript support
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
 ![Example img](https://github.com/dipson88/treeselectjs/blob/main/treeselectjs.png?raw=true)
 
 ### Getting Started
-It is a js module.
-
 ```bash
 npm install --save treeselectjs
 ```
-You should import treeselectjs
+Import treeselectjs (ES)
 ```
 import Treeselect from 'treeselectjs'
 ```
-and css file with styles
+Import treeselectjs (CommonJS)
+```
+const Treeselect = require('treeselectjs').default
+```
+Import css file with styles
 ```
 @import 'treeselectjs/dist/treeselect-js.css'
 ```
@@ -74,6 +77,7 @@ const options = [
   }
 ]
 
+// Use slot if you need
 const slot = document.createElement('div')
 slot.innerHTML='<a class="treeselect-demo__slot" href="">Click!</a>'
 
@@ -99,7 +103,7 @@ slot.addEventListener('click', (e) => {
 Name  | Type (default) | Description
 ------------- | ------------- | -------------
 **parentHtmlContainer**  | HTMLElement (required!) | It should be a HTML element (div), it will be changed to the list container.
-**value**  | Array[String] ([]) | An array of `value` from `options` prop. This value will be selected on load of the treeselect. You can call `updateValue` to update prop or set value `treeselect.value` and call `mount`. The `value` changes if you check/uncheck checkboxes or remove tags from the input.
+**value**  | Array[String \| Number] ([]) | An array of `value` from `options` prop. This value will be selected on load of the treeselect. You can call `updateValue` to update prop or set value `treeselect.value` and call `mount`. The `value` changes if you check/uncheck checkboxes or remove tags from the input.
 **options**  | Array[Object] ([]) | It is an array of objects ```{ name: String, value: String, children: [] }```, where children are the same array of objects. Do not use duplicated values.
 **openLevel**  | Number (0) | All groups will be opened to this level.
 **appendToBody**  | Boolean (false) | List will be appended to the body instead of the input container.
@@ -114,16 +118,18 @@ Name  | Type (default) | Description
 **disabled** | Boolean (false) | List will be disabled.
 **emptyText** | String ('No results found...') | A empty list text.
 **staticList** | Boolean (false) | Add the list as a static DOM element. List doesn't overlap content. This prop will be ignored if you use `appendToBody`.
+**id** | String ('') | id attribute for the accessibility.
+**iconElements** | Object({ arrowUp, ... }) | Object contains all svg icons. You can use HTMLElement or a String to reset values from the default Object. Object: ```iconElements: { arrowUp, arrowDown, arrowRight, attention, clear, cross, check, partialCheck }```. After reset of icon you have to update styles if it is necessary, use `alwaysOpen` prop for more comfortable work with styles changes.
 
 ### Emits
 Name  | Return Type | Description
 ------------- | ------------- | -------------
-**input**  | Array[String] | Returns selected ids without groups, only leafs.
+**input**  | Array[String \| Number] | Returns selected ids without groups, only leafs.
 
 ### Methods
 Name  | Params | Description
 ------------- | ------------- | -------------
-**updateValue**  | Array[String] | Update selected values.
+**updateValue**  | Array[String \| Number] | Update selected values.
 **mount**  | None | Helps to remount and update settings. Change settings that you need (treeselect.appendToBody = true), then call mount().
 **destroy**  | None | Deletes elements from the DOM. Call mount() to add treeselect to the DOM with previously saved internal data. If you need to recreate treeselect with default params - call ```new Treeselect(options)```.
 **focus**  | None | Focuses treeselect input without open/close state changes.
@@ -135,4 +141,4 @@ Name  | Params | Description
 3) Use **updateValue()** method to update only the value.
 4) If you need to delete List from the DOM when you don't need treeselect anymore - call **destroy()**.
 5) Do not use **duplicated** values for the options. You will see a error with duplicated values.
-6) **Value** inside the **options** prop should be a **String**.
+6) **Value** prop inside the **options** prop should be a **String** or **Number**.

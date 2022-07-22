@@ -1,0 +1,97 @@
+type ValueOptionType = string | number;
+type OptionType = {
+    value: ValueOptionType;
+    name: string;
+    children: OptionType[];
+};
+interface ITreeslect {
+    parentHtmlContainer: HTMLElement;
+    value: ValueOptionType[];
+    options: OptionType[];
+    openLevel: number;
+    appendToBody: boolean;
+    alwaysOpen: boolean;
+    showTags: boolean;
+    tagsCountText: string;
+    clearable: boolean;
+    searchable: boolean;
+    placeholder: string;
+    grouped: boolean;
+    listSlotHtmlComponent: HTMLElement | null;
+    disabled: boolean;
+    emptyText: string;
+    staticList: boolean;
+    id: string;
+    iconElements: IconsType;
+    isListOpened: boolean;
+    srcElement: HTMLElement | null;
+    mount: () => void;
+    updateValue: (newValue: ValueOptionType[]) => void;
+    destroy: () => void;
+    focus: () => void;
+    toggleOpenClose: () => void;
+}
+interface ITreeslectParams {
+    parentHtmlContainer: HTMLElement;
+    value?: ValueOptionType[];
+    options?: OptionType[];
+    openLevel?: number;
+    appendToBody?: boolean;
+    alwaysOpen?: boolean;
+    showTags?: boolean;
+    tagsCountText?: string;
+    clearable?: boolean;
+    searchable?: boolean;
+    placeholder?: string;
+    grouped?: boolean;
+    listSlotHtmlComponent?: HTMLElement | null;
+    disabled?: boolean;
+    emptyText?: string;
+    staticList?: boolean;
+    id?: string;
+    iconElements?: Partial<IconsType>;
+}
+type IconsType = {
+    arrowUp: string | HTMLElement;
+    arrowDown: string | HTMLElement;
+    arrowRight: string | HTMLElement;
+    attention: string | HTMLElement;
+    clear: string | HTMLElement;
+    cross: string | HTMLElement;
+    check: string | HTMLElement;
+    partialCheck: string | HTMLElement;
+};
+export default class Treeselect implements ITreeslect {
+    #private;
+    parentHtmlContainer: HTMLElement;
+    value: ValueOptionType[];
+    options: OptionType[];
+    openLevel: number;
+    appendToBody: boolean;
+    alwaysOpen: boolean;
+    showTags: boolean;
+    tagsCountText: string;
+    clearable: boolean;
+    searchable: boolean;
+    placeholder: string;
+    grouped: boolean;
+    listSlotHtmlComponent: HTMLElement | null;
+    disabled: boolean;
+    emptyText: string;
+    staticList: boolean;
+    id: string;
+    iconElements: IconsType;
+    isListOpened: boolean;
+    srcElement: HTMLElement | null;
+    constructor({ parentHtmlContainer, value, options, openLevel, appendToBody, alwaysOpen, showTags, tagsCountText, clearable, searchable, placeholder, grouped, listSlotHtmlComponent, disabled, emptyText, staticList, id, iconElements }: ITreeslectParams);
+    mount(): void;
+    updateValue(newValue: ValueOptionType[]): void;
+    destroy(): void;
+    focus(): void;
+    toggleOpenClose(): void;
+    scrollWindowHandler(): void;
+    focusWindowHandler(e: Event): void;
+    blurWindowHandler(): void;
+    updateListPosition(): void;
+}
+export default Treeselect;

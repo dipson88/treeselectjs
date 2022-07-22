@@ -1,5 +1,5 @@
-@import './input.css';
-@import './list.css';
+@import './input/input.css';
+@import './list/list.css';
 
 .treeselect {
   width: 100%;
