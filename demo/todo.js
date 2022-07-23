@@ -8,6 +8,7 @@
 // use _ instead private class #
 // disable change focused element on fast scroll appendToBody
 // Should we add a list direction if we use staticList prop?
+// Use callback instead of eventListeners.
 
 // REQUESTS
 // Investigate an ability to add a diff names but the same values, and check them.

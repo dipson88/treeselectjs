@@ -24,9 +24,10 @@ export interface ITreeslect {
   emptyText: string
   staticList: boolean
   id: string
-  iconElements: IconsType, 
+  iconElements: IconsType
   isListOpened: boolean
   srcElement: HTMLElement | null
+  inputCallback: ((value: ValueOptionType[]) => void) | undefined
   mount: () => void
   updateValue: (newValue: ValueOptionType[]) => void
   destroy: () => void
@@ -51,8 +52,9 @@ export interface ITreeslectParams {
   disabled?: boolean
   emptyText?: string
   staticList?: boolean
-  id?: string,
-  iconElements?: Partial<IconsType> 
+  id?: string
+  iconElements?: Partial<IconsType>
+  inputCallback?: (value: ValueOptionType[]) => void
 }
 
 export type FlattedOptionType = {

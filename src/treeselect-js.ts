@@ -44,6 +44,7 @@ class Treeselect implements ITreeslect {
   staticList: boolean
   id: string
   iconElements: IconsType
+  inputCallback: ((value: ValueOptionType[]) => void) | undefined
 
   // InnerState
   isListOpened: boolean
@@ -80,7 +81,8 @@ class Treeselect implements ITreeslect {
     emptyText,
     staticList,
     id,
-    iconElements
+    iconElements,
+    inputCallback
   }: ITreeslectParams) {
     validateProps({
       parentHtmlContainer,
@@ -106,6 +108,7 @@ class Treeselect implements ITreeslect {
     this.staticList = !!(staticList && !this.appendToBody)
     this.id = id ?? ''
     this.iconElements = getDefaultIcons(iconElements)
+    this.inputCallback = inputCallback
 
     this.isListOpened = false
     this.srcElement = null
@@ -451,6 +454,10 @@ class Treeselect implements ITreeslect {
   // Emits
   #emitInput() {
     this.srcElement?.dispatchEvent(new CustomEvent('input', { detail: this.value }))
+
+    if (this.inputCallback) {
+      this.inputCallback(this.value)
+    }
   }
 }
 

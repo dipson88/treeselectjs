@@ -25,6 +25,7 @@ interface ITreeslect {
     iconElements: IconsType;
     isListOpened: boolean;
     srcElement: HTMLElement | null;
+    inputCallback: ((value: ValueOptionType[]) => void) | undefined;
     mount: () => void;
     updateValue: (newValue: ValueOptionType[]) => void;
     destroy: () => void;
@@ -50,6 +51,7 @@ interface ITreeslectParams {
     staticList?: boolean;
     id?: string;
     iconElements?: Partial<IconsType>;
+    inputCallback?: (value: ValueOptionType[]) => void;
 }
 type IconsType = {
     arrowUp: string | HTMLElement;
@@ -81,9 +83,10 @@ export default class Treeselect implements ITreeslect {
     staticList: boolean;
     id: string;
     iconElements: IconsType;
+    inputCallback: ((value: ValueOptionType[]) => void) | undefined;
     isListOpened: boolean;
     srcElement: HTMLElement | null;
-    constructor({ parentHtmlContainer, value, options, openLevel, appendToBody, alwaysOpen, showTags, tagsCountText, clearable, searchable, placeholder, grouped, listSlotHtmlComponent, disabled, emptyText, staticList, id, iconElements }: ITreeslectParams);
+    constructor({ parentHtmlContainer, value, options, openLevel, appendToBody, alwaysOpen, showTags, tagsCountText, clearable, searchable, placeholder, grouped, listSlotHtmlComponent, disabled, emptyText, staticList, id, iconElements, inputCallback }: ITreeslectParams);
     mount(): void;
     updateValue(newValue: ValueOptionType[]): void;
     destroy(): void;
