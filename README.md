@@ -29,7 +29,7 @@ Import css file with styles
 
 Example
 ```
-import Treeselect from '../dist/treeselect-js.js';
+import Treeselect from 'treeselectjs'
 
 const options = [
   {
