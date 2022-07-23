@@ -19,7 +19,6 @@
 }
 
 .treeselect-input--unsearchable .treeselect-input__edit {
-  z-index: -1;
   caret-color: transparent;
   cursor: default;
 }
