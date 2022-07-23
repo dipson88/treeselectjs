@@ -120,11 +120,12 @@ Name  | Type (default) | Description
 **staticList** | Boolean (false) | Add the list as a static DOM element. List doesn't overlap content. This prop will be ignored if you use `appendToBody`.
 **id** | String ('') | id attribute for the accessibility.
 **iconElements** | Object({ arrowUp, ... }) | Object contains all svg icons. You can use HTMLElement or a String to reset values from the default Object. Object: ```iconElements: { arrowUp, arrowDown, arrowRight, attention, clear, cross, check, partialCheck }```. After reset of icon you have to update styles if it is necessary, use `alwaysOpen` prop for more comfortable work with styles changes.
+**inputCallback** | (value) => void (undefined) | Callback method for `input` if you don't what use eventListener.
 
 ### Emits
 Name  | Return Type | Description
 ------------- | ------------- | -------------
-**input**  | Array[String \| Number] | Returns selected ids without groups, only leafs.
+**input**  | Array[String \| Number] | Returns selected ids without groups, only leafs. Add `eventListener` or use `inputCallback` prop to get value.
 
 ### Methods
 Name  | Params | Description
