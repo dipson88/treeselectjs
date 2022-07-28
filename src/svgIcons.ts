@@ -43,8 +43,3 @@ export const getDefaultIcons = (iconsFromProps: Partial<IconsType> | undefined) 
 
   return newIcons as IconsType
 }
-
-export default {
-  icons,
-  appendIconToElement
-}

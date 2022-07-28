@@ -373,5 +373,3 @@ export class TreeselectInput implements ITreeselectInput {
     this.srcElement.dispatchEvent(new CustomEvent('close'))
   }
 }
-
-export default TreeselectInput

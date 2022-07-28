@@ -1,6 +1,6 @@
 {
   "name": "treeselectjs",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Treeselect JS",
   "main": "dist/treeselect-js.cjs.js",
   "module": "dist/treeselect-js.mjs.js",
@@ -28,7 +28,6 @@
     },
     "types": {
       "isLibrary": true,
-      "context": "node",
       "source": "src/treeselect-js.ts",
       "optimize": true,
       "sourceMap": false
@@ -66,6 +65,7 @@
   "homepage": "https://github.com/dipson88/treeselectjs#readme",
   "devDependencies": {
     "@parcel/packager-ts": "^2.6.2",
+    "@parcel/transformer-typescript-tsc": "^2.6.2",
     "@parcel/transformer-typescript-types": "^2.6.2",
     "parcel": "^2.6.2",
     "prettier": "^2.7.1",
@@ -73,8 +73,5 @@
   },
   "files": [
     "dist"
-  ],
-  "dependencies": {
-    "@swc/helpers": "^0.4.3"
-  }
+  ]
 }

@@ -159,7 +159,7 @@ const getFlattedOptionByInputId = (inputId: string | null, flattedOptions: Flatt
   return flattedOptions.find((fo) => fo.id.toString() === inputId)
 }
 
-class TreeselectList implements ITreeselectList {
+export class TreeselectList implements ITreeselectList {
   // Props
   options: OptionType[]
   value: ValueOptionType[]
@@ -595,5 +595,3 @@ class TreeselectList implements ITreeselectList {
     this.srcElement.dispatchEvent(new CustomEvent('input', { detail: this.selectedNodes }))
   }
 }
-
-export default TreeselectList

@@ -16,11 +16,11 @@ npm install --save treeselectjs
 ```
 Import treeselectjs (ES)
 ```
-import Treeselect from 'treeselectjs'
+import { Treeselect } from 'treeselectjs'
 ```
 Import treeselectjs (CommonJS)
 ```
-const Treeselect = require('treeselectjs').default
+const { Treeselect } = require('treeselectjs')
 ```
 Import css file with styles
 ```
@@ -29,7 +29,7 @@ Import css file with styles
 
 Example
 ```
-import Treeselect from 'treeselectjs'
+import { Treeselect } from 'treeselectjs'
 
 const options = [
   {

@@ -63,7 +63,7 @@ type IconsType = {
     check: string | HTMLElement;
     partialCheck: string | HTMLElement;
 };
-export default class Treeselect implements ITreeslect {
+export class Treeselect implements ITreeslect {
     #private;
     parentHtmlContainer: HTMLElement;
     value: ValueOptionType[];
@@ -97,4 +97,3 @@ export default class Treeselect implements ITreeslect {
     blurWindowHandler(): void;
     updateListPosition(): void;
 }
-export default Treeselect;
