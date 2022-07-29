@@ -1,9 +1,4 @@
-import { ValueOptionType, OptionType, FlattedOptionType, IconsType } from '../treeselectTypes'
-
-export type SelectedNodesType = {
-  nodes: FlattedOptionType[]
-  groupedNodes: FlattedOptionType[]
-}
+import { ValueOptionType, OptionType, FlattedOptionType, IconsType, SelectedNodesType } from '../treeselectTypes'
 
 export interface ITreeslectListParams {
   options: OptionType[]
@@ -12,6 +7,9 @@ export interface ITreeslectListParams {
   listSlotHtmlComponent: HTMLElement | null
   emptyText: string
   iconElements: IconsType
+  inputCallback: (value: SelectedNodesType) => void
+  arrowClickCallback: () => void
+  mouseupCallback: () => void
 }
 
 export interface ITreeselectList extends ITreeslectListParams {
