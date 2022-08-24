@@ -8,7 +8,8 @@ import {
   OptionType,
   ValueOptionType,
   FlattedOptionType,
-  IconsType
+  IconsType,
+  SelectedNodesType
 } from './treeselectTypes'
 import { getDefaultIcons } from './svgIcons'
 
@@ -183,7 +184,10 @@ export class Treeselect implements ITreeslect {
       openLevel: this.openLevel,
       listSlotHtmlComponent: this.listSlotHtmlComponent,
       emptyText: this.emptyText,
-      iconElements: this.iconElements
+      iconElements: this.iconElements,
+      inputCallback: (value) => this.#listInputListener(value),
+      arrowClickCallback: () => this.#listArrowClickListener(),
+      mouseupCallback: () => this.#treeselectInput?.focus()
     })
 
     const { groupedNodes, nodes } = list.selectedNodes
@@ -197,50 +201,40 @@ export class Treeselect implements ITreeslect {
       placeholder: this.placeholder,
       disabled: this.disabled,
       id: this.id,
-      iconElements: this.iconElements
+      iconElements: this.iconElements,
+      inputCallback: (value) => this.#inputInputListener(value),
+      searchCallback: (value) => this.#inputSearchListener(value),
+      openCallback: () => this.#openList(),
+      closeCallback: () => this.#closeList(),
+      keydownCallback: (key) => this.#inputKeydownListener(key),
+      focusCallback: () => this.#inputFocusListener()
     })
 
     if (this.appendToBody) {
       this.#containerResizer = new ResizeObserver(() => this.updateListPosition())
     }
 
-    // Input events
-    input.srcElement.addEventListener('input', (e) => this.#inputInputListener(e, list))
-    input.srcElement.addEventListener('open', () => this.#openList())
-    input.srcElement.addEventListener('keydown', (e) => this.#inputKeydownListener(e, list))
-    input.srcElement.addEventListener('search', (e) => this.#inputSearchListener(e, list))
-    input.srcElement.addEventListener('focus', () => this.#inputFocusListener(), true)
-
-    if (!this.alwaysOpen) {
-      input.srcElement.addEventListener('close', () => this.#closeList())
-    }
-
-    // List events
-    list.srcElement.addEventListener('mouseup', () => input.focus(), true)
-    list.srcElement.addEventListener('input', (e) => this.#listInputListener(e, input))
-    list.srcElement.addEventListener('arrow-click', () => this.#listArrowClickListener(input))
-
     container.append(input.srcElement)
 
     return { container, list, input }
   }
 
-  #inputInputListener(e: Event, list: ITreeselectList) {
-    const inputIds = getOnlyIds((e as CustomEvent).detail)
-    list.updateValue(inputIds)
-    const { nodes } = list.selectedNodes
-    this.value = getOnlyIds(nodes)
+  #inputInputListener(value: FlattedOptionType[]) {
+    const inputIds = getOnlyIds(value)
+    this.#treeselectList?.updateValue(inputIds)
+    const nodes = this.#treeselectList?.selectedNodes?.nodes
+    this.value = nodes ? getOnlyIds(nodes) : []
     this.#emitInput()
   }
 
-  #inputKeydownListener(e: Event, list: ITreeselectList) {
+  #inputKeydownListener(key: string) {
     if (this.isListOpened) {
-      list.callKeyAction((e as KeyboardEvent).key)
+      this.#treeselectList?.callKeyAction(key)
     }
   }
 
-  #inputSearchListener(e: Event, list: ITreeselectList) {
-    list.updateSearchValue((e as CustomEvent).detail)
+  #inputSearchListener(value: string) {
+    this.#treeselectList?.updateSearchValue(value)
     this.updateListPosition()
   }
 
@@ -254,17 +248,17 @@ export class Treeselect implements ITreeslect {
     }
   }
 
-  #listInputListener(e: Event, input: TreeselectInput) {
-    const { groupedNodes, nodes } = (e as CustomEvent).detail
+  #listInputListener(value: SelectedNodesType) {
+    const { groupedNodes, nodes } = value
     const inputIds = this.grouped ? groupedNodes : nodes
-    input.updateValue(inputIds)
+    this.#treeselectInput?.updateValue(inputIds)
     this.value = getOnlyIds(nodes)
-    input.focus()
+    this.#treeselectInput?.focus()
     this.#emitInput()
   }
 
-  #listArrowClickListener(input: TreeselectInput) {
-    input.focus()
+  #listArrowClickListener() {
+    this.#treeselectInput?.focus()
     this.updateListPosition()
   }
 
@@ -293,6 +287,10 @@ export class Treeselect implements ITreeslect {
   }
 
   #closeList() {
+    if (this.alwaysOpen) {
+      return
+    }
+
     this.isListOpened = false
 
     if (this.#scrollEvent && this.#resizeEvent) {
@@ -381,7 +379,7 @@ export class Treeselect implements ITreeslect {
       window.removeEventListener('resize', this.#resizeEvent)
     }
 
-    document.removeEventListener('click', this.#focusEvent, true)
+    document.removeEventListener('mousedown', this.#focusEvent, true)
     document.removeEventListener('focus', this.#focusEvent, true)
     window.removeEventListener('blur', this.#blurEvent)
   }

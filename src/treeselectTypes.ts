@@ -79,3 +79,8 @@ export type IconsType = {
   check: string | HTMLElement
   partialCheck: string | HTMLElement
 }
+
+export type SelectedNodesType = {
+  nodes: FlattedOptionType[]
+  groupedNodes: FlattedOptionType[]
+}
