@@ -28,6 +28,12 @@
   z-index: -1;
 }
 
+.treeselect-input--value-not-selected.treeselect-input--unsearchable .treeselect-input__edit:focus {
+  z-index: auto;
+  position: static;
+  width: auto;
+}
+
 .treeselect-input--value-not-selected .treeselect-input__edit {
   width: auto;
   z-index: auto;
