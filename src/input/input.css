@@ -23,6 +23,15 @@
   cursor: default;
 }
 
+.treeselect-input--value-not-selected .treeselect-input__edit {
+  width: auto;
+  z-index: auto;
+}
+
+.treeselect-input--value-not-selected .treeselect-input__tags {
+  gap: 0;
+}
+
 .treeselect-input__tags {
   display: inline-flex;
   align-items: center;
@@ -77,14 +86,24 @@
 
 .treeselect-input__edit {
   flex: 1;
-  min-width: 0;
+  width: 0;
   border: none;
   font-size: 14px;
+
+  /* Hide input for user */
+  position: absolute;
+  z-index: -1;
+  min-width: 0;
 }
 
 .treeselect-input__edit:focus {
   outline: none;
   min-width: 30px;
+
+  /* Show input for user */
+  z-index: auto;
+  position: static;
+  width: auto;
 }
 
 .treeselect-input__operators {
