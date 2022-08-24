@@ -11,6 +11,12 @@ export interface ITreeselectInputParams {
   disabled: boolean
   id: string
   iconElements: IconsType
+  inputCallback: (value: FlattedOptionType[]) => void
+  searchCallback: (value: string) => void
+  openCallback: () => void
+  closeCallback: () => void
+  keydownCallback: (key: string) => void
+  focusCallback: () => void
 }
 
 export interface ITreeselectInput extends ITreeselectInputParams {

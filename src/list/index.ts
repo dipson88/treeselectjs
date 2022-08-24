@@ -1,5 +1,5 @@
-import { OptionType, ValueOptionType, FlattedOptionType, IconsType } from '../treeselectTypes'
-import { ITreeslectListParams, ITreeselectList, SelectedNodesType } from './listTypes'
+import { OptionType, ValueOptionType, FlattedOptionType, IconsType, SelectedNodesType } from '../treeselectTypes'
+import { ITreeslectListParams, ITreeselectList } from './listTypes'
 import {
   getFlattedOptions,
   updateCheckStateFlattedOption,
@@ -175,11 +175,26 @@ export class TreeselectList implements ITreeselectList {
   selectedNodes: SelectedNodesType
   srcElement: HTMLElement
 
+  // Callbacks
+  inputCallback: (value: SelectedNodesType) => void
+  arrowClickCallback: () => void
+  mouseupCallback: () => void
+
   // PrivateInnerState
   #lastFocusedItem: HTMLElement | null = null
   #isMouseActionsAvailable = true
 
-  constructor({ options, value, openLevel, listSlotHtmlComponent, emptyText, iconElements }: ITreeslectListParams) {
+  constructor({
+    options,
+    value,
+    openLevel,
+    listSlotHtmlComponent,
+    emptyText,
+    iconElements,
+    inputCallback,
+    arrowClickCallback,
+    mouseupCallback
+  }: ITreeslectListParams) {
     this.options = options
     this.value = value
     this.openLevel = openLevel ?? 0
@@ -192,6 +207,10 @@ export class TreeselectList implements ITreeselectList {
     this.flattedOptionsBeforeSearch = this.flattedOptions
     this.selectedNodes = { nodes: [], groupedNodes: [] }
     this.srcElement = this.#createSrcElement()
+
+    this.inputCallback = inputCallback
+    this.arrowClickCallback = arrowClickCallback
+    this.mouseupCallback = mouseupCallback
 
     this.updateValue(this.value)
     validateOptions(this.flattedOptions)
@@ -369,6 +388,7 @@ export class TreeselectList implements ITreeselectList {
 
     list.addEventListener('mouseout', (e) => this.#listMouseout(e))
     list.addEventListener('mousemove', () => this.#listMouseMove())
+    list.addEventListener('mouseup', () => this.mouseupCallback(), true)
 
     return list
   }
@@ -558,7 +578,7 @@ export class TreeselectList implements ITreeselectList {
       hideShowChildrenFlattedOptions(this.flattedOptions, flattedOption)
       updateDOM(this.flattedOptions, this.srcElement, this.iconElements)
 
-      this.#emitArrowClick()
+      this.arrowClickCallback()
     }
   }
 
@@ -586,12 +606,8 @@ export class TreeselectList implements ITreeselectList {
   }
 
   // Emits
-  #emitArrowClick() {
-    this.srcElement.dispatchEvent(new CustomEvent('arrow-click'))
-  }
-
   #emitInput() {
     this.#updateSelectedNodes()
-    this.srcElement.dispatchEvent(new CustomEvent('input', { detail: this.selectedNodes }))
+    this.inputCallback(this.selectedNodes)
   }
 }
