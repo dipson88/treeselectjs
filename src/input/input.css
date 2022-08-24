@@ -23,6 +23,11 @@
   cursor: default;
 }
 
+.treeselect-input--unsearchable .treeselect-input__edit:focus {
+  position: absolute;
+  z-index: -1;
+}
+
 .treeselect-input--value-not-selected .treeselect-input__edit {
   width: auto;
   z-index: auto;
