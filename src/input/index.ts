@@ -93,6 +93,9 @@ export class TreeselectInput implements ITreeselectInput {
       this.#updateOpenClose()
     }
 
+    this.searchText = ''
+    this.searchCallback('')
+    this.#updateEditControl()
     this.#htmlEditControl.blur()
   }
 
@@ -137,6 +140,9 @@ export class TreeselectInput implements ITreeselectInput {
     } else {
       this.#htmlTagsSection.appendChild(this.#createCountElement())
     }
+    
+    // We need to add htmlEditControl because we clear all data inside the tags list
+    this.#htmlTagsSection.appendChild(this.#htmlEditControl)
   }
 
   #updateOperators() {
@@ -166,8 +172,10 @@ export class TreeselectInput implements ITreeselectInput {
   #updateEditControl() {
     if (this.value?.length) {
       this.#htmlEditControl.removeAttribute('placeholder')
+      this.srcElement.classList.remove('treeselect-input--value-not-selected')
     } else {
       this.#htmlEditControl.setAttribute('placeholder', this.placeholder)
+      this.srcElement.classList.add('treeselect-input--value-not-selected')
     }
 
     if (!this.searchable) {
@@ -198,7 +206,9 @@ export class TreeselectInput implements ITreeselectInput {
     container.addEventListener('mousedown', (e) => this.#containerMousedown(e))
     container.addEventListener('focus', () => this.focusCallback(), true)
 
-    container.append(htmlTagsSection, htmlEditControl, htmlOperators)
+    // We added htmlEditControl at the end of tags list
+    htmlTagsSection.appendChild(htmlEditControl)
+    container.append(htmlTagsSection, htmlOperators)
 
     return container
   }
@@ -243,8 +253,8 @@ export class TreeselectInput implements ITreeselectInput {
     // Two methods help to prevent mousedown on main container
     e.preventDefault()
     e.stopPropagation()
-    this.focus()
     this.removeItem(id)
+    this.focus()
   }
 
   #createTagName(name: string) {
@@ -307,6 +317,7 @@ export class TreeselectInput implements ITreeselectInput {
     }
 
     this.keydownCallback(e.key)
+    this.focus()
   }
 
   #controlInput(e: Event, input: HTMLInputElement) {
@@ -356,11 +367,12 @@ export class TreeselectInput implements ITreeselectInput {
   #clearButtonMousedown(e: Event) {
     e.preventDefault()
     e.stopPropagation()
-    this.#htmlEditControl?.focus()
 
     if (this.searchText.length || this.value.length) {
       this.clear()
     }
+
+    this.focus()
   }
 
   #createInputArrow(isOpen: boolean) {
