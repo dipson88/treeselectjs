@@ -114,7 +114,6 @@ export class TreeselectInput implements ITreeselectInput {
     this.value = []
     this.#emitInput()
     this.#updateTags()
-    // TODO recheck
     this.clearSearch()
   }
 
