@@ -4,9 +4,9 @@ type OptionType = {
     name: string;
     children: OptionType[];
 };
-interface ITreeslect {
+interface ITreeselect {
     parentHtmlContainer: HTMLElement;
-    value: ValueOptionType[];
+    value: ValueOptionType[] | ValueOptionType;
     options: OptionType[];
     openLevel: number;
     appendToBody: boolean;
@@ -22,19 +22,21 @@ interface ITreeslect {
     emptyText: string;
     staticList: boolean;
     id: string;
+    isSingleSelect: boolean;
+    showCount: boolean;
     iconElements: IconsType;
     isListOpened: boolean;
     srcElement: HTMLElement | null;
-    inputCallback: ((value: ValueOptionType[]) => void) | undefined;
+    inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined;
     mount: () => void;
-    updateValue: (newValue: ValueOptionType[]) => void;
+    updateValue: (newValue: ValueOptionType[] | ValueOptionType) => void;
     destroy: () => void;
     focus: () => void;
     toggleOpenClose: () => void;
 }
-interface ITreeslectParams {
+interface ITreeselectParams {
     parentHtmlContainer: HTMLElement;
-    value?: ValueOptionType[];
+    value?: ValueOptionType[] | ValueOptionType;
     options?: OptionType[];
     openLevel?: number;
     appendToBody?: boolean;
@@ -50,8 +52,10 @@ interface ITreeslectParams {
     emptyText?: string;
     staticList?: boolean;
     id?: string;
+    isSingleSelect?: boolean;
+    showCount?: boolean;
     iconElements?: Partial<IconsType>;
-    inputCallback?: (value: ValueOptionType[]) => void;
+    inputCallback?: (value: ValueOptionType[] | ValueOptionType) => void;
 }
 type IconsType = {
     arrowUp: string | HTMLElement;
@@ -63,7 +67,7 @@ type IconsType = {
     check: string | HTMLElement;
     partialCheck: string | HTMLElement;
 };
-export class Treeselect implements ITreeslect {
+export class Treeselect implements ITreeselect {
     #private;
     parentHtmlContainer: HTMLElement;
     value: ValueOptionType[];
@@ -82,13 +86,15 @@ export class Treeselect implements ITreeslect {
     emptyText: string;
     staticList: boolean;
     id: string;
+    isSingleSelect: boolean;
+    showCount: boolean;
     iconElements: IconsType;
-    inputCallback: ((value: ValueOptionType[]) => void) | undefined;
+    inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined;
     isListOpened: boolean;
     srcElement: HTMLElement | null;
-    constructor({ parentHtmlContainer, value, options, openLevel, appendToBody, alwaysOpen, showTags, tagsCountText, clearable, searchable, placeholder, grouped, listSlotHtmlComponent, disabled, emptyText, staticList, id, iconElements, inputCallback }: ITreeslectParams);
+    constructor({ parentHtmlContainer, value, options, openLevel, appendToBody, alwaysOpen, showTags, tagsCountText, clearable, searchable, placeholder, grouped, listSlotHtmlComponent, disabled, emptyText, staticList, id, isSingleSelect, showCount, iconElements, inputCallback }: ITreeselectParams);
     mount(): void;
-    updateValue(newValue: ValueOptionType[]): void;
+    updateValue(newValue: ValueOptionType[] | ValueOptionType): void;
     destroy(): void;
     focus(): void;
     toggleOpenClose(): void;
