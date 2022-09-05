@@ -57,14 +57,6 @@ const getResultValue = (value: ValueOptionType[], isSingleSelect: boolean) => {
   return value
 }
 
-const getDefaultShowTagsParam = (showTags: boolean | undefined, isSingleSelect: boolean | undefined) => {
-  if (isSingleSelect) {
-    return false
-  }
-
-  return showTags ?? true
-}
-
 export class Treeselect implements ITreeselect {
   // Props
   parentHtmlContainer: HTMLElement
@@ -143,7 +135,7 @@ export class Treeselect implements ITreeselect {
     this.openLevel = openLevel ?? 0
     this.appendToBody = appendToBody ?? true
     this.alwaysOpen = !!(alwaysOpen && !disabled)
-    this.showTags = getDefaultShowTagsParam(showTags, isSingleSelect)
+    this.showTags = showTags ?? true
     this.tagsCountText = tagsCountText ?? 'elements selected'
     this.clearable = clearable ?? true
     this.searchable = searchable ?? true

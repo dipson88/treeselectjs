@@ -85,7 +85,9 @@ export class TreeselectInput implements ITreeselectInput {
 
   // Public methods
   focus() {
-    this.#htmlEditControl.focus()
+    // We need focus after all updates.
+    // We move focus after stack calls.
+    setTimeout(() => this.#htmlEditControl.focus(), 0)
   }
 
   blur() {
@@ -217,6 +219,7 @@ export class TreeselectInput implements ITreeselectInput {
 
   #containerMousedown(e: Event) {
     e.preventDefault()
+    e.stopPropagation()
 
     if (!this.isOpened) {
       this.#updateOpenClose()
@@ -306,6 +309,8 @@ export class TreeselectInput implements ITreeselectInput {
   }
 
   #controlKeydown(e: KeyboardEvent) {
+    e.stopPropagation()
+
     if (e.key === 'Backspace' && !this.searchText.length && this.value.length && !this.showTags) {
       this.clear()
     }
@@ -316,6 +321,12 @@ export class TreeselectInput implements ITreeselectInput {
 
     if (e.code === 'Space' && (!this.searchText || !this.searchable)) {
       this.#updateOpenClose()
+    }
+
+    // We need to prevent enter to avoid unexpected behavior inside forms.
+    // Enter action is handled inside the keydownCallback method.
+    if (e.key === 'Enter') {
+      e.preventDefault()
     }
 
     this.keydownCallback(e.key)
