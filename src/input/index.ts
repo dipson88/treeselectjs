@@ -93,9 +93,7 @@ export class TreeselectInput implements ITreeselectInput {
       this.#updateOpenClose()
     }
 
-    this.searchText = ''
-    this.searchCallback('')
-    this.#updateEditControl()
+    this.clearSearch()
     this.#htmlEditControl.blur()
   }
 
@@ -114,15 +112,20 @@ export class TreeselectInput implements ITreeselectInput {
 
   clear() {
     this.value = []
-    this.searchText = ''
-    this.searchCallback('')
     this.#emitInput()
     this.#updateTags()
-    this.#updateEditControl()
+    // TODO recheck
+    this.clearSearch()
   }
 
   openClose() {
     this.#updateOpenClose()
+  }
+
+  clearSearch () {
+    this.searchText = ''
+    this.searchCallback('')
+    this.#updateEditControl()
   }
 
   // Private methods

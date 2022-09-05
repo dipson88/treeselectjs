@@ -135,6 +135,11 @@
   background-color: #ffffff;
 }
 
+/* single-select styles */
+.treeselect-list.treeselect-list--single-select .treeselect-list__item-checkbox-container {
+  display: none;
+}
+
 /* checked styles */
 .treeselect-list__item .treeselect-list__item-checkbox-container svg {
   stroke: transparent;

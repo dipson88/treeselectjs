@@ -6,9 +6,9 @@ export type OptionType = {
   children: OptionType[]
 }
 
-export interface ITreeslect {
+export interface ITreeselect {
   parentHtmlContainer: HTMLElement
-  value: ValueOptionType[]
+  value: ValueOptionType[] | ValueOptionType
   options: OptionType[]
   openLevel: number
   appendToBody: boolean
@@ -24,20 +24,21 @@ export interface ITreeslect {
   emptyText: string
   staticList: boolean
   id: string
+  isSingleSelect: boolean
   iconElements: IconsType
   isListOpened: boolean
   srcElement: HTMLElement | null
-  inputCallback: ((value: ValueOptionType[]) => void) | undefined
+  inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
   mount: () => void
-  updateValue: (newValue: ValueOptionType[]) => void
+  updateValue: (newValue: ValueOptionType[] | ValueOptionType) => void
   destroy: () => void
   focus: () => void
   toggleOpenClose: () => void
 }
 
-export interface ITreeslectParams {
+export interface ITreeselectParams {
   parentHtmlContainer: HTMLElement
-  value?: ValueOptionType[]
+  value?: ValueOptionType[] | ValueOptionType
   options?: OptionType[]
   openLevel?: number
   appendToBody?: boolean
@@ -53,8 +54,9 @@ export interface ITreeslectParams {
   emptyText?: string
   staticList?: boolean
   id?: string
+  isSingleSelect?: boolean
   iconElements?: Partial<IconsType>
-  inputCallback?: (value: ValueOptionType[]) => void
+  inputCallback?: (value: ValueOptionType[] | ValueOptionType) => void
 }
 
 export type FlattedOptionType = {

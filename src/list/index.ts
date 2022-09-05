@@ -1,5 +1,5 @@
 import { OptionType, ValueOptionType, FlattedOptionType, IconsType, SelectedNodesType } from '../treeselectTypes'
-import { ITreeslectListParams, ITreeselectList } from './listTypes'
+import { ITreeselectListParams, ITreeselectList } from './listTypes'
 import {
   getFlattedOptions,
   updateCheckStateFlattedOption,
@@ -166,6 +166,7 @@ export class TreeselectList implements ITreeselectList {
   openLevel: number
   listSlotHtmlComponent: HTMLElement | null
   emptyText: string
+  isSingleSelect: boolean
   iconElements: IconsType
 
   // InnerState
@@ -190,16 +191,18 @@ export class TreeselectList implements ITreeselectList {
     openLevel,
     listSlotHtmlComponent,
     emptyText,
+    isSingleSelect,
     iconElements,
     inputCallback,
     arrowClickCallback,
     mouseupCallback
-  }: ITreeslectListParams) {
+  }: ITreeselectListParams) {
     this.options = options
     this.value = value
     this.openLevel = openLevel ?? 0
     this.listSlotHtmlComponent = listSlotHtmlComponent ?? null
     this.emptyText = emptyText ?? 'No results found...'
+    this.isSingleSelect = isSingleSelect ?? false
     this.iconElements = iconElements
 
     this.searchText = ''
@@ -386,6 +389,10 @@ export class TreeselectList implements ITreeselectList {
     const list = document.createElement('div')
     list.classList.add('treeselect-list')
 
+    if (this.isSingleSelect) {
+      list.classList.add('treeselect-list--single-select')
+    }
+
     list.addEventListener('mouseout', (e) => this.#listMouseout(e))
     list.addEventListener('mousemove', () => this.#listMouseMove())
     list.addEventListener('mouseup', () => this.mouseupCallback(), true)
@@ -558,14 +565,22 @@ export class TreeselectList implements ITreeselectList {
   // Actions
   #checkboxClickEvent(target: HTMLInputElement, option: OptionType) {
     const flattedOption = this.flattedOptions.find((fo) => fo.id === option.value)
+    const isGroupAndSingleSelect = flattedOption?.isGroup && this.isSingleSelect
 
-    if (flattedOption) {
+    if (!flattedOption || isGroupAndSingleSelect) {
+      return
+    }
+
+    if (this.isSingleSelect) {
+      updateFlattedOptionsByValue([flattedOption.id], this.flattedOptions)
+    } else {
       flattedOption.checked = target.checked
       flattedOption.isPartialChecked = false
       updateCheckStateFlattedOption(flattedOption, this.flattedOptions)
-      updateDOM(this.flattedOptions, this.srcElement, this.iconElements)
-      this.#emitInput()
     }
+
+    updateDOM(this.flattedOptions, this.srcElement, this.iconElements)
+    this.#emitInput()
   }
 
   #arrowClickEvent(e: Event) {
