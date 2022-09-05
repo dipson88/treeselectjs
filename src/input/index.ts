@@ -122,7 +122,7 @@ export class TreeselectInput implements ITreeselectInput {
     this.#updateOpenClose()
   }
 
-  clearSearch () {
+  clearSearch() {
     this.searchText = ''
     this.searchCallback('')
     this.#updateEditControl()
@@ -143,7 +143,7 @@ export class TreeselectInput implements ITreeselectInput {
     } else {
       this.#htmlTagsSection.appendChild(this.#createCountElement())
     }
-    
+
     // We need to add htmlEditControl because we clear all data inside the tags list
     this.#htmlTagsSection.appendChild(this.#htmlEditControl)
   }

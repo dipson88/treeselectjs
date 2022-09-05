@@ -591,7 +591,7 @@ export class TreeselectList implements ITreeselectList {
 
     if (this.isSingleSelect) {
       const [firstSelectedValue] = this.value
-      
+
       // Prevent emit the same value.
       if (flattedOption.id === firstSelectedValue) {
         return

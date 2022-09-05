@@ -42,7 +42,8 @@
   },
   "scripts": {
     "build": "parcel build",
-    "watch": "parcel watch"
+    "watch": "parcel watch",
+    "prettier": "prettier --w src && prettier --w demo"
   },
   "repository": {
     "type": "git",
