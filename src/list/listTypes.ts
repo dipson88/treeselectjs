@@ -7,6 +7,7 @@ export interface ITreeselectListParams {
   listSlotHtmlComponent: HTMLElement | null
   emptyText: string
   isSingleSelect: boolean
+  showCount: boolean
   iconElements: IconsType
   inputCallback: (value: SelectedNodesType) => void
   arrowClickCallback: () => void

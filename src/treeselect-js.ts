@@ -29,7 +29,11 @@ const validateProps = ({
   }
 
   if (isSingleSelect && Array.isArray(value)) {
-    console.error('Validation: if you use isSingleSelect prop, you should pass single value!')
+    console.error('Validation: if you use isSingleSelect prop, you should pass a single value!')
+  }
+
+  if (!isSingleSelect && !Array.isArray(value)) {
+    console.error('Validation: you should pass an array as a value!')
   }
 }
 
@@ -81,6 +85,7 @@ export class Treeselect implements ITreeselect {
   staticList: boolean
   id: string
   isSingleSelect: boolean
+  showCount: boolean
   iconElements: IconsType
   inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
 
@@ -120,6 +125,7 @@ export class Treeselect implements ITreeselect {
     staticList,
     id,
     isSingleSelect,
+    showCount,
     iconElements,
     inputCallback
   }: ITreeselectParams) {
@@ -149,6 +155,7 @@ export class Treeselect implements ITreeselect {
     this.staticList = !!(staticList && !this.appendToBody)
     this.id = id ?? ''
     this.isSingleSelect = isSingleSelect ?? false
+    this.showCount = showCount ?? false
     this.iconElements = getDefaultIcons(iconElements)
     this.inputCallback = inputCallback
 
@@ -227,6 +234,7 @@ export class Treeselect implements ITreeselect {
       listSlotHtmlComponent: this.listSlotHtmlComponent,
       emptyText: this.emptyText,
       isSingleSelect: this.isSingleSelect,
+      showCount: this.showCount,
       iconElements: this.iconElements,
       inputCallback: (value) => this.#listInputListener(value),
       arrowClickCallback: () => this.#listArrowClickListener(),

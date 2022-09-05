@@ -167,6 +167,7 @@ export class TreeselectList implements ITreeselectList {
   listSlotHtmlComponent: HTMLElement | null
   emptyText: string
   isSingleSelect: boolean
+  showCount: boolean
   iconElements: IconsType
 
   // InnerState
@@ -193,6 +194,7 @@ export class TreeselectList implements ITreeselectList {
     emptyText,
     isSingleSelect,
     iconElements,
+    showCount,
     inputCallback,
     arrowClickCallback,
     mouseupCallback
@@ -203,6 +205,7 @@ export class TreeselectList implements ITreeselectList {
     this.listSlotHtmlComponent = listSlotHtmlComponent ?? null
     this.emptyText = emptyText ?? 'No results found...'
     this.isSingleSelect = isSingleSelect ?? false
+    this.showCount = showCount ?? false
     this.iconElements = iconElements
 
     this.searchText = ''
@@ -221,6 +224,7 @@ export class TreeselectList implements ITreeselectList {
 
   // Public methods
   updateValue(value: ValueOptionType[]) {
+    this.value = value
     updateValue(value, this.flattedOptions, this.srcElement, this.iconElements)
     this.#updateSelectedNodes()
   }
@@ -481,7 +485,7 @@ export class TreeselectList implements ITreeselectList {
     }
 
     const checkbox = this.#createCheckbox(option)
-    const label = this.#createCheckboxLabel(option)
+    const label = this.#createCheckboxLabel(option, isGroup)
     itemElement.append(checkbox, label)
 
     return itemElement
@@ -554,12 +558,26 @@ export class TreeselectList implements ITreeselectList {
     return checkboxContainer
   }
 
-  #createCheckboxLabel(option: OptionType) {
+  #createCheckboxLabel(option: OptionType, isGroup: boolean) {
     const label = document.createElement('label')
     label.innerHTML = option.name
     label.classList.add('treeselect-list__item-label')
 
+    if (isGroup && this.showCount) {
+      const counter = this.#createCounter(option)
+      label.appendChild(counter)
+    }
+
     return label
+  }
+
+  #createCounter(option: OptionType) {
+    const counter = document.createElement('span')
+    const children = this.flattedOptions.filter((fo) => fo.childOf === option.value)
+    counter.innerHTML = `(${children.length})`
+    counter.classList.add('treeselect-list__item-label-counter')
+
+    return counter
   }
 
   // Actions
@@ -572,6 +590,13 @@ export class TreeselectList implements ITreeselectList {
     }
 
     if (this.isSingleSelect) {
+      const [firstSelectedValue] = this.value
+      
+      // Prevent emit the same value.
+      if (flattedOption.id === firstSelectedValue) {
+        return
+      }
+
       updateFlattedOptionsByValue([flattedOption.id], this.flattedOptions)
     } else {
       flattedOption.checked = target.checked
@@ -624,5 +649,6 @@ export class TreeselectList implements ITreeselectList {
   #emitInput() {
     this.#updateSelectedNodes()
     this.inputCallback(this.selectedNodes)
+    this.value = this.selectedNodes.nodes.map((node) => node.id)
   }
 }

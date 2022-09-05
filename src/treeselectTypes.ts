@@ -25,6 +25,7 @@ export interface ITreeselect {
   staticList: boolean
   id: string
   isSingleSelect: boolean
+  showCount: boolean
   iconElements: IconsType
   isListOpened: boolean
   srcElement: HTMLElement | null
@@ -55,6 +56,7 @@ export interface ITreeselectParams {
   staticList?: boolean
   id?: string
   isSingleSelect?: boolean
+  showCount?: boolean
   iconElements?: Partial<IconsType>
   inputCallback?: (value: ValueOptionType[] | ValueOptionType) => void
 }
