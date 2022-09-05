@@ -1,18 +1,20 @@
 import { ValueOptionType, OptionType, FlattedOptionType, IconsType, SelectedNodesType } from '../treeselectTypes'
 
-export interface ITreeslectListParams {
+export interface ITreeselectListParams {
   options: OptionType[]
   value: ValueOptionType[]
   openLevel: number
   listSlotHtmlComponent: HTMLElement | null
   emptyText: string
+  isSingleSelect: boolean
+  showCount: boolean
   iconElements: IconsType
   inputCallback: (value: SelectedNodesType) => void
   arrowClickCallback: () => void
   mouseupCallback: () => void
 }
 
-export interface ITreeselectList extends ITreeslectListParams {
+export interface ITreeselectList extends ITreeselectListParams {
   searchText: string
   flattedOptions: FlattedOptionType[]
   flattedOptionsBeforeSearch: FlattedOptionType[]

@@ -1,13 +1,13 @@
 {
   "name": "treeselectjs",
-  "version": "0.3.6",
+  "version": "0.4.0",
   "description": "Treeselect JS",
-  "main": "dist/treeselect-js.cjs.js",
-  "module": "dist/treeselect-js.mjs.js",
-  "types": "dist/treeselect-js.d.ts",
+  "main": "dist/treeselectjs.cjs.js",
+  "module": "dist/treeselectjs.mjs.js",
+  "types": "dist/treeselectjs.d.ts",
   "targets": {
     "main": {
-      "source": "src/treeselect-js.ts",
+      "source": "src/treeselectjs.ts",
       "outputFormat": "commonjs",
       "isLibrary": true,
       "optimize": true,
@@ -17,7 +17,7 @@
       }
     },
     "module": {
-      "source": "src/treeselect-js.ts",
+      "source": "src/treeselectjs.ts",
       "outputFormat": "esmodule",
       "isLibrary": true,
       "optimize": true,
@@ -28,12 +28,12 @@
     },
     "types": {
       "isLibrary": true,
-      "source": "src/treeselect-js.ts",
+      "source": "src/treeselectjs.ts",
       "optimize": true,
       "sourceMap": false
     },
     "css": {
-      "source": "src/treeselect-js.css",
+      "source": "src/treeselectjs.css",
       "distDir": "dist",
       "isLibrary": true,
       "optimize": true,
@@ -42,7 +42,8 @@
   },
   "scripts": {
     "build": "parcel build",
-    "watch": "parcel watch"
+    "watch": "parcel watch",
+    "prettier": "prettier --w src && prettier --w demo"
   },
   "repository": {
     "type": "git",

@@ -1,4 +1,4 @@
-import { Treeselect } from '../dist/treeselect-js.mjs.js';
+import { Treeselect } from '../dist/treeselectjs.mjs.js'
 
 const options = [
   {
@@ -10,14 +10,14 @@ const options = [
         value: 'London',
         children: [
           {
-          name: 'Chelsea',
-          value: 'Chelsea',
-          children: []
+            name: 'Chelsea',
+            value: 'Chelsea',
+            children: []
           },
           {
-          name: 'West End',
-          value: 'West End',
-          children: []
+            name: 'West End',
+            value: 'West End',
+            children: []
           }
         ]
       },
@@ -47,7 +47,7 @@ const options = [
 ]
 
 const slot = document.createElement('div')
-slot.innerHTML='<a class="treeselect-demo__slot" href="">Click!</a>'
+slot.innerHTML = '<a class="treeselect-demo__slot" href="">Click!</a>'
 
 const domElement = document.querySelector('.treeselect-demo')
 const treeselect = new Treeselect({

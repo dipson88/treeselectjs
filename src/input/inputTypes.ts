@@ -29,4 +29,5 @@ export interface ITreeselectInput extends ITreeselectInputParams {
   removeItem: (id: string) => void
   clear: () => void
   openClose: () => void
+  clearSearch: () => void
 }

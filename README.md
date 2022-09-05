@@ -24,7 +24,7 @@ const { Treeselect } = require('treeselectjs')
 ```
 Import css file with styles
 ```
-@import 'treeselectjs/dist/treeselect-js.css'
+@import 'treeselectjs/dist/treeselectjs.css'
 ```
 
 Example
@@ -41,14 +41,14 @@ const options = [
         value: 'London',
         children: [
           {
-          name: 'Chelsea',
-          value: 'Chelsea',
-          children: []
+            name: 'Chelsea',
+            value: 'Chelsea',
+            children: []
           },
           {
-          name: 'West End',
-          value: 'West End',
-          children: []
+            name: 'West End',
+            value: 'West End',
+            children: []
           }
         ]
       },
@@ -110,6 +110,7 @@ Name  | Type (default) | Description
 **alwaysOpen**  | Boolean (false) | List will be always opened. You can use it for comfortable style changing. If you what to use it as an opened list, turn `staticList` to `true`.
 **showTags**  | Boolean (true) | Selected values look like tags. The false value shows results as '{count} elements selected'. You can change text if you use `tagsCountText` prop. For one selected element, you will see a name of this element.
 **tagsCountText**  | String ('elements selected') | This text will be shown if you use 'showTags'. This text will be inserted after the count of the selected elements - ```'{count} {tagsCountText}'```.
+**showCount** | Boolean (false) | Shows count of children near the group's name.
 **clearable**  | Boolean (true) | Clear icon is available.
 **searchable**  | Boolean (true) | Search is available.
 **placeholder**  | String ('Search...') | Placeholder text.
@@ -119,6 +120,7 @@ Name  | Type (default) | Description
 **emptyText** | String ('No results found...') | A empty list text.
 **staticList** | Boolean (false) | Add the list as a static DOM element. List doesn't overlap content. This prop will be ignored if you use `appendToBody`.
 **id** | String ('') | id attribute for the accessibility.
+**isSingleSelect** | Boolean (false) | Converts multi-select to the single value select. Checkboxes will be removed. You should pass only one id instead of array of values.
 **iconElements** | Object({ arrowUp, ... }) | Object contains all svg icons. You can use HTMLElement or a String to reset values from the default Object. Object: ```iconElements: { arrowUp, arrowDown, arrowRight, attention, clear, cross, check, partialCheck }```. After reset of icon you have to update styles if it is necessary, use `alwaysOpen` prop for more comfortable work with styles changes.
 **inputCallback** | (value) => void (undefined) | Callback method for `input` if you don't what use eventListener.
 
@@ -143,3 +145,4 @@ Name  | Params | Description
 4) If you need to delete List from the DOM when you don't need treeselect anymore - call **destroy()**.
 5) Do not use **duplicated** values for the options. You will see a error with duplicated values.
 6) **Value** prop inside the **options** prop should be a **String** or **Number**.
+7) If you use **isSingleSelect** prop, you should pass only a single **id** as a value.

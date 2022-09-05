@@ -24,7 +24,7 @@
 }
 
 .treeselect-list__item--focused {
-  background-color: #f0ffff!important;
+  background-color: #f0ffff !important;
 }
 
 .treeselect-list__item--hidden {
@@ -101,6 +101,12 @@
   pointer-events: none;
 }
 
+.treeselect-list__item-label-counter {
+  margin-left: 3px;
+  color: #838790;
+  font-size: 13px;
+}
+
 .treeselect-list__empty {
   display: flex;
   align-items: center;
@@ -133,6 +139,11 @@
   max-width: 100%;
   bottom: 0;
   background-color: #ffffff;
+}
+
+/* single-select styles */
+.treeselect-list.treeselect-list--single-select .treeselect-list__item-checkbox-container {
+  display: none;
 }
 
 /* checked styles */

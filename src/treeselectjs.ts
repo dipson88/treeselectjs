@@ -3,8 +3,8 @@ import { ITreeselectList } from './list/listTypes'
 import { TreeselectInput } from './input/index'
 import { TreeselectList } from './list/index'
 import {
-  ITreeslect,
-  ITreeslectParams,
+  ITreeselect,
+  ITreeselectParams,
   OptionType,
   ValueOptionType,
   FlattedOptionType,
@@ -13,7 +13,13 @@ import {
 } from './treeselectTypes'
 import { getDefaultIcons } from './svgIcons'
 
-const validateProps = ({ parentHtmlContainer, staticList, appendToBody }: Partial<ITreeslectParams>) => {
+const validateProps = ({
+  parentHtmlContainer,
+  staticList,
+  appendToBody,
+  isSingleSelect,
+  value
+}: Partial<ITreeselectParams>) => {
   if (!parentHtmlContainer) {
     console.error('Validation: parentHtmlContainer prop is required!')
   }
@@ -21,11 +27,45 @@ const validateProps = ({ parentHtmlContainer, staticList, appendToBody }: Partia
   if (staticList && appendToBody) {
     console.error('Validation: You should set staticList to false if you use appendToBody!')
   }
+
+  if (isSingleSelect && Array.isArray(value)) {
+    console.error('Validation: if you use isSingleSelect prop, you should pass a single value!')
+  }
+
+  if (!isSingleSelect && !Array.isArray(value)) {
+    console.error('Validation: you should pass an array as a value!')
+  }
 }
 
 const getOnlyIds = (nodes: FlattedOptionType[]) => nodes.map((node) => node.id)
 
-export class Treeselect implements ITreeslect {
+const getDefaultValue = (value: ValueOptionType[] | ValueOptionType | undefined) => {
+  if (!value) {
+    return []
+  }
+
+  return Array.isArray(value) ? value : [value]
+}
+
+const getResultValue = (value: ValueOptionType[], isSingleSelect: boolean) => {
+  if (isSingleSelect) {
+    const [firstItem] = value
+
+    return firstItem
+  }
+
+  return value
+}
+
+const getDefaultShowTagsParam = (showTags: boolean | undefined, isSingleSelect: boolean | undefined) => {
+  if (isSingleSelect) {
+    return false
+  }
+
+  return showTags ?? true
+}
+
+export class Treeselect implements ITreeselect {
   // Props
   parentHtmlContainer: HTMLElement
   value: ValueOptionType[]
@@ -44,8 +84,10 @@ export class Treeselect implements ITreeslect {
   emptyText: string
   staticList: boolean
   id: string
+  isSingleSelect: boolean
+  showCount: boolean
   iconElements: IconsType
-  inputCallback: ((value: ValueOptionType[]) => void) | undefined
+  inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
 
   // InnerState
   isListOpened: boolean
@@ -82,22 +124,26 @@ export class Treeselect implements ITreeslect {
     emptyText,
     staticList,
     id,
+    isSingleSelect,
+    showCount,
     iconElements,
     inputCallback
-  }: ITreeslectParams) {
+  }: ITreeselectParams) {
     validateProps({
       parentHtmlContainer,
+      value,
       staticList,
-      appendToBody
+      appendToBody,
+      isSingleSelect
     })
 
     this.parentHtmlContainer = parentHtmlContainer
-    this.value = value ?? []
+    this.value = getDefaultValue(value)
     this.options = options ?? []
     this.openLevel = openLevel ?? 0
     this.appendToBody = appendToBody ?? true
     this.alwaysOpen = !!(alwaysOpen && !disabled)
-    this.showTags = showTags ?? true
+    this.showTags = getDefaultShowTagsParam(showTags, isSingleSelect)
     this.tagsCountText = tagsCountText ?? 'elements selected'
     this.clearable = clearable ?? true
     this.searchable = searchable ?? true
@@ -108,6 +154,8 @@ export class Treeselect implements ITreeslect {
     this.emptyText = emptyText ?? 'No results found...'
     this.staticList = !!(staticList && !this.appendToBody)
     this.id = id ?? ''
+    this.isSingleSelect = isSingleSelect ?? false
+    this.showCount = showCount ?? false
     this.iconElements = getDefaultIcons(iconElements)
     this.inputCallback = inputCallback
 
@@ -141,11 +189,12 @@ export class Treeselect implements ITreeslect {
     }
   }
 
-  updateValue(newValue: ValueOptionType[]) {
+  updateValue(newValue: ValueOptionType[] | ValueOptionType) {
     const list = this.#treeselectList
 
     if (list) {
-      list.updateValue(newValue)
+      const value = getDefaultValue(newValue)
+      list.updateValue(value)
       const { groupedNodes, nodes } = list.selectedNodes
       const inputNewValue = this.grouped ? groupedNodes : nodes
       this.#treeselectInput?.updateValue(inputNewValue)
@@ -184,6 +233,8 @@ export class Treeselect implements ITreeslect {
       openLevel: this.openLevel,
       listSlotHtmlComponent: this.listSlotHtmlComponent,
       emptyText: this.emptyText,
+      isSingleSelect: this.isSingleSelect,
+      showCount: this.showCount,
       iconElements: this.iconElements,
       inputCallback: (value) => this.#listInputListener(value),
       arrowClickCallback: () => this.#listArrowClickListener(),
@@ -253,7 +304,17 @@ export class Treeselect implements ITreeslect {
     const inputIds = this.grouped ? groupedNodes : nodes
     this.#treeselectInput?.updateValue(inputIds)
     this.value = getOnlyIds(nodes)
-    this.#treeselectInput?.focus()
+
+    if (this.isSingleSelect) {
+      this.#treeselectInput?.openClose()
+      this.#treeselectInput?.clearSearch()
+    }
+
+    // Too fast close, we need to wait one tick.
+    setTimeout(() => {
+      this.#treeselectInput?.focus()
+    }, 0)
+
     this.#emitInput()
   }
 
@@ -451,10 +512,11 @@ export class Treeselect implements ITreeslect {
 
   // Emits
   #emitInput() {
-    this.srcElement?.dispatchEvent(new CustomEvent('input', { detail: this.value }))
+    const value = getResultValue(this.value, this.isSingleSelect)
+    this.srcElement?.dispatchEvent(new CustomEvent('input', { detail: value }))
 
     if (this.inputCallback) {
-      this.inputCallback(this.value)
+      this.inputCallback(value)
     }
   }
 }
