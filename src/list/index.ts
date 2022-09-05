@@ -309,11 +309,11 @@ export class TreeselectList implements ITreeselectList {
     const option = getFlattedOptionByInputId(inputId, this.flattedOptions)!
     const arrow = itemFocused.querySelector('.treeselect-list__item-icon')!
 
-    if (key === 'ArrowLeft' && !option.isClosed) {
+    if (key === 'ArrowLeft' && !option.isClosed && option.isGroup) {
       arrow.dispatchEvent(new Event('mousedown'))
     }
 
-    if (key === 'ArrowRight' && option.isClosed) {
+    if (key === 'ArrowRight' && option.isClosed && option.isGroup) {
       arrow.dispatchEvent(new Event('mousedown'))
     }
   }
@@ -518,6 +518,7 @@ export class TreeselectList implements ITreeselectList {
   }
 
   #itemElementMousedown(e: Event, option: OptionType) {
+    e.preventDefault()
     e.stopPropagation()
     const checkbox = (e.target as HTMLElement).querySelector('.treeselect-list__item-checkbox') as HTMLInputElement
     checkbox.checked = !checkbox.checked
@@ -536,6 +537,7 @@ export class TreeselectList implements ITreeselectList {
   }
 
   #arrowMousedown(e: Event) {
+    e.preventDefault()
     e.stopPropagation()
     this.#arrowClickEvent(e)
   }
