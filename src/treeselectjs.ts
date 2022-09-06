@@ -71,6 +71,7 @@ export class Treeselect implements ITreeselect {
   searchable: boolean
   placeholder: string
   grouped: boolean
+  isGroupedValue: boolean
   listSlotHtmlComponent: HTMLElement | null
   disabled: boolean
   emptyText: string
@@ -78,10 +79,12 @@ export class Treeselect implements ITreeselect {
   id: string
   isSingleSelect: boolean
   showCount: boolean
+  disabledBranchNode: boolean
   iconElements: IconsType
   inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
 
   // InnerState
+  groupedValue: ValueOptionType[]
   isListOpened: boolean
   srcElement: HTMLElement | null
 
@@ -111,6 +114,7 @@ export class Treeselect implements ITreeselect {
     searchable,
     placeholder,
     grouped,
+    isGroupedValue,
     listSlotHtmlComponent,
     disabled,
     emptyText,
@@ -118,6 +122,7 @@ export class Treeselect implements ITreeselect {
     id,
     isSingleSelect,
     showCount,
+    disabledBranchNode,
     iconElements,
     inputCallback
   }: ITreeselectParams) {
@@ -141,6 +146,7 @@ export class Treeselect implements ITreeselect {
     this.searchable = searchable ?? true
     this.placeholder = placeholder ?? 'Search...'
     this.grouped = grouped ?? true
+    this.isGroupedValue = isGroupedValue ?? false
     this.listSlotHtmlComponent = listSlotHtmlComponent ?? null
     this.disabled = disabled ?? false
     this.emptyText = emptyText ?? 'No results found...'
@@ -148,9 +154,11 @@ export class Treeselect implements ITreeselect {
     this.id = id ?? ''
     this.isSingleSelect = isSingleSelect ?? false
     this.showCount = showCount ?? false
+    this.disabledBranchNode = disabledBranchNode ?? false
     this.iconElements = getDefaultIcons(iconElements)
     this.inputCallback = inputCallback
 
+    this.groupedValue = []
     this.isListOpened = false
     this.srcElement = null
 
@@ -227,6 +235,7 @@ export class Treeselect implements ITreeselect {
       emptyText: this.emptyText,
       isSingleSelect: this.isSingleSelect,
       showCount: this.showCount,
+      disabledBranchNode: this.disabledBranchNode,
       iconElements: this.iconElements,
       inputCallback: (value) => this.#listInputListener(value),
       arrowClickCallback: () => this.#listArrowClickListener(),
@@ -266,7 +275,9 @@ export class Treeselect implements ITreeselect {
     const inputIds = getOnlyIds(value)
     this.#treeselectList?.updateValue(inputIds)
     const nodes = this.#treeselectList?.selectedNodes?.nodes
+    const groupedNodes = this.#treeselectList?.selectedNodes?.groupedNodes
     this.value = nodes ? getOnlyIds(nodes) : []
+    this.groupedValue = groupedNodes ? getOnlyIds(groupedNodes) : []
     this.#emitInput()
   }
 
@@ -296,8 +307,9 @@ export class Treeselect implements ITreeselect {
     const inputIds = this.grouped ? groupedNodes : nodes
     this.#treeselectInput?.updateValue(inputIds)
     this.value = getOnlyIds(nodes)
+    this.groupedValue = getOnlyIds(groupedNodes)
 
-    if (this.isSingleSelect) {
+    if (this.isSingleSelect && !this.alwaysOpen) {
       this.#treeselectInput?.openClose()
       this.#treeselectInput?.clearSearch()
     }
@@ -504,7 +516,8 @@ export class Treeselect implements ITreeselect {
 
   // Emits
   #emitInput() {
-    const value = getResultValue(this.value, this.isSingleSelect)
+    const typedValue = this.isGroupedValue || this.isSingleSelect ? this.groupedValue : this.value
+    const value = getResultValue(typedValue, this.isSingleSelect)
     this.srcElement?.dispatchEvent(new CustomEvent('input', { detail: value }))
 
     if (this.inputCallback) {

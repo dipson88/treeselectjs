@@ -284,11 +284,14 @@ export class TreeselectInput implements ITreeselectInput {
 
     if (!this.value.length) {
       countEl.innerHTML = ''
+      countEl.setAttribute('title', '')
 
       return countEl
     }
 
-    countEl.innerHTML = this.value.length === 1 ? this.value[0].name : `${this.value.length} ${this.tagsCountText}`
+    const count = this.value.length === 1 ? this.value[0].name : `${this.value.length} ${this.tagsCountText}`
+    countEl.innerHTML = count
+    countEl.setAttribute('title', count)
 
     return countEl
   }
@@ -330,7 +333,11 @@ export class TreeselectInput implements ITreeselectInput {
     }
 
     this.keydownCallback(e.key)
-    this.focus()
+
+    // We don't need focus during the page navigation.
+    if (e.key !== 'Tab') {
+      this.focus()
+    }
   }
 
   #controlInput(e: Event, input: HTMLInputElement) {

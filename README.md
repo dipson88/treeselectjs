@@ -121,6 +121,8 @@ Name  | Type (default) | Description
 **staticList** | Boolean (false) | Add the list as a static DOM element. List doesn't overlap content. This prop will be ignored if you use `appendToBody`.
 **id** | String ('') | id attribute for the accessibility.
 **isSingleSelect** | Boolean (false) | Converts multi-select to the single value select. Checkboxes will be removed. You should pass only one id instead of array of values. Also you can set **showTags** to false. It helps to show treeselect as a dropdown.
+**isGroupedValue** | Boolean (false) | Return groups if they selected instead of separate ids. Treeselect returns only leaves ids by default.
+**disabledBranchNode** | Boolean (false) | It is impossible to select groups. You can select only leaves.
 **iconElements** | Object({ arrowUp, ... }) | Object contains all svg icons. You can use HTMLElement or a String to reset values from the default Object. Object: ```iconElements: { arrowUp, arrowDown, arrowRight, attention, clear, cross, check, partialCheck }```. After reset of icon you have to update styles if it is necessary, use `alwaysOpen` prop for more comfortable work with styles changes.
 **inputCallback** | (value) => void (undefined) | Callback method for `input` if you don't what use eventListener.
 
@@ -146,4 +148,4 @@ Name  | Params | Description
 5) Do not use **duplicated** values for the options. You will see a error with duplicated values.
 6) **Value** prop inside the **options** prop should be a **String** or **Number**.
 7) If you use **isSingleSelect** prop, you should pass only a single **id** as a value.
-8) If you use **isSingleSelect** prop, you can set **showTags** to false. It helps to show treeselect as a dropdown.
+8) If you use **isSingleSelect** prop, you can set **showTags** to false. It helps to show treeselect as a dropdown. Also you can disable selecting of group's nodes with help of **disabledBranchNode**.

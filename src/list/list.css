@@ -146,7 +146,26 @@
   display: none;
 }
 
+/* disabled-branch-node styles */
+.treeselect-list.treeselect-list--disabled-branch-node
+  .treeselect-list__item--group
+  .treeselect-list__item-checkbox-container {
+  display: none;
+}
+
 /* checked styles */
+.treeselect-list__item--checked {
+  background-color: #e9f1f1;
+}
+
+.treeselect-list.treeselect-list--single-select .treeselect-list__item--checked {
+  background-color: transparent;
+}
+
+.treeselect-list.treeselect-list--single-select .treeselect-list__item--single-selected {
+  background-color: #e9f1f1;
+}
+
 .treeselect-list__item .treeselect-list__item-checkbox-container svg {
   stroke: transparent;
 }

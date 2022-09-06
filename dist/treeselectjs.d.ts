@@ -17,6 +17,7 @@ interface ITreeselect {
     searchable: boolean;
     placeholder: string;
     grouped: boolean;
+    isGroupedValue: boolean;
     listSlotHtmlComponent: HTMLElement | null;
     disabled: boolean;
     emptyText: string;
@@ -24,7 +25,9 @@ interface ITreeselect {
     id: string;
     isSingleSelect: boolean;
     showCount: boolean;
+    disabledBranchNode: boolean;
     iconElements: IconsType;
+    groupedValue: ValueOptionType[];
     isListOpened: boolean;
     srcElement: HTMLElement | null;
     inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined;
@@ -47,6 +50,7 @@ interface ITreeselectParams {
     searchable?: boolean;
     placeholder?: string;
     grouped?: boolean;
+    isGroupedValue?: boolean;
     listSlotHtmlComponent?: HTMLElement | null;
     disabled?: boolean;
     emptyText?: string;
@@ -54,6 +58,7 @@ interface ITreeselectParams {
     id?: string;
     isSingleSelect?: boolean;
     showCount?: boolean;
+    disabledBranchNode?: boolean;
     iconElements?: Partial<IconsType>;
     inputCallback?: (value: ValueOptionType[] | ValueOptionType) => void;
 }
@@ -81,6 +86,7 @@ export class Treeselect implements ITreeselect {
     searchable: boolean;
     placeholder: string;
     grouped: boolean;
+    isGroupedValue: boolean;
     listSlotHtmlComponent: HTMLElement | null;
     disabled: boolean;
     emptyText: string;
@@ -88,11 +94,13 @@ export class Treeselect implements ITreeselect {
     id: string;
     isSingleSelect: boolean;
     showCount: boolean;
+    disabledBranchNode: boolean;
     iconElements: IconsType;
     inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined;
+    groupedValue: ValueOptionType[];
     isListOpened: boolean;
     srcElement: HTMLElement | null;
-    constructor({ parentHtmlContainer, value, options, openLevel, appendToBody, alwaysOpen, showTags, tagsCountText, clearable, searchable, placeholder, grouped, listSlotHtmlComponent, disabled, emptyText, staticList, id, isSingleSelect, showCount, iconElements, inputCallback }: ITreeselectParams);
+    constructor({ parentHtmlContainer, value, options, openLevel, appendToBody, alwaysOpen, showTags, tagsCountText, clearable, searchable, placeholder, grouped, isGroupedValue, listSlotHtmlComponent, disabled, emptyText, staticList, id, isSingleSelect, showCount, disabledBranchNode, iconElements, inputCallback }: ITreeselectParams);
     mount(): void;
     updateValue(newValue: ValueOptionType[] | ValueOptionType): void;
     destroy(): void;
