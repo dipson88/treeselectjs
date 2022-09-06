@@ -333,7 +333,11 @@ export class TreeselectInput implements ITreeselectInput {
     }
 
     this.keydownCallback(e.key)
-    this.focus()
+
+    // We don't need focus during the page navigation.
+    if (e.key !== 'Tab') {
+      this.focus()
+    }
   }
 
   #controlInput(e: Event, input: HTMLInputElement) {

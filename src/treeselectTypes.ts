@@ -19,6 +19,7 @@ export interface ITreeselect {
   searchable: boolean
   placeholder: string
   grouped: boolean
+  isGroupedValue: boolean
   listSlotHtmlComponent: HTMLElement | null
   disabled: boolean
   emptyText: string
@@ -26,7 +27,9 @@ export interface ITreeselect {
   id: string
   isSingleSelect: boolean
   showCount: boolean
+  disabledBranchNode: boolean
   iconElements: IconsType
+  groupedValue: ValueOptionType[]
   isListOpened: boolean
   srcElement: HTMLElement | null
   inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
@@ -50,6 +53,7 @@ export interface ITreeselectParams {
   searchable?: boolean
   placeholder?: string
   grouped?: boolean
+  isGroupedValue?: boolean
   listSlotHtmlComponent?: HTMLElement | null
   disabled?: boolean
   emptyText?: string
@@ -57,6 +61,7 @@ export interface ITreeselectParams {
   id?: string
   isSingleSelect?: boolean
   showCount?: boolean
+  disabledBranchNode?: boolean
   iconElements?: Partial<IconsType>
   inputCallback?: (value: ValueOptionType[] | ValueOptionType) => void
 }

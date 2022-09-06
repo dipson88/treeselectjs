@@ -11,6 +11,8 @@ import {
 } from './listHelper'
 import { appendIconToElement } from '../svgIcons'
 
+let previousSingleSelectedValue: ValueOptionType[] = []
+
 const validateOptions = (flatOptions: FlattedOptionType[]) => {
   const { duplications } = flatOptions.reduce(
     (acc, curr) => {
@@ -67,6 +69,12 @@ const updateCheckedClass = (option: FlattedOptionType, listItem: HTMLElement) =>
     listItem.classList.add('treeselect-list__item--checked')
   } else {
     listItem.classList.remove('treeselect-list__item--checked')
+  }
+
+  if (Array.isArray(previousSingleSelectedValue) && previousSingleSelectedValue[0] === option.id) {
+    listItem.classList.add('treeselect-list__item--single-selected')
+  } else {
+    listItem.classList.remove('treeselect-list__item--single-selected')
   }
 }
 
@@ -159,6 +167,13 @@ const getFlattedOptionByInputId = (inputId: string | null, flattedOptions: Flatt
   return flattedOptions.find((fo) => fo.id.toString() === inputId)
 }
 
+const getArrowOfItemByCheckbox = (checkbox: HTMLElement | Element) => {
+  const item = getListItemByCheckbox(checkbox)
+  const arrow = item.querySelector('.treeselect-list__item-icon')
+
+  return arrow
+}
+
 export class TreeselectList implements ITreeselectList {
   // Props
   options: OptionType[]
@@ -168,6 +183,7 @@ export class TreeselectList implements ITreeselectList {
   emptyText: string
   isSingleSelect: boolean
   showCount: boolean
+  disabledBranchNode: boolean
   iconElements: IconsType
 
   // InnerState
@@ -195,6 +211,7 @@ export class TreeselectList implements ITreeselectList {
     isSingleSelect,
     iconElements,
     showCount,
+    disabledBranchNode,
     inputCallback,
     arrowClickCallback,
     mouseupCallback
@@ -206,6 +223,7 @@ export class TreeselectList implements ITreeselectList {
     this.emptyText = emptyText ?? 'No results found...'
     this.isSingleSelect = isSingleSelect ?? false
     this.showCount = showCount ?? false
+    this.disabledBranchNode = disabledBranchNode ?? false
     this.iconElements = iconElements
 
     this.searchText = ''
@@ -225,6 +243,7 @@ export class TreeselectList implements ITreeselectList {
   // Public methods
   updateValue(value: ValueOptionType[]) {
     this.value = value
+    previousSingleSelectedValue = this.isSingleSelect ? this.value : []
     updateValue(value, this.flattedOptions, this.srcElement, this.iconElements)
     this.#updateSelectedNodes()
   }
@@ -397,6 +416,10 @@ export class TreeselectList implements ITreeselectList {
       list.classList.add('treeselect-list--single-select')
     }
 
+    if (this.disabledBranchNode) {
+      list.classList.add('treeselect-list--disabled-branch-node')
+    }
+
     list.addEventListener('mouseout', (e) => this.#listMouseout(e))
     list.addEventListener('mousemove', () => this.#listMouseMove())
     list.addEventListener('mouseup', () => this.mouseupCallback(), true)
@@ -482,6 +505,7 @@ export class TreeselectList implements ITreeselectList {
     if (isGroup) {
       const arrow = this.#createArrow()
       itemElement.appendChild(arrow)
+      itemElement.classList.add('treeselect-list__item--group')
     }
 
     const checkbox = this.#createCheckbox(option)
@@ -585,20 +609,27 @@ export class TreeselectList implements ITreeselectList {
   // Actions
   #checkboxClickEvent(target: HTMLInputElement, option: OptionType) {
     const flattedOption = this.flattedOptions.find((fo) => fo.id === option.value)
-    const isGroupAndSingleSelect = flattedOption?.isGroup && this.isSingleSelect
+    if (!flattedOption) {
+      return
+    }
 
-    if (!flattedOption || isGroupAndSingleSelect) {
+    if (flattedOption?.isGroup && this.disabledBranchNode) {
+      // We need to close/open disabled group on mousedown
+      const arrow = getArrowOfItemByCheckbox(target)
+      arrow?.dispatchEvent(new Event('mousedown'))
+
       return
     }
 
     if (this.isSingleSelect) {
-      const [firstSelectedValue] = this.value
+      const [previousValue] = previousSingleSelectedValue
 
       // Prevent emit the same value.
-      if (flattedOption.id === firstSelectedValue) {
+      if (flattedOption.id === previousValue) {
         return
       }
 
+      previousSingleSelectedValue = [flattedOption.id]
       updateFlattedOptionsByValue([flattedOption.id], this.flattedOptions)
     } else {
       flattedOption.checked = target.checked
