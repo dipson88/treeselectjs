@@ -17,6 +17,7 @@ export interface ITreeselectInputParams {
   closeCallback: () => void
   keydownCallback: (key: string) => void
   focusCallback: () => void
+  blurCallback: () => void
 }
 
 export interface ITreeselectInput extends ITreeselectInputParams {

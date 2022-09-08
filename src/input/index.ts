@@ -33,6 +33,7 @@ export class TreeselectInput implements ITreeselectInput {
   closeCallback: () => void
   keydownCallback: (key: string) => void
   focusCallback: () => void
+  blurCallback: () => void
 
   constructor({
     value,
@@ -50,7 +51,8 @@ export class TreeselectInput implements ITreeselectInput {
     openCallback,
     closeCallback,
     keydownCallback,
-    focusCallback
+    focusCallback,
+    blurCallback
   }: ITreeselectInputParams) {
     this.value = value
     this.showTags = showTags
@@ -77,6 +79,7 @@ export class TreeselectInput implements ITreeselectInput {
     this.closeCallback = closeCallback
     this.keydownCallback = keydownCallback
     this.focusCallback = focusCallback
+    this.blurCallback = blurCallback
 
     this.srcElement = this.#createTreeselectInput(this.#htmlTagsSection, this.#htmlEditControl, this.#htmlOperators)
 
@@ -209,6 +212,7 @@ export class TreeselectInput implements ITreeselectInput {
 
     container.addEventListener('mousedown', (e) => this.#containerMousedown(e))
     container.addEventListener('focus', () => this.focusCallback(), true)
+    container.addEventListener('blur', () => this.blurCallback(), true)
 
     // We added htmlEditControl at the end of tags list
     htmlTagsSection.appendChild(htmlEditControl)
