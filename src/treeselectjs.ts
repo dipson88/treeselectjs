@@ -259,7 +259,8 @@ export class Treeselect implements ITreeselect {
       openCallback: () => this.#openList(),
       closeCallback: () => this.#closeList(),
       keydownCallback: (key) => this.#inputKeydownListener(key),
-      focusCallback: () => this.#inputFocusListener()
+      focusCallback: () => this.#inputFocusListener(),
+      blurCallback: () => this.#inputBlurListener()
     })
 
     if (this.appendToBody) {
@@ -302,6 +303,21 @@ export class Treeselect implements ITreeselect {
     }
   }
 
+  #inputBlurListener() {
+    // TODO review focus system.
+    // On Blur we need to check is element focused again.
+    // Because after actions on list we call focus with help of timeout with 0.
+    // We call timeout with 1 because it should call after focus timeout.
+    setTimeout(() => {
+      const isInput = this.#treeselectInput?.srcElement.contains(document.activeElement)
+      const isList = this.#treeselectList?.srcElement.contains(document.activeElement)
+
+      if (!isInput && !isList) {
+        this.blurWindowHandler()
+      }
+    }, 1)
+  }
+
   #listInputListener(value: SelectedNodesType) {
     const { groupedNodes, nodes } = value
     const inputIds = this.grouped ? groupedNodes : nodes
@@ -314,11 +330,7 @@ export class Treeselect implements ITreeselect {
       this.#treeselectInput?.clearSearch()
     }
 
-    // Too fast close, we need to wait one tick.
-    setTimeout(() => {
-      this.#treeselectInput?.focus()
-    }, 0)
-
+    this.#treeselectInput?.focus()
     this.#emitInput()
   }
 
