@@ -6,6 +6,8 @@ export type OptionType = {
   children: OptionType[]
 }
 
+export type DirectionType = 'auto' | 'top' | 'bottom'
+
 export interface ITreeselect {
   parentHtmlContainer: HTMLElement
   value: ValueOptionType[] | ValueOptionType
@@ -28,11 +30,14 @@ export interface ITreeselect {
   isSingleSelect: boolean
   showCount: boolean
   disabledBranchNode: boolean
+  direction: DirectionType
   iconElements: IconsType
   groupedValue: ValueOptionType[]
   isListOpened: boolean
   srcElement: HTMLElement | null
   inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
+  openCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
+  closeCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
   mount: () => void
   updateValue: (newValue: ValueOptionType[] | ValueOptionType) => void
   destroy: () => void
@@ -62,8 +67,11 @@ export interface ITreeselectParams {
   isSingleSelect?: boolean
   showCount?: boolean
   disabledBranchNode?: boolean
+  direction?: DirectionType
   iconElements?: Partial<IconsType>
   inputCallback?: (value: ValueOptionType[] | ValueOptionType) => void
+  openCallback?: (value: ValueOptionType[] | ValueOptionType) => void
+  closeCallback?: (value: ValueOptionType[] | ValueOptionType) => void
 }
 
 export type FlattedOptionType = {

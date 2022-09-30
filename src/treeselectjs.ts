@@ -9,7 +9,8 @@ import {
   ValueOptionType,
   FlattedOptionType,
   IconsType,
-  SelectedNodesType
+  SelectedNodesType,
+  DirectionType
 } from './treeselectTypes'
 import { getDefaultIcons } from './svgIcons'
 
@@ -18,7 +19,8 @@ const validateProps = ({
   staticList,
   appendToBody,
   isSingleSelect,
-  value
+  value,
+  direction
 }: Partial<ITreeselectParams>) => {
   if (!parentHtmlContainer) {
     console.error('Validation: parentHtmlContainer prop is required!')
@@ -34,6 +36,10 @@ const validateProps = ({
 
   if (!isSingleSelect && !Array.isArray(value)) {
     console.error('Validation: you should pass an array as a value!')
+  }
+
+  if (direction !== 'auto' && direction !== 'bottom' && direction !== 'top') {
+    console.error('Validation: you should pass (auto | top | bottom | undefined) as a value for the direction prop!')
   }
 }
 
@@ -80,8 +86,11 @@ export class Treeselect implements ITreeselect {
   isSingleSelect: boolean
   showCount: boolean
   disabledBranchNode: boolean
+  direction: DirectionType
   iconElements: IconsType
   inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
+  openCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
+  closeCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
 
   // InnerState
   groupedValue: ValueOptionType[]
@@ -123,8 +132,11 @@ export class Treeselect implements ITreeselect {
     isSingleSelect,
     showCount,
     disabledBranchNode,
+    direction,
     iconElements,
-    inputCallback
+    inputCallback,
+    openCallback,
+    closeCallback
   }: ITreeselectParams) {
     validateProps({
       parentHtmlContainer,
@@ -155,8 +167,11 @@ export class Treeselect implements ITreeselect {
     this.isSingleSelect = isSingleSelect ?? false
     this.showCount = showCount ?? false
     this.disabledBranchNode = disabledBranchNode ?? false
+    this.direction = direction ?? 'auto'
     this.iconElements = getDefaultIcons(iconElements)
     this.inputCallback = inputCallback
+    this.openCallback = openCallback
+    this.closeCallback = closeCallback
 
     this.groupedValue = []
     this.isListOpened = false
@@ -361,6 +376,8 @@ export class Treeselect implements ITreeselect {
     this.updateListPosition()
     this.#updateOpenCloseClasses(true)
     this.#treeselectList.focusFirstListElement()
+
+    this.#emitOpen()
   }
 
   #closeList() {
@@ -395,6 +412,7 @@ export class Treeselect implements ITreeselect {
     }
 
     this.#updateOpenCloseClasses(false)
+    this.#emitClose()
   }
 
   #updateDirectionClasses(isTop: boolean, appendToBody: boolean) {
@@ -507,7 +525,11 @@ export class Treeselect implements ITreeselect {
 
     const spaceTop = containerY
     const spaceBottom = windowHeight - containerY - containerHeight
-    const isTopDirection = spaceTop > spaceBottom && spaceTop >= listHeight && spaceBottom < listHeight
+    let isTopDirection = spaceTop > spaceBottom && spaceTop >= listHeight && spaceBottom < listHeight
+
+    if (this.direction !== 'auto') {
+      isTopDirection = this.direction === 'top'
+    }
 
     if (this.appendToBody) {
       list.style.transform = isTopDirection
@@ -527,13 +549,37 @@ export class Treeselect implements ITreeselect {
   }
 
   // Emits
-  #emitInput() {
+  #getEmitValue() {
     const typedValue = this.isGroupedValue || this.isSingleSelect ? this.groupedValue : this.value
     const value = getResultValue(typedValue, this.isSingleSelect)
+
+    return value
+  }
+
+  #emitInput() {
+    const value = this.#getEmitValue()
     this.srcElement?.dispatchEvent(new CustomEvent('input', { detail: value }))
 
     if (this.inputCallback) {
       this.inputCallback(value)
+    }
+  }
+
+  #emitOpen() {
+    const value = this.#getEmitValue()
+    this.srcElement?.dispatchEvent(new CustomEvent('open', { detail: value }))
+
+    if (this.openCallback) {
+      this.openCallback(value)
+    }
+  }
+
+  #emitClose() {
+    const value = this.#getEmitValue()
+    this.srcElement?.dispatchEvent(new CustomEvent('close', { detail: value }))
+
+    if (this.closeCallback) {
+      this.closeCallback(value)
     }
   }
 }
