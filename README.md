@@ -123,7 +123,7 @@ Name  | Type (default) | Description
 **isSingleSelect** | Boolean (false) | Converts multi-select to the single value select. Checkboxes will be removed. You should pass only one id instead of array of values. Also you can set **showTags** to false. It helps to show treeselect as a dropdown.
 **isGroupedValue** | Boolean (false) | Return groups if they selected instead of separate ids. Treeselect returns only leaves ids by default.
 **disabledBranchNode** | Boolean (false) | It is impossible to select groups. You can select only leaves.
-**direction** | String (auto) | A force direction for the list. Supported values: `auto` | `top` | `bottom`.
+**direction** | String (auto) | A force direction for the list. Supported values: `auto`, `top`, `bottom`.
 **iconElements** | Object({ arrowUp, ... }) | Object contains all svg icons. You can use HTMLElement or a String to reset values from the default Object. Object: ```iconElements: { arrowUp, arrowDown, arrowRight, attention, clear, cross, check, partialCheck }```. After reset of icon you have to update styles if it is necessary, use `alwaysOpen` prop for more comfortable work with styles changes.
 **inputCallback** | (value) => void (undefined) | Callback method for `input` if you don't what use eventListener.
 **openCallback** | (value) => void (undefined) | Callback method for `open` if you don't what use eventListener.
