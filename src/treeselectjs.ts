@@ -38,7 +38,7 @@ const validateProps = ({
     console.error('Validation: you should pass an array as a value!')
   }
 
-  if (direction !== 'auto' && direction !== 'bottom' && direction !== 'top') {
+  if (direction && direction !== 'auto' && direction !== 'bottom' && direction !== 'top') {
     console.error('Validation: you should pass (auto | top | bottom | undefined) as a value for the direction prop!')
   }
 }
@@ -201,6 +201,8 @@ export class Treeselect implements ITreeselect {
 
     if (this.disabled) {
       this.srcElement.classList.add('treeselect--disabled')
+    } else {
+      this.srcElement.classList.remove('treeselect--disabled')
     }
   }
 
