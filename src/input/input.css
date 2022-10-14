@@ -31,11 +31,10 @@
 .treeselect-input--value-not-selected.treeselect-input--unsearchable .treeselect-input__edit:focus {
   z-index: auto;
   position: static;
-  width: auto;
+  width: 100%;
 }
 
 .treeselect-input--value-not-selected .treeselect-input__edit {
-  width: auto;
   z-index: auto;
 }
 
@@ -49,6 +48,7 @@
   flex-wrap: wrap;
   gap: 4px;
   max-width: 100%;
+  width: 100%;
   box-sizing: border-box;
 }
 
@@ -100,6 +100,10 @@
   width: 0;
   border: none;
   font-size: 14px;
+  text-overflow: ellipsis;
+
+  width: 100%;
+  max-width: calc(100% - 45px);
 
   /* Hide input for user */
   position: absolute;
@@ -110,11 +114,11 @@
 .treeselect-input__edit:focus {
   outline: none;
   min-width: 30px;
+  max-width: 100%;
 
   /* Show input for user */
   z-index: auto;
   position: static;
-  width: auto;
 }
 
 .treeselect-input__operators {
