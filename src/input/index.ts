@@ -12,6 +12,7 @@ export class TreeselectInput implements ITreeselectInput {
   searchable: boolean
   placeholder: string
   disabled: boolean
+  isSingleSelect: boolean
   id: string
   iconElements: IconsType
 
@@ -44,6 +45,7 @@ export class TreeselectInput implements ITreeselectInput {
     searchable,
     placeholder,
     disabled,
+    isSingleSelect,
     id,
     iconElements,
     inputCallback,
@@ -62,6 +64,7 @@ export class TreeselectInput implements ITreeselectInput {
     this.clearable = clearable
     this.isAlwaysOpened = isAlwaysOpened
     this.disabled = disabled
+    this.isSingleSelect = isSingleSelect,
     this.id = id
     this.iconElements = iconElements
 
@@ -189,6 +192,12 @@ export class TreeselectInput implements ITreeselectInput {
       this.srcElement.classList.add('treeselect-input--unsearchable')
     } else {
       this.srcElement.classList.remove('treeselect-input--unsearchable')
+    }
+
+    if (this.isSingleSelect) {
+      this.srcElement.classList.add('treeselect-input--is-single-select')
+    } else {
+      this.srcElement.classList.remove('treeselect-input--is-single-select')
     }
 
     this.#htmlEditControl.value = this.searchText

@@ -269,6 +269,7 @@ export class Treeselect implements ITreeselect {
       searchable: this.searchable,
       placeholder: this.placeholder,
       disabled: this.disabled,
+      isSingleSelect: this.isSingleSelect,
       id: this.id,
       iconElements: this.iconElements,
       inputCallback: (value) => this.#inputInputListener(value),
