@@ -9,6 +9,7 @@ export interface ITreeselectInputParams {
   searchable: boolean
   placeholder: string
   disabled: boolean
+  isSingleSelect: boolean
   id: string
   iconElements: IconsType
   inputCallback: (value: FlattedOptionType[]) => void
