@@ -34,6 +34,7 @@ export interface ITreeselect {
   iconElements: IconsType
   groupedValue: ValueOptionType[]
   isListOpened: boolean
+  selectedName: string
   srcElement: HTMLElement | null
   inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
   openCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
