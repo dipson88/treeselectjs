@@ -125,9 +125,10 @@ Name  | Type (default) | Description
 **disabledBranchNode** | Boolean (false) | It is impossible to select groups. You can select only leaves.
 **direction** | String (auto) | A force direction for the list. Supported values: `auto`, `top`, `bottom`.
 **iconElements** | Object({ arrowUp, ... }) | Object contains all svg icons. You can use HTMLElement or a String to reset values from the default Object. Object: ```iconElements: { arrowUp, arrowDown, arrowRight, attention, clear, cross, check, partialCheck }```. After reset of icon you have to update styles if it is necessary, use `alwaysOpen` prop for more comfortable work with styles changes.
-**inputCallback** | (value) => void (undefined) | Callback method for `input` if you don't what use eventListener.
-**openCallback** | (value) => void (undefined) | Callback method for `open` if you don't what use eventListener.
-**closeCallback** | (value) => void (undefined) | Callback method for `close` if you don't what use eventListener.
+**inputCallback** | (value) => void (undefined) | Callback method for `input` if you don't want to to eventListener.
+**openCallback** | (value) => void (undefined) | Callback method for `open` if you don't want to use eventListener.
+**closeCallback** | (value) => void (undefined) | Callback method for `close` if you don't want to use eventListener.
+**nameChangeCallback** | (name) => void (undefined) | Callback method for `name-change` if you don't want to use eventListener.
 
 ### Emits
 Name  | Return Type | Description
@@ -135,6 +136,7 @@ Name  | Return Type | Description
 **input**  | Array[String \| Number] | Returns selected ids, action is triggered on change the list value. Add `eventListener` or use `inputCallback` prop to get value.
 **open**  | Array[String \| Number] | Returns selected ids, action is triggered on opening the list. Add `eventListener` or use `openCallback` prop to get value.
 **close**  | Array[String \| Number] | Returns selected ids, action is triggered on closing the list. Add `eventListener` or use `closeCallback` prop to get value.
+**name-change**  | String | Returns selected name inside the input, action is triggered on on change the list. Add `eventListener` or use `nameChangeCallback` prop to get name.
 
 ### Methods
 Name  | Params | Description

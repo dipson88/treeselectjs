@@ -91,6 +91,7 @@ export class Treeselect implements ITreeselect {
   inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
   openCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
   closeCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
+  nameChangeCallback: ((name: string) => void) | undefined
 
   // InnerState
   groupedValue: ValueOptionType[]
@@ -136,7 +137,8 @@ export class Treeselect implements ITreeselect {
     iconElements,
     inputCallback,
     openCallback,
-    closeCallback
+    closeCallback,
+    nameChangeCallback
   }: ITreeselectParams) {
     validateProps({
       parentHtmlContainer,
@@ -172,6 +174,7 @@ export class Treeselect implements ITreeselect {
     this.inputCallback = inputCallback
     this.openCallback = openCallback
     this.closeCallback = closeCallback
+    this.nameChangeCallback = nameChangeCallback
 
     this.groupedValue = []
     this.isListOpened = false
@@ -213,7 +216,7 @@ export class Treeselect implements ITreeselect {
       const value = getDefaultValue(newValue)
       list.updateValue(value)
       const { groupedNodes, nodes } = list.selectedNodes
-      const inputNewValue = this.grouped ? groupedNodes : nodes
+      const inputNewValue = this.grouped || this.isSingleSelect ? groupedNodes : nodes
       this.#treeselectInput?.updateValue(inputNewValue)
     }
   }
@@ -261,7 +264,7 @@ export class Treeselect implements ITreeselect {
 
     const { groupedNodes, nodes } = list.selectedNodes
     const input = new TreeselectInput({
-      value: this.grouped ? groupedNodes : nodes,
+      value: this.grouped || this.isSingleSelect ? groupedNodes : nodes,
       showTags: this.showTags,
       tagsCountText: this.tagsCountText,
       clearable: this.clearable,
@@ -338,7 +341,7 @@ export class Treeselect implements ITreeselect {
 
   #listInputListener(value: SelectedNodesType) {
     const { groupedNodes, nodes } = value
-    const inputIds = this.grouped ? groupedNodes : nodes
+    const inputIds = this.grouped || this.isSingleSelect ? groupedNodes : nodes
     this.#treeselectInput?.updateValue(inputIds)
     this.value = getOnlyIds(nodes)
     this.groupedValue = getOnlyIds(groupedNodes)
@@ -565,6 +568,13 @@ export class Treeselect implements ITreeselect {
 
     if (this.inputCallback) {
       this.inputCallback(value)
+    }
+
+    const selectedName = this.#treeselectInput?.selectedName ?? ''
+    this.srcElement?.dispatchEvent(new CustomEvent('name-change', { detail: selectedName }))
+
+    if (this.nameChangeCallback) {
+      this.nameChangeCallback(selectedName)
     }
   }
 

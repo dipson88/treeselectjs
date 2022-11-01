@@ -35,6 +35,7 @@ interface ITreeselect {
     inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined;
     openCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined;
     closeCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined;
+    nameChangeCallback: ((name: string) => void) | undefined;
     mount: () => void;
     updateValue: (newValue: ValueOptionType[] | ValueOptionType) => void;
     destroy: () => void;
@@ -68,6 +69,7 @@ interface ITreeselectParams {
     inputCallback?: (value: ValueOptionType[] | ValueOptionType) => void;
     openCallback?: (value: ValueOptionType[] | ValueOptionType) => void;
     closeCallback?: (value: ValueOptionType[] | ValueOptionType) => void;
+    nameChangeCallback?: (name: string) => void;
 }
 type IconsType = {
     arrowUp: string | HTMLElement;
@@ -107,10 +109,11 @@ export class Treeselect implements ITreeselect {
     inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined;
     openCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined;
     closeCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined;
+    nameChangeCallback: ((name: string) => void) | undefined;
     groupedValue: ValueOptionType[];
     isListOpened: boolean;
     srcElement: HTMLElement | null;
-    constructor({ parentHtmlContainer, value, options, openLevel, appendToBody, alwaysOpen, showTags, tagsCountText, clearable, searchable, placeholder, grouped, isGroupedValue, listSlotHtmlComponent, disabled, emptyText, staticList, id, isSingleSelect, showCount, disabledBranchNode, direction, iconElements, inputCallback, openCallback, closeCallback }: ITreeselectParams);
+    constructor({ parentHtmlContainer, value, options, openLevel, appendToBody, alwaysOpen, showTags, tagsCountText, clearable, searchable, placeholder, grouped, isGroupedValue, listSlotHtmlComponent, disabled, emptyText, staticList, id, isSingleSelect, showCount, disabledBranchNode, direction, iconElements, inputCallback, openCallback, closeCallback, nameChangeCallback }: ITreeselectParams);
     mount(): void;
     updateValue(newValue: ValueOptionType[] | ValueOptionType): void;
     destroy(): void;
