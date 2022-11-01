@@ -2,6 +2,18 @@ import { ValueOptionType, FlattedOptionType, IconsType } from '../treeselectType
 import { ITreeselectInputParams, ITreeselectInput } from './inputTypes'
 import { appendIconToElement } from '../svgIcons'
 
+const getTagsSelectedName = (value: FlattedOptionType[]) => {
+  return value.reduce((acc, { name }, index) => {
+    acc += name
+
+    if (index < value.length - 1) {
+      acc += ', '
+    }
+
+    return acc
+  }, '')
+}
+
 export class TreeselectInput implements ITreeselectInput {
   // Props
   value: FlattedOptionType[]
@@ -20,6 +32,7 @@ export class TreeselectInput implements ITreeselectInput {
   isOpened: boolean
   searchText: string
   srcElement: HTMLElement | Element
+  selectedName: string
 
   // PrivateInnerState
   #htmlTagsSection: HTMLDivElement
@@ -64,12 +77,13 @@ export class TreeselectInput implements ITreeselectInput {
     this.clearable = clearable
     this.isAlwaysOpened = isAlwaysOpened
     this.disabled = disabled
-    this.isSingleSelect = isSingleSelect,
+    this.isSingleSelect = isSingleSelect
     this.id = id
     this.iconElements = iconElements
 
     this.isOpened = false
     this.searchText = ''
+    this.selectedName = ''
 
     this.#htmlTagsSection = this.#createTagsSection()
     this.#htmlEditControl = this.#createControl()
@@ -147,8 +161,10 @@ export class TreeselectInput implements ITreeselectInput {
 
     if (this.showTags) {
       this.#htmlTagsSection.append(...this.#createTags())
+      this.selectedName = getTagsSelectedName(this.value)
     } else {
       this.#htmlTagsSection.appendChild(this.#createCountElement())
+      this.selectedName = this.#htmlTagsSection.innerText
     }
 
     // We need to add htmlEditControl because we clear all data inside the tags list

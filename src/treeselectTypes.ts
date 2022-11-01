@@ -38,6 +38,7 @@ export interface ITreeselect {
   inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
   openCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
   closeCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
+  nameChangeCallback: ((name: string) => void) | undefined
   mount: () => void
   updateValue: (newValue: ValueOptionType[] | ValueOptionType) => void
   destroy: () => void
@@ -72,6 +73,7 @@ export interface ITreeselectParams {
   inputCallback?: (value: ValueOptionType[] | ValueOptionType) => void
   openCallback?: (value: ValueOptionType[] | ValueOptionType) => void
   closeCallback?: (value: ValueOptionType[] | ValueOptionType) => void
+  nameChangeCallback?: (name: string) => void
 }
 
 export type FlattedOptionType = {

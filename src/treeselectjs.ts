@@ -91,6 +91,7 @@ export class Treeselect implements ITreeselect {
   inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
   openCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
   closeCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
+  nameChangeCallback: ((name: string) => void) | undefined
 
   // InnerState
   groupedValue: ValueOptionType[]
@@ -136,7 +137,8 @@ export class Treeselect implements ITreeselect {
     iconElements,
     inputCallback,
     openCallback,
-    closeCallback
+    closeCallback,
+    nameChangeCallback
   }: ITreeselectParams) {
     validateProps({
       parentHtmlContainer,
@@ -172,6 +174,7 @@ export class Treeselect implements ITreeselect {
     this.inputCallback = inputCallback
     this.openCallback = openCallback
     this.closeCallback = closeCallback
+    this.nameChangeCallback = nameChangeCallback
 
     this.groupedValue = []
     this.isListOpened = false
@@ -565,6 +568,13 @@ export class Treeselect implements ITreeselect {
 
     if (this.inputCallback) {
       this.inputCallback(value)
+    }
+
+    const selectedName = this.#treeselectInput?.selectedName ?? ''
+    this.srcElement?.dispatchEvent(new CustomEvent('name-change', { detail: selectedName }))
+
+    if (this.nameChangeCallback) {
+      this.nameChangeCallback(selectedName)
     }
   }
 
