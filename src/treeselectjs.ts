@@ -96,6 +96,7 @@ export class Treeselect implements ITreeselect {
   // InnerState
   groupedValue: ValueOptionType[]
   isListOpened: boolean
+  selectedName: string
   srcElement: HTMLElement | null
 
   // Components
@@ -178,6 +179,7 @@ export class Treeselect implements ITreeselect {
 
     this.groupedValue = []
     this.isListOpened = false
+    this.selectedName = ''
     this.srcElement = null
 
     this.mount()
@@ -192,6 +194,7 @@ export class Treeselect implements ITreeselect {
     this.srcElement = container
     this.#treeselectList = list
     this.#treeselectInput = input
+    this.selectedName = this.#treeselectInput.selectedName
 
     this.#scrollEvent = this.scrollWindowHandler.bind(this)
     this.#resizeEvent = this.scrollWindowHandler.bind(this)
@@ -570,11 +573,11 @@ export class Treeselect implements ITreeselect {
       this.inputCallback(value)
     }
 
-    const selectedName = this.#treeselectInput?.selectedName ?? ''
-    this.srcElement?.dispatchEvent(new CustomEvent('name-change', { detail: selectedName }))
+    this.selectedName = this.#treeselectInput?.selectedName ?? ''
+    this.srcElement?.dispatchEvent(new CustomEvent('name-change', { detail: this.selectedName }))
 
     if (this.nameChangeCallback) {
-      this.nameChangeCallback(selectedName)
+      this.nameChangeCallback(this.selectedName)
     }
   }
 

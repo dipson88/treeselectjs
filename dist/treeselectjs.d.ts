@@ -31,6 +31,7 @@ interface ITreeselect {
     iconElements: IconsType;
     groupedValue: ValueOptionType[];
     isListOpened: boolean;
+    selectedName: string;
     srcElement: HTMLElement | null;
     inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined;
     openCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined;
@@ -112,6 +113,7 @@ export class Treeselect implements ITreeselect {
     nameChangeCallback: ((name: string) => void) | undefined;
     groupedValue: ValueOptionType[];
     isListOpened: boolean;
+    selectedName: string;
     srcElement: HTMLElement | null;
     constructor({ parentHtmlContainer, value, options, openLevel, appendToBody, alwaysOpen, showTags, tagsCountText, clearable, searchable, placeholder, grouped, isGroupedValue, listSlotHtmlComponent, disabled, emptyText, staticList, id, isSingleSelect, showCount, disabledBranchNode, direction, iconElements, inputCallback, openCallback, closeCallback, nameChangeCallback }: ITreeselectParams);
     mount(): void;
