@@ -39,9 +39,10 @@ const updateValue = (
   newValue: ValueOptionType[],
   flattedOptions: FlattedOptionType[],
   srcElement: HTMLElement | Element,
-  iconElements: IconsType
+  iconElements: IconsType,
+  isSingleSelect: boolean
 ) => {
-  updateFlattedOptionsByValue(newValue, flattedOptions)
+  updateFlattedOptionsByValue(newValue, flattedOptions, isSingleSelect)
   updateDOM(flattedOptions, srcElement, iconElements)
 }
 
@@ -244,7 +245,7 @@ export class TreeselectList implements ITreeselectList {
   updateValue(value: ValueOptionType[]) {
     this.value = value
     previousSingleSelectedValue = this.isSingleSelect ? this.value : []
-    updateValue(value, this.flattedOptions, this.srcElement, this.iconElements)
+    updateValue(value, this.flattedOptions, this.srcElement, this.iconElements, this.isSingleSelect)
     this.#updateSelectedNodes()
   }
 
@@ -630,11 +631,11 @@ export class TreeselectList implements ITreeselectList {
       }
 
       previousSingleSelectedValue = [flattedOption.id]
-      updateFlattedOptionsByValue([flattedOption.id], this.flattedOptions)
+      updateFlattedOptionsByValue([flattedOption.id], this.flattedOptions, this.isSingleSelect)
     } else {
       flattedOption.checked = target.checked
       flattedOption.isPartialChecked = false
-      updateCheckStateFlattedOption(flattedOption, this.flattedOptions)
+      updateCheckStateFlattedOption(flattedOption, this.flattedOptions, this.isSingleSelect)
     }
 
     updateDOM(this.flattedOptions, this.srcElement, this.iconElements)

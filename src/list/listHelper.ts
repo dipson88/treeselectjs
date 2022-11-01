@@ -79,13 +79,15 @@ const checkAllParentOptions = (childOf: ValueOptionType, flattedOptions: Flatted
 
 const updateCheckStateFlattedOption = (
   { id, isGroup, childOf, checked }: Partial<FlattedOptionType>,
-  flattedOptions: FlattedOptionType[]
+  flattedOptions: FlattedOptionType[],
+  isSingleSelect: boolean
 ) => {
   if (isGroup) {
     checkAllChildrenOptions({ id, checked }, flattedOptions)
   }
 
-  if (childOf) {
+  // For single select we should avoid to checking parent node if we have only one child node inside of parent node
+  if (childOf && !isSingleSelect) {
     checkAllParentOptions(childOf, flattedOptions)
   }
 }
@@ -209,14 +211,18 @@ const resetCheckedState = (flattedOptions: FlattedOptionType[]) => {
   })
 }
 
-const updateFlattedOptionsByValue = (newValue: ValueOptionType[], flattedOptions: FlattedOptionType[]) => {
+const updateFlattedOptionsByValue = (
+  newValue: ValueOptionType[],
+  flattedOptions: FlattedOptionType[],
+  isSingleSelect: boolean
+) => {
   resetCheckedState(flattedOptions)
 
   const toCheck = flattedOptions.filter((option) => newValue.some((id) => id === option.id))
   toCheck.forEach((option) => {
     option.checked = true
     option.isPartialChecked = false
-    updateCheckStateFlattedOption(option, flattedOptions)
+    updateCheckStateFlattedOption(option, flattedOptions, isSingleSelect)
   })
 }
 

@@ -213,7 +213,7 @@ export class Treeselect implements ITreeselect {
       const value = getDefaultValue(newValue)
       list.updateValue(value)
       const { groupedNodes, nodes } = list.selectedNodes
-      const inputNewValue = this.grouped ? groupedNodes : nodes
+      const inputNewValue = this.grouped || this.isSingleSelect ? groupedNodes : nodes
       this.#treeselectInput?.updateValue(inputNewValue)
     }
   }
@@ -261,7 +261,7 @@ export class Treeselect implements ITreeselect {
 
     const { groupedNodes, nodes } = list.selectedNodes
     const input = new TreeselectInput({
-      value: this.grouped ? groupedNodes : nodes,
+      value: this.grouped || this.isSingleSelect ? groupedNodes : nodes,
       showTags: this.showTags,
       tagsCountText: this.tagsCountText,
       clearable: this.clearable,
@@ -338,7 +338,7 @@ export class Treeselect implements ITreeselect {
 
   #listInputListener(value: SelectedNodesType) {
     const { groupedNodes, nodes } = value
-    const inputIds = this.grouped ? groupedNodes : nodes
+    const inputIds = this.grouped || this.isSingleSelect ? groupedNodes : nodes
     this.#treeselectInput?.updateValue(inputIds)
     this.value = getOnlyIds(nodes)
     this.groupedValue = getOnlyIds(groupedNodes)
