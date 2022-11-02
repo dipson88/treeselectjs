@@ -19,13 +19,13 @@ export interface ITreeselectInputParams {
   keydownCallback: (key: string) => void
   focusCallback: () => void
   blurCallback: () => void
+  nameChangeCallback: (name: string) => void
 }
 
 export interface ITreeselectInput extends ITreeselectInputParams {
   isOpened: boolean
   searchText: string
   srcElement: HTMLElement | Element
-  selectedName: string
   focus: () => void
   blur: () => void
   updateValue: (newValue: FlattedOptionType[]) => void
