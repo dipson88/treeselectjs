@@ -363,9 +363,9 @@ export class Treeselect implements ITreeselect {
     this.updateListPosition()
   }
 
-  #inputNameChangeListener (name: string) {
+  #inputNameChangeListener(name: string) {
     const isNewName = this.selectedName !== name
-    
+
     if (isNewName) {
       this.selectedName = name
       this.#emitNameChange()
