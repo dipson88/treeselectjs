@@ -153,7 +153,7 @@ export class Treeselect implements ITreeselect {
     this.value = getDefaultValue(value)
     this.options = options ?? []
     this.openLevel = openLevel ?? 0
-    this.appendToBody = appendToBody ?? true
+    this.appendToBody = appendToBody ?? false
     this.alwaysOpen = !!(alwaysOpen && !disabled)
     this.showTags = showTags ?? true
     this.tagsCountText = tagsCountText ?? 'elements selected'

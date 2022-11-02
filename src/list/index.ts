@@ -379,7 +379,9 @@ export class TreeselectList implements ITreeselectList {
         return
       }
 
-      if (listCoord.y + listCoord.height < nextCoord.y + nextCoord.height) {
+      const slotHeight = this.listSlotHtmlComponent?.clientHeight ?? 0
+
+      if (listCoord.y + listCoord.height < nextCoord.y + nextCoord.height + slotHeight) {
         this.srcElement.scroll(0, this.srcElement.scrollTop + nextCoord.height)
 
         return
