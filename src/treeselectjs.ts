@@ -194,7 +194,6 @@ export class Treeselect implements ITreeselect {
     this.srcElement = container
     this.#treeselectList = list
     this.#treeselectInput = input
-    this.selectedName = this.#treeselectInput.selectedName
 
     this.#scrollEvent = this.scrollWindowHandler.bind(this)
     this.#resizeEvent = this.scrollWindowHandler.bind(this)
@@ -284,7 +283,8 @@ export class Treeselect implements ITreeselect {
       closeCallback: () => this.#closeList(),
       keydownCallback: (key) => this.#inputKeydownListener(key),
       focusCallback: () => this.#inputFocusListener(),
-      blurCallback: () => this.#inputBlurListener()
+      blurCallback: () => this.#inputBlurListener(),
+      nameChangeCallback: (name) => this.#inputNameChangeListener(name)
     })
 
     if (this.appendToBody) {
@@ -361,6 +361,15 @@ export class Treeselect implements ITreeselect {
   #listArrowClickListener() {
     this.#treeselectInput?.focus()
     this.updateListPosition()
+  }
+
+  #inputNameChangeListener (name: string) {
+    const isNewName = this.selectedName !== name
+    
+    if (isNewName) {
+      this.selectedName = name
+      this.#emitNameChange()
+    }
   }
 
   #openList() {
@@ -572,8 +581,9 @@ export class Treeselect implements ITreeselect {
     if (this.inputCallback) {
       this.inputCallback(value)
     }
+  }
 
-    this.selectedName = this.#treeselectInput?.selectedName ?? ''
+  #emitNameChange() {
     this.srcElement?.dispatchEvent(new CustomEvent('name-change', { detail: this.selectedName }))
 
     if (this.nameChangeCallback) {

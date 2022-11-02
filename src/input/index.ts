@@ -32,7 +32,6 @@ export class TreeselectInput implements ITreeselectInput {
   isOpened: boolean
   searchText: string
   srcElement: HTMLElement | Element
-  selectedName: string
 
   // PrivateInnerState
   #htmlTagsSection: HTMLDivElement
@@ -48,6 +47,7 @@ export class TreeselectInput implements ITreeselectInput {
   keydownCallback: (key: string) => void
   focusCallback: () => void
   blurCallback: () => void
+  nameChangeCallback: (name: string) => void
 
   constructor({
     value,
@@ -67,7 +67,8 @@ export class TreeselectInput implements ITreeselectInput {
     closeCallback,
     keydownCallback,
     focusCallback,
-    blurCallback
+    blurCallback,
+    nameChangeCallback
   }: ITreeselectInputParams) {
     this.value = value
     this.showTags = showTags
@@ -83,7 +84,6 @@ export class TreeselectInput implements ITreeselectInput {
 
     this.isOpened = false
     this.searchText = ''
-    this.selectedName = ''
 
     this.#htmlTagsSection = this.#createTagsSection()
     this.#htmlEditControl = this.#createControl()
@@ -97,6 +97,7 @@ export class TreeselectInput implements ITreeselectInput {
     this.keydownCallback = keydownCallback
     this.focusCallback = focusCallback
     this.blurCallback = blurCallback
+    this.nameChangeCallback = nameChangeCallback
 
     this.srcElement = this.#createTreeselectInput(this.#htmlTagsSection, this.#htmlEditControl, this.#htmlOperators)
 
@@ -161,10 +162,12 @@ export class TreeselectInput implements ITreeselectInput {
 
     if (this.showTags) {
       this.#htmlTagsSection.append(...this.#createTags())
-      this.selectedName = getTagsSelectedName(this.value)
+      const selectedName = getTagsSelectedName(this.value)
+      this.nameChangeCallback(selectedName)
     } else {
-      this.#htmlTagsSection.appendChild(this.#createCountElement())
-      this.selectedName = this.#htmlTagsSection.innerText
+      const countElement = this.#createCountElement()
+      this.#htmlTagsSection.appendChild(countElement)
+      this.nameChangeCallback(countElement.innerHTML)
     }
 
     // We need to add htmlEditControl because we clear all data inside the tags list
