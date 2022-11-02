@@ -331,7 +331,14 @@ export class TreeselectInput implements ITreeselectInput {
   #createControl() {
     const input = document.createElement('input')
     input.classList.add('treeselect-input__edit')
-    input.setAttribute('id', this.id)
+
+    if (this.id) {
+      input.setAttribute('id', this.id)
+    }
+
+    if (!this.searchable || this.disabled) {
+      input.setAttribute('readonly', 'readonly')
+    }
 
     if (this.disabled) {
       input.setAttribute('tabindex', '-1')
