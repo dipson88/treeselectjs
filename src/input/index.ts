@@ -167,7 +167,7 @@ export class TreeselectInput implements ITreeselectInput {
     } else {
       const countElement = this.#createCountElement()
       this.#htmlTagsSection.appendChild(countElement)
-      this.nameChangeCallback(countElement.innerHTML)
+      this.nameChangeCallback(countElement.innerText)
     }
 
     // We need to add htmlEditControl because we clear all data inside the tags list
@@ -297,7 +297,7 @@ export class TreeselectInput implements ITreeselectInput {
   #createTagName(name: string) {
     const elementTag = document.createElement('span')
     elementTag.classList.add('treeselect-input__tags-name')
-    elementTag.innerHTML = name
+    elementTag.textContent = name
 
     return elementTag
   }
@@ -315,14 +315,14 @@ export class TreeselectInput implements ITreeselectInput {
     countEl.classList.add('treeselect-input__tags-count')
 
     if (!this.value.length) {
-      countEl.innerHTML = ''
+      countEl.textContent = ''
       countEl.setAttribute('title', '')
 
       return countEl
     }
 
     const count = this.value.length === 1 ? this.value[0].name : `${this.value.length} ${this.tagsCountText}`
-    countEl.innerHTML = count
+    countEl.textContent = count
     countEl.setAttribute('title', count)
 
     return countEl

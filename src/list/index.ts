@@ -484,7 +484,7 @@ export class TreeselectList implements ITreeselectList {
 
     const text = document.createElement('span')
     text.classList.add('treeselect-list__empty-text')
-    text.innerHTML = this.emptyText
+    text.textContent = this.emptyText
 
     emptyList.append(icon, text)
 
@@ -589,7 +589,7 @@ export class TreeselectList implements ITreeselectList {
 
   #createCheckboxLabel(option: OptionType, isGroup: boolean) {
     const label = document.createElement('label')
-    label.innerHTML = option.name
+    label.textContent = option.name
     label.classList.add('treeselect-list__item-label')
 
     if (isGroup && this.showCount) {
@@ -603,7 +603,7 @@ export class TreeselectList implements ITreeselectList {
   #createCounter(option: OptionType) {
     const counter = document.createElement('span')
     const children = this.flattedOptions.filter((fo) => fo.childOf === option.value)
-    counter.innerHTML = `(${children.length})`
+    counter.textContent = `(${children.length})`
     counter.classList.add('treeselect-list__item-label-counter')
 
     return counter
