@@ -11,8 +11,6 @@ import {
 } from './listHelper'
 import { appendIconToElement } from '../svgIcons'
 
-let previousSingleSelectedValue: ValueOptionType[] = []
-
 const validateOptions = (flatOptions: FlattedOptionType[]) => {
   const { duplications } = flatOptions.reduce(
     (acc, curr) => {
@@ -40,20 +38,26 @@ const updateValue = (
   flattedOptions: FlattedOptionType[],
   srcElement: HTMLElement | Element,
   iconElements: IconsType,
-  isSingleSelect: boolean
+  isSingleSelect: boolean,
+  previousSingleSelectedValue: ValueOptionType[]
 ) => {
   updateFlattedOptionsByValue(newValue, flattedOptions, isSingleSelect)
-  updateDOM(flattedOptions, srcElement, iconElements)
+  updateDOM(flattedOptions, srcElement, iconElements, previousSingleSelectedValue)
 }
 
-const updateDOM = (flattedOptions: FlattedOptionType[], srcElement: HTMLElement | Element, iconElements: IconsType) => {
+const updateDOM = (
+  flattedOptions: FlattedOptionType[],
+  srcElement: HTMLElement | Element,
+  iconElements: IconsType,
+  previousSingleSelectedValue: ValueOptionType[]
+) => {
   flattedOptions.forEach((option) => {
     const input = srcElement.querySelector(`[input-id="${option.id}"]`) as HTMLInputElement
     const listItem = getListItemByCheckbox(input)
 
     input.checked = option.checked
 
-    updateCheckedClass(option, listItem)
+    updateCheckedClass(option, listItem, previousSingleSelectedValue)
     updatePartialCheckedClass(option, listItem)
     updateClosedClass(option, listItem, iconElements)
     updateHiddenClass(option, listItem)
@@ -65,7 +69,11 @@ const updateDOM = (flattedOptions: FlattedOptionType[], srcElement: HTMLElement 
   updateEmptyListClass(flattedOptions, srcElement)
 }
 
-const updateCheckedClass = (option: FlattedOptionType, listItem: HTMLElement) => {
+const updateCheckedClass = (
+  option: FlattedOptionType,
+  listItem: HTMLElement,
+  previousSingleSelectedValue: ValueOptionType[]
+) => {
   if (option.checked) {
     listItem.classList.add('treeselect-list__item--checked')
   } else {
@@ -202,6 +210,7 @@ export class TreeselectList implements ITreeselectList {
   // PrivateInnerState
   #lastFocusedItem: HTMLElement | null = null
   #isMouseActionsAvailable = true
+  #previousSingleSelectedValue: ValueOptionType[] = []
 
   constructor({
     options,
@@ -244,8 +253,15 @@ export class TreeselectList implements ITreeselectList {
   // Public methods
   updateValue(value: ValueOptionType[]) {
     this.value = value
-    previousSingleSelectedValue = this.isSingleSelect ? this.value : []
-    updateValue(value, this.flattedOptions, this.srcElement, this.iconElements, this.isSingleSelect)
+    this.#previousSingleSelectedValue = this.isSingleSelect ? this.value : []
+    updateValue(
+      value,
+      this.flattedOptions,
+      this.srcElement,
+      this.iconElements,
+      this.isSingleSelect,
+      this.#previousSingleSelectedValue
+    )
     this.#updateSelectedNodes()
   }
 
@@ -278,7 +294,7 @@ export class TreeselectList implements ITreeselectList {
       updateVisibleBySearchFlattedOptions(this.flattedOptions, searchText)
     }
 
-    updateDOM(this.flattedOptions, this.srcElement, this.iconElements)
+    updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue)
     this.focusFirstListElement()
   }
 
@@ -625,14 +641,14 @@ export class TreeselectList implements ITreeselectList {
     }
 
     if (this.isSingleSelect) {
-      const [previousValue] = previousSingleSelectedValue
+      const [previousValue] = this.#previousSingleSelectedValue
 
       // Prevent emit the same value.
       if (flattedOption.id === previousValue) {
         return
       }
 
-      previousSingleSelectedValue = [flattedOption.id]
+      this.#previousSingleSelectedValue = [flattedOption.id]
       updateFlattedOptionsByValue([flattedOption.id], this.flattedOptions, this.isSingleSelect)
     } else {
       flattedOption.checked = target.checked
@@ -640,7 +656,7 @@ export class TreeselectList implements ITreeselectList {
       updateCheckStateFlattedOption(flattedOption, this.flattedOptions, this.isSingleSelect)
     }
 
-    updateDOM(this.flattedOptions, this.srcElement, this.iconElements)
+    updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue)
     this.#emitInput()
   }
 
@@ -652,7 +668,7 @@ export class TreeselectList implements ITreeselectList {
     if (flattedOption) {
       flattedOption.isClosed = !flattedOption.isClosed
       hideShowChildrenFlattedOptions(this.flattedOptions, flattedOption)
-      updateDOM(this.flattedOptions, this.srcElement, this.iconElements)
+      updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue)
 
       this.arrowClickCallback()
     }
