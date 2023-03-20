@@ -26,6 +26,8 @@
 .treeselect-input--unsearchable .treeselect-input__edit:focus {
   position: absolute;
   z-index: -1;
+  left: 0;
+  padding: 0;
 }
 
 .treeselect-input--value-not-selected.treeselect-input--unsearchable .treeselect-input__edit:focus {

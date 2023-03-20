@@ -529,10 +529,7 @@ export class Treeselect implements ITreeselect {
       return
     }
 
-    // We need to reset position
-    list.style.transform = ''
-
-    const { y: listY, height: listHeight } = list.getBoundingClientRect()
+    const { height: listHeight } = list.getBoundingClientRect()
     const {
       x: containerX,
       y: containerY,
@@ -550,11 +547,19 @@ export class Treeselect implements ITreeselect {
     }
 
     if (this.appendToBody) {
-      list.style.transform = isTopDirection
-        ? `translateY(${containerY - listY - listHeight}px)`
-        : `translateY(${containerY + containerHeight - listY}px)`
+      // We need to set zero position to the list because it helps calculate transform more easier
+      if (list.style.top !== '0px' || list.style.left !== '0px') {
+        list.style.top = '0px'
+        list.style.left = '0px'
+      }
+
+      const translateX = containerX + window.scrollX
+      const translateY = isTopDirection
+        ? containerY + window.scrollY - listHeight
+        : containerY + window.scrollY + containerHeight
+
+      list.style.transform = `translate(${translateX}px,${translateY}px)`
       list.style.width = `${containerWidth}px`
-      list.style.left = `${containerX + window.scrollX}px`
     }
 
     const attributeToAdd = isTopDirection ? 'top' : 'bottom'
