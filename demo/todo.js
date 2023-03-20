@@ -9,7 +9,10 @@
 // Should we add a list direction if we use staticList prop?
 // Add updateValue on mount
 // Add className for list
-// Add scroll position saving on close
 
 // REQUESTS
 // Investigate an ability to add a diff names but the same values, and check them.
+// disabled mode for values.
+// attributes for the elements
+// autoexpand prop for selected values.
+// scroll position saving on close
