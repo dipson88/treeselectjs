@@ -152,7 +152,7 @@ Name  | Params | Description
 2) If you want to update props, set props to the entity of the class and then call **mount()** method.
 3) Use **updateValue()** method to update only the value.
 4) If you need to delete List from the DOM when you don't need treeselect anymore - call **destroy()**.
-5) Do not use **duplicated** values for the options. You will see a error with duplicated values.
+5) Do not use **duplicated** values for the options. You will see a error with duplicated values. But you can use duplicated names.
 6) **Value** prop inside the **options** prop should be a **String** or **Number**.
 7) If you use **isSingleSelect** prop, you should pass only a single **id** as a value.
 8) If you use **isSingleSelect** prop, you can set **showTags** to false. It helps to show treeselect as a dropdown. Also you can disable selecting of group's nodes with help of **disabledBranchNode**.
