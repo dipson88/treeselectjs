@@ -66,7 +66,7 @@ const getResultValue = (value: ValueOptionType[], isSingleSelect: boolean) => {
 export class Treeselect implements ITreeselect {
   // Props
   parentHtmlContainer: HTMLElement
-  value: ValueOptionType[]
+  value: ValueOptionType[] | ValueOptionType
   options: OptionType[]
   openLevel: number
   appendToBody: boolean
@@ -94,6 +94,7 @@ export class Treeselect implements ITreeselect {
   nameChangeCallback: ((name: string) => void) | undefined
 
   // InnerState
+  ungroupedValue: ValueOptionType[]
   groupedValue: ValueOptionType[]
   isListOpened: boolean
   selectedName: string
@@ -150,7 +151,7 @@ export class Treeselect implements ITreeselect {
     })
 
     this.parentHtmlContainer = parentHtmlContainer
-    this.value = getDefaultValue(value)
+    this.value = []
     this.options = options ?? []
     this.openLevel = openLevel ?? 0
     this.appendToBody = appendToBody ?? false
@@ -177,16 +178,17 @@ export class Treeselect implements ITreeselect {
     this.closeCallback = closeCallback
     this.nameChangeCallback = nameChangeCallback
 
+    this.ungroupedValue = []
     this.groupedValue = []
     this.isListOpened = false
     this.selectedName = ''
     this.srcElement = null
 
-    this.mount()
+    this.mount(value)
   }
 
   // Public methods
-  mount() {
+  mount(initValue?: ValueOptionType[] | ValueOptionType | undefined) {
     this.destroy()
 
     const { container, list, input } = this.#createTreeselect()
@@ -209,6 +211,8 @@ export class Treeselect implements ITreeselect {
     } else {
       this.srcElement.classList.remove('treeselect--disabled')
     }
+
+    this.updateValue(initValue ?? [])
   }
 
   updateValue(newValue: ValueOptionType[] | ValueOptionType) {
@@ -220,6 +224,7 @@ export class Treeselect implements ITreeselect {
       const { groupedNodes, nodes } = list.selectedNodes
       const inputNewValue = this.grouped || this.isSingleSelect ? groupedNodes : nodes
       this.#treeselectInput?.updateValue(inputNewValue)
+      this.#updateInnerValues({ groupedNodes, nodes })
     }
   }
 
@@ -245,13 +250,20 @@ export class Treeselect implements ITreeselect {
     }
   }
 
+  #updateInnerValues({ groupedNodes, nodes }: { groupedNodes?: FlattedOptionType[]; nodes?: FlattedOptionType[] }) {
+    this.ungroupedValue = nodes ? getOnlyIds(nodes) : []
+    this.groupedValue = groupedNodes ? getOnlyIds(groupedNodes) : []
+    const typedValue = this.isGroupedValue || this.isSingleSelect ? this.groupedValue : this.ungroupedValue
+    this.value = getResultValue(typedValue, this.isSingleSelect)
+  }
+
   #createTreeselect() {
     const container = this.parentHtmlContainer
     container.classList.add('treeselect')
 
     const list = new TreeselectList({
       options: this.options,
-      value: this.value,
+      value: this.ungroupedValue,
       openLevel: this.openLevel,
       listSlotHtmlComponent: this.listSlotHtmlComponent,
       emptyText: this.emptyText,
@@ -301,8 +313,7 @@ export class Treeselect implements ITreeselect {
     this.#treeselectList?.updateValue(inputIds)
     const nodes = this.#treeselectList?.selectedNodes?.nodes
     const groupedNodes = this.#treeselectList?.selectedNodes?.groupedNodes
-    this.value = nodes ? getOnlyIds(nodes) : []
-    this.groupedValue = groupedNodes ? getOnlyIds(groupedNodes) : []
+    this.#updateInnerValues({ groupedNodes, nodes })
     this.#emitInput()
   }
 
@@ -346,8 +357,7 @@ export class Treeselect implements ITreeselect {
     const { groupedNodes, nodes } = value
     const inputIds = this.grouped || this.isSingleSelect ? groupedNodes : nodes
     this.#treeselectInput?.updateValue(inputIds)
-    this.value = getOnlyIds(nodes)
-    this.groupedValue = getOnlyIds(groupedNodes)
+    this.#updateInnerValues({ groupedNodes, nodes })
 
     if (this.isSingleSelect && !this.alwaysOpen) {
       this.#treeselectInput?.openClose()
@@ -572,19 +582,11 @@ export class Treeselect implements ITreeselect {
   }
 
   // Emits
-  #getEmitValue() {
-    const typedValue = this.isGroupedValue || this.isSingleSelect ? this.groupedValue : this.value
-    const value = getResultValue(typedValue, this.isSingleSelect)
-
-    return value
-  }
-
   #emitInput() {
-    const value = this.#getEmitValue()
-    this.srcElement?.dispatchEvent(new CustomEvent('input', { detail: value }))
+    this.srcElement?.dispatchEvent(new CustomEvent('input', { detail: this.value }))
 
     if (this.inputCallback) {
-      this.inputCallback(value)
+      this.inputCallback(this.value)
     }
   }
 
@@ -597,20 +599,18 @@ export class Treeselect implements ITreeselect {
   }
 
   #emitOpen() {
-    const value = this.#getEmitValue()
-    this.srcElement?.dispatchEvent(new CustomEvent('open', { detail: value }))
+    this.srcElement?.dispatchEvent(new CustomEvent('open', { detail: this.value }))
 
     if (this.openCallback) {
-      this.openCallback(value)
+      this.openCallback(this.value)
     }
   }
 
   #emitClose() {
-    const value = this.#getEmitValue()
-    this.srcElement?.dispatchEvent(new CustomEvent('close', { detail: value }))
+    this.srcElement?.dispatchEvent(new CustomEvent('close', { detail: this.value }))
 
     if (this.closeCallback) {
-      this.closeCallback(value)
+      this.closeCallback(this.value)
     }
   }
 }

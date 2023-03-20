@@ -34,6 +34,7 @@
   z-index: auto;
   position: static;
   width: 100%;
+  padding: revert;
 }
 
 .treeselect-input--value-not-selected .treeselect-input__edit {

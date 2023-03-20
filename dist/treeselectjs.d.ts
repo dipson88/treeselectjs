@@ -29,6 +29,7 @@ interface ITreeselect {
     disabledBranchNode: boolean;
     direction: DirectionType;
     iconElements: IconsType;
+    ungroupedValue: ValueOptionType[];
     groupedValue: ValueOptionType[];
     isListOpened: boolean;
     selectedName: string;
@@ -85,7 +86,7 @@ type IconsType = {
 export class Treeselect implements ITreeselect {
     #private;
     parentHtmlContainer: HTMLElement;
-    value: ValueOptionType[];
+    value: ValueOptionType[] | ValueOptionType;
     options: OptionType[];
     openLevel: number;
     appendToBody: boolean;
@@ -111,12 +112,13 @@ export class Treeselect implements ITreeselect {
     openCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined;
     closeCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined;
     nameChangeCallback: ((name: string) => void) | undefined;
+    ungroupedValue: ValueOptionType[];
     groupedValue: ValueOptionType[];
     isListOpened: boolean;
     selectedName: string;
     srcElement: HTMLElement | null;
     constructor({ parentHtmlContainer, value, options, openLevel, appendToBody, alwaysOpen, showTags, tagsCountText, clearable, searchable, placeholder, grouped, isGroupedValue, listSlotHtmlComponent, disabled, emptyText, staticList, id, isSingleSelect, showCount, disabledBranchNode, direction, iconElements, inputCallback, openCallback, closeCallback, nameChangeCallback }: ITreeselectParams);
-    mount(): void;
+    mount(initValue?: ValueOptionType[] | ValueOptionType | undefined): void;
     updateValue(newValue: ValueOptionType[] | ValueOptionType): void;
     destroy(): void;
     focus(): void;

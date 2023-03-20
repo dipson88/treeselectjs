@@ -32,6 +32,7 @@ export interface ITreeselect {
   disabledBranchNode: boolean
   direction: DirectionType
   iconElements: IconsType
+  ungroupedValue: ValueOptionType[]
   groupedValue: ValueOptionType[]
   isListOpened: boolean
   selectedName: string

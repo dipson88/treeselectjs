@@ -156,3 +156,4 @@ Name  | Params | Description
 6) **Value** prop inside the **options** prop should be a **String** or **Number**.
 7) If you use **isSingleSelect** prop, you should pass only a single **id** as a value.
 8) If you use **isSingleSelect** prop, you can set **showTags** to false. It helps to show treeselect as a dropdown. Also you can disable selecting of group's nodes with help of **disabledBranchNode**.
+9) If you want to get current `value` you can use a public field - `value`: `treeselect.value`.
