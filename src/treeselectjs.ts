@@ -112,6 +112,9 @@ export class Treeselect implements ITreeselect {
   // List position scroll
   #scrollPosition: number = 0
 
+  // Timer for search text
+  #searchTimer: number = 0
+
   // Outside listeners
   #scrollEvent: EventListenerOrEventListenerObject | null = null
   #resizeEvent: EventListenerOrEventListenerObject | null = null
@@ -334,8 +337,15 @@ export class Treeselect implements ITreeselect {
   }
 
   #inputSearchListener(value: string) {
-    this.#treeselectList?.updateSearchValue(value)
-    this.updateListPosition()
+    // debounce for input 350ms
+    if (this.#searchTimer) {
+      clearTimeout(this.#searchTimer)
+    }
+
+    this.#searchTimer = setTimeout(() => {
+      this.#treeselectList?.updateSearchValue(value)
+      this.updateListPosition()
+    }, 350)
   }
 
   #inputFocusListener() {
