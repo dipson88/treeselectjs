@@ -58,7 +58,6 @@ const updateFlattedOptionStateWithChildren = (
     currentOption.checked = false
     currentOption.isPartialChecked = false
     checkUncheckAllChildren(currentOption, childrenOptions, flattedOptions)
-    console.log(currentOption.name)
 
     return currentOption.checked
   }
