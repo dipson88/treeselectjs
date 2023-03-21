@@ -1,14 +1,8 @@
 import { OptionType, ValueOptionType, FlattedOptionType, IconsType, SelectedNodesType } from '../treeselectTypes'
 import { ITreeselectListParams, ITreeselectList } from './listTypes'
-import {
-  getFlattedOptions,
-  updateCheckStateFlattedOption,
-  updateVisibleBySearchFlattedOptions,
-  getGroupedCheckedFlattedOptions,
-  getUnGroupedCheckedFlattedOptions,
-  hideShowChildrenFlattedOptions,
-  updateFlattedOptionsByValue
-} from './listHelper'
+import { getFlattedOptions, getCheckedOptions } from './helpers/listOptionsHelper'
+import { updateOptionByCheckState, updateOptionsByValue } from './helpers/listCheckStateHelper'
+import { hideShowChildrenOptions, updateVisibleBySearchFlattedOptions } from './helpers/listVisibilityStateHelper'
 import { appendIconToElement } from '../svgIcons'
 
 const validateOptions = (flatOptions: FlattedOptionType[]) => {
@@ -41,7 +35,7 @@ const updateValue = (
   isSingleSelect: boolean,
   previousSingleSelectedValue: ValueOptionType[]
 ) => {
-  updateFlattedOptionsByValue(newValue, flattedOptions, isSingleSelect)
+  updateOptionsByValue(newValue, flattedOptions, isSingleSelect)
   updateDOM(flattedOptions, srcElement, iconElements, previousSingleSelectedValue)
 }
 
@@ -59,6 +53,7 @@ const updateDOM = (
 
     updateCheckedClass(option, listItem, previousSingleSelectedValue)
     updatePartialCheckedClass(option, listItem)
+    updateDisabledCheckedClass(option, listItem)
     updateClosedClass(option, listItem, iconElements)
     updateHiddenClass(option, listItem)
 
@@ -80,7 +75,7 @@ const updateCheckedClass = (
     listItem.classList.remove('treeselect-list__item--checked')
   }
 
-  if (Array.isArray(previousSingleSelectedValue) && previousSingleSelectedValue[0] === option.id) {
+  if (Array.isArray(previousSingleSelectedValue) && previousSingleSelectedValue[0] === option.id && !option.disabled) {
     listItem.classList.add('treeselect-list__item--single-selected')
   } else {
     listItem.classList.remove('treeselect-list__item--single-selected')
@@ -92,6 +87,14 @@ const updatePartialCheckedClass = (option: FlattedOptionType, listItem: HTMLElem
     listItem.classList.add('treeselect-list__item--partial-checked')
   } else {
     listItem.classList.remove('treeselect-list__item--partial-checked')
+  }
+}
+
+const updateDisabledCheckedClass = (option: FlattedOptionType, listItem: HTMLElement) => {
+  if (option.disabled) {
+    listItem.classList.add('treeselect-list__item--disabled')
+  } else {
+    listItem.classList.remove('treeselect-list__item--disabled')
   }
 }
 
@@ -246,7 +249,6 @@ export class TreeselectList implements ITreeselectList {
     this.arrowClickCallback = arrowClickCallback
     this.mouseupCallback = mouseupCallback
 
-    this.updateValue(this.value)
     validateOptions(this.flattedOptions)
   }
 
@@ -563,6 +565,12 @@ export class TreeselectList implements ITreeselectList {
   #itemElementMousedown(e: Event, option: OptionType) {
     e.preventDefault()
     e.stopPropagation()
+    const isDisabled = this.flattedOptions.find((f) => f.id === option.value)?.disabled
+
+    if (isDisabled) {
+      return
+    }
+
     const checkbox = (e.target as HTMLElement).querySelector('.treeselect-list__item-checkbox') as HTMLInputElement
     checkbox.checked = !checkbox.checked
     this.#checkboxClickEvent(checkbox, option)
@@ -649,11 +657,11 @@ export class TreeselectList implements ITreeselectList {
       }
 
       this.#previousSingleSelectedValue = [flattedOption.id]
-      updateFlattedOptionsByValue([flattedOption.id], this.flattedOptions, this.isSingleSelect)
+      updateOptionsByValue([flattedOption.id], this.flattedOptions, this.isSingleSelect)
     } else {
       flattedOption.checked = target.checked
-      flattedOption.isPartialChecked = false
-      updateCheckStateFlattedOption(flattedOption, this.flattedOptions, this.isSingleSelect)
+      const resultChecked = updateOptionByCheckState(flattedOption, this.flattedOptions)
+      target.checked = resultChecked
     }
 
     updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue)
@@ -667,7 +675,7 @@ export class TreeselectList implements ITreeselectList {
 
     if (flattedOption) {
       flattedOption.isClosed = !flattedOption.isClosed
-      hideShowChildrenFlattedOptions(this.flattedOptions, flattedOption)
+      hideShowChildrenOptions(this.flattedOptions, flattedOption)
       updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue)
 
       this.arrowClickCallback()
@@ -691,10 +699,8 @@ export class TreeselectList implements ITreeselectList {
   }
 
   #updateSelectedNodes() {
-    this.selectedNodes = {
-      nodes: getUnGroupedCheckedFlattedOptions(this.flattedOptions),
-      groupedNodes: getGroupedCheckedFlattedOptions(this.flattedOptions)
-    }
+    const { ungroupedNodes, groupedNodes } = getCheckedOptions(this.flattedOptions)
+    this.selectedNodes = { nodes: ungroupedNodes, groupedNodes }
   }
 
   // Emits

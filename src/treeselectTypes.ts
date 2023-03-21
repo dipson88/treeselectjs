@@ -3,6 +3,7 @@ export type ValueOptionType = string | number
 export type OptionType = {
   value: ValueOptionType
   name: string
+  disabled?: boolean
   children: OptionType[]
 }
 
@@ -88,6 +89,7 @@ export type FlattedOptionType = {
   level: number
   isClosed: boolean
   hidden: boolean
+  disabled: boolean
 }
 
 export type IconsType = {

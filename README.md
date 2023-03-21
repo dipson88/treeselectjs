@@ -104,7 +104,7 @@ Name  | Type (default) | Description
 ------------- | ------------- | -------------
 **parentHtmlContainer**  | HTMLElement (required!) | It should be a HTML element (div), it will be changed to the list container.
 **value**  | Array[String \| Number] ([]) | An array of `value` from `options` prop. This value will be selected on load of the treeselect. You can call `updateValue` to update prop or set value `treeselect.value` and call `mount`. The `value` changes if you check/uncheck checkboxes or remove tags from the input.
-**options**  | Array[Object] ([]) | It is an array of objects ```{ name: String, value: String, children: [] }```, where children are the same array of objects. Do not use duplicated values.
+**options**  | Array[Object] ([]) | It is an array of objects ```{ name: String, value: String, disabled: Boolean, children: [] }```, where children are the same array of objects. Do not use duplicated values.
 **openLevel**  | Number (0) | All groups will be opened to this level.
 **appendToBody**  | Boolean (false) | List will be appended to the body instead of the input container.
 **alwaysOpen**  | Boolean (false) | List will be always opened. You can use it for comfortable style changing. If you what to use it as an opened list, turn `staticList` to `true`.

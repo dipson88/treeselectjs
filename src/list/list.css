@@ -181,3 +181,11 @@
 .treeselect-list__item--partial-checked .treeselect-list__item-checkbox-container {
   background-color: #52c67e;
 }
+
+.treeselect-list__item--disabled .treeselect-list__item-checkbox-container {
+  background-color: #e9f1f1;
+}
+
+.treeselect-list__item--disabled .treeselect-list__item-label {
+  color: #c5c7cb;
+}
