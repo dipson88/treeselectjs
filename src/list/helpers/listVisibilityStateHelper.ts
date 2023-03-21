@@ -16,6 +16,15 @@ export const hideShowChildrenOptions = (
   })
 }
 
+export const expandSelectedItems = (flattedOptions: FlattedOptionType[]) => {
+  flattedOptions
+    .filter((option) => option.isGroup && !option.disabled && (option.checked || option.isPartialChecked))
+    .forEach((option) => {
+      option.isClosed = false
+      hideShowChildrenOptions(flattedOptions, option)
+    })
+}
+
 export const updateVisibleBySearchFlattedOptions = (flattedOptions: FlattedOptionType[], searchText: string) => {
   const optionsWithSearchText = getSearchedFlattedOptions(flattedOptions, searchText)
 

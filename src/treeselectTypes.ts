@@ -73,6 +73,7 @@ export interface ITreeselectParams {
   showCount?: boolean
   disabledBranchNode?: boolean
   direction?: DirectionType
+  expandSelected?: boolean
   iconElements?: Partial<IconsType>
   inputCallback?: (value: ValueOptionType[] | ValueOptionType) => void
   openCallback?: (value: ValueOptionType[] | ValueOptionType) => void

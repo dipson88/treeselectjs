@@ -87,6 +87,7 @@ export class Treeselect implements ITreeselect {
   showCount: boolean
   disabledBranchNode: boolean
   direction: DirectionType
+  expandSelected: boolean
   iconElements: IconsType
   inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
   openCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
@@ -136,6 +137,7 @@ export class Treeselect implements ITreeselect {
     showCount,
     disabledBranchNode,
     direction,
+    expandSelected,
     iconElements,
     inputCallback,
     openCallback,
@@ -172,6 +174,7 @@ export class Treeselect implements ITreeselect {
     this.showCount = showCount ?? false
     this.disabledBranchNode = disabledBranchNode ?? false
     this.direction = direction ?? 'auto'
+    this.expandSelected = expandSelected ?? false
     this.iconElements = getDefaultIcons(iconElements)
     this.inputCallback = inputCallback
     this.openCallback = openCallback
@@ -270,6 +273,7 @@ export class Treeselect implements ITreeselect {
       isSingleSelect: this.isSingleSelect,
       showCount: this.showCount,
       disabledBranchNode: this.disabledBranchNode,
+      expandSelected: this.expandSelected,
       iconElements: this.iconElements,
       inputCallback: (value) => this.#listInputListener(value),
       arrowClickCallback: () => this.#listArrowClickListener(),

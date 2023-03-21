@@ -2,7 +2,11 @@ import { OptionType, ValueOptionType, FlattedOptionType, IconsType, SelectedNode
 import { ITreeselectListParams, ITreeselectList } from './listTypes'
 import { getFlattedOptions, getCheckedOptions } from './helpers/listOptionsHelper'
 import { updateOptionByCheckState, updateOptionsByValue } from './helpers/listCheckStateHelper'
-import { hideShowChildrenOptions, updateVisibleBySearchFlattedOptions } from './helpers/listVisibilityStateHelper'
+import {
+  hideShowChildrenOptions,
+  updateVisibleBySearchFlattedOptions,
+  expandSelectedItems
+} from './helpers/listVisibilityStateHelper'
 import { appendIconToElement } from '../svgIcons'
 
 const validateOptions = (flatOptions: FlattedOptionType[]) => {
@@ -27,15 +31,22 @@ const validateOptions = (flatOptions: FlattedOptionType[]) => {
   }
 }
 
-const updateValue = (
+const updateListValue = (
   newValue: ValueOptionType[],
   flattedOptions: FlattedOptionType[],
   srcElement: HTMLElement | Element,
   iconElements: IconsType,
   isSingleSelect: boolean,
-  previousSingleSelectedValue: ValueOptionType[]
+  previousSingleSelectedValue: ValueOptionType[],
+  expandSelected: boolean,
+  isFirstValueUpdate: boolean
 ) => {
   updateOptionsByValue(newValue, flattedOptions, isSingleSelect)
+
+  if (isFirstValueUpdate && expandSelected) {
+    expandSelectedItems(flattedOptions)
+  }
+
   updateDOM(flattedOptions, srcElement, iconElements, previousSingleSelectedValue)
 }
 
@@ -210,6 +221,7 @@ export class TreeselectList implements ITreeselectList {
   isSingleSelect: boolean
   showCount: boolean
   disabledBranchNode: boolean
+  expandSelected: boolean
   iconElements: IconsType
 
   // InnerState
@@ -228,6 +240,7 @@ export class TreeselectList implements ITreeselectList {
   #lastFocusedItem: HTMLElement | null = null
   #isMouseActionsAvailable = true
   #previousSingleSelectedValue: ValueOptionType[] = []
+  #isFirstValueUpdate: boolean = true
 
   constructor({
     options,
@@ -239,6 +252,7 @@ export class TreeselectList implements ITreeselectList {
     iconElements,
     showCount,
     disabledBranchNode,
+    expandSelected,
     inputCallback,
     arrowClickCallback,
     mouseupCallback
@@ -251,6 +265,7 @@ export class TreeselectList implements ITreeselectList {
     this.isSingleSelect = isSingleSelect ?? false
     this.showCount = showCount ?? false
     this.disabledBranchNode = disabledBranchNode ?? false
+    this.expandSelected = expandSelected ?? false
     this.iconElements = iconElements
 
     this.searchText = ''
@@ -270,14 +285,17 @@ export class TreeselectList implements ITreeselectList {
   updateValue(value: ValueOptionType[]) {
     this.value = value
     this.#previousSingleSelectedValue = this.isSingleSelect ? this.value : []
-    updateValue(
+    updateListValue(
       value,
       this.flattedOptions,
       this.srcElement,
       this.iconElements,
       this.isSingleSelect,
-      this.#previousSingleSelectedValue
+      this.#previousSingleSelectedValue,
+      this.expandSelected,
+      this.#isFirstValueUpdate
     )
+    this.#isFirstValueUpdate = false
     this.#updateSelectedNodes()
   }
 
