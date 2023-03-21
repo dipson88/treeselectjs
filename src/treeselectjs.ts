@@ -88,6 +88,7 @@ export class Treeselect implements ITreeselect {
   disabledBranchNode: boolean
   direction: DirectionType
   expandSelected: boolean
+  saveScrollPosition: boolean
   iconElements: IconsType
   inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
   openCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
@@ -107,6 +108,9 @@ export class Treeselect implements ITreeselect {
 
   // Resize props
   #containerResizer: ResizeObserver | null = null
+
+  // List position scroll
+  #scrollPosition: number = 0
 
   // Outside listeners
   #scrollEvent: EventListenerOrEventListenerObject | null = null
@@ -138,6 +142,7 @@ export class Treeselect implements ITreeselect {
     disabledBranchNode,
     direction,
     expandSelected,
+    saveScrollPosition,
     iconElements,
     inputCallback,
     openCallback,
@@ -175,6 +180,7 @@ export class Treeselect implements ITreeselect {
     this.disabledBranchNode = disabledBranchNode ?? false
     this.direction = direction ?? 'auto'
     this.expandSelected = expandSelected ?? false
+    this.saveScrollPosition = saveScrollPosition ?? true
     this.iconElements = getDefaultIcons(iconElements)
     this.inputCallback = inputCallback
     this.openCallback = openCallback
@@ -407,7 +413,7 @@ export class Treeselect implements ITreeselect {
 
     this.updateListPosition()
     this.#updateOpenCloseClasses(true)
-    this.#treeselectList.focusFirstListElement()
+    this.#updateScrollPosition()
 
     this.#emitOpen()
   }
@@ -435,6 +441,8 @@ export class Treeselect implements ITreeselect {
     if (!isElementExist) {
       return
     }
+
+    this.#scrollPosition = this.#treeselectList.srcElement.scrollTop
 
     if (this.appendToBody) {
       document.body.removeChild(this.#treeselectList.srcElement)
@@ -509,6 +517,14 @@ export class Treeselect implements ITreeselect {
     document.removeEventListener('mousedown', this.#focusEvent, true)
     document.removeEventListener('focus', this.#focusEvent, true)
     window.removeEventListener('blur', this.#blurEvent)
+  }
+
+  #updateScrollPosition() {
+    if (this.saveScrollPosition) {
+      this.#treeselectList?.srcElement.scroll(0, this.#scrollPosition)
+    } else {
+      this.#treeselectList?.focusFirstListElement()
+    }
   }
 
   // Outside Listeners

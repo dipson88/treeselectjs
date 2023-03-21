@@ -33,6 +33,8 @@ export interface ITreeselect {
   showCount: boolean
   disabledBranchNode: boolean
   direction: DirectionType
+  expandSelected: boolean
+  saveScrollPosition: boolean
   iconElements: IconsType
   ungroupedValue: ValueOptionType[]
   groupedValue: ValueOptionType[]
@@ -74,6 +76,7 @@ export interface ITreeselectParams {
   disabledBranchNode?: boolean
   direction?: DirectionType
   expandSelected?: boolean
+  saveScrollPosition?: boolean
   iconElements?: Partial<IconsType>
   inputCallback?: (value: ValueOptionType[] | ValueOptionType) => void
   openCallback?: (value: ValueOptionType[] | ValueOptionType) => void
