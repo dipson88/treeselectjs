@@ -186,6 +186,20 @@ const getArrowOfItemByCheckbox = (checkbox: HTMLElement | Element) => {
   return arrow
 }
 
+const setAttributesFromHtmlAttr = (itemElement: HTMLDivElement, htmlAttr?: object) => {
+  if (!htmlAttr) {
+    return
+  }
+
+  Object.keys(htmlAttr).forEach((key) => {
+    const value = htmlAttr[key as keyof object]
+
+    if (typeof value === 'string') {
+      itemElement.setAttribute(key, value)
+    }
+  })
+}
+
 export class TreeselectList implements ITreeselectList {
   // Props
   options: OptionType[]
@@ -538,6 +552,7 @@ export class TreeselectList implements ITreeselectList {
 
   #createItemElement(option: OptionType) {
     const itemElement = document.createElement('div')
+    setAttributesFromHtmlAttr(itemElement, option.htmlAttr)
     itemElement.setAttribute('tabindex', '-1')
     itemElement.setAttribute('title', option.name)
     itemElement.classList.add('treeselect-list__item')

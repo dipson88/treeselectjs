@@ -4,6 +4,7 @@ export type OptionType = {
   value: ValueOptionType
   name: string
   disabled?: boolean
+  htmlAttr?: object
   children: OptionType[]
 }
 
