@@ -45,7 +45,7 @@ export interface ITreeselect {
   openCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
   closeCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
   nameChangeCallback: ((name: string) => void) | undefined
-  mount: () => void
+  mount: (initValue?: ValueOptionType[] | ValueOptionType | undefined) => void
   updateValue: (newValue: ValueOptionType[] | ValueOptionType) => void
   destroy: () => void
   focus: () => void

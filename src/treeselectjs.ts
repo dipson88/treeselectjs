@@ -224,7 +224,7 @@ export class Treeselect implements ITreeselect {
       this.srcElement.classList.remove('treeselect--disabled')
     }
 
-    this.updateValue(initValue ?? [])
+    this.updateValue(initValue ?? this.value)
   }
 
   updateValue(newValue: ValueOptionType[] | ValueOptionType) {
