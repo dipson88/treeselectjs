@@ -44,7 +44,7 @@ export class TreeselectInput implements ITreeselectInput {
   searchCallback: (value: string) => void
   openCallback: () => void
   closeCallback: () => void
-  keydownCallback: (key: string) => void
+  keydownCallback: (e: KeyboardEvent) => void
   focusCallback: () => void
   blurCallback: () => void
   nameChangeCallback: (name: string) => void
@@ -352,12 +352,13 @@ export class TreeselectInput implements ITreeselectInput {
 
   #controlKeydown(e: KeyboardEvent) {
     e.stopPropagation()
+    const key = e.key
 
-    if (e.key === 'Backspace' && !this.searchText.length && this.value.length && !this.showTags) {
+    if (key === 'Backspace' && !this.searchText.length && this.value.length && !this.showTags) {
       this.clear()
     }
 
-    if (e.key === 'Backspace' && !this.searchText.length && this.value.length) {
+    if (key === 'Backspace' && !this.searchText.length && this.value.length) {
       this.removeItem(this.value[this.value.length - 1].id)
     }
 
@@ -367,14 +368,15 @@ export class TreeselectInput implements ITreeselectInput {
 
     // We need to prevent enter to avoid unexpected behavior inside forms.
     // Enter action is handled inside the keydownCallback method.
-    if (e.key === 'Enter') {
+    // ArrowDown and ArrowUp were prevented to avoid cursor jumping during list navigation.
+    if (key === 'Enter' || key === 'ArrowDown' || key === 'ArrowUp') {
       e.preventDefault()
     }
 
-    this.keydownCallback(e.key)
+    this.keydownCallback(e)
 
     // We don't need focus during the page navigation.
-    if (e.key !== 'Tab') {
+    if (key !== 'Tab') {
       this.focus()
     }
   }

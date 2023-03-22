@@ -306,7 +306,7 @@ export class Treeselect implements ITreeselect {
       searchCallback: (value) => this.#inputSearchListener(value),
       openCallback: () => this.#openList(),
       closeCallback: () => this.#closeList(),
-      keydownCallback: (key) => this.#inputKeydownListener(key),
+      keydownCallback: (e) => this.#inputKeydownListener(e),
       focusCallback: () => this.#inputFocusListener(),
       blurCallback: () => this.#inputBlurListener(),
       nameChangeCallback: (name) => this.#inputNameChangeListener(name)
@@ -330,9 +330,9 @@ export class Treeselect implements ITreeselect {
     this.#emitInput()
   }
 
-  #inputKeydownListener(key: string) {
+  #inputKeydownListener(e: KeyboardEvent) {
     if (this.isListOpened) {
-      this.#treeselectList?.callKeyAction(key)
+      this.#treeselectList?.callKeyAction(e)
     }
   }
 
@@ -530,7 +530,9 @@ export class Treeselect implements ITreeselect {
   }
 
   #updateScrollPosition() {
-    if (this.saveScrollPosition) {
+    const isLastFocusedElementExist = this.#treeselectList?.isLastFocusedElementExist()
+
+    if (this.saveScrollPosition && isLastFocusedElementExist) {
       this.#treeselectList?.srcElement.scroll(0, this.#scrollPosition)
     } else {
       this.#treeselectList?.focusFirstListElement()
@@ -629,6 +631,8 @@ export class Treeselect implements ITreeselect {
   }
 
   #emitOpen() {
+    if (this.alwaysOpen) return
+
     this.srcElement?.dispatchEvent(new CustomEvent('open', { detail: this.value }))
 
     if (this.openCallback) {
@@ -637,6 +641,8 @@ export class Treeselect implements ITreeselect {
   }
 
   #emitClose() {
+    if (this.alwaysOpen) return
+
     this.srcElement?.dispatchEvent(new CustomEvent('close', { detail: this.value }))
 
     if (this.closeCallback) {

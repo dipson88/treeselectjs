@@ -332,16 +332,23 @@ export class TreeselectList implements ITreeselectList {
     this.focusFirstListElement()
   }
 
-  callKeyAction(key: string) {
+  callKeyAction(e: KeyboardEvent) {
     this.#isMouseActionsAvailable = false
     const itemFocused = this.srcElement.querySelector('.treeselect-list__item--focused') as HTMLElement | null
+    const isHidden = itemFocused?.classList.contains('treeselect-list__item--hidden')
+
+    if (isHidden) {
+      return
+    }
+
+    const key = e.key
 
     if (key === 'Enter' && itemFocused) {
       itemFocused.dispatchEvent(new Event('mousedown'))
     }
 
     if (key === 'ArrowLeft' || key === 'ArrowRight') {
-      this.#keyActionsLeftRight(itemFocused, key)
+      this.#keyActionsLeftRight(itemFocused, e)
     }
 
     if (key === 'ArrowDown' || key === 'ArrowUp') {
@@ -368,12 +375,17 @@ export class TreeselectList implements ITreeselectList {
     firstItem.classList.add(focusedClass)
   }
 
+  isLastFocusedElementExist() {
+    return !!this.#lastFocusedItem
+  }
+
   // Private methods
-  #keyActionsLeftRight(itemFocused: HTMLElement | null, key: string) {
+  #keyActionsLeftRight(itemFocused: HTMLElement | null, e: KeyboardEvent) {
     if (!itemFocused) {
       return
     }
 
+    const key = e.key
     const checkbox = itemFocused.querySelector('.treeselect-list__item-checkbox')!
     const inputId = checkbox.getAttribute('input-id')
     const option = getFlattedOptionByInputId(inputId, this.flattedOptions)!
@@ -381,10 +393,14 @@ export class TreeselectList implements ITreeselectList {
 
     if (key === 'ArrowLeft' && !option.isClosed && option.isGroup) {
       arrow.dispatchEvent(new Event('mousedown'))
+      // We use preventDefault to avoid cursor jumping during opening/closing group
+      e.preventDefault()
     }
 
     if (key === 'ArrowRight' && option.isClosed && option.isGroup) {
       arrow.dispatchEvent(new Event('mousedown'))
+      // We use preventDefault to avoid cursor jumping during opening/closing group
+      e.preventDefault()
     }
   }
 

@@ -24,6 +24,7 @@ export interface ITreeselectList extends ITreeselectListParams {
   srcElement: HTMLElement
   updateValue: (value: ValueOptionType[]) => void
   updateSearchValue: (searchText: string) => void
-  callKeyAction: (key: string) => void
+  callKeyAction: (e: KeyboardEvent) => void
   focusFirstListElement: () => void
+  isLastFocusedElementExist: () => boolean
 }
