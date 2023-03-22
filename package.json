@@ -1,6 +1,6 @@
 {
   "name": "treeselectjs",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Treeselect JS",
   "main": "dist/treeselectjs.cjs.js",
   "module": "dist/treeselectjs.mjs.js",
@@ -47,7 +47,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dipson88/treeselectjs.git"
+    "url": "https://github.com/dipson88/treeselectjs.git"
   },
   "keywords": [
     "treeselect",
