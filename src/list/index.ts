@@ -465,14 +465,15 @@ export class TreeselectList implements ITreeselectList {
     const list = this.#createList()
     const listTreeItems = this.#getListHTML(this.options)
     list.append(...listTreeItems)
+
+    const emptyList = this.#createEmptyList()
+    list.append(emptyList)
+
     const slot = this.#createSlot()
 
     if (slot) {
       list.append(slot)
     }
-
-    const emptyList = this.#createEmptyList()
-    list.append(emptyList)
 
     return list
   }
