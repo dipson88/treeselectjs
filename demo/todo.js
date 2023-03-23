@@ -12,7 +12,7 @@
 // FEATURES (TODO)
 // select node as a separate node without children (individual mode)
 // opportunity to add empty groups without children
-// select input text with mouse (now it is unselectable)
+// select input text with mouse (now it is unselectable) (done - experimental)
 // e2e tests (cypress)
 // check and ko-fi
 
