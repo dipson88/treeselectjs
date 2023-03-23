@@ -250,7 +250,8 @@ export class TreeselectInput implements ITreeselectInput {
   }
 
   #containerMousedown(e: Event) {
-    e.preventDefault()
+    // TODO experimental for text selection
+    // e.preventDefault()
     e.stopPropagation()
 
     if (!this.isOpened) {
