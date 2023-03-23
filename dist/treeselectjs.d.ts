@@ -42,7 +42,7 @@ interface ITreeselect {
     openCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined;
     closeCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined;
     nameChangeCallback: ((name: string) => void) | undefined;
-    mount: (initValue?: ValueOptionType[] | ValueOptionType | undefined) => void;
+    mount: () => void;
     updateValue: (newValue: ValueOptionType[] | ValueOptionType) => void;
     destroy: () => void;
     focus: () => void;
@@ -126,7 +126,7 @@ export class Treeselect implements ITreeselect {
     selectedName: string;
     srcElement: HTMLElement | null;
     constructor({ parentHtmlContainer, value, options, openLevel, appendToBody, alwaysOpen, showTags, tagsCountText, clearable, searchable, placeholder, grouped, isGroupedValue, listSlotHtmlComponent, disabled, emptyText, staticList, id, isSingleSelect, showCount, disabledBranchNode, direction, expandSelected, saveScrollPosition, iconElements, inputCallback, openCallback, closeCallback, nameChangeCallback }: ITreeselectParams);
-    mount(initValue?: ValueOptionType[] | ValueOptionType | undefined): void;
+    mount(): void;
     updateValue(newValue: ValueOptionType[] | ValueOptionType): void;
     destroy(): void;
     focus(): void;

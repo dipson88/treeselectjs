@@ -199,11 +199,11 @@ export class Treeselect implements ITreeselect {
     this.#initMount(value)
   }
 
-  mount () {
+  mount() {
     this.#initMount(this.value)
   }
 
-  #initMount (initValue?: ValueOptionType[] | ValueOptionType | undefined) {
+  #initMount(initValue?: ValueOptionType[] | ValueOptionType | undefined) {
     this.destroy()
 
     const { container, list, input } = this.#createTreeselect()
