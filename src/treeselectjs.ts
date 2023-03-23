@@ -196,11 +196,14 @@ export class Treeselect implements ITreeselect {
     this.selectedName = ''
     this.srcElement = null
 
-    this.mount(value)
+    this.#initMount(value)
   }
 
-  // Public methods
-  mount(initValue?: ValueOptionType[] | ValueOptionType | undefined) {
+  mount () {
+    this.#initMount(this.value)
+  }
+
+  #initMount (initValue?: ValueOptionType[] | ValueOptionType | undefined) {
     this.destroy()
 
     const { container, list, input } = this.#createTreeselect()
