@@ -7,12 +7,7 @@
 // create update function for the list to avoid a remount
 // disable change focused element on fast scroll appendToBody
 // Should we add a list direction if we use staticList prop?
-// Add updateValue on mount
 // Add className for list
 
 // REQUESTS
 // Investigate an ability to add a diff names but the same values, and check them.
-// disabled mode for values.
-// attributes for the elements
-// autoexpand prop for selected values.
-// scroll position saving on close
