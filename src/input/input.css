@@ -27,17 +27,16 @@
   position: absolute;
   z-index: -1;
   left: 0;
-  padding: 0;
+  min-width: 0;
+  width: 0;
 }
 
+.treeselect-input--value-not-selected .treeselect-input__edit,
 .treeselect-input--value-not-selected.treeselect-input--unsearchable .treeselect-input__edit:focus {
   z-index: auto;
   position: static;
   width: 100%;
-}
-
-.treeselect-input--value-not-selected .treeselect-input__edit {
-  z-index: auto;
+  max-width: 100%;
 }
 
 .treeselect-input--value-not-selected .treeselect-input__tags {
@@ -99,13 +98,13 @@
 
 .treeselect-input__edit {
   flex: 1;
-  width: 0;
   border: none;
   font-size: 14px;
   text-overflow: ellipsis;
 
   width: 100%;
   max-width: calc(100% - 45px);
+  padding: 0;
 
   /* Hide input for user */
   position: absolute;

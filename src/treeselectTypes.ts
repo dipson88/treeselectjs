@@ -3,6 +3,8 @@ export type ValueOptionType = string | number
 export type OptionType = {
   value: ValueOptionType
   name: string
+  disabled?: boolean
+  htmlAttr?: object
   children: OptionType[]
 }
 
@@ -31,7 +33,10 @@ export interface ITreeselect {
   showCount: boolean
   disabledBranchNode: boolean
   direction: DirectionType
+  expandSelected: boolean
+  saveScrollPosition: boolean
   iconElements: IconsType
+  ungroupedValue: ValueOptionType[]
   groupedValue: ValueOptionType[]
   isListOpened: boolean
   selectedName: string
@@ -70,6 +75,8 @@ export interface ITreeselectParams {
   showCount?: boolean
   disabledBranchNode?: boolean
   direction?: DirectionType
+  expandSelected?: boolean
+  saveScrollPosition?: boolean
   iconElements?: Partial<IconsType>
   inputCallback?: (value: ValueOptionType[] | ValueOptionType) => void
   openCallback?: (value: ValueOptionType[] | ValueOptionType) => void
@@ -87,6 +94,7 @@ export type FlattedOptionType = {
   level: number
   isClosed: boolean
   hidden: boolean
+  disabled: boolean
 }
 
 export type IconsType = {

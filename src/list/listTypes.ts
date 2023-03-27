@@ -9,6 +9,7 @@ export interface ITreeselectListParams {
   isSingleSelect: boolean
   showCount: boolean
   disabledBranchNode: boolean
+  expandSelected: boolean
   iconElements: IconsType
   inputCallback: (value: SelectedNodesType) => void
   arrowClickCallback: () => void
@@ -23,6 +24,7 @@ export interface ITreeselectList extends ITreeselectListParams {
   srcElement: HTMLElement
   updateValue: (value: ValueOptionType[]) => void
   updateSearchValue: (searchText: string) => void
-  callKeyAction: (key: string) => void
+  callKeyAction: (e: KeyboardEvent) => void
   focusFirstListElement: () => void
+  isLastFocusedElementExist: () => boolean
 }
