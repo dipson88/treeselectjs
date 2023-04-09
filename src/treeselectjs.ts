@@ -1,3 +1,4 @@
+import './treeselectjs.css'
 import { ITreeselectInput } from './input/inputTypes'
 import { ITreeselectList } from './list/listTypes'
 import { TreeselectInput } from './input/index'
@@ -63,7 +64,7 @@ const getResultValue = (value: ValueOptionType[], isSingleSelect: boolean) => {
   return value
 }
 
-export class Treeselect implements ITreeselect {
+export default class Treeselect implements ITreeselect {
   // Props
   parentHtmlContainer: HTMLElement
   value: ValueOptionType[] | ValueOptionType

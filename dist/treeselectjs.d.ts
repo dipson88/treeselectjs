@@ -1,13 +1,17 @@
-type ValueOptionType = string | number;
-type OptionType = {
-    value: ValueOptionType;
-    name: string;
-    disabled?: boolean;
-    htmlAttr?: object;
-    children: OptionType[];
+declare type DirectionType = 'auto' | 'top' | 'bottom';
+
+declare type IconsType = {
+    arrowUp: string | HTMLElement;
+    arrowDown: string | HTMLElement;
+    arrowRight: string | HTMLElement;
+    attention: string | HTMLElement;
+    clear: string | HTMLElement;
+    cross: string | HTMLElement;
+    check: string | HTMLElement;
+    partialCheck: string | HTMLElement;
 };
-type DirectionType = 'auto' | 'top' | 'bottom';
-interface ITreeselect {
+
+declare interface ITreeselect {
     parentHtmlContainer: HTMLElement;
     value: ValueOptionType[] | ValueOptionType;
     options: OptionType[];
@@ -48,7 +52,8 @@ interface ITreeselect {
     focus: () => void;
     toggleOpenClose: () => void;
 }
-interface ITreeselectParams {
+
+declare interface ITreeselectParams {
     parentHtmlContainer: HTMLElement;
     value?: ValueOptionType[] | ValueOptionType;
     options?: OptionType[];
@@ -79,17 +84,16 @@ interface ITreeselectParams {
     closeCallback?: (value: ValueOptionType[] | ValueOptionType) => void;
     nameChangeCallback?: (name: string) => void;
 }
-type IconsType = {
-    arrowUp: string | HTMLElement;
-    arrowDown: string | HTMLElement;
-    arrowRight: string | HTMLElement;
-    attention: string | HTMLElement;
-    clear: string | HTMLElement;
-    cross: string | HTMLElement;
-    check: string | HTMLElement;
-    partialCheck: string | HTMLElement;
+
+declare type OptionType = {
+    value: ValueOptionType;
+    name: string;
+    disabled?: boolean;
+    htmlAttr?: object;
+    children: OptionType[];
 };
-export class Treeselect implements ITreeselect {
+
+declare class Treeselect implements ITreeselect {
     #private;
     parentHtmlContainer: HTMLElement;
     value: ValueOptionType[] | ValueOptionType;
@@ -136,3 +140,8 @@ export class Treeselect implements ITreeselect {
     blurWindowHandler(): void;
     updateListPosition(): void;
 }
+export default Treeselect;
+
+declare type ValueOptionType = string | number;
+
+export { }
