@@ -6,6 +6,11 @@ A multi-select js component with nested options.
 - Screen sensitive direction
 - Typescript support
 
+Build data:
+- treeselectjs.umd.cjs  39.57 kB │ gzip: 10.13 kB
+- treeselectjs.css   6.41 kB │ gzip:  1.27 kB
+- treeselectjs.js   48.64 kB │ gzip: 11.03 kB
+
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
 ![Example img](https://github.com/dipson88/treeselectjs/blob/main/treeselectjs.png?raw=true)
@@ -16,11 +21,19 @@ npm install --save treeselectjs
 ```
 Import treeselectjs (ES)
 ```
-import { Treeselect } from 'treeselectjs'
+import Treeselect from 'treeselectjs'
 ```
 Import treeselectjs (CommonJS)
 ```
-const { Treeselect } = require('treeselectjs')
+const Treeselect = require('treeselectjs')
+```
+Import treeselectjs (Script)
+```
+<script src="https://cdn.jsdelivr.net/npm/treeselectjs"></script>
+<script>
+const treeselect = new treeselectjs({ ...props })
+</script>
+const Treeselect = require('treeselectjs')
 ```
 Import css file with styles
 ```
@@ -29,7 +42,7 @@ Import css file with styles
 
 Example
 ```
-import { Treeselect } from 'treeselectjs'
+import Treeselect from 'treeselectjs'
 
 const options = [
   {
