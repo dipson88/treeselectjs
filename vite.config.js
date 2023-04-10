@@ -17,11 +17,11 @@ export default defineConfig({
           }
 
           return assetInfo.name
+        },
+        globals: {
+          treeselectjs: 'Treeselect'
         }
       }
-    },
-    watch: {
-      include: ['src/**']
     }
   },
   server: {

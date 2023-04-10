@@ -23,21 +23,21 @@ Import treeselectjs (ES)
 ```
 import Treeselect from 'treeselectjs'
 ```
-Import treeselectjs (CommonJS)
-```
-const Treeselect = require('treeselectjs')
-```
-Import treeselectjs (Script)
-```
-<script src="https://cdn.jsdelivr.net/npm/treeselectjs"></script>
-<script>
-const treeselect = new treeselectjs({ ...props })
-</script>
-const Treeselect = require('treeselectjs')
-```
-Import css file with styles
+Import css file with styles (ES)
 ```
 @import 'treeselectjs/dist/treeselectjs.css'
+```
+
+Import treeselectjs (UMD)
+```
+<script src="https://cdn.jsdelivr.net/npm/treeselect-alpha-test@0.0.19/dist/treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselect-alpha-test@0.0.19/dist/treeselectjs.css" />
+...
+<script>
+  ...
+  const treeselect = new Treeselect({ ...props })
+  ...
+</script>
 ```
 
 Example

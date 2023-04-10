@@ -2,22 +2,25 @@
   "name": "treeselectjs",
   "version": "0.8.0",
   "description": "Treeselect JS",
-  "type": "module",
-  "main": "./dist/treeselectjs.umd.cjs",
-  "module": "./dist/treeselectjs.js",
+  "main": "./dist/treeselectjs.umd.js",
+  "module": "./dist/treeselectjs.mjs",
   "types": "./dist/treeselectjs.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/treeselectjs.js",
-      "require": "./dist/treeselectjs.umd.cjs"
+      "import": "./dist/treeselectjs.mjs",
+      "require": "./dist/treeselectjs.umd.js"
+    },
+    "./dist/treeselectjs.css": {
+      "import": "./dist/treeselectjs.css",
+      "require": "./dist/treeselectjs.css"
     }
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build --watch",
+    "build": "tsc && vite build",
     "preview": "vite preview",
     "prettier": "prettier --w src && prettier --w app && prettier --w docs"
-  },
+  },  
   "repository": {
     "type": "git",
     "url": "https://github.com/dipson88/treeselectjs.git"
@@ -37,6 +40,9 @@
     "url": "https://github.com/dipson88/treeselectjs/issues"
   },
   "homepage": "https://github.com/dipson88/treeselectjs#readme",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "devDependencies": {
     "prettier": "^2.8.7",
     "typescript": "^4.9.3",
