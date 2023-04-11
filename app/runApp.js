@@ -1,43 +1,43 @@
 const options = [
   {
     name: 'England',
-    value: 'England',
+    value: 1,
     children: [
       {
         name: 'London',
-        value: 'London',
+        value: 2,
         children: [
           {
             name: 'Chelsea',
-            value: 'Chelsea',
+            value: 3,
             children: []
           },
           {
             name: 'West End',
-            value: 'West End',
+            value: 4,
             children: []
           }
         ]
       },
       {
         name: 'Brighton',
-        value: 'Brighton',
+        value: 5,
         children: []
       }
     ]
   },
   {
     name: 'France',
-    value: 'France',
+    value: 6,
     children: [
       {
         name: 'Paris',
-        value: 'Paris',
+        value: 7,
         children: []
       },
       {
         name: 'Lyon',
-        value: 'Lyon',
+        value: 8,
         children: []
       }
     ]
@@ -51,7 +51,7 @@ export const runApp = (Treeselect) => {
   const domElement = document.querySelector('.treeselect-demo')
   const treeselect = new Treeselect({
     parentHtmlContainer: domElement,
-    value: ['West End', 'Paris', 'Lyon'],
+    value: [4, 7, 8],
     options: options,
     listSlotHtmlComponent: slot
   })
