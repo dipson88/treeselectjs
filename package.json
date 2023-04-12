@@ -40,9 +40,6 @@
     "url": "https://github.com/dipson88/treeselectjs/issues"
   },
   "homepage": "https://github.com/dipson88/treeselectjs#readme",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
   "devDependencies": {
     "prettier": "^2.8.7",
     "typescript": "^4.9.3",
