@@ -6,6 +6,11 @@ A multi-select js component with nested options.
 - Screen sensitive direction
 - Typescript support
 
+Build data:
+- treeselectjs.mjs   48.64 kB │ gzip: 11.03 kB
+- treeselectjs.umd.js  39.57 kB │ gzip: 10.13 kB
+- treeselectjs.css   6.41 kB │ gzip:  1.27 kB
+
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
 ![Example img](https://github.com/dipson88/treeselectjs/blob/main/treeselectjs.png?raw=true)
@@ -16,61 +21,67 @@ npm install --save treeselectjs
 ```
 Import treeselectjs (ES)
 ```
-import { Treeselect } from 'treeselectjs'
+import Treeselect from 'treeselectjs'
+
+@import 'treeselectjs/dist/treeselectjs.css // Styles
 ```
-Import treeselectjs (CommonJS)
+
+Import treeselectjs (UMD)
 ```
-const { Treeselect } = require('treeselectjs')
-```
-Import css file with styles
-```
-@import 'treeselectjs/dist/treeselectjs.css'
+<script src="https://cdn.jsdelivr.net/npm/treeselect-alpha-test@0.0.19/dist/treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselect-alpha-test@0.0.19/dist/treeselectjs.css" />
+...
+<script>
+  ...
+  const treeselect = new Treeselect({ ...props })
+  ...
+</script>
 ```
 
 Example
 ```
-import { Treeselect } from 'treeselectjs'
+import Treeselect from 'treeselectjs'
 
 const options = [
   {
     name: 'England',
-    value: 'England',
+    value: 1,
     children: [
       {
         name: 'London',
-        value: 'London',
+        value: 2,
         children: [
           {
             name: 'Chelsea',
-            value: 'Chelsea',
+            value: 3,
             children: []
           },
           {
             name: 'West End',
-            value: 'West End',
+            value: 4,
             children: []
           }
         ]
       },
       {
         name: 'Brighton',
-        value: 'Brighton',
+        value: 5,
         children: []
       }
     ]
   },
   {
     name: 'France',
-    value: 'France',
+    value: 6,
     children: [
       {
         name: 'Paris',
-        value: 'Paris',
+        value: 7,
         children: []
       },
       {
         name: 'Lyon',
-        value: 'Lyon',
+        value: 8,
         children: []
       }
     ]
@@ -84,7 +95,7 @@ slot.innerHTML='<a class="treeselect-demo__slot" href="">Click!</a>'
 const domElement = document.querySelector('.treeselect-demo')
 const treeselect = new Treeselect({
   parentHtmlContainer: domElement,
-  value: ['West End', 'Paris', 'Lyon'],
+  value: [4, 7, 8],
   options: options,
   listSlotHtmlComponent: slot
 })

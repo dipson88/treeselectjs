@@ -1,50 +1,26 @@
 {
   "name": "treeselectjs",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Treeselect JS",
-  "main": "dist/treeselectjs.cjs.js",
-  "module": "dist/treeselectjs.mjs.js",
-  "types": "dist/treeselectjs.d.ts",
-  "targets": {
-    "main": {
-      "source": "src/treeselectjs.ts",
-      "outputFormat": "commonjs",
-      "isLibrary": true,
-      "optimize": true,
-      "sourceMap": false,
-      "engines": {
-        "browsers": "> 0.5%, last 2 versions, not dead"
-      }
+  "main": "./dist/treeselectjs.umd.js",
+  "module": "./dist/treeselectjs.mjs",
+  "types": "./dist/treeselectjs.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/treeselectjs.mjs",
+      "require": "./dist/treeselectjs.umd.js"
     },
-    "module": {
-      "source": "src/treeselectjs.ts",
-      "outputFormat": "esmodule",
-      "isLibrary": true,
-      "optimize": true,
-      "sourceMap": false,
-      "engines": {
-        "browsers": "> 0.5%, last 2 versions, not dead"
-      }
-    },
-    "types": {
-      "isLibrary": true,
-      "source": "src/treeselectjs.ts",
-      "optimize": true,
-      "sourceMap": false
-    },
-    "css": {
-      "source": "src/treeselectjs.css",
-      "distDir": "dist",
-      "isLibrary": true,
-      "optimize": true,
-      "sourceMap": false
+    "./dist/treeselectjs.css": {
+      "import": "./dist/treeselectjs.css",
+      "require": "./dist/treeselectjs.css"
     }
   },
   "scripts": {
-    "build": "parcel build",
-    "watch": "parcel watch",
-    "prettier": "prettier --w src && prettier --w demo"
-  },
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "prettier": "prettier --w src && prettier --w app && prettier --w docs"
+  },  
   "repository": {
     "type": "git",
     "url": "https://github.com/dipson88/treeselectjs.git"
@@ -64,13 +40,14 @@
     "url": "https://github.com/dipson88/treeselectjs/issues"
   },
   "homepage": "https://github.com/dipson88/treeselectjs#readme",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "devDependencies": {
-    "@parcel/packager-ts": "^2.6.2",
-    "@parcel/transformer-typescript-tsc": "^2.6.2",
-    "@parcel/transformer-typescript-types": "^2.6.2",
-    "parcel": "^2.6.2",
-    "prettier": "^2.7.1",
-    "typescript": "^4.7.4"
+    "prettier": "^2.8.7",
+    "typescript": "^4.9.3",
+    "vite": "^4.2.0",
+    "vite-plugin-dts": "^2.2.0"
   },
   "files": [
     "dist"
