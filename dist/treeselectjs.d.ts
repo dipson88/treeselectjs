@@ -1,6 +1,6 @@
-declare type DirectionType = 'auto' | 'top' | 'bottom';
+export declare type DirectionType = 'auto' | 'top' | 'bottom';
 
-declare type IconsType = {
+export declare type IconsType = {
     arrowUp: string | HTMLElement;
     arrowDown: string | HTMLElement;
     arrowRight: string | HTMLElement;
@@ -53,7 +53,7 @@ declare interface ITreeselect {
     toggleOpenClose: () => void;
 }
 
-declare interface ITreeselectParams {
+export declare interface ITreeselectParams {
     parentHtmlContainer: HTMLElement;
     value?: ValueOptionType[] | ValueOptionType;
     options?: OptionType[];
@@ -85,7 +85,7 @@ declare interface ITreeselectParams {
     nameChangeCallback?: (name: string) => void;
 }
 
-declare type OptionType = {
+export declare type OptionType = {
     value: ValueOptionType;
     name: string;
     disabled?: boolean;
@@ -142,6 +142,6 @@ declare class Treeselect implements ITreeselect {
 }
 export default Treeselect;
 
-declare type ValueOptionType = string | number;
+export declare type ValueOptionType = string | number;
 
 export { }

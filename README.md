@@ -28,8 +28,8 @@ import Treeselect from 'treeselectjs'
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.8.0/dist/treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.8.0/dist/treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.8.1/dist/treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.8.1/dist/treeselectjs.css" />
 ...
 <script>
   ...
@@ -179,9 +179,9 @@ Name  | Type | Description
 ### Emits
 Name  | Return Type | Description
 ------------- | ------------- | -------------
-**input**  | Array[String \| Number] | Returns selected ids, action is triggered on change the list value. Add `eventListener` or use `inputCallback` prop to get value.
-**open**  | Array[String \| Number] | Returns selected ids, action is triggered on opening the list. Add `eventListener` or use `openCallback` prop to get value.
-**close**  | Array[String \| Number] | Returns selected ids, action is triggered on closing the list. Add `eventListener` or use `closeCallback` prop to get value.
+**input**  | Array[String \| Number] | Returns selected values, action is triggered on change the list value. Add `eventListener` or use `inputCallback` prop to get value.
+**open**  | Array[String \| Number] | Returns selected values, action is triggered on opening the list. Add `eventListener` or use `openCallback` prop to get value.
+**close**  | Array[String \| Number] | Returns selected values, action is triggered on closing the list. Add `eventListener` or use `closeCallback` prop to get value.
 **name-change**  | String | Returns selected name inside the input, action is triggered on on change the list. Add `eventListener` or use `nameChangeCallback` prop to get name.
 
 ---
@@ -204,5 +204,5 @@ Name  | Params | Description
 4) If you need to delete List from the DOM when you don't need treeselect anymore - call **destroy()**.
 5) Do not use **duplicated** values for the options. You will see a error with duplicated values. But you can use duplicated names.
 6) **Value** prop inside the **options** prop should be a **String** or **Number**.
-7) If you use **isSingleSelect** prop, you should pass only a single **id** as a value.
+7) If you use **isSingleSelect** prop, you should pass only a single **value** without an array.
 8) If you use **isSingleSelect** prop, you can set **showTags** to false. It helps to show treeselect as a dropdown. Also you can disable selecting of group's nodes with help of **disabledBranchNode**.
