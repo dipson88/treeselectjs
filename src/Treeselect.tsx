@@ -72,7 +72,7 @@ const Treeselect: FC<PropsWithChildren<TreeselectProps>> = (props) => {
       inputCallback: props.onInput,
       openCallback: props.onOpen,
       closeCallback: props.onClose,
-      nameChangeCallback: props.onNameChange,
+      nameChangeCallback: props.onNameChange
     })
 
     return () => {
