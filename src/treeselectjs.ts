@@ -15,6 +15,14 @@ import {
 } from './treeselectTypes'
 import { getDefaultIcons } from './svgIcons'
 
+export {
+  type ValueOptionType,
+  type OptionType,
+  type DirectionType,
+  type IconsType,
+  type ITreeselectParams
+}
+
 const validateProps = ({
   parentHtmlContainer,
   staticList,
