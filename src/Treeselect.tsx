@@ -7,7 +7,7 @@ interface TreeselectReactParams extends ITreeselectParams {
   onInput?: (value: Value) => void
   onOpen?: (value: Value) => void
   onClose?: (value: Value) => void
-  onNameChange?: (name: Value) => void
+  onNameChange?: (name: string) => void
 }
 
 export type TreeselectProps = Omit<
@@ -68,7 +68,11 @@ const Treeselect: FC<PropsWithChildren<TreeselectProps>> = (props) => {
     treeselect.current = new TreeselectJS({
       parentHtmlContainer: treeselectRef.current as HTMLDivElement,
       listSlotHtmlComponent: treeselectAfterListSlotRef.current as HTMLDivElement,
-      ...props
+      ...props,
+      inputCallback: props.onInput,
+      openCallback: props.onOpen,
+      closeCallback: props.onClose,
+      nameChangeCallback: props.onNameChange,
     })
 
     return () => {

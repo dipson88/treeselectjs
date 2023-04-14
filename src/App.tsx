@@ -27,6 +27,10 @@ const App = () => {
     setIsSingleSelect(true)
   }
 
+  const onNameChange = (name: string) => {
+    console.log('onNameChange', name)
+  }
+
   return (
     <div>
       <button onClick={onClickSingleSelect}>isSingleSelect</button>
@@ -38,6 +42,7 @@ const App = () => {
         onInput={(value) => {
           console.log(value)
         }}
+        onNameChange={onNameChange}
       >
         <a
           style={{
