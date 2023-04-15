@@ -14,7 +14,7 @@ Build data:
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
-![Example img](https://github.com/dipson88/react-treeselectjs/blob/main/react-treeselectjs.png?raw=true)
+![Example img](https://github.com/dipson88/react-treeselectjs/blob/main/treeselectjs.png?raw=true)
 
 ### Getting Started
 ```bash
@@ -84,7 +84,7 @@ const options = [
 ]
 
 function App() {
-  // Also for type tou can import TreeselectValue from 'react-treeselectjs'
+  // Also for type, you can import { TreeselectValue } from 'react-treeselectjs'
   const onInput = (value: string | number | (string | number)[]) => {
     console.log(value)
   }
