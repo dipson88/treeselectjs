@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import 'treeselectjs/dist/treeselectjs.css'
 
 const App = () => {
-  const options = [
+  const [options, setOptions] = useState([
     {
       name: 'test',
       value: 1,
@@ -14,7 +14,7 @@ const App = () => {
       value: 2,
       children: []
     }
-  ]
+  ])
 
   const [isSingleSelect, setIsSingleSelect] = useState(false)
   const [value, setValue] = useState([1])
@@ -31,10 +31,15 @@ const App = () => {
     console.log('onNameChange', name)
   }
 
+  const onChangeOptions = () => {
+    setOptions(prev => [...prev, { name: 'test3', value: 3, children: [] }])
+  }
+
   return (
     <div>
       <button onClick={onClickSingleSelect}>isSingleSelect</button>
       <button onClick={onClickValue}>value</button>
+      <button onClick={onChangeOptions}>options</button>
       <Treeselect
         isSingleSelect={isSingleSelect}
         options={options}
