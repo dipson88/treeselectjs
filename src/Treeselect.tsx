@@ -1,12 +1,12 @@
 import React, { FC, PropsWithChildren, useEffect, useRef } from 'react'
 import TreeselectJS, { ValueOptionType, ITreeselectParams } from 'treeselectjs'
 
-type Value = ValueOptionType | ValueOptionType[]
+export type TreeselectValue = ValueOptionType | ValueOptionType[]
 
 interface TreeselectReactParams extends ITreeselectParams {
-  onInput?: (value: Value) => void
-  onOpen?: (value: Value) => void
-  onClose?: (value: Value) => void
+  onInput?: (value: TreeselectValue) => void
+  onOpen?: (value: TreeselectValue) => void
+  onClose?: (value: TreeselectValue) => void
   onNameChange?: (name: string) => void
 }
 
