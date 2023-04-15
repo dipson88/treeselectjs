@@ -35,6 +35,10 @@ const App = () => {
     setOptions(prev => [...prev, { name: 'test3', value: 3, children: [] }])
   }
 
+  const onInput = (value: string | number | (string | number)[]) => {
+    console.log('onInput', value)
+  }
+
   return (
     <div>
       <button onClick={onClickSingleSelect}>isSingleSelect</button>
@@ -44,9 +48,7 @@ const App = () => {
         isSingleSelect={isSingleSelect}
         options={options}
         value={value}
-        onInput={(value) => {
-          console.log(value)
-        }}
+        onInput={onInput}
         onNameChange={onNameChange}
       >
         <a

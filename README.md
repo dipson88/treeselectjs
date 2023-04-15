@@ -28,13 +28,13 @@ import 'treeselectjs/dist/treeselectjs.css // use styles from treeselectjs
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.1.0/dist/react-treeselectjs.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.1.1/dist/react-treeselectjs.umd.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.8.0/dist/treeselectjs.css" />
 ```
 
 Example
 ```
-import Treeselect from 'treeselect-alpha-test'
+import Treeselect from 'react-treeselectjs'
 import 'treeselectjs/dist/treeselectjs.css'
 
 const options = [
@@ -84,7 +84,8 @@ const options = [
 ]
 
 function App() {
-  const onInput = (value: number[]) => {
+  // Also for type tou can import TreeselectValue from 'react-treeselectjs'
+  const onInput = (value: string | number | (string | number)[]) => {
     console.log(value)
   }
 
