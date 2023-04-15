@@ -2,6 +2,7 @@
 
 A multi-select js component with nested options.
 
+- React wrapper - https://www.npmjs.com/package/react-treeselectjs
 - Full key support (ArrowUp, ArrowDown, Space, ArrowLeft, ArrowRight, Enter)
 - Screen sensitive direction
 - Typescript support
