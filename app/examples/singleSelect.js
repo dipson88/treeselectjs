@@ -44,24 +44,19 @@ const options = [
   }
 ]
 
-export const runApp = (Treeselect) => {
-  const slot = document.createElement('div')
-  slot.innerHTML = '<a class="treeselect-demo__slot" href="">Click!</a>'
+const className = '.treeselect-demo-single-select'
 
-  const domElement = document.querySelector('.treeselect-demo')
+export const runSingleSelectExample = (Treeselect) => {
+  const domElement = document.querySelector(className)
   const treeselect = new Treeselect({
     parentHtmlContainer: domElement,
-    value: [4, 7, 8],
+    value: 4,
     options: options,
-    listSlotHtmlComponent: slot
+    isSingleSelect: true,
+    showTags: false
   })
 
   treeselect.srcElement.addEventListener('input', (e) => {
-    console.log('Selected value:', e.detail)
-  })
-
-  slot.addEventListener('click', (e) => {
-    e.preventDefault()
-    alert('Slot click!')
+    console.log('singleSelect: Selected value ', e.detail)
   })
 }
