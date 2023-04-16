@@ -4,7 +4,6 @@ import { runSlotExample } from '../app/examples/slot.js'
 import { runDisabledExample } from '../app/examples/disabled.js'
 import { runSingleSelectExample } from '../app/examples/singleSelect.js'
 
-
 const runDemo = (Treeselect) => {
   runDefaultExample(Treeselect)
   runSlotExample(Treeselect)
