@@ -28,8 +28,8 @@ import 'treeselectjs/dist/treeselectjs.css // use styles from treeselectjs
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.1.1/dist/react-treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.8.0/dist/treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.1.3/dist/react-treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.8.4/dist/treeselectjs.css" />
 ```
 
 Example
