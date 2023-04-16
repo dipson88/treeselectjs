@@ -143,7 +143,7 @@ const checkUncheckAllChildren = (
   flattedOptions: FlattedOptionType[]
 ) => {
   children.forEach((option) => {
-    option.disabled = !!disabled
+    option.disabled = !!disabled || !!option.disabled
     option.checked = !!checked && !option.disabled
     option.isPartialChecked = false
     const subChildren = getChildrenOptions(option, flattedOptions)

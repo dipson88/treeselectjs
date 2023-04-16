@@ -271,7 +271,7 @@ const Kt = (l, e, t) => {
   l.checked = !1, l.isPartialChecked = !1;
 }, gt = ({ checked: l, disabled: e }, t, s) => {
   t.forEach((i) => {
-    i.disabled = !!e, i.checked = !!l && !i.disabled, i.isPartialChecked = !1;
+    i.disabled = !!e || !!i.disabled, i.checked = !!l && !i.disabled, i.isPartialChecked = !1;
     const o = ut(i, s);
     gt({ checked: l, disabled: e }, o, s);
   });
