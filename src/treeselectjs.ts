@@ -11,11 +11,20 @@ import {
   FlattedOptionType,
   IconsType,
   SelectedNodesType,
-  DirectionType
+  DirectionType,
+  ValueType,
+  ValueInputType
 } from './treeselectTypes'
 import { getDefaultIcons } from './svgIcons'
 
-export { type ValueOptionType, type OptionType, type DirectionType, type IconsType, type ITreeselectParams }
+export {
+  type ValueType,
+  type ValueInputType,
+  type OptionType,
+  type DirectionType,
+  type IconsType,
+  type ITreeselectParams
+}
 
 const validateProps = ({
   parentHtmlContainer,
@@ -48,7 +57,7 @@ const validateProps = ({
 
 const getOnlyIds = (nodes: FlattedOptionType[]) => nodes.map((node) => node.id)
 
-const getDefaultValue = (value: ValueOptionType[] | ValueOptionType | undefined) => {
+const getDefaultValue = (value: ValueInputType) => {
   if (!value) {
     return []
   }
@@ -56,11 +65,11 @@ const getDefaultValue = (value: ValueOptionType[] | ValueOptionType | undefined)
   return Array.isArray(value) ? value : [value]
 }
 
-const getResultValue = (value: ValueOptionType[], isSingleSelect: boolean) => {
+const getResultValue = (value: ValueOptionType[], isSingleSelect: boolean): ValueType => {
   if (isSingleSelect) {
     const [firstItem] = value
 
-    return firstItem
+    return firstItem ?? null
   }
 
   return value
@@ -69,7 +78,7 @@ const getResultValue = (value: ValueOptionType[], isSingleSelect: boolean) => {
 export default class Treeselect implements ITreeselect {
   // Props
   parentHtmlContainer: HTMLElement
-  value: ValueOptionType[] | ValueOptionType
+  value: ValueType
   options: OptionType[]
   openLevel: number
   appendToBody: boolean
@@ -93,9 +102,9 @@ export default class Treeselect implements ITreeselect {
   expandSelected: boolean
   saveScrollPosition: boolean
   iconElements: IconsType
-  inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
-  openCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
-  closeCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
+  inputCallback: ((value: ValueType) => void) | undefined
+  openCallback: ((value: ValueType) => void) | undefined
+  closeCallback: ((value: ValueType) => void) | undefined
   nameChangeCallback: ((name: string) => void) | undefined
 
   // InnerState
@@ -203,10 +212,22 @@ export default class Treeselect implements ITreeselect {
   }
 
   mount() {
+    // We need to revalidate props if user call mount method
+    // because user can change props after init
+    validateProps({
+      parentHtmlContainer: this.parentHtmlContainer,
+      value: this.value,
+      staticList: this.staticList,
+      appendToBody: this.appendToBody,
+      isSingleSelect: this.isSingleSelect
+    })
+    // We need to re-merge icons if icons were changed
+    // And user call mount method
+    this.iconElements = getDefaultIcons(this.iconElements)
     this.#initMount(this.value)
   }
 
-  #initMount(initValue?: ValueOptionType[] | ValueOptionType | undefined) {
+  #initMount(initValue?: ValueInputType) {
     this.destroy()
 
     const { container, list, input } = this.#createTreeselect()
@@ -233,7 +254,7 @@ export default class Treeselect implements ITreeselect {
     this.updateValue(initValue ?? this.value)
   }
 
-  updateValue(newValue: ValueOptionType[] | ValueOptionType) {
+  updateValue(newValue: ValueInputType) {
     const list = this.#treeselectList
 
     if (list) {
