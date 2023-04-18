@@ -1,5 +1,9 @@
 export type ValueOptionType = string | number
 
+export type ValueType = ValueOptionType[] | ValueOptionType | null
+
+export type ValueInputType = ValueOptionType[] | ValueOptionType | null | undefined
+
 export type OptionType = {
   value: ValueOptionType
   name: string
@@ -12,7 +16,7 @@ export type DirectionType = 'auto' | 'top' | 'bottom'
 
 export interface ITreeselect {
   parentHtmlContainer: HTMLElement
-  value: ValueOptionType[] | ValueOptionType
+  value: ValueType
   options: OptionType[]
   openLevel: number
   appendToBody: boolean
@@ -41,12 +45,12 @@ export interface ITreeselect {
   isListOpened: boolean
   selectedName: string
   srcElement: HTMLElement | null
-  inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
-  openCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
-  closeCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined
+  inputCallback: ((value: ValueType) => void) | undefined
+  openCallback: ((value: ValueType) => void) | undefined
+  closeCallback: ((value: ValueType) => void) | undefined
   nameChangeCallback: ((name: string) => void) | undefined
   mount: () => void
-  updateValue: (newValue: ValueOptionType[] | ValueOptionType) => void
+  updateValue: (newValue: ValueInputType) => void
   destroy: () => void
   focus: () => void
   toggleOpenClose: () => void
@@ -54,7 +58,7 @@ export interface ITreeselect {
 
 export interface ITreeselectParams {
   parentHtmlContainer: HTMLElement
-  value?: ValueOptionType[] | ValueOptionType
+  value?: ValueInputType
   options?: OptionType[]
   openLevel?: number
   appendToBody?: boolean
@@ -78,9 +82,9 @@ export interface ITreeselectParams {
   expandSelected?: boolean
   saveScrollPosition?: boolean
   iconElements?: Partial<IconsType>
-  inputCallback?: (value: ValueOptionType[] | ValueOptionType) => void
-  openCallback?: (value: ValueOptionType[] | ValueOptionType) => void
-  closeCallback?: (value: ValueOptionType[] | ValueOptionType) => void
+  inputCallback?: (value: ValueType) => void
+  openCallback?: (value: ValueType) => void
+  closeCallback?: (value: ValueType) => void
   nameChangeCallback?: (name: string) => void
 }
 

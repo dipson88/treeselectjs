@@ -13,7 +13,7 @@ export declare type IconsType = {
 
 declare interface ITreeselect {
     parentHtmlContainer: HTMLElement;
-    value: ValueOptionType[] | ValueOptionType;
+    value: ValueType;
     options: OptionType[];
     openLevel: number;
     appendToBody: boolean;
@@ -42,12 +42,12 @@ declare interface ITreeselect {
     isListOpened: boolean;
     selectedName: string;
     srcElement: HTMLElement | null;
-    inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined;
-    openCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined;
-    closeCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined;
+    inputCallback: ((value: ValueType) => void) | undefined;
+    openCallback: ((value: ValueType) => void) | undefined;
+    closeCallback: ((value: ValueType) => void) | undefined;
     nameChangeCallback: ((name: string) => void) | undefined;
     mount: () => void;
-    updateValue: (newValue: ValueOptionType[] | ValueOptionType) => void;
+    updateValue: (newValue: ValueInputType) => void;
     destroy: () => void;
     focus: () => void;
     toggleOpenClose: () => void;
@@ -55,7 +55,7 @@ declare interface ITreeselect {
 
 export declare interface ITreeselectParams {
     parentHtmlContainer: HTMLElement;
-    value?: ValueOptionType[] | ValueOptionType;
+    value?: ValueInputType;
     options?: OptionType[];
     openLevel?: number;
     appendToBody?: boolean;
@@ -79,9 +79,9 @@ export declare interface ITreeselectParams {
     expandSelected?: boolean;
     saveScrollPosition?: boolean;
     iconElements?: Partial<IconsType>;
-    inputCallback?: (value: ValueOptionType[] | ValueOptionType) => void;
-    openCallback?: (value: ValueOptionType[] | ValueOptionType) => void;
-    closeCallback?: (value: ValueOptionType[] | ValueOptionType) => void;
+    inputCallback?: (value: ValueType) => void;
+    openCallback?: (value: ValueType) => void;
+    closeCallback?: (value: ValueType) => void;
     nameChangeCallback?: (name: string) => void;
 }
 
@@ -96,7 +96,7 @@ export declare type OptionType = {
 declare class Treeselect implements ITreeselect {
     #private;
     parentHtmlContainer: HTMLElement;
-    value: ValueOptionType[] | ValueOptionType;
+    value: ValueType;
     options: OptionType[];
     openLevel: number;
     appendToBody: boolean;
@@ -120,9 +120,9 @@ declare class Treeselect implements ITreeselect {
     expandSelected: boolean;
     saveScrollPosition: boolean;
     iconElements: IconsType;
-    inputCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined;
-    openCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined;
-    closeCallback: ((value: ValueOptionType[] | ValueOptionType) => void) | undefined;
+    inputCallback: ((value: ValueType) => void) | undefined;
+    openCallback: ((value: ValueType) => void) | undefined;
+    closeCallback: ((value: ValueType) => void) | undefined;
     nameChangeCallback: ((name: string) => void) | undefined;
     ungroupedValue: ValueOptionType[];
     groupedValue: ValueOptionType[];
@@ -131,7 +131,7 @@ declare class Treeselect implements ITreeselect {
     srcElement: HTMLElement | null;
     constructor({ parentHtmlContainer, value, options, openLevel, appendToBody, alwaysOpen, showTags, tagsCountText, clearable, searchable, placeholder, grouped, isGroupedValue, listSlotHtmlComponent, disabled, emptyText, staticList, id, isSingleSelect, showCount, disabledBranchNode, direction, expandSelected, saveScrollPosition, iconElements, inputCallback, openCallback, closeCallback, nameChangeCallback }: ITreeselectParams);
     mount(): void;
-    updateValue(newValue: ValueOptionType[] | ValueOptionType): void;
+    updateValue(newValue: ValueInputType): void;
     destroy(): void;
     focus(): void;
     toggleOpenClose(): void;
@@ -142,6 +142,10 @@ declare class Treeselect implements ITreeselect {
 }
 export default Treeselect;
 
-export declare type ValueOptionType = string | number;
+export declare type ValueInputType = ValueOptionType[] | ValueOptionType | null | undefined;
+
+declare type ValueOptionType = string | number;
+
+export declare type ValueType = ValueOptionType[] | ValueOptionType | null;
 
 export { }
