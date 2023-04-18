@@ -203,6 +203,9 @@ export default class Treeselect implements ITreeselect {
   }
 
   mount() {
+    // We need to re-merge icons if icons were changed
+    // And user call mount method
+    this.iconElements = getDefaultIcons(this.iconElements)
     this.#initMount(this.value)
   }
 
