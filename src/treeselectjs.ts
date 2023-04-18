@@ -642,7 +642,6 @@ export default class Treeselect implements ITreeselect {
 
   // Emits
   #emitInput() {
-    console.log('emit input', this.value)
     this.srcElement?.dispatchEvent(new CustomEvent('input', { detail: this.value }))
 
     if (this.inputCallback) {

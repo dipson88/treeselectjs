@@ -32,7 +32,7 @@ const At = {
     e[t] || (e[t] = At[t]);
   }), e;
 }, Qs = (l) => l.reduce((e, { name: t }, s) => (e += t, s < l.length - 1 && (e += ", "), e), "");
-var A, v, I, E, he, Pt, H, U, ue, Bt, pe, Vt, G, z, T, D, me, Dt, fe, It, Ce, Ht, be, Gt, ge, Mt, we, Ft, ke, qt, ve, jt, Ee, $t, Le, Wt, ye, Rt, xe, Ut, Se, zt, _e, Yt, Ae, Kt, Te, Xt, Y, bt;
+var A, E, I, v, he, Pt, H, U, ue, Bt, pe, Vt, G, z, T, D, me, Dt, fe, It, Ce, Ht, be, Gt, ge, Mt, we, Ft, ke, qt, Ee, jt, ve, $t, Le, Wt, ye, Rt, xe, Ut, Se, zt, _e, Yt, Ae, Kt, Te, Xt, Y, bt;
 class ei {
   constructor({
     value: e,
@@ -69,8 +69,8 @@ class ei {
     r(this, ge);
     r(this, we);
     r(this, ke);
-    r(this, ve);
     r(this, Ee);
+    r(this, ve);
     r(this, Le);
     r(this, ye);
     r(this, xe);
@@ -98,9 +98,9 @@ class ei {
     c(this, "srcElement");
     // PrivateInnerState
     r(this, A, void 0);
-    r(this, v, void 0);
-    r(this, I, void 0);
     r(this, E, void 0);
+    r(this, I, void 0);
+    r(this, v, void 0);
     // Callbacks
     c(this, "inputCallback");
     c(this, "searchCallback");
@@ -110,14 +110,14 @@ class ei {
     c(this, "focusCallback");
     c(this, "blurCallback");
     c(this, "nameChangeCallback");
-    this.value = e, this.showTags = t, this.tagsCountText = s, this.searchable = d, this.placeholder = u, this.clearable = i, this.isAlwaysOpened = o, this.disabled = f, this.isSingleSelect = C, this.id = b, this.iconElements = g, this.isOpened = !1, this.searchText = "", m(this, A, a(this, Ce, Ht).call(this)), m(this, v, a(this, Ee, $t).call(this)), m(this, I, a(this, xe, Ut).call(this)), m(this, E, null), this.inputCallback = w, this.searchCallback = k, this.openCallback = O, this.closeCallback = P, this.keydownCallback = R, this.focusCallback = ne, this.blurCallback = mt, this.nameChangeCallback = oe, this.srcElement = a(this, me, Dt).call(this, n(this, A), n(this, v), n(this, I)), a(this, he, Pt).call(this);
+    this.value = e, this.showTags = t, this.tagsCountText = s, this.searchable = d, this.placeholder = u, this.clearable = i, this.isAlwaysOpened = o, this.disabled = f, this.isSingleSelect = C, this.id = b, this.iconElements = g, this.isOpened = !1, this.searchText = "", m(this, A, a(this, Ce, Ht).call(this)), m(this, E, a(this, ve, $t).call(this)), m(this, I, a(this, xe, Ut).call(this)), m(this, v, null), this.inputCallback = w, this.searchCallback = k, this.openCallback = O, this.closeCallback = P, this.keydownCallback = R, this.focusCallback = ne, this.blurCallback = mt, this.nameChangeCallback = oe, this.srcElement = a(this, me, Dt).call(this, n(this, A), n(this, E), n(this, I)), a(this, he, Pt).call(this);
   }
   // Public methods
   focus() {
-    setTimeout(() => n(this, v).focus(), 0);
+    setTimeout(() => n(this, E).focus(), 0);
   }
   blur() {
-    this.isOpened && a(this, T, D).call(this), this.clearSearch(), n(this, v).blur();
+    this.isOpened && a(this, T, D).call(this), this.clearSearch(), n(this, E).blur();
   }
   updateValue(e) {
     this.value = e, a(this, H, U).call(this), a(this, G, z).call(this);
@@ -135,7 +135,7 @@ class ei {
     this.searchText = "", this.searchCallback(""), a(this, G, z).call(this);
   }
 }
-A = new WeakMap(), v = new WeakMap(), I = new WeakMap(), E = new WeakMap(), he = new WeakSet(), Pt = function() {
+A = new WeakMap(), E = new WeakMap(), I = new WeakMap(), v = new WeakMap(), he = new WeakSet(), Pt = function() {
   a(this, H, U).call(this), a(this, G, z).call(this), a(this, ue, Bt).call(this);
 }, H = new WeakSet(), U = function() {
   if (n(this, A).innerHTML = "", this.showTags) {
@@ -143,21 +143,21 @@ A = new WeakMap(), v = new WeakMap(), I = new WeakMap(), E = new WeakMap(), he =
     const e = Qs(this.value);
     this.nameChangeCallback(e);
   } else {
-    const e = a(this, ve, jt).call(this);
+    const e = a(this, Ee, jt).call(this);
     n(this, A).appendChild(e), this.nameChangeCallback(e.innerText);
   }
-  n(this, A).appendChild(n(this, v));
+  n(this, A).appendChild(n(this, E));
 }, ue = new WeakSet(), Bt = function() {
   const e = [];
   n(this, I).innerHTML = "", this.clearable && e.push(a(this, Se, zt).call(this)), this.isAlwaysOpened || e.push(a(this, Ae, Kt).call(this, this.isOpened)), e.length && n(this, I).append(...e);
 }, pe = new WeakSet(), Vt = function() {
-  if (!this.isAlwaysOpened && n(this, E)) {
+  if (!this.isAlwaysOpened && n(this, v)) {
     const e = this.isOpened ? this.iconElements.arrowUp : this.iconElements.arrowDown;
-    N(e, n(this, E));
+    N(e, n(this, v));
   }
 }, G = new WeakSet(), z = function() {
   var e;
-  (e = this.value) != null && e.length ? (n(this, v).removeAttribute("placeholder"), this.srcElement.classList.remove("treeselect-input--value-not-selected")) : (n(this, v).setAttribute("placeholder", this.placeholder), this.srcElement.classList.add("treeselect-input--value-not-selected")), this.searchable ? this.srcElement.classList.remove("treeselect-input--unsearchable") : this.srcElement.classList.add("treeselect-input--unsearchable"), this.isSingleSelect ? this.srcElement.classList.add("treeselect-input--is-single-select") : this.srcElement.classList.remove("treeselect-input--is-single-select"), n(this, v).value = this.searchText;
+  (e = this.value) != null && e.length ? (n(this, E).removeAttribute("placeholder"), this.srcElement.classList.remove("treeselect-input--value-not-selected")) : (n(this, E).setAttribute("placeholder", this.placeholder), this.srcElement.classList.add("treeselect-input--value-not-selected")), this.searchable ? this.srcElement.classList.remove("treeselect-input--unsearchable") : this.srcElement.classList.add("treeselect-input--unsearchable"), this.isSingleSelect ? this.srcElement.classList.add("treeselect-input--is-single-select") : this.srcElement.classList.remove("treeselect-input--is-single-select"), n(this, E).value = this.searchText;
 }, T = new WeakSet(), D = function() {
   this.isOpened = !this.isOpened, a(this, pe, Vt).call(this), this.isOpened ? this.openCallback() : this.closeCallback();
 }, me = new WeakSet(), Dt = function(e, t, s) {
@@ -183,13 +183,13 @@ A = new WeakMap(), v = new WeakMap(), I = new WeakMap(), E = new WeakMap(), he =
 }, ke = new WeakSet(), qt = function() {
   const e = document.createElement("span");
   return e.classList.add("treeselect-input__tags-cross"), N(this.iconElements.cross, e), e;
-}, ve = new WeakSet(), jt = function() {
+}, Ee = new WeakSet(), jt = function() {
   const e = document.createElement("span");
   if (e.classList.add("treeselect-input__tags-count"), !this.value.length)
     return e.textContent = "", e.setAttribute("title", ""), e;
   const t = this.value.length === 1 ? this.value[0].name : `${this.value.length} ${this.tagsCountText}`;
   return e.textContent = t, e.setAttribute("title", t), e;
-}, Ee = new WeakSet(), $t = function() {
+}, ve = new WeakSet(), $t = function() {
   const e = document.createElement("input");
   return e.classList.add("treeselect-input__edit"), this.id && e.setAttribute("id", this.id), (!this.searchable || this.disabled) && e.setAttribute("readonly", "readonly"), this.disabled && e.setAttribute("tabindex", "-1"), e.addEventListener("keydown", (t) => a(this, Le, Wt).call(this, t)), e.addEventListener("input", (t) => a(this, ye, Rt).call(this, t, e)), e;
 }, Le = new WeakSet(), Wt = function(e) {
@@ -218,9 +218,9 @@ A = new WeakMap(), v = new WeakMap(), I = new WeakMap(), E = new WeakMap(), he =
 }, _e = new WeakSet(), Yt = function(e) {
   e.preventDefault(), e.stopPropagation(), (this.searchText.length || this.value.length) && this.clear(), this.focus();
 }, Ae = new WeakSet(), Kt = function(e) {
-  m(this, E, document.createElement("span")), n(this, E).classList.add("treeselect-input__arrow");
+  m(this, v, document.createElement("span")), n(this, v).classList.add("treeselect-input__arrow");
   const t = e ? this.iconElements.arrowUp : this.iconElements.arrowDown;
-  return N(t, n(this, E)), n(this, E).addEventListener("mousedown", (s) => a(this, Te, Xt).call(this, s)), n(this, E);
+  return N(t, n(this, v)), n(this, v).addEventListener("mousedown", (s) => a(this, Te, Xt).call(this, s)), n(this, v);
 }, Te = new WeakSet(), Xt = function(e) {
   e.stopPropagation(), e.preventDefault(), this.focus(), a(this, T, D).call(this);
 }, Y = new WeakSet(), bt = function() {
@@ -385,13 +385,13 @@ const Jt = (l, e, t) => {
 }, ki = (l, e) => {
   const t = l.some((i) => !i.hidden), s = e.querySelector(".treeselect-list__empty");
   t ? s.classList.add("treeselect-list__empty--hidden") : s.classList.remove("treeselect-list__empty--hidden");
-}, _ = (l) => l.parentNode.parentNode, Nt = (l, e) => e.find((t) => t.id.toString() === l), vi = (l) => _(l).querySelector(".treeselect-list__item-icon"), Ei = (l, e) => {
+}, _ = (l) => l.parentNode.parentNode, Nt = (l, e) => e.find((t) => t.id.toString() === l), Ei = (l) => _(l).querySelector(".treeselect-list__item-icon"), vi = (l, e) => {
   e && Object.keys(e).forEach((t) => {
     const s = e[t];
     typeof s == "string" && l.setAttribute(t, s);
   });
 };
-var M, B, y, K, Ne, ns, Oe, os, Pe, as, Be, rs, Ve, cs, De, ds, X, wt, Ie, hs, He, us, Ge, ps, J, kt, Me, ms, Fe, fs, qe, Cs, je, bs, $e, gs, We, ws, Re, ks, Ue, vs, ze, Es, Ye, Ls, Ke, ys, Z, vt, Q, Et, Xe, xs;
+var M, B, y, K, Ne, ns, Oe, os, Pe, as, Be, rs, Ve, cs, De, ds, X, wt, Ie, hs, He, us, Ge, ps, J, kt, Me, ms, Fe, fs, qe, Cs, je, bs, $e, gs, We, ws, Re, ks, Ue, Es, ze, vs, Ye, Ls, Ke, ys, Z, Et, Q, vt, Xe, xs;
 class Li {
   constructor({
     options: e,
@@ -475,7 +475,7 @@ class Li {
       n(this, y),
       this.expandSelected,
       n(this, K)
-    ), m(this, K, !1), a(this, Q, Et).call(this);
+    ), m(this, K, !1), a(this, Q, vt).call(this);
   }
   updateSearchValue(e) {
     if (e === this.searchText)
@@ -592,15 +592,15 @@ M = new WeakMap(), B = new WeakMap(), y = new WeakMap(), K = new WeakMap(), Ne =
     const d = a(this, $e, gs).call(this);
     s.appendChild(d), s.classList.add("treeselect-list__item--group");
   }
-  const i = a(this, Re, ks).call(this, e), o = a(this, Ue, vs).call(this, e, t);
+  const i = a(this, Re, ks).call(this, e), o = a(this, Ue, Es).call(this, e, t);
   return s.append(i, o), s;
 }, Me = new WeakSet(), ms = function(e) {
   const t = document.createElement("div");
-  return Ei(t, e.htmlAttr), t.setAttribute("tabindex", "-1"), t.setAttribute("title", e.name), t.classList.add("treeselect-list__item"), t.addEventListener("mouseover", () => a(this, Fe, fs).call(this, t), !0), t.addEventListener("mouseout", () => a(this, qe, Cs).call(this, t), !0), t.addEventListener("mousedown", (s) => a(this, je, bs).call(this, s, e)), t;
+  return vi(t, e.htmlAttr), t.setAttribute("tabindex", "-1"), t.setAttribute("title", e.name), t.classList.add("treeselect-list__item"), t.addEventListener("mouseover", () => a(this, Fe, fs).call(this, t), !0), t.addEventListener("mouseout", () => a(this, qe, Cs).call(this, t), !0), t.addEventListener("mousedown", (s) => a(this, je, bs).call(this, s, e)), t;
 }, Fe = new WeakSet(), fs = function(e) {
-  n(this, B) && a(this, Z, vt).call(this, !0, e);
+  n(this, B) && a(this, Z, Et).call(this, !0, e);
 }, qe = new WeakSet(), Cs = function(e) {
-  n(this, B) && (a(this, Z, vt).call(this, !1, e), m(this, M, e));
+  n(this, B) && (a(this, Z, Et).call(this, !1, e), m(this, M, e));
 }, je = new WeakSet(), bs = function(e, t) {
   var o;
   if (e.preventDefault(), e.stopPropagation(), (o = this.flattedOptions.find((d) => d.id === t.value)) == null ? void 0 : o.disabled)
@@ -619,21 +619,21 @@ M = new WeakMap(), B = new WeakMap(), y = new WeakMap(), K = new WeakMap(), Ne =
   s.classList.add("treeselect-list__item-checkbox-icon"), s.innerHTML = "";
   const i = document.createElement("input");
   return i.setAttribute("tabindex", "-1"), i.setAttribute("type", "checkbox"), i.setAttribute("input-id", e.value.toString()), i.classList.add("treeselect-list__item-checkbox"), t.append(s, i), t;
-}, Ue = new WeakSet(), vs = function(e, t) {
+}, Ue = new WeakSet(), Es = function(e, t) {
   const s = document.createElement("label");
   if (s.textContent = e.name, s.classList.add("treeselect-list__item-label"), t && this.showCount) {
-    const i = a(this, ze, Es).call(this, e);
+    const i = a(this, ze, vs).call(this, e);
     s.appendChild(i);
   }
   return s;
-}, ze = new WeakSet(), Es = function(e) {
+}, ze = new WeakSet(), vs = function(e) {
   const t = document.createElement("span"), s = this.flattedOptions.filter((i) => i.childOf === e.value);
   return t.textContent = `(${s.length})`, t.classList.add("treeselect-list__item-label-counter"), t;
 }, Ye = new WeakSet(), Ls = function(e, t) {
   const s = this.flattedOptions.find((i) => i.id === t.value);
   if (s) {
     if (s != null && s.isGroup && this.disabledBranchNode) {
-      const i = vi(e);
+      const i = Ei(e);
       i == null || i.dispatchEvent(new Event("mousedown"));
       return;
     }
@@ -653,18 +653,18 @@ M = new WeakMap(), B = new WeakMap(), y = new WeakMap(), K = new WeakMap(), Ne =
   var o, d;
   const t = (d = (o = e.target) == null ? void 0 : o.parentNode) == null ? void 0 : d.querySelector("[input-id]"), s = (t == null ? void 0 : t.getAttribute("input-id")) ?? null, i = Nt(s, this.flattedOptions);
   i && (i.isClosed = !i.isClosed, pt(this.flattedOptions, i), ae(this.flattedOptions, this.srcElement, this.iconElements, n(this, y)), this.arrowClickCallback());
-}, Z = new WeakSet(), vt = function(e, t) {
+}, Z = new WeakSet(), Et = function(e, t) {
   const s = "treeselect-list__item--focused";
   if (e) {
     const i = Array.from(this.srcElement.querySelectorAll(`.${s}`));
     i.length && i.forEach((o) => o.classList.remove(s)), t.classList.add(s);
   } else
     t.classList.remove(s);
-}, Q = new WeakSet(), Et = function() {
+}, Q = new WeakSet(), vt = function() {
   const { ungroupedNodes: e, groupedNodes: t } = oi(this.flattedOptions);
   this.selectedNodes = { nodes: e, groupedNodes: t };
 }, Xe = new WeakSet(), xs = function() {
-  a(this, Q, Et).call(this), this.inputCallback(this.selectedNodes), this.value = this.selectedNodes.nodes.map((e) => e.id);
+  a(this, Q, vt).call(this), this.inputCallback(this.selectedNodes), this.value = this.selectedNodes.nodes.map((e) => e.id);
 };
 const Ot = ({
   parentHtmlContainer: l,
@@ -964,7 +964,7 @@ h = new WeakMap(), p = new WeakMap(), F = new WeakMap(), ee = new WeakMap(), q =
   this.saveScrollPosition && e ? (s = n(this, h)) == null || s.srcElement.scroll(0, n(this, ee)) : (i = n(this, h)) == null || i.focusFirstListElement();
 }, le = new WeakSet(), St = function() {
   var e;
-  console.log("emit input", this.value), (e = this.srcElement) == null || e.dispatchEvent(new CustomEvent("input", { detail: this.value })), this.inputCallback && this.inputCallback(this.value);
+  (e = this.srcElement) == null || e.dispatchEvent(new CustomEvent("input", { detail: this.value })), this.inputCallback && this.inputCallback(this.value);
 }, ct = new WeakSet(), Gs = function() {
   var e;
   (e = this.srcElement) == null || e.dispatchEvent(new CustomEvent("name-change", { detail: this.selectedName })), this.nameChangeCallback && this.nameChangeCallback(this.selectedName);
