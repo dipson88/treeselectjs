@@ -32,10 +32,10 @@ const App = () => {
   }
 
   const onChangeOptions = () => {
-    setOptions(prev => [...prev, { name: 'test3', value: 3, children: [] }])
+    setOptions((prev) => [...prev, { name: 'test3', value: 3, children: [] }])
   }
 
-  const onInput = (value: string | number | (string | number)[]) => {
+  const onInput = (value: string | number | (string | number)[] | null) => {
     console.log('onInput', value)
   }
 

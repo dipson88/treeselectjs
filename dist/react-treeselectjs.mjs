@@ -645,7 +645,7 @@ const vr = W.Fragment, Se = W.jsx, pr = W.jsxs, hr = ["value", "id", "children"]
     }), m && c.current.mount();
   }
   return Z(() => {
-    c.current && JSON.stringify(c.current.value) !== JSON.stringify(s.value) && c.current.updateValue(s.value ?? []);
+    c.current && JSON.stringify(c.current.value) !== JSON.stringify(s.value) && c.current.updateValue(s.value);
   }, [s.value]), Z(() => {
     var h;
     (((h = c.current) == null ? void 0 : h.id) || s.id) && c.current && (c.current.id = s.id ?? "", c.current.mount());

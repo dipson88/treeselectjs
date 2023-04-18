@@ -9,8 +9,8 @@ A multi-select js component with nested options.
 - Typescript support
 
 Build data:
-- react-treeselectjs.mjs  22.30 kB │ gzip: 6.72 kB
-- react-treeselectjs.umd.js  14.69 kB │ gzip: 5.76 kB
+- react-treeselectjs.mjs  22.42 kB │ gzip: 6.77 kB
+- react-treeselectjs.umd.js  14.78 kB │ gzip: 5.79 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
@@ -28,8 +28,8 @@ import 'treeselectjs/dist/treeselectjs.css // use styles from treeselectjs
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.1.3/dist/react-treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.8.4/dist/treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.1.4/dist/react-treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.8.5/dist/treeselectjs.css" />
 ```
 
 Example
@@ -85,7 +85,7 @@ const options = [
 
 function App() {
   // Also for type, you can import { TreeselectValue } from 'react-treeselectjs'
-  const onInput = (value: string | number | (string | number)[]) => {
+  const onInput = (value: string | number | (string | number)[] | null) => {
     console.log(value)
   }
 

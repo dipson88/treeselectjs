@@ -1,12 +1,12 @@
 import React, { FC, PropsWithChildren, useEffect, useRef } from 'react'
-import TreeselectJS, { ValueOptionType, ITreeselectParams } from 'treeselectjs'
+import TreeselectJS, { ValueType, ITreeselectParams } from 'treeselectjs'
 
-export type TreeselectValue = ValueOptionType | ValueOptionType[]
+export type TreeselectValue = ValueType
 
 interface TreeselectReactParams extends ITreeselectParams {
-  onInput?: (value: TreeselectValue) => void
-  onOpen?: (value: TreeselectValue) => void
-  onClose?: (value: TreeselectValue) => void
+  onInput?: (value: ValueType) => void
+  onOpen?: (value: ValueType) => void
+  onClose?: (value: ValueType) => void
   onNameChange?: (name: string) => void
 }
 
@@ -51,7 +51,7 @@ const Treeselect: FC<PropsWithChildren<TreeselectProps>> = (props) => {
       const isValueChanged = JSON.stringify(treeselect.current.value) !== JSON.stringify(props.value)
 
       if (isValueChanged) {
-        treeselect.current.updateValue(props.value ?? []) // TODO do we need a single select?
+        treeselect.current.updateValue(props.value)
       }
     }
   }, [props.value])

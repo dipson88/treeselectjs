@@ -1,10 +1,10 @@
 import { FC, PropsWithChildren } from 'react';
-import { ValueOptionType, ITreeselectParams } from 'treeselectjs';
-export type TreeselectValue = ValueOptionType | ValueOptionType[];
+import { ValueType, ITreeselectParams } from 'treeselectjs';
+export type TreeselectValue = ValueType;
 interface TreeselectReactParams extends ITreeselectParams {
-    onInput?: (value: TreeselectValue) => void;
-    onOpen?: (value: TreeselectValue) => void;
-    onClose?: (value: TreeselectValue) => void;
+    onInput?: (value: ValueType) => void;
+    onOpen?: (value: ValueType) => void;
+    onClose?: (value: ValueType) => void;
     onNameChange?: (name: string) => void;
 }
 export type TreeselectProps = Omit<TreeselectReactParams, 'parentHtmlContainer' | 'listSlotHtmlComponent' | 'inputCallback' | 'openCallback' | 'closeCallback' | 'nameChangeCallback'>;
