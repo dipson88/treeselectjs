@@ -1,5 +1,5 @@
 import Treeselect from './Treeselect'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import 'treeselectjs/dist/treeselectjs.css'
 
 const App = () => {
@@ -27,17 +27,17 @@ const App = () => {
     setIsSingleSelect(true)
   }
 
-  const onNameChange = (name: string) => {
+  const onNameChange = useCallback((name: string) => {
     console.log('onNameChange', name)
-  }
+  }, [])
 
   const onChangeOptions = () => {
     setOptions((prev) => [...prev, { name: 'test3', value: 3, children: [] }])
   }
 
-  const onInput = (value: string | number | (string | number)[] | null) => {
+  const onInput = useCallback((value: string | number | (string | number)[] | null) => {
     console.log('onInput', value)
-  }
+  }, [])
 
   return (
     <div>

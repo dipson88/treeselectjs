@@ -9,8 +9,8 @@ A multi-select js component with nested options.
 - Typescript support
 
 Build data:
-- react-treeselectjs.mjs  22.42 kB │ gzip: 6.77 kB
-- react-treeselectjs.umd.js  14.78 kB │ gzip: 5.79 kB
+- react-treeselectjs.mjs  22.61 kB │ gzip: 6.83 kB
+- react-treeselectjs.umd.js  14.94 kB │ gzip: 5.85 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
@@ -28,12 +28,13 @@ import 'treeselectjs/dist/treeselectjs.css // use styles from treeselectjs
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.1.4/dist/react-treeselectjs.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.1.5/dist/react-treeselectjs.umd.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.8.5/dist/treeselectjs.css" />
 ```
 
 Example
 ```
+import React, { useCallback } from 'react'
 import Treeselect from 'react-treeselectjs'
 import 'treeselectjs/dist/treeselectjs.css'
 
@@ -84,10 +85,10 @@ const options = [
 ]
 
 function App() {
-  // Also for type, you can import { TreeselectValue } from 'react-treeselectjs'
-  const onInput = (value: string | number | (string | number)[] | null) => {
-    console.log(value)
-  }
+  // Also for value type, you can import { TreeselectValue } from 'react-treeselectjs'
+  const onInput = useCallback((value: string | number | (string | number)[] | null) => {
+    console.log('onInput', value)
+  }, [])
 
   return (
     <div>
