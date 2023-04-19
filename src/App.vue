@@ -69,7 +69,7 @@ export default defineComponent({
 
     const value = ref<number[]>([3])
 
-    // Also for value type, you can import { TreeselectValue } from 'react-treeselectjs'
+    // Also for value type, you can import { TreeselectValue } from 'vue-treeselectjs'
     const onInput = (value: string | number | (string | number)[] | null) => {
       console.log('onInput', value)
     }
