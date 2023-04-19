@@ -1,6 +1,6 @@
 {
   "name": "react-treeselectjs",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Treeselect React Component",
   "main": "./dist/react-treeselectjs.umd.js",
   "module": "./dist/react-treeselectjs.mjs",
@@ -40,7 +40,7 @@
   },
   "homepage": "https://github.com/dipson88/react-treeselectjs#readme",
   "dependencies": {
-    "treeselectjs": "^0.8.5"
+    "treeselectjs": "^0.8.6"
   },
   "devDependencies": {
     "@types/node": "^18.15.11",
