@@ -39,9 +39,10 @@ const updateListValue = (
   isSingleSelect: boolean,
   previousSingleSelectedValue: ValueOptionType[],
   expandSelected: boolean,
-  isFirstValueUpdate: boolean
+  isFirstValueUpdate: boolean,
+  isIndependentNodes: boolean
 ) => {
-  updateOptionsByValue(newValue, flattedOptions, isSingleSelect)
+  updateOptionsByValue(newValue, flattedOptions, isSingleSelect, isIndependentNodes)
 
   if (isFirstValueUpdate && expandSelected) {
     expandSelectedItems(flattedOptions)
@@ -222,6 +223,7 @@ export class TreeselectList implements ITreeselectList {
   showCount: boolean
   disabledBranchNode: boolean
   expandSelected: boolean
+  isIndependentNodes: boolean
   iconElements: IconsType
 
   // InnerState
@@ -253,6 +255,7 @@ export class TreeselectList implements ITreeselectList {
     showCount,
     disabledBranchNode,
     expandSelected,
+    isIndependentNodes,
     inputCallback,
     arrowClickCallback,
     mouseupCallback
@@ -266,12 +269,13 @@ export class TreeselectList implements ITreeselectList {
     this.showCount = showCount ?? false
     this.disabledBranchNode = disabledBranchNode ?? false
     this.expandSelected = expandSelected ?? false
+    this.isIndependentNodes = isIndependentNodes ?? false
     this.iconElements = iconElements
 
     this.searchText = ''
-    this.flattedOptions = getFlattedOptions(this.options, this.openLevel)
+    this.flattedOptions = getFlattedOptions(this.options, this.openLevel, this.isIndependentNodes)
     this.flattedOptionsBeforeSearch = this.flattedOptions
-    this.selectedNodes = { nodes: [], groupedNodes: [] }
+    this.selectedNodes = { nodes: [], groupedNodes: [], allNodes: [] }
     this.srcElement = this.#createSrcElement()
 
     this.inputCallback = inputCallback
@@ -293,7 +297,8 @@ export class TreeselectList implements ITreeselectList {
       this.isSingleSelect,
       this.#previousSingleSelectedValue,
       this.expandSelected,
-      this.#isFirstValueUpdate
+      this.#isFirstValueUpdate,
+      this.isIndependentNodes
     )
     this.#isFirstValueUpdate = false
     this.#updateSelectedNodes()
@@ -707,10 +712,10 @@ export class TreeselectList implements ITreeselectList {
       }
 
       this.#previousSingleSelectedValue = [flattedOption.id]
-      updateOptionsByValue([flattedOption.id], this.flattedOptions, this.isSingleSelect)
+      updateOptionsByValue([flattedOption.id], this.flattedOptions, this.isSingleSelect, this.isIndependentNodes)
     } else {
       flattedOption.checked = target.checked
-      const resultChecked = updateOptionByCheckState(flattedOption, this.flattedOptions)
+      const resultChecked = updateOptionByCheckState(flattedOption, this.flattedOptions, this.isIndependentNodes)
       target.checked = resultChecked
     }
 
@@ -749,8 +754,8 @@ export class TreeselectList implements ITreeselectList {
   }
 
   #updateSelectedNodes() {
-    const { ungroupedNodes, groupedNodes } = getCheckedOptions(this.flattedOptions)
-    this.selectedNodes = { nodes: ungroupedNodes, groupedNodes }
+    const { ungroupedNodes, groupedNodes, allNodes } = getCheckedOptions(this.flattedOptions)
+    this.selectedNodes = { nodes: ungroupedNodes, groupedNodes, allNodes }
   }
 
   // Emits

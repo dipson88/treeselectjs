@@ -4,7 +4,8 @@ import { getChildrenOptions } from './listOptionsHelper'
 export const updateOptionsByValue = (
   newValue: ValueOptionType[],
   flattedOptions: FlattedOptionType[],
-  isSingleSelect: boolean
+  isSingleSelect: boolean,
+  isIndependentNodes: boolean
 ) => {
   uncheckedAllFlattedOptions(flattedOptions)
   const optionsToCheck = flattedOptions.filter((option) => !option.disabled && newValue.some((id) => id === option.id))
@@ -18,19 +19,26 @@ export const updateOptionsByValue = (
   optionsToCheck.forEach((option) => {
     option.checked = true
     // option.isPartialChecked = false
-    const resultChecked = updateOptionByCheckState(option, flattedOptions)
+    const resultChecked = updateOptionByCheckState(option, flattedOptions, isIndependentNodes)
     option.checked = resultChecked
   })
 }
 
 export const updateOptionByCheckState = (
   { id, checked }: Partial<FlattedOptionType>,
-  flattedOptions: FlattedOptionType[]
+  flattedOptions: FlattedOptionType[],
+  isIndependentNodes: boolean
 ) => {
   const currentOption = flattedOptions.find((option) => option.id === id)
 
   if (!currentOption) {
     return false
+  }
+
+  if (isIndependentNodes) {
+    currentOption.checked = currentOption.disabled ? false : !!checked
+
+    return currentOption.checked
   }
 
   const resultCheckedState = updateFlattedOptionStateWithChildren(!!checked, currentOption, flattedOptions)

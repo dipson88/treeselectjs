@@ -244,6 +244,67 @@
           </pre>
         </div>
       </section>
+
+      <hr />
+      <!-- Independent Nodes section -->
+      <section class="section">
+        <p class="section__title">Treeselect with independent nodes prop</p>
+        <div class="section__data">
+          <div class="section__select treeselect-demo-independent-nodes"></div>
+          <pre class="section__props">
+<code data-language="javascript">
+  <b>parentHtmlContainer:</b> document.querySelector(className),
+  <b>value:</b> [1, 4, 7, 8],
+  <b>isIndependentNodes:</b> true,
+  <b>options:</b> [
+    {
+      name: 'England',
+      value: 1,
+      children: [
+        {
+          name: 'London',
+          value: 2,
+          children: [
+            {
+              name: 'Chelsea',
+              value: 3,
+              children: [],
+            },
+            {
+              name: 'West End',
+              value: 4,
+              children: []
+            }
+          ]
+        },
+        {
+          name: 'Brighton',
+          value: 5,
+          children: []
+        }
+      ]
+    },
+    {
+      name: 'France',
+      value: 6,
+      children: [
+        {
+          name: 'Paris',
+          value: 7,
+          children: []
+        },
+        {
+          name: 'Lyon',
+          value: 8,
+          children: []
+        }
+      ]
+    }
+  ]
+</code>
+          </pre>
+        </div>
+      </section>
     </main>
   </body>
 </html>
