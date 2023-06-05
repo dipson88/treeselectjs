@@ -1,16 +1,16 @@
-var Js = Object.defineProperty;
-var Zs = (l, e, t) => e in l ? Js(l, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : l[e] = t;
-var c = (l, e, t) => (Zs(l, typeof e != "symbol" ? e + "" : e, t), t), ft = (l, e, t) => {
+var ii = Object.defineProperty;
+var li = (l, e, t) => e in l ? ii(l, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : l[e] = t;
+var c = (l, e, t) => (li(l, typeof e != "symbol" ? e + "" : e, t), t), bt = (l, e, t) => {
   if (!e.has(l))
     throw TypeError("Cannot " + t);
 };
-var n = (l, e, t) => (ft(l, e, "read from private field"), t ? t.call(l) : e.get(l)), r = (l, e, t) => {
+var n = (l, e, t) => (bt(l, e, "read from private field"), t ? t.call(l) : e.get(l)), r = (l, e, t) => {
   if (e.has(l))
     throw TypeError("Cannot add the same private member more than once");
   e instanceof WeakSet ? e.add(l) : e.set(l, t);
-}, m = (l, e, t, s) => (ft(l, e, "write to private field"), s ? s.call(l, t) : e.set(l, t), t);
-var a = (l, e, t) => (ft(l, e, "access private method"), t);
-const At = {
+}, m = (l, e, t, s) => (bt(l, e, "write to private field"), s ? s.call(l, t) : e.set(l, t), t);
+var o = (l, e, t) => (bt(l, e, "access private method"), t);
+const Ot = {
   arrowUp: '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>',
   arrowDown: '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
   arrowRight: '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>',
@@ -19,50 +19,49 @@ const At = {
   cross: '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>',
   check: '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>',
   partialCheck: '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>'
-}, N = (l, e) => {
+}, O = (l, e) => {
   if (e.innerHTML = "", typeof l == "string")
     e.innerHTML = l;
   else {
     const t = l.cloneNode(!0);
     e.appendChild(t);
   }
-}, Tt = (l) => {
+}, It = (l) => {
   const e = l ? { ...l } : {};
-  return Object.keys(At).forEach((t) => {
-    e[t] || (e[t] = At[t]);
+  return Object.keys(Ot).forEach((t) => {
+    e[t] || (e[t] = Ot[t]);
   }), e;
-}, Qs = (l) => l.reduce((e, { name: t }, s) => (e += t, s < l.length - 1 && (e += ", "), e), "");
-var A, E, I, v, he, Pt, H, U, ue, Bt, pe, Vt, G, z, T, D, me, Dt, fe, It, Ce, Ht, be, Gt, ge, Mt, we, Ft, ke, qt, Ee, jt, ve, $t, Le, Wt, ye, Rt, xe, Ut, Se, zt, _e, Yt, Ae, Kt, Te, Xt, Y, bt;
-class ei {
+}, ni = (l) => l.reduce((e, { name: t }, s) => (e += t, s < l.length - 1 && (e += ", "), e), "");
+var T, E, D, v, ue, Vt, H, R, pe, Dt, me, Ht, G, U, N, V, fe, Gt, Ce, Mt, be, Ft, ge, qt, we, jt, ke, $t, Ee, Wt, ve, Rt, Le, Ut, ye, zt, xe, Yt, Se, Kt, _e, Xt, Ae, Jt, Te, Zt, Ne, Qt, z, gt;
+class ai {
   constructor({
     value: e,
     showTags: t,
     tagsCountText: s,
     clearable: i,
-    isAlwaysOpened: o,
+    isAlwaysOpened: a,
     searchable: d,
-    placeholder: u,
+    placeholder: p,
     disabled: f,
     isSingleSelect: C,
     id: b,
     iconElements: g,
     inputCallback: w,
     searchCallback: k,
-    openCallback: O,
-    closeCallback: P,
-    keydownCallback: R,
-    focusCallback: ne,
-    blurCallback: mt,
+    openCallback: y,
+    closeCallback: I,
+    keydownCallback: W,
+    focusCallback: ae,
+    blurCallback: Ct,
     nameChangeCallback: oe
   }) {
     // Private methods
-    r(this, he);
-    r(this, H);
     r(this, ue);
+    r(this, H);
     r(this, pe);
-    r(this, G);
-    r(this, T);
     r(this, me);
+    r(this, G);
+    r(this, N);
     r(this, fe);
     r(this, Ce);
     r(this, be);
@@ -78,8 +77,9 @@ class ei {
     r(this, _e);
     r(this, Ae);
     r(this, Te);
+    r(this, Ne);
     // Emits
-    r(this, Y);
+    r(this, z);
     // Props
     c(this, "value");
     c(this, "showTags");
@@ -97,9 +97,9 @@ class ei {
     c(this, "searchText");
     c(this, "srcElement");
     // PrivateInnerState
-    r(this, A, void 0);
+    r(this, T, void 0);
     r(this, E, void 0);
-    r(this, I, void 0);
+    r(this, D, void 0);
     r(this, v, void 0);
     // Callbacks
     c(this, "inputCallback");
@@ -110,93 +110,93 @@ class ei {
     c(this, "focusCallback");
     c(this, "blurCallback");
     c(this, "nameChangeCallback");
-    this.value = e, this.showTags = t, this.tagsCountText = s, this.searchable = d, this.placeholder = u, this.clearable = i, this.isAlwaysOpened = o, this.disabled = f, this.isSingleSelect = C, this.id = b, this.iconElements = g, this.isOpened = !1, this.searchText = "", m(this, A, a(this, Ce, Ht).call(this)), m(this, E, a(this, ve, $t).call(this)), m(this, I, a(this, xe, Ut).call(this)), m(this, v, null), this.inputCallback = w, this.searchCallback = k, this.openCallback = O, this.closeCallback = P, this.keydownCallback = R, this.focusCallback = ne, this.blurCallback = mt, this.nameChangeCallback = oe, this.srcElement = a(this, me, Dt).call(this, n(this, A), n(this, E), n(this, I)), a(this, he, Pt).call(this);
+    this.value = e, this.showTags = t, this.tagsCountText = s, this.searchable = d, this.placeholder = p, this.clearable = i, this.isAlwaysOpened = a, this.disabled = f, this.isSingleSelect = C, this.id = b, this.iconElements = g, this.isOpened = !1, this.searchText = "", m(this, T, o(this, be, Ft).call(this)), m(this, E, o(this, Le, Ut).call(this)), m(this, D, o(this, Se, Kt).call(this)), m(this, v, null), this.inputCallback = w, this.searchCallback = k, this.openCallback = y, this.closeCallback = I, this.keydownCallback = W, this.focusCallback = ae, this.blurCallback = Ct, this.nameChangeCallback = oe, this.srcElement = o(this, fe, Gt).call(this, n(this, T), n(this, E), n(this, D)), o(this, ue, Vt).call(this);
   }
   // Public methods
   focus() {
     setTimeout(() => n(this, E).focus(), 0);
   }
   blur() {
-    this.isOpened && a(this, T, D).call(this), this.clearSearch(), n(this, E).blur();
+    this.isOpened && o(this, N, V).call(this), this.clearSearch(), n(this, E).blur();
   }
   updateValue(e) {
-    this.value = e, a(this, H, U).call(this), a(this, G, z).call(this);
+    this.value = e, o(this, H, R).call(this), o(this, G, U).call(this);
   }
   removeItem(e) {
-    this.value = this.value.filter((t) => t.id !== e), a(this, Y, bt).call(this), a(this, H, U).call(this), a(this, G, z).call(this);
+    this.value = this.value.filter((t) => t.id !== e), o(this, z, gt).call(this), o(this, H, R).call(this), o(this, G, U).call(this);
   }
   clear() {
-    this.value = [], a(this, Y, bt).call(this), a(this, H, U).call(this), this.clearSearch();
+    this.value = [], o(this, z, gt).call(this), o(this, H, R).call(this), this.clearSearch();
   }
   openClose() {
-    a(this, T, D).call(this);
+    o(this, N, V).call(this);
   }
   clearSearch() {
-    this.searchText = "", this.searchCallback(""), a(this, G, z).call(this);
+    this.searchText = "", this.searchCallback(""), o(this, G, U).call(this);
   }
 }
-A = new WeakMap(), E = new WeakMap(), I = new WeakMap(), v = new WeakMap(), he = new WeakSet(), Pt = function() {
-  a(this, H, U).call(this), a(this, G, z).call(this), a(this, ue, Bt).call(this);
-}, H = new WeakSet(), U = function() {
-  if (n(this, A).innerHTML = "", this.showTags) {
-    n(this, A).append(...a(this, be, Gt).call(this));
-    const e = Qs(this.value);
+T = new WeakMap(), E = new WeakMap(), D = new WeakMap(), v = new WeakMap(), ue = new WeakSet(), Vt = function() {
+  o(this, H, R).call(this), o(this, G, U).call(this), o(this, pe, Dt).call(this);
+}, H = new WeakSet(), R = function() {
+  if (n(this, T).innerHTML = "", this.showTags) {
+    n(this, T).append(...o(this, ge, qt).call(this));
+    const e = ni(this.value);
     this.nameChangeCallback(e);
   } else {
-    const e = a(this, Ee, jt).call(this);
-    n(this, A).appendChild(e), this.nameChangeCallback(e.innerText);
+    const e = o(this, ve, Rt).call(this);
+    n(this, T).appendChild(e), this.nameChangeCallback(e.innerText);
   }
-  n(this, A).appendChild(n(this, E));
-}, ue = new WeakSet(), Bt = function() {
+  n(this, T).appendChild(n(this, E));
+}, pe = new WeakSet(), Dt = function() {
   const e = [];
-  n(this, I).innerHTML = "", this.clearable && e.push(a(this, Se, zt).call(this)), this.isAlwaysOpened || e.push(a(this, Ae, Kt).call(this, this.isOpened)), e.length && n(this, I).append(...e);
-}, pe = new WeakSet(), Vt = function() {
+  n(this, D).innerHTML = "", this.clearable && e.push(o(this, _e, Xt).call(this)), this.isAlwaysOpened || e.push(o(this, Te, Zt).call(this, this.isOpened)), e.length && n(this, D).append(...e);
+}, me = new WeakSet(), Ht = function() {
   if (!this.isAlwaysOpened && n(this, v)) {
     const e = this.isOpened ? this.iconElements.arrowUp : this.iconElements.arrowDown;
-    N(e, n(this, v));
+    O(e, n(this, v));
   }
-}, G = new WeakSet(), z = function() {
+}, G = new WeakSet(), U = function() {
   var e;
   (e = this.value) != null && e.length ? (n(this, E).removeAttribute("placeholder"), this.srcElement.classList.remove("treeselect-input--value-not-selected")) : (n(this, E).setAttribute("placeholder", this.placeholder), this.srcElement.classList.add("treeselect-input--value-not-selected")), this.searchable ? this.srcElement.classList.remove("treeselect-input--unsearchable") : this.srcElement.classList.add("treeselect-input--unsearchable"), this.isSingleSelect ? this.srcElement.classList.add("treeselect-input--is-single-select") : this.srcElement.classList.remove("treeselect-input--is-single-select"), n(this, E).value = this.searchText;
-}, T = new WeakSet(), D = function() {
-  this.isOpened = !this.isOpened, a(this, pe, Vt).call(this), this.isOpened ? this.openCallback() : this.closeCallback();
-}, me = new WeakSet(), Dt = function(e, t, s) {
+}, N = new WeakSet(), V = function() {
+  this.isOpened = !this.isOpened, o(this, me, Ht).call(this), this.isOpened ? this.openCallback() : this.closeCallback();
+}, fe = new WeakSet(), Gt = function(e, t, s) {
   const i = document.createElement("div");
-  return i.classList.add("treeselect-input"), i.setAttribute("tabindex", "-1"), i.addEventListener("mousedown", (o) => a(this, fe, It).call(this, o)), i.addEventListener("focus", () => this.focusCallback(), !0), i.addEventListener("blur", () => this.blurCallback(), !0), e.appendChild(t), i.append(e, s), i;
-}, fe = new WeakSet(), It = function(e) {
-  e.stopPropagation(), this.isOpened || a(this, T, D).call(this), this.focus();
-}, Ce = new WeakSet(), Ht = function() {
+  return i.classList.add("treeselect-input"), i.setAttribute("tabindex", "-1"), i.addEventListener("mousedown", (a) => o(this, Ce, Mt).call(this, a)), i.addEventListener("focus", () => this.focusCallback(), !0), i.addEventListener("blur", () => this.blurCallback(), !0), e.appendChild(t), i.append(e, s), i;
+}, Ce = new WeakSet(), Mt = function(e) {
+  e.stopPropagation(), this.isOpened || o(this, N, V).call(this), this.focus();
+}, be = new WeakSet(), Ft = function() {
   const e = document.createElement("div");
   return e.classList.add("treeselect-input__tags"), e;
-}, be = new WeakSet(), Gt = function() {
+}, ge = new WeakSet(), qt = function() {
   return this.value.map((e) => {
     const t = document.createElement("div");
     t.classList.add("treeselect-input__tags-element"), t.setAttribute("tabindex", "-1"), t.setAttribute("tag-id", e.id.toString()), t.setAttribute("title", e.name);
-    const s = a(this, we, Ft).call(this, e.name), i = a(this, ke, qt).call(this);
-    return t.addEventListener("mousedown", (o) => a(this, ge, Mt).call(this, o, e.id)), t.append(s, i), t;
+    const s = o(this, ke, $t).call(this, e.name), i = o(this, Ee, Wt).call(this);
+    return t.addEventListener("mousedown", (a) => o(this, we, jt).call(this, a, e.id)), t.append(s, i), t;
   });
-}, ge = new WeakSet(), Mt = function(e, t) {
+}, we = new WeakSet(), jt = function(e, t) {
   e.preventDefault(), e.stopPropagation(), this.removeItem(t), this.focus();
-}, we = new WeakSet(), Ft = function(e) {
+}, ke = new WeakSet(), $t = function(e) {
   const t = document.createElement("span");
   return t.classList.add("treeselect-input__tags-name"), t.textContent = e, t;
-}, ke = new WeakSet(), qt = function() {
+}, Ee = new WeakSet(), Wt = function() {
   const e = document.createElement("span");
-  return e.classList.add("treeselect-input__tags-cross"), N(this.iconElements.cross, e), e;
-}, Ee = new WeakSet(), jt = function() {
+  return e.classList.add("treeselect-input__tags-cross"), O(this.iconElements.cross, e), e;
+}, ve = new WeakSet(), Rt = function() {
   const e = document.createElement("span");
   if (e.classList.add("treeselect-input__tags-count"), !this.value.length)
     return e.textContent = "", e.setAttribute("title", ""), e;
   const t = this.value.length === 1 ? this.value[0].name : `${this.value.length} ${this.tagsCountText}`;
   return e.textContent = t, e.setAttribute("title", t), e;
-}, ve = new WeakSet(), $t = function() {
+}, Le = new WeakSet(), Ut = function() {
   const e = document.createElement("input");
-  return e.classList.add("treeselect-input__edit"), this.id && e.setAttribute("id", this.id), (!this.searchable || this.disabled) && e.setAttribute("readonly", "readonly"), this.disabled && e.setAttribute("tabindex", "-1"), e.addEventListener("keydown", (t) => a(this, Le, Wt).call(this, t)), e.addEventListener("input", (t) => a(this, ye, Rt).call(this, t, e)), e;
-}, Le = new WeakSet(), Wt = function(e) {
+  return e.classList.add("treeselect-input__edit"), this.id && e.setAttribute("id", this.id), (!this.searchable || this.disabled) && e.setAttribute("readonly", "readonly"), this.disabled && e.setAttribute("tabindex", "-1"), e.addEventListener("keydown", (t) => o(this, ye, zt).call(this, t)), e.addEventListener("input", (t) => o(this, xe, Yt).call(this, t, e)), e;
+}, ye = new WeakSet(), zt = function(e) {
   e.stopPropagation();
   const t = e.key;
-  t === "Backspace" && !this.searchText.length && this.value.length && !this.showTags && this.clear(), t === "Backspace" && !this.searchText.length && this.value.length && this.removeItem(this.value[this.value.length - 1].id), e.code === "Space" && (!this.searchText || !this.searchable) && a(this, T, D).call(this), (t === "Enter" || t === "ArrowDown" || t === "ArrowUp") && e.preventDefault(), this.keydownCallback(e), t !== "Tab" && this.focus();
-}, ye = new WeakSet(), Rt = function(e, t) {
+  t === "Backspace" && !this.searchText.length && this.value.length && !this.showTags && this.clear(), t === "Backspace" && !this.searchText.length && this.value.length && this.removeItem(this.value[this.value.length - 1].id), e.code === "Space" && (!this.searchText || !this.searchable) && o(this, N, V).call(this), (t === "Enter" || t === "ArrowDown" || t === "ArrowUp") && e.preventDefault(), this.keydownCallback(e), t !== "Tab" && this.focus();
+}, xe = new WeakSet(), Yt = function(e, t) {
   e.stopPropagation();
   const s = this.searchText, i = t.value.trim();
   if (s.length === 0 && i.length === 0) {
@@ -204,145 +204,149 @@ A = new WeakMap(), E = new WeakMap(), I = new WeakMap(), v = new WeakMap(), he =
     return;
   }
   if (this.searchable) {
-    const o = e.target.value;
-    this.searchCallback(o), this.isOpened || a(this, T, D).call(this);
+    const a = e.target.value;
+    this.searchCallback(a), this.isOpened || o(this, N, V).call(this);
   } else
     t.value = "";
   this.searchText = t.value;
-}, xe = new WeakSet(), Ut = function() {
+}, Se = new WeakSet(), Kt = function() {
   const e = document.createElement("div");
   return e.classList.add("treeselect-input__operators"), e;
-}, Se = new WeakSet(), zt = function() {
+}, _e = new WeakSet(), Xt = function() {
   const e = document.createElement("span");
-  return e.classList.add("treeselect-input__clear"), e.setAttribute("tabindex", "-1"), N(this.iconElements.clear, e), e.addEventListener("mousedown", (t) => a(this, _e, Yt).call(this, t)), e;
-}, _e = new WeakSet(), Yt = function(e) {
+  return e.classList.add("treeselect-input__clear"), e.setAttribute("tabindex", "-1"), O(this.iconElements.clear, e), e.addEventListener("mousedown", (t) => o(this, Ae, Jt).call(this, t)), e;
+}, Ae = new WeakSet(), Jt = function(e) {
   e.preventDefault(), e.stopPropagation(), (this.searchText.length || this.value.length) && this.clear(), this.focus();
-}, Ae = new WeakSet(), Kt = function(e) {
+}, Te = new WeakSet(), Zt = function(e) {
   m(this, v, document.createElement("span")), n(this, v).classList.add("treeselect-input__arrow");
   const t = e ? this.iconElements.arrowUp : this.iconElements.arrowDown;
-  return N(t, n(this, v)), n(this, v).addEventListener("mousedown", (s) => a(this, Te, Xt).call(this, s)), n(this, v);
-}, Te = new WeakSet(), Xt = function(e) {
-  e.stopPropagation(), e.preventDefault(), this.focus(), a(this, T, D).call(this);
-}, Y = new WeakSet(), bt = function() {
+  return O(t, n(this, v)), n(this, v).addEventListener("mousedown", (s) => o(this, Ne, Qt).call(this, s)), n(this, v);
+}, Ne = new WeakSet(), Qt = function(e) {
+  e.stopPropagation(), e.preventDefault(), this.focus(), o(this, N, V).call(this);
+}, z = new WeakSet(), gt = function() {
   this.inputCallback(this.value);
 };
-const Jt = (l, e, t) => {
-  li(e);
-  const s = e.filter((i) => !i.disabled && l.some((o) => o === i.id));
-  if (t && s.length) {
-    s[0].checked = !0;
+const es = (l, e, t, s) => {
+  di(e);
+  const i = e.filter((a) => !a.disabled && l.some((d) => d === a.id));
+  if (t && i.length) {
+    i[0].checked = !0;
     return;
   }
-  s.forEach((i) => {
-    i.checked = !0;
-    const o = _t(i, e);
-    i.checked = o;
+  i.forEach((a) => {
+    a.checked = !0;
+    const d = Nt(a, e, s);
+    a.checked = d;
   });
-}, _t = ({ id: l, checked: e }, t) => {
-  const s = t.find((o) => o.id === l);
-  if (!s)
+}, Nt = ({ id: l, checked: e }, t, s) => {
+  const i = t.find((d) => d.id === l);
+  if (!i)
     return !1;
-  const i = Zt(!!e, s, t);
-  return Qt(s, t), i;
-}, Zt = (l, e, t) => {
+  if (s)
+    return i.checked = i.disabled ? !1 : !!e, i.checked;
+  const a = ts(!!e, i, t);
+  return ss(i, t), a;
+}, ts = (l, e, t) => {
   if (!e.isGroup)
     return e.checked = e.disabled ? !1 : !!l, e.isPartialChecked = !1, e.checked;
-  const s = t.filter((u) => u.childOf === e.id);
-  return !l || e.disabled || e.isPartialChecked ? (e.checked = !1, e.isPartialChecked = !1, gt(e, s, t), e.checked) : es(s, t) ? ts(s) ? (e.checked = !1, e.isPartialChecked = !1, e.disabled = !0, e.checked) : (e.checked = !1, e.isPartialChecked = !0, s.forEach((u) => {
-    Zt(l, u, t);
-  }), e.checked) : (e.checked = !0, e.isPartialChecked = !1, gt(e, s, t), e.checked);
-}, Qt = (l, e) => {
+  const s = t.filter((p) => p.childOf === e.id);
+  return !l || e.disabled || e.isPartialChecked ? (e.checked = !1, e.isPartialChecked = !1, wt(e, s, t), e.checked) : is(s, t) ? ls(s) ? (e.checked = !1, e.isPartialChecked = !1, e.disabled = !0, e.checked) : (e.checked = !1, e.isPartialChecked = !0, s.forEach((p) => {
+    ts(l, p, t);
+  }), e.checked) : (e.checked = !0, e.isPartialChecked = !1, wt(e, s, t), e.checked);
+}, ss = (l, e) => {
   const t = e.find((s) => s.id === l.childOf);
-  t && (ti(t, e), Qt(t, e));
-}, ti = (l, e) => {
-  const t = ut(l, e);
-  if (ts(t)) {
+  t && (oi(t, e), ss(t, e));
+}, oi = (l, e) => {
+  const t = mt(l, e);
+  if (ls(t)) {
     l.checked = !1, l.isPartialChecked = !1, l.disabled = !0;
     return;
   }
-  if (si(t)) {
+  if (ri(t)) {
     l.checked = !0, l.isPartialChecked = !1;
     return;
   }
-  if (ii(t)) {
+  if (ci(t)) {
     l.checked = !1, l.isPartialChecked = !0;
     return;
   }
   l.checked = !1, l.isPartialChecked = !1;
-}, gt = ({ checked: l, disabled: e }, t, s) => {
+}, wt = ({ checked: l, disabled: e }, t, s) => {
   t.forEach((i) => {
     i.disabled = !!e || !!i.disabled, i.checked = !!l && !i.disabled, i.isPartialChecked = !1;
-    const o = ut(i, s);
-    gt({ checked: l, disabled: e }, o, s);
+    const a = mt(i, s);
+    wt({ checked: l, disabled: e }, a, s);
   });
-}, es = (l, e) => l.some((i) => i.disabled) ? !0 : l.some((i) => {
+}, is = (l, e) => l.some((i) => i.disabled) ? !0 : l.some((i) => {
   if (i.isGroup) {
-    const o = ut(i, e);
-    return es(o, e);
+    const a = mt(i, e);
+    return is(a, e);
   }
   return !1;
-}), ts = (l) => l.every((e) => !!e.disabled), si = (l) => l.every((e) => !!e.checked), ii = (l) => l.some((e) => !!e.checked || !!e.isPartialChecked), li = (l) => {
+}), ls = (l) => l.every((e) => !!e.disabled), ri = (l) => l.every((e) => !!e.checked), ci = (l) => l.some((e) => !!e.checked || !!e.isPartialChecked), di = (l) => {
   l.forEach((e) => {
     e.checked = !1, e.isPartialChecked = !1;
   });
-}, ni = (l, e, t = "", s = 0) => {
-  const i = ss(l, e, t, s);
-  return ai(i);
-}, ss = (l, e, t, s) => l.reduce((i, o) => {
+}, hi = (l, e, t) => {
+  const s = { level: 0, groupId: "" }, i = ns(l, e, s.groupId, s.level);
+  return pi(i, t);
+}, ns = (l, e, t, s) => l.reduce((i, a) => {
   var C;
-  const d = !!((C = o.children) != null && C.length), u = s >= e && d, f = s > e;
+  const d = !!((C = a.children) != null && C.length), p = s >= e && d, f = s > e;
   if (i.push({
-    id: o.value,
-    name: o.name,
+    id: a.value,
+    name: a.name,
     childOf: t,
     isGroup: d,
     checked: !1,
     isPartialChecked: !1,
     level: s,
-    isClosed: u,
+    isClosed: p,
     hidden: f,
-    disabled: o.disabled ?? !1
+    disabled: a.disabled ?? !1
   }), d) {
-    const b = ss(o.children, e, o.value, s + 1);
+    const b = ns(a.children, e, a.value, s + 1);
     i.push(...b);
   }
   return i;
-}, []), ut = ({ id: l }, e) => e.filter((t) => t.childOf === l), oi = (l) => {
+}, []), mt = ({ id: l }, e) => e.filter((t) => t.childOf === l), ui = (l) => {
   const { ungroupedNodes: e, allGroupedNodes: t, allNodes: s } = l.reduce(
-    (o, d) => (d.checked && (o.allNodes.push(d), d.isGroup ? o.allGroupedNodes.push(d) : o.ungroupedNodes.push(d)), o),
+    (a, d) => (d.checked && (a.allNodes.push(d), d.isGroup ? a.allGroupedNodes.push(d) : a.ungroupedNodes.push(d)), a),
     {
       ungroupedNodes: [],
       allGroupedNodes: [],
       allNodes: []
     }
-  ), i = s.filter((o) => !t.some(({ id: d }) => d === o.childOf));
+  ), i = s.filter((a) => !t.some(({ id: d }) => d === a.childOf));
   return { ungroupedNodes: e, groupedNodes: i, allNodes: s };
-}, ai = (l) => (l.filter((t) => !!t.disabled).forEach(({ id: t }) => _t({ id: t, checked: !1 }, l)), l), pt = (l, { id: e, isClosed: t }) => {
-  ut({ id: e }, l).forEach((i) => {
-    i.hidden = t ?? !1, i.isGroup && !i.isClosed && pt(l, { id: i.id, isClosed: t });
+}, pi = (l, e) => (l.filter((s) => !!s.disabled).forEach(
+  ({ id: s }) => Nt({ id: s, checked: !1 }, l, e)
+), l), ft = (l, { id: e, isClosed: t }) => {
+  mt({ id: e }, l).forEach((i) => {
+    i.hidden = t ?? !1, i.isGroup && !i.isClosed && ft(l, { id: i.id, isClosed: t });
   });
-}, ri = (l) => {
+}, mi = (l) => {
   l.filter((e) => e.isGroup && !e.disabled && (e.checked || e.isPartialChecked)).forEach((e) => {
-    e.isClosed = !1, pt(l, e);
+    e.isClosed = !1, ft(l, e);
   });
-}, ci = (l, e) => {
-  const t = di(l, e);
+}, fi = (l, e) => {
+  const t = Ci(l, e);
   l.forEach((s) => {
-    t.some(({ id: o }) => o === s.id) ? (s.isGroup && (s.isClosed = !1, pt(l, s)), s.hidden = !1) : s.hidden = !0;
+    t.some(({ id: a }) => a === s.id) ? (s.isGroup && (s.isClosed = !1, ft(l, s)), s.hidden = !1) : s.hidden = !0;
   });
-}, di = (l, e) => l.reduce((t, s) => {
+}, Ci = (l, e) => l.reduce((t, s) => {
   if (s.name.toLowerCase().includes(e.toLowerCase())) {
     if (t.push(s), s.isGroup) {
-      const o = is(s.id, l);
-      t.push(...o);
+      const a = as(s.id, l);
+      t.push(...a);
     }
     if (s.childOf) {
-      const o = ls(s.childOf, l);
-      t.push(...o);
+      const a = os(s.childOf, l);
+      t.push(...a);
     }
   }
   return t;
-}, []), is = (l, e) => e.reduce((t, s) => (s.childOf === l && (t.push(s), s.isGroup && t.push(...is(s.id, e))), t), []), ls = (l, e) => e.reduce((t, s) => (s.id === l && (t.push(s), s.childOf && t.push(...ls(s.childOf, e))), t), []), hi = (l) => {
+}, []), as = (l, e) => e.reduce((t, s) => (s.childOf === l && (t.push(s), s.isGroup && t.push(...as(s.id, e))), t), []), os = (l, e) => e.reduce((t, s) => (s.id === l && (t.push(s), s.childOf && t.push(...os(s.childOf, e))), t), []), bi = (l) => {
   const { duplications: e } = l.reduce(
     (t, s) => (t.allItems.some((i) => i.toString() === s.id.toString()) && t.duplications.push(s.id), t.allItems.push(s.id), t),
     {
@@ -351,76 +355,76 @@ const Jt = (l, e, t) => {
     }
   );
   e.length && console.error(`Validation: You have duplicated values: ${e.join(", ")}! You should use unique values.`);
-}, ui = (l, e, t, s, i, o, d, u) => {
-  Jt(l, e, i), u && d && ri(e), ae(e, t, s, o);
-}, ae = (l, e, t, s) => {
+}, gi = (l, e, t, s, i, a, d, p, f) => {
+  es(l, e, i, f), p && d && mi(e), ce(e, t, s, a);
+}, ce = (l, e, t, s) => {
   l.forEach((i) => {
-    const o = e.querySelector(`[input-id="${i.id}"]`), d = _(o);
-    o.checked = i.checked, pi(i, d, s), mi(i, d), fi(i, d), Ci(i, d, t), bi(i, d), wi(i, d, l), gi(i, o, t);
-  }), ki(l, e);
-}, pi = (l, e, t) => {
+    const a = e.querySelector(`[input-id="${i.id}"]`), d = A(a);
+    a.checked = i.checked, wi(i, d, s), ki(i, d), Ei(i, d), vi(i, d, t), Li(i, d), xi(i, d, l), yi(i, a, t);
+  }), Si(l, e);
+}, wi = (l, e, t) => {
   l.checked ? e.classList.add("treeselect-list__item--checked") : e.classList.remove("treeselect-list__item--checked"), Array.isArray(t) && t[0] === l.id && !l.disabled ? e.classList.add("treeselect-list__item--single-selected") : e.classList.remove("treeselect-list__item--single-selected");
-}, mi = (l, e) => {
+}, ki = (l, e) => {
   l.isPartialChecked ? e.classList.add("treeselect-list__item--partial-checked") : e.classList.remove("treeselect-list__item--partial-checked");
-}, fi = (l, e) => {
+}, Ei = (l, e) => {
   l.disabled ? e.classList.add("treeselect-list__item--disabled") : e.classList.remove("treeselect-list__item--disabled");
-}, Ci = (l, e, t) => {
+}, vi = (l, e, t) => {
   if (l.isGroup) {
     const s = e.querySelector(".treeselect-list__item-icon"), i = l.isClosed ? t.arrowRight : t.arrowDown;
-    N(i, s), l.isClosed ? e.classList.add("treeselect-list__item--closed") : e.classList.remove("treeselect-list__item--closed");
+    O(i, s), l.isClosed ? e.classList.add("treeselect-list__item--closed") : e.classList.remove("treeselect-list__item--closed");
   }
-}, bi = (l, e) => {
+}, Li = (l, e) => {
   l.hidden ? e.classList.add("treeselect-list__item--hidden") : e.classList.remove("treeselect-list__item--hidden");
-}, gi = (l, e, t) => {
+}, yi = (l, e, t) => {
   const i = e.parentNode.querySelector(".treeselect-list__item-checkbox-icon");
-  l.checked ? N(t.check, i) : l.isPartialChecked ? N(t.partialCheck, i) : i.innerHTML = "";
-}, wi = (l, e, t) => {
-  const s = l.level === 0, i = 20, o = 5;
+  l.checked ? O(t.check, i) : l.isPartialChecked ? O(t.partialCheck, i) : i.innerHTML = "";
+}, xi = (l, e, t) => {
+  const s = l.level === 0, i = 20, a = 5;
   if (s) {
-    const d = t.some((f) => f.isGroup && f.level === l.level), u = !l.isGroup && d ? `${i}px` : `${o}px`;
-    e.style.paddingLeft = l.isGroup ? "0" : u;
+    const d = t.some((f) => f.isGroup && f.level === l.level), p = !l.isGroup && d ? `${i}px` : `${a}px`;
+    e.style.paddingLeft = l.isGroup ? "0" : p;
   } else
     e.style.paddingLeft = l.isGroup ? `${l.level * i}px` : `${l.level * i + i}px`;
   e.setAttribute("level", l.level.toString()), e.setAttribute("group", l.isGroup.toString());
-}, ki = (l, e) => {
+}, Si = (l, e) => {
   const t = l.some((i) => !i.hidden), s = e.querySelector(".treeselect-list__empty");
   t ? s.classList.add("treeselect-list__empty--hidden") : s.classList.remove("treeselect-list__empty--hidden");
-}, _ = (l) => l.parentNode.parentNode, Nt = (l, e) => e.find((t) => t.id.toString() === l), Ei = (l) => _(l).querySelector(".treeselect-list__item-icon"), vi = (l, e) => {
+}, A = (l) => l.parentNode.parentNode, Pt = (l, e) => e.find((t) => t.id.toString() === l), _i = (l) => A(l).querySelector(".treeselect-list__item-icon"), Ai = (l, e) => {
   e && Object.keys(e).forEach((t) => {
     const s = e[t];
     typeof s == "string" && l.setAttribute(t, s);
   });
 };
-var M, B, y, K, Ne, ns, Oe, os, Pe, as, Be, rs, Ve, cs, De, ds, X, wt, Ie, hs, He, us, Ge, ps, J, kt, Me, ms, Fe, fs, qe, Cs, je, bs, $e, gs, We, ws, Re, ks, Ue, Es, ze, vs, Ye, Ls, Ke, ys, Z, Et, Q, vt, Xe, xs;
-class Li {
+var M, P, x, Y, Oe, rs, Ie, cs, Pe, ds, Be, hs, Ve, us, De, ps, K, kt, He, ms, Ge, fs, Me, Cs, X, Et, Fe, bs, qe, gs, je, ws, $e, ks, We, Es, Re, vs, Ue, Ls, ze, ys, Ye, xs, Ke, Ss, Xe, _s, J, vt, Z, Lt, Je, As;
+class Ti {
   constructor({
     options: e,
     value: t,
     openLevel: s,
     listSlotHtmlComponent: i,
-    emptyText: o,
+    emptyText: a,
     isSingleSelect: d,
-    iconElements: u,
+    iconElements: p,
     showCount: f,
     disabledBranchNode: C,
     expandSelected: b,
-    inputCallback: g,
-    arrowClickCallback: w,
-    mouseupCallback: k
+    isIndependentNodes: g,
+    inputCallback: w,
+    arrowClickCallback: k,
+    mouseupCallback: y
   }) {
     // Private methods
-    r(this, Ne);
     r(this, Oe);
+    r(this, Ie);
     r(this, Pe);
     r(this, Be);
     r(this, Ve);
     r(this, De);
-    r(this, X);
-    r(this, Ie);
+    r(this, K);
     r(this, He);
     r(this, Ge);
-    r(this, J);
     r(this, Me);
+    r(this, X);
     r(this, Fe);
     r(this, qe);
     r(this, je);
@@ -429,13 +433,14 @@ class Li {
     r(this, Re);
     r(this, Ue);
     r(this, ze);
-    // Actions
     r(this, Ye);
+    // Actions
     r(this, Ke);
-    r(this, Z);
-    r(this, Q);
-    // Emits
     r(this, Xe);
+    r(this, J);
+    r(this, Z);
+    // Emits
+    r(this, Je);
     // Props
     c(this, "options");
     c(this, "value");
@@ -446,6 +451,7 @@ class Li {
     c(this, "showCount");
     c(this, "disabledBranchNode");
     c(this, "expandSelected");
+    c(this, "isIndependentNodes");
     c(this, "iconElements");
     // InnerState
     c(this, "searchText");
@@ -459,72 +465,73 @@ class Li {
     c(this, "mouseupCallback");
     // PrivateInnerState
     r(this, M, null);
-    r(this, B, !0);
-    r(this, y, []);
-    r(this, K, !0);
-    this.options = e, this.value = t, this.openLevel = s ?? 0, this.listSlotHtmlComponent = i ?? null, this.emptyText = o ?? "No results found...", this.isSingleSelect = d ?? !1, this.showCount = f ?? !1, this.disabledBranchNode = C ?? !1, this.expandSelected = b ?? !1, this.iconElements = u, this.searchText = "", this.flattedOptions = ni(this.options, this.openLevel), this.flattedOptionsBeforeSearch = this.flattedOptions, this.selectedNodes = { nodes: [], groupedNodes: [] }, this.srcElement = a(this, Pe, as).call(this), this.inputCallback = g, this.arrowClickCallback = w, this.mouseupCallback = k, hi(this.flattedOptions);
+    r(this, P, !0);
+    r(this, x, []);
+    r(this, Y, !0);
+    this.options = e, this.value = t, this.openLevel = s ?? 0, this.listSlotHtmlComponent = i ?? null, this.emptyText = a ?? "No results found...", this.isSingleSelect = d ?? !1, this.showCount = f ?? !1, this.disabledBranchNode = C ?? !1, this.expandSelected = b ?? !1, this.isIndependentNodes = g ?? !1, this.iconElements = p, this.searchText = "", this.flattedOptions = hi(this.options, this.openLevel, this.isIndependentNodes), this.flattedOptionsBeforeSearch = this.flattedOptions, this.selectedNodes = { nodes: [], groupedNodes: [], allNodes: [] }, this.srcElement = o(this, Pe, ds).call(this), this.inputCallback = w, this.arrowClickCallback = k, this.mouseupCallback = y, bi(this.flattedOptions);
   }
   // Public methods
   updateValue(e) {
-    this.value = e, m(this, y, this.isSingleSelect ? this.value : []), ui(
+    this.value = e, m(this, x, this.isSingleSelect ? this.value : []), gi(
       e,
       this.flattedOptions,
       this.srcElement,
       this.iconElements,
       this.isSingleSelect,
-      n(this, y),
+      n(this, x),
       this.expandSelected,
-      n(this, K)
-    ), m(this, K, !1), a(this, Q, vt).call(this);
+      n(this, Y),
+      this.isIndependentNodes
+    ), m(this, Y, !1), o(this, Z, Lt).call(this);
   }
   updateSearchValue(e) {
     if (e === this.searchText)
       return;
     const t = this.searchText === "" && e !== "";
     this.searchText = e, t && (this.flattedOptionsBeforeSearch = JSON.parse(JSON.stringify(this.flattedOptions))), this.searchText === "" && (this.flattedOptions = this.flattedOptionsBeforeSearch.map((s) => {
-      const i = this.flattedOptions.find((o) => o.id === s.id);
+      const i = this.flattedOptions.find((a) => a.id === s.id);
       return i.isClosed = s.isClosed, i.hidden = s.hidden, i;
-    }), this.flattedOptionsBeforeSearch = []), this.searchText && ci(this.flattedOptions, e), ae(this.flattedOptions, this.srcElement, this.iconElements, n(this, y)), this.focusFirstListElement();
+    }), this.flattedOptionsBeforeSearch = []), this.searchText && fi(this.flattedOptions, e), ce(this.flattedOptions, this.srcElement, this.iconElements, n(this, x)), this.focusFirstListElement();
   }
   callKeyAction(e) {
-    m(this, B, !1);
+    m(this, P, !1);
     const t = this.srcElement.querySelector(".treeselect-list__item--focused");
     if (t == null ? void 0 : t.classList.contains("treeselect-list__item--hidden"))
       return;
     const i = e.key;
-    i === "Enter" && t && t.dispatchEvent(new Event("mousedown")), (i === "ArrowLeft" || i === "ArrowRight") && a(this, Ne, ns).call(this, t, e), (i === "ArrowDown" || i === "ArrowUp") && a(this, Oe, os).call(this, t, i);
+    i === "Enter" && t && t.dispatchEvent(new Event("mousedown")), (i === "ArrowLeft" || i === "ArrowRight") && o(this, Oe, rs).call(this, t, e), (i === "ArrowDown" || i === "ArrowUp") && o(this, Ie, cs).call(this, t, i);
   }
   focusFirstListElement() {
     const e = "treeselect-list__item--focused", t = this.srcElement.querySelector(`.${e}`), s = Array.from(this.srcElement.querySelectorAll(".treeselect-list__item-checkbox")).filter(
-      (o) => window.getComputedStyle(_(o)).display !== "none"
+      (a) => window.getComputedStyle(A(a)).display !== "none"
     );
     if (!s.length)
       return;
-    t && t.classList.remove(e), _(s[0]).classList.add(e);
+    t && t.classList.remove(e), A(s[0]).classList.add(e);
   }
   isLastFocusedElementExist() {
     return !!n(this, M);
   }
 }
-M = new WeakMap(), B = new WeakMap(), y = new WeakMap(), K = new WeakMap(), Ne = new WeakSet(), ns = function(e, t) {
+M = new WeakMap(), P = new WeakMap(), x = new WeakMap(), Y = new WeakMap(), Oe = new WeakSet(), rs = function(e, t) {
   if (!e)
     return;
-  const s = t.key, o = e.querySelector(".treeselect-list__item-checkbox").getAttribute("input-id"), d = Nt(o, this.flattedOptions), u = e.querySelector(".treeselect-list__item-icon");
-  s === "ArrowLeft" && !d.isClosed && d.isGroup && (u.dispatchEvent(new Event("mousedown")), t.preventDefault()), s === "ArrowRight" && d.isClosed && d.isGroup && (u.dispatchEvent(new Event("mousedown")), t.preventDefault());
-}, Oe = new WeakSet(), os = function(e, t) {
+  const s = t.key, a = e.querySelector(".treeselect-list__item-checkbox").getAttribute("input-id"), d = Pt(a, this.flattedOptions), p = e.querySelector(".treeselect-list__item-icon");
+  s === "ArrowLeft" && !d.isClosed && d.isGroup && (p.dispatchEvent(new Event("mousedown")), t.preventDefault()), s === "ArrowRight" && d.isClosed && d.isGroup && (p.dispatchEvent(new Event("mousedown")), t.preventDefault());
+}, Ie = new WeakSet(), cs = function(e, t) {
   var i;
   const s = Array.from(this.srcElement.querySelectorAll(".treeselect-list__item-checkbox")).filter(
-    (o) => window.getComputedStyle(_(o)).display !== "none"
+    (a) => window.getComputedStyle(A(a)).display !== "none"
   );
   if (s.length)
     if (!e)
-      _(s[0]).classList.add("treeselect-list__item--focused");
+      A(s[0]).classList.add("treeselect-list__item--focused");
     else {
-      const o = s.findIndex(
-        (P) => _(P).classList.contains("treeselect-list__item--focused")
+      const a = s.findIndex(
+        (I) => A(I).classList.contains("treeselect-list__item--focused")
       );
-      _(s[o]).classList.remove("treeselect-list__item--focused");
-      const u = t === "ArrowDown" ? o + 1 : o - 1, f = t === "ArrowDown" ? 0 : s.length - 1, C = s[u] ?? s[f], b = !s[u], g = _(C);
+      A(s[a]).classList.remove("treeselect-list__item--focused");
+      const p = t === "ArrowDown" ? a + 1 : a - 1, f = t === "ArrowDown" ? 0 : s.length - 1, C = s[p] ?? s[f], b = !s[p], g = A(C);
       g.classList.add("treeselect-list__item--focused");
       const w = this.srcElement.getBoundingClientRect(), k = g.getBoundingClientRect();
       if (b && t === "ArrowDown") {
@@ -535,8 +542,8 @@ M = new WeakMap(), B = new WeakMap(), y = new WeakMap(), K = new WeakMap(), Ne =
         this.srcElement.scroll(0, this.srcElement.scrollHeight);
         return;
       }
-      const O = ((i = this.listSlotHtmlComponent) == null ? void 0 : i.clientHeight) ?? 0;
-      if (w.y + w.height < k.y + k.height + O) {
+      const y = ((i = this.listSlotHtmlComponent) == null ? void 0 : i.clientHeight) ?? 0;
+      if (w.y + w.height < k.y + k.height + y) {
         this.srcElement.scroll(0, this.srcElement.scrollTop + k.height);
         return;
       }
@@ -545,199 +552,203 @@ M = new WeakMap(), B = new WeakMap(), y = new WeakMap(), K = new WeakMap(), Ne =
         return;
       }
     }
-}, Pe = new WeakSet(), as = function() {
-  const e = a(this, Be, rs).call(this), t = a(this, X, wt).call(this, this.options);
+}, Pe = new WeakSet(), ds = function() {
+  const e = o(this, Be, hs).call(this), t = o(this, K, kt).call(this, this.options);
   e.append(...t);
-  const s = a(this, He, us).call(this);
+  const s = o(this, Ge, fs).call(this);
   e.append(s);
-  const i = a(this, Ie, hs).call(this);
+  const i = o(this, He, ms).call(this);
   return i && e.append(i), e;
-}, Be = new WeakSet(), rs = function() {
+}, Be = new WeakSet(), hs = function() {
   const e = document.createElement("div");
-  return e.classList.add("treeselect-list"), this.isSingleSelect && e.classList.add("treeselect-list--single-select"), this.disabledBranchNode && e.classList.add("treeselect-list--disabled-branch-node"), e.addEventListener("mouseout", (t) => a(this, Ve, cs).call(this, t)), e.addEventListener("mousemove", () => a(this, De, ds).call(this)), e.addEventListener("mouseup", () => this.mouseupCallback(), !0), e;
-}, Ve = new WeakSet(), cs = function(e) {
-  e.stopPropagation(), n(this, M) && n(this, B) && n(this, M).classList.add("treeselect-list__item--focused");
-}, De = new WeakSet(), ds = function() {
-  m(this, B, !0);
-}, X = new WeakSet(), wt = function(e) {
+  return e.classList.add("treeselect-list"), this.isSingleSelect && e.classList.add("treeselect-list--single-select"), this.disabledBranchNode && e.classList.add("treeselect-list--disabled-branch-node"), e.addEventListener("mouseout", (t) => o(this, Ve, us).call(this, t)), e.addEventListener("mousemove", () => o(this, De, ps).call(this)), e.addEventListener("mouseup", () => this.mouseupCallback(), !0), e;
+}, Ve = new WeakSet(), us = function(e) {
+  e.stopPropagation(), n(this, M) && n(this, P) && n(this, M).classList.add("treeselect-list__item--focused");
+}, De = new WeakSet(), ps = function() {
+  m(this, P, !0);
+}, K = new WeakSet(), kt = function(e) {
   return e.reduce((t, s) => {
-    var o;
-    if ((o = s.children) != null && o.length) {
-      const d = a(this, Ge, ps).call(this, s), u = a(this, X, wt).call(this, s.children);
-      return d.append(...u), t.push(d), t;
+    var a;
+    if ((a = s.children) != null && a.length) {
+      const d = o(this, Me, Cs).call(this, s), p = o(this, K, kt).call(this, s.children);
+      return d.append(...p), t.push(d), t;
     }
-    const i = a(this, J, kt).call(this, s, !1);
+    const i = o(this, X, Et).call(this, s, !1);
     return t.push(i), t;
   }, []);
-}, Ie = new WeakSet(), hs = function() {
+}, He = new WeakSet(), ms = function() {
   if (!this.listSlotHtmlComponent)
     return null;
   const e = document.createElement("div");
   return e.classList.add("treeselect-list__slot"), e.appendChild(this.listSlotHtmlComponent), e;
-}, He = new WeakSet(), us = function() {
+}, Ge = new WeakSet(), fs = function() {
   const e = document.createElement("div");
   e.classList.add("treeselect-list__empty"), e.setAttribute("title", this.emptyText);
   const t = document.createElement("span");
-  t.classList.add("treeselect-list__empty-icon"), N(this.iconElements.attention, t);
+  t.classList.add("treeselect-list__empty-icon"), O(this.iconElements.attention, t);
   const s = document.createElement("span");
   return s.classList.add("treeselect-list__empty-text"), s.textContent = this.emptyText, e.append(t, s), e;
-}, Ge = new WeakSet(), ps = function(e) {
+}, Me = new WeakSet(), Cs = function(e) {
   const t = document.createElement("div");
   t.setAttribute("group-container-id", e.value.toString()), t.classList.add("treeselect-list__group-container");
-  const s = a(this, J, kt).call(this, e, !0);
+  const s = o(this, X, Et).call(this, e, !0);
   return t.appendChild(s), t;
-}, J = new WeakSet(), kt = function(e, t) {
-  const s = a(this, Me, ms).call(this, e);
+}, X = new WeakSet(), Et = function(e, t) {
+  const s = o(this, Fe, bs).call(this, e);
   if (t) {
-    const d = a(this, $e, gs).call(this);
+    const d = o(this, We, Es).call(this);
     s.appendChild(d), s.classList.add("treeselect-list__item--group");
   }
-  const i = a(this, Re, ks).call(this, e), o = a(this, Ue, Es).call(this, e, t);
-  return s.append(i, o), s;
-}, Me = new WeakSet(), ms = function(e) {
+  const i = o(this, Ue, Ls).call(this, e), a = o(this, ze, ys).call(this, e, t);
+  return s.append(i, a), s;
+}, Fe = new WeakSet(), bs = function(e) {
   const t = document.createElement("div");
-  return vi(t, e.htmlAttr), t.setAttribute("tabindex", "-1"), t.setAttribute("title", e.name), t.classList.add("treeselect-list__item"), t.addEventListener("mouseover", () => a(this, Fe, fs).call(this, t), !0), t.addEventListener("mouseout", () => a(this, qe, Cs).call(this, t), !0), t.addEventListener("mousedown", (s) => a(this, je, bs).call(this, s, e)), t;
-}, Fe = new WeakSet(), fs = function(e) {
-  n(this, B) && a(this, Z, Et).call(this, !0, e);
-}, qe = new WeakSet(), Cs = function(e) {
-  n(this, B) && (a(this, Z, Et).call(this, !1, e), m(this, M, e));
-}, je = new WeakSet(), bs = function(e, t) {
-  var o;
-  if (e.preventDefault(), e.stopPropagation(), (o = this.flattedOptions.find((d) => d.id === t.value)) == null ? void 0 : o.disabled)
+  return Ai(t, e.htmlAttr), t.setAttribute("tabindex", "-1"), t.setAttribute("title", e.name), t.classList.add("treeselect-list__item"), t.addEventListener("mouseover", () => o(this, qe, gs).call(this, t), !0), t.addEventListener("mouseout", () => o(this, je, ws).call(this, t), !0), t.addEventListener("mousedown", (s) => o(this, $e, ks).call(this, s, e)), t;
+}, qe = new WeakSet(), gs = function(e) {
+  n(this, P) && o(this, J, vt).call(this, !0, e);
+}, je = new WeakSet(), ws = function(e) {
+  n(this, P) && (o(this, J, vt).call(this, !1, e), m(this, M, e));
+}, $e = new WeakSet(), ks = function(e, t) {
+  var a;
+  if (e.preventDefault(), e.stopPropagation(), (a = this.flattedOptions.find((d) => d.id === t.value)) == null ? void 0 : a.disabled)
     return;
   const i = e.target.querySelector(".treeselect-list__item-checkbox");
-  i.checked = !i.checked, a(this, Ye, Ls).call(this, i, t);
-}, $e = new WeakSet(), gs = function() {
+  i.checked = !i.checked, o(this, Ke, Ss).call(this, i, t);
+}, We = new WeakSet(), Es = function() {
   const e = document.createElement("span");
-  return e.setAttribute("tabindex", "-1"), e.classList.add("treeselect-list__item-icon"), N(this.iconElements.arrowDown, e), e.addEventListener("mousedown", (t) => a(this, We, ws).call(this, t)), e;
-}, We = new WeakSet(), ws = function(e) {
-  e.preventDefault(), e.stopPropagation(), a(this, Ke, ys).call(this, e);
-}, Re = new WeakSet(), ks = function(e) {
+  return e.setAttribute("tabindex", "-1"), e.classList.add("treeselect-list__item-icon"), O(this.iconElements.arrowDown, e), e.addEventListener("mousedown", (t) => o(this, Re, vs).call(this, t)), e;
+}, Re = new WeakSet(), vs = function(e) {
+  e.preventDefault(), e.stopPropagation(), o(this, Xe, _s).call(this, e);
+}, Ue = new WeakSet(), Ls = function(e) {
   const t = document.createElement("div");
   t.classList.add("treeselect-list__item-checkbox-container");
   const s = document.createElement("span");
   s.classList.add("treeselect-list__item-checkbox-icon"), s.innerHTML = "";
   const i = document.createElement("input");
   return i.setAttribute("tabindex", "-1"), i.setAttribute("type", "checkbox"), i.setAttribute("input-id", e.value.toString()), i.classList.add("treeselect-list__item-checkbox"), t.append(s, i), t;
-}, Ue = new WeakSet(), Es = function(e, t) {
+}, ze = new WeakSet(), ys = function(e, t) {
   const s = document.createElement("label");
   if (s.textContent = e.name, s.classList.add("treeselect-list__item-label"), t && this.showCount) {
-    const i = a(this, ze, vs).call(this, e);
+    const i = o(this, Ye, xs).call(this, e);
     s.appendChild(i);
   }
   return s;
-}, ze = new WeakSet(), vs = function(e) {
+}, Ye = new WeakSet(), xs = function(e) {
   const t = document.createElement("span"), s = this.flattedOptions.filter((i) => i.childOf === e.value);
   return t.textContent = `(${s.length})`, t.classList.add("treeselect-list__item-label-counter"), t;
-}, Ye = new WeakSet(), Ls = function(e, t) {
+}, Ke = new WeakSet(), Ss = function(e, t) {
   const s = this.flattedOptions.find((i) => i.id === t.value);
   if (s) {
     if (s != null && s.isGroup && this.disabledBranchNode) {
-      const i = Ei(e);
+      const i = _i(e);
       i == null || i.dispatchEvent(new Event("mousedown"));
       return;
     }
     if (this.isSingleSelect) {
-      const [i] = n(this, y);
+      const [i] = n(this, x);
       if (s.id === i)
         return;
-      m(this, y, [s.id]), Jt([s.id], this.flattedOptions, this.isSingleSelect);
+      m(this, x, [s.id]), es([s.id], this.flattedOptions, this.isSingleSelect, this.isIndependentNodes);
     } else {
       s.checked = e.checked;
-      const i = _t(s, this.flattedOptions);
+      const i = Nt(s, this.flattedOptions, this.isIndependentNodes);
       e.checked = i;
     }
-    ae(this.flattedOptions, this.srcElement, this.iconElements, n(this, y)), a(this, Xe, xs).call(this);
+    ce(this.flattedOptions, this.srcElement, this.iconElements, n(this, x)), o(this, Je, As).call(this);
   }
-}, Ke = new WeakSet(), ys = function(e) {
-  var o, d;
-  const t = (d = (o = e.target) == null ? void 0 : o.parentNode) == null ? void 0 : d.querySelector("[input-id]"), s = (t == null ? void 0 : t.getAttribute("input-id")) ?? null, i = Nt(s, this.flattedOptions);
-  i && (i.isClosed = !i.isClosed, pt(this.flattedOptions, i), ae(this.flattedOptions, this.srcElement, this.iconElements, n(this, y)), this.arrowClickCallback());
-}, Z = new WeakSet(), Et = function(e, t) {
+}, Xe = new WeakSet(), _s = function(e) {
+  var a, d;
+  const t = (d = (a = e.target) == null ? void 0 : a.parentNode) == null ? void 0 : d.querySelector("[input-id]"), s = (t == null ? void 0 : t.getAttribute("input-id")) ?? null, i = Pt(s, this.flattedOptions);
+  i && (i.isClosed = !i.isClosed, ft(this.flattedOptions, i), ce(this.flattedOptions, this.srcElement, this.iconElements, n(this, x)), this.arrowClickCallback());
+}, J = new WeakSet(), vt = function(e, t) {
   const s = "treeselect-list__item--focused";
   if (e) {
     const i = Array.from(this.srcElement.querySelectorAll(`.${s}`));
-    i.length && i.forEach((o) => o.classList.remove(s)), t.classList.add(s);
+    i.length && i.forEach((a) => a.classList.remove(s)), t.classList.add(s);
   } else
     t.classList.remove(s);
-}, Q = new WeakSet(), vt = function() {
-  const { ungroupedNodes: e, groupedNodes: t } = oi(this.flattedOptions);
-  this.selectedNodes = { nodes: e, groupedNodes: t };
-}, Xe = new WeakSet(), xs = function() {
-  a(this, Q, vt).call(this), this.inputCallback(this.selectedNodes), this.value = this.selectedNodes.nodes.map((e) => e.id);
+}, Z = new WeakSet(), Lt = function() {
+  const { ungroupedNodes: e, groupedNodes: t, allNodes: s } = ui(this.flattedOptions);
+  this.selectedNodes = { nodes: e, groupedNodes: t, allNodes: s };
+}, Je = new WeakSet(), As = function() {
+  o(this, Z, Lt).call(this), this.inputCallback(this.selectedNodes), this.value = this.selectedNodes.nodes.map((e) => e.id);
 };
-const Ot = ({
+const Bt = ({
   parentHtmlContainer: l,
   staticList: e,
   appendToBody: t,
   isSingleSelect: s,
   value: i,
-  direction: o
+  direction: a
 }) => {
-  l || console.error("Validation: parentHtmlContainer prop is required!"), e && t && console.error("Validation: You should set staticList to false if you use appendToBody!"), s && Array.isArray(i) && console.error("Validation: if you use isSingleSelect prop, you should pass a single value!"), !s && !Array.isArray(i) && console.error("Validation: you should pass an array as a value!"), o && o !== "auto" && o !== "bottom" && o !== "top" && console.error("Validation: you should pass (auto | top | bottom | undefined) as a value for the direction prop!");
-}, Ct = (l) => l.map((e) => e.id), yi = (l) => l ? Array.isArray(l) ? l : [l] : [], xi = (l, e) => {
+  l || console.error("Validation: parentHtmlContainer prop is required!"), e && t && console.error("Validation: You should set staticList to false if you use appendToBody!"), s && Array.isArray(i) && console.error("Validation: if you use isSingleSelect prop, you should pass a single value!"), !s && !Array.isArray(i) && console.error("Validation: you should pass an array as a value!"), a && a !== "auto" && a !== "bottom" && a !== "top" && console.error("Validation: you should pass (auto | top | bottom | undefined) as a value for the direction prop!");
+}, re = (l) => l.map((e) => e.id), Ni = (l) => l ? Array.isArray(l) ? l : [l] : [], Oi = (l, e) => {
   if (e) {
     const [t] = l;
     return t ?? null;
   }
   return l;
 };
-var h, p, F, ee, q, x, S, L, V, te, Lt, j, re, Je, Ss, Ze, _s, Qe, As, et, Ts, tt, Ns, st, Os, it, Ps, lt, Bs, nt, Vs, ot, Ds, se, yt, at, Is, $, ce, ie, xt, W, de, rt, Hs, le, St, ct, Gs, dt, Ms, ht, Fs;
-class _i {
+var h, u, F, Q, q, S, _, L, B, ee, yt, te, xt, Ze, Ts, Qe, Ns, et, Os, tt, Is, st, Ps, it, Bs, se, St, lt, Vs, nt, Ds, at, Hs, ot, Gs, ie, _t, rt, Ms, j, de, le, At, $, he, ct, Fs, ne, Tt, dt, qs, ht, js, ut, $s, pt, Ws;
+class Pi {
   constructor({
     parentHtmlContainer: e,
     value: t,
     options: s,
     openLevel: i,
-    appendToBody: o,
+    appendToBody: a,
     alwaysOpen: d,
-    showTags: u,
+    showTags: p,
     tagsCountText: f,
     clearable: C,
     searchable: b,
     placeholder: g,
     grouped: w,
     isGroupedValue: k,
-    listSlotHtmlComponent: O,
-    disabled: P,
-    emptyText: R,
-    staticList: ne,
-    id: mt,
+    listSlotHtmlComponent: y,
+    disabled: I,
+    emptyText: W,
+    staticList: ae,
+    id: Ct,
     isSingleSelect: oe,
-    showCount: qs,
-    disabledBranchNode: js,
-    direction: $s,
-    expandSelected: Ws,
-    saveScrollPosition: Rs,
-    iconElements: Us,
-    inputCallback: zs,
-    openCallback: Ys,
-    closeCallback: Ks,
-    nameChangeCallback: Xs
+    showCount: Rs,
+    disabledBranchNode: Us,
+    direction: zs,
+    expandSelected: Ys,
+    saveScrollPosition: Ks,
+    isIndependentNodes: Xs,
+    iconElements: Js,
+    inputCallback: Zs,
+    openCallback: Qs,
+    closeCallback: ei,
+    nameChangeCallback: ti,
+    searchCallback: si
   }) {
+    r(this, ee);
     r(this, te);
-    r(this, j);
-    r(this, Je);
     r(this, Ze);
     r(this, Qe);
     r(this, et);
     r(this, tt);
     r(this, st);
     r(this, it);
+    r(this, se);
     r(this, lt);
     r(this, nt);
-    r(this, ot);
-    r(this, se);
     r(this, at);
-    r(this, $);
+    r(this, ot);
     r(this, ie);
-    r(this, W);
     r(this, rt);
-    // Emits
+    r(this, j);
     r(this, le);
+    r(this, $);
     r(this, ct);
+    // Emits
+    r(this, ne);
     r(this, dt);
     r(this, ht);
+    r(this, ut);
+    r(this, pt);
     // Props
     c(this, "parentHtmlContainer");
     c(this, "value");
@@ -763,116 +774,118 @@ class _i {
     c(this, "direction");
     c(this, "expandSelected");
     c(this, "saveScrollPosition");
+    c(this, "isIndependentNodes");
     c(this, "iconElements");
     c(this, "inputCallback");
     c(this, "openCallback");
     c(this, "closeCallback");
     c(this, "nameChangeCallback");
+    c(this, "searchCallback");
     // InnerState
     c(this, "ungroupedValue");
     c(this, "groupedValue");
+    c(this, "allValue");
     c(this, "isListOpened");
     c(this, "selectedName");
     c(this, "srcElement");
     // Components
     r(this, h, null);
-    r(this, p, null);
+    r(this, u, null);
     // Resize props
     r(this, F, null);
     // List position scroll
-    r(this, ee, 0);
+    r(this, Q, 0);
     // Timer for search text
     r(this, q, 0);
     // Outside listeners
-    r(this, x, null);
     r(this, S, null);
+    r(this, _, null);
     r(this, L, null);
-    r(this, V, null);
-    Ot({
+    r(this, B, null);
+    Bt({
       parentHtmlContainer: e,
       value: t,
-      staticList: ne,
-      appendToBody: o,
+      staticList: ae,
+      appendToBody: a,
       isSingleSelect: oe
-    }), this.parentHtmlContainer = e, this.value = [], this.options = s ?? [], this.openLevel = i ?? 0, this.appendToBody = o ?? !1, this.alwaysOpen = !!(d && !P), this.showTags = u ?? !0, this.tagsCountText = f ?? "elements selected", this.clearable = C ?? !0, this.searchable = b ?? !0, this.placeholder = g ?? "Search...", this.grouped = w ?? !0, this.isGroupedValue = k ?? !1, this.listSlotHtmlComponent = O ?? null, this.disabled = P ?? !1, this.emptyText = R ?? "No results found...", this.staticList = !!(ne && !this.appendToBody), this.id = mt ?? "", this.isSingleSelect = oe ?? !1, this.showCount = qs ?? !1, this.disabledBranchNode = js ?? !1, this.direction = $s ?? "auto", this.expandSelected = Ws ?? !1, this.saveScrollPosition = Rs ?? !0, this.iconElements = Tt(Us), this.inputCallback = zs, this.openCallback = Ys, this.closeCallback = Ks, this.nameChangeCallback = Xs, this.ungroupedValue = [], this.groupedValue = [], this.isListOpened = !1, this.selectedName = "", this.srcElement = null, a(this, te, Lt).call(this, t);
+    }), this.parentHtmlContainer = e, this.value = [], this.options = s ?? [], this.openLevel = i ?? 0, this.appendToBody = a ?? !1, this.alwaysOpen = !!(d && !I), this.showTags = p ?? !0, this.tagsCountText = f ?? "elements selected", this.clearable = C ?? !0, this.searchable = b ?? !0, this.placeholder = g ?? "Search...", this.grouped = w ?? !0, this.isGroupedValue = k ?? !1, this.listSlotHtmlComponent = y ?? null, this.disabled = I ?? !1, this.emptyText = W ?? "No results found...", this.staticList = !!(ae && !this.appendToBody), this.id = Ct ?? "", this.isSingleSelect = oe ?? !1, this.showCount = Rs ?? !1, this.disabledBranchNode = Us ?? !1, this.direction = zs ?? "auto", this.expandSelected = Ys ?? !1, this.saveScrollPosition = Ks ?? !0, this.isIndependentNodes = Xs ?? !1, this.iconElements = It(Js), this.inputCallback = Zs, this.openCallback = Qs, this.closeCallback = ei, this.nameChangeCallback = ti, this.searchCallback = si, this.ungroupedValue = [], this.groupedValue = [], this.allValue = [], this.isListOpened = !1, this.selectedName = "", this.srcElement = null, o(this, ee, yt).call(this, t);
   }
   mount() {
-    Ot({
+    Bt({
       parentHtmlContainer: this.parentHtmlContainer,
       value: this.value,
       staticList: this.staticList,
       appendToBody: this.appendToBody,
       isSingleSelect: this.isSingleSelect
-    }), this.iconElements = Tt(this.iconElements), a(this, te, Lt).call(this, this.value);
+    }), this.iconElements = It(this.iconElements), o(this, ee, yt).call(this, this.value);
   }
   updateValue(e) {
-    var s;
-    const t = n(this, h);
-    if (t) {
-      const i = yi(e);
-      t.updateValue(i);
-      const { groupedNodes: o, nodes: d } = t.selectedNodes, u = this.grouped || this.isSingleSelect ? o : d;
-      (s = n(this, p)) == null || s.updateValue(u), a(this, j, re).call(this, { groupedNodes: o, nodes: d });
-    }
+    const t = Ni(e), s = n(this, h);
+    s && (s.updateValue(t), o(this, se, St).call(this, s == null ? void 0 : s.selectedNodes));
   }
   destroy() {
-    this.srcElement && (a(this, se, yt).call(this), this.srcElement.innerHTML = "", this.srcElement = null, a(this, W, de).call(this, !0));
+    this.srcElement && (o(this, ie, _t).call(this), this.srcElement.innerHTML = "", this.srcElement = null, o(this, $, he).call(this, !0));
   }
   focus() {
-    n(this, p) && n(this, p).focus();
+    n(this, u) && n(this, u).focus();
   }
   toggleOpenClose() {
-    n(this, p) && (n(this, p).openClose(), n(this, p).focus());
+    n(this, u) && (n(this, u).openClose(), n(this, u).focus());
   }
   // Outside Listeners
   scrollWindowHandler() {
     this.updateListPosition();
   }
   focusWindowHandler(e) {
-    var s, i, o;
-    ((s = this.srcElement) == null ? void 0 : s.contains(e.target)) || ((i = n(this, h)) == null ? void 0 : i.srcElement.contains(e.target)) || ((o = n(this, p)) == null || o.blur(), a(this, W, de).call(this, !1), a(this, $, ce).call(this, !1));
+    var s, i, a;
+    ((s = this.srcElement) == null ? void 0 : s.contains(e.target)) || ((i = n(this, h)) == null ? void 0 : i.srcElement.contains(e.target)) || ((a = n(this, u)) == null || a.blur(), o(this, $, he).call(this, !1), o(this, j, de).call(this, !1));
   }
   blurWindowHandler() {
     var e;
-    (e = n(this, p)) == null || e.blur(), a(this, W, de).call(this, !1), a(this, $, ce).call(this, !1);
+    (e = n(this, u)) == null || e.blur(), o(this, $, he).call(this, !1), o(this, j, de).call(this, !1);
   }
   // Update direction of the list. Support appendToBody and standard mode with absolute
   updateListPosition() {
-    var O;
-    const e = this.srcElement, t = (O = n(this, h)) == null ? void 0 : O.srcElement;
+    var y;
+    const e = this.srcElement, t = (y = n(this, h)) == null ? void 0 : y.srcElement;
     if (!e || !t)
       return;
     const { height: s } = t.getBoundingClientRect(), {
       x: i,
-      y: o,
+      y: a,
       height: d,
-      width: u
-    } = e.getBoundingClientRect(), f = window.innerHeight, C = o, b = f - o - d;
+      width: p
+    } = e.getBoundingClientRect(), f = window.innerHeight, C = a, b = f - a - d;
     let g = C > b && C >= s && b < s;
     if (this.direction !== "auto" && (g = this.direction === "top"), this.appendToBody) {
       (t.style.top !== "0px" || t.style.left !== "0px") && (t.style.top = "0px", t.style.left = "0px");
-      const P = i + window.scrollX, R = g ? o + window.scrollY - s : o + window.scrollY + d;
-      t.style.transform = `translate(${P}px,${R}px)`, t.style.width = `${u}px`;
+      const I = i + window.scrollX, W = g ? a + window.scrollY - s : a + window.scrollY + d;
+      t.style.transform = `translate(${I}px,${W}px)`, t.style.width = `${p}px`;
     }
     const w = g ? "top" : "bottom";
-    t.getAttribute("direction") !== w && (t.setAttribute("direction", w), a(this, at, Is).call(this, g, this.appendToBody));
+    t.getAttribute("direction") !== w && (t.setAttribute("direction", w), o(this, rt, Ms).call(this, g, this.appendToBody));
   }
 }
-h = new WeakMap(), p = new WeakMap(), F = new WeakMap(), ee = new WeakMap(), q = new WeakMap(), x = new WeakMap(), S = new WeakMap(), L = new WeakMap(), V = new WeakMap(), te = new WeakSet(), Lt = function(e) {
-  var o;
+h = new WeakMap(), u = new WeakMap(), F = new WeakMap(), Q = new WeakMap(), q = new WeakMap(), S = new WeakMap(), _ = new WeakMap(), L = new WeakMap(), B = new WeakMap(), ee = new WeakSet(), yt = function(e) {
+  var a;
   this.destroy();
-  const { container: t, list: s, input: i } = a(this, Je, Ss).call(this);
-  this.srcElement = t, m(this, h, s), m(this, p, i), m(this, x, this.scrollWindowHandler.bind(this)), m(this, S, this.scrollWindowHandler.bind(this)), m(this, L, this.focusWindowHandler.bind(this)), m(this, V, this.blurWindowHandler.bind(this)), this.alwaysOpen && ((o = n(this, p)) == null || o.openClose()), this.disabled ? this.srcElement.classList.add("treeselect--disabled") : this.srcElement.classList.remove("treeselect--disabled"), this.updateValue(e ?? this.value);
-}, j = new WeakSet(), re = function({ groupedNodes: e, nodes: t }) {
-  this.ungroupedValue = t ? Ct(t) : [], this.groupedValue = e ? Ct(e) : [];
-  const s = this.isGroupedValue || this.isSingleSelect ? this.groupedValue : this.ungroupedValue;
-  this.value = xi(s, this.isSingleSelect);
-}, Je = new WeakSet(), Ss = function() {
+  const { container: t, list: s, input: i } = o(this, Ze, Ts).call(this);
+  this.srcElement = t, m(this, h, s), m(this, u, i), m(this, S, this.scrollWindowHandler.bind(this)), m(this, _, this.scrollWindowHandler.bind(this)), m(this, L, this.focusWindowHandler.bind(this)), m(this, B, this.blurWindowHandler.bind(this)), this.alwaysOpen && ((a = n(this, u)) == null || a.openClose()), this.disabled ? this.srcElement.classList.add("treeselect--disabled") : this.srcElement.classList.remove("treeselect--disabled"), this.updateValue(e ?? this.value);
+}, te = new WeakSet(), xt = function({
+  groupedNodes: e,
+  nodes: t,
+  allNodes: s
+}) {
+  this.ungroupedValue = t ? re(t) : [], this.groupedValue = e ? re(e) : [], this.allValue = s ? re(s) : [];
+  let i = [];
+  this.isIndependentNodes || this.isSingleSelect ? i = this.allValue : this.isGroupedValue ? i = this.groupedValue : i = this.ungroupedValue, this.value = Oi(i, this.isSingleSelect);
+}, Ze = new WeakSet(), Ts = function() {
   const e = this.parentHtmlContainer;
   e.classList.add("treeselect");
-  const t = new Li({
+  const t = new Ti({
+    value: [],
+    // updateValue method calls in initMount method to set actual value
     options: this.options,
-    value: this.ungroupedValue,
     openLevel: this.openLevel,
     listSlotHtmlComponent: this.listSlotHtmlComponent,
     emptyText: this.emptyText,
@@ -880,15 +893,17 @@ h = new WeakMap(), p = new WeakMap(), F = new WeakMap(), ee = new WeakMap(), q =
     showCount: this.showCount,
     disabledBranchNode: this.disabledBranchNode,
     expandSelected: this.expandSelected,
+    isIndependentNodes: this.isIndependentNodes,
     iconElements: this.iconElements,
-    inputCallback: (d) => a(this, it, Ps).call(this, d),
-    arrowClickCallback: () => a(this, lt, Bs).call(this),
+    inputCallback: (i) => o(this, lt, Vs).call(this, i),
+    arrowClickCallback: () => o(this, nt, Ds).call(this),
     mouseupCallback: () => {
-      var d;
-      return (d = n(this, p)) == null ? void 0 : d.focus();
+      var i;
+      return (i = n(this, u)) == null ? void 0 : i.focus();
     }
-  }), { groupedNodes: s, nodes: i } = t.selectedNodes, o = new ei({
-    value: this.grouped || this.isSingleSelect ? s : i,
+  }), s = new ai({
+    value: [],
+    // updateValue method calls in initMount method to set actual value
     showTags: this.showTags,
     tagsCountText: this.tagsCountText,
     clearable: this.clearable,
@@ -899,82 +914,91 @@ h = new WeakMap(), p = new WeakMap(), F = new WeakMap(), ee = new WeakMap(), q =
     isSingleSelect: this.isSingleSelect,
     id: this.id,
     iconElements: this.iconElements,
-    inputCallback: (d) => a(this, Ze, _s).call(this, d),
-    searchCallback: (d) => a(this, et, Ts).call(this, d),
-    openCallback: () => a(this, ot, Ds).call(this),
-    closeCallback: () => a(this, se, yt).call(this),
-    keydownCallback: (d) => a(this, Qe, As).call(this, d),
-    focusCallback: () => a(this, tt, Ns).call(this),
-    blurCallback: () => a(this, st, Os).call(this),
-    nameChangeCallback: (d) => a(this, nt, Vs).call(this, d)
+    inputCallback: (i) => o(this, Qe, Ns).call(this, i),
+    searchCallback: (i) => o(this, tt, Is).call(this, i),
+    openCallback: () => o(this, ot, Gs).call(this),
+    closeCallback: () => o(this, ie, _t).call(this),
+    keydownCallback: (i) => o(this, et, Os).call(this, i),
+    focusCallback: () => o(this, st, Ps).call(this),
+    blurCallback: () => o(this, it, Bs).call(this),
+    nameChangeCallback: (i) => o(this, at, Hs).call(this, i)
   });
-  return this.appendToBody && m(this, F, new ResizeObserver(() => this.updateListPosition())), e.append(o.srcElement), { container: e, list: t, input: o };
-}, Ze = new WeakSet(), _s = function(e) {
-  var o, d, u, f, C;
-  const t = Ct(e);
-  (o = n(this, h)) == null || o.updateValue(t);
-  const s = (u = (d = n(this, h)) == null ? void 0 : d.selectedNodes) == null ? void 0 : u.nodes, i = (C = (f = n(this, h)) == null ? void 0 : f.selectedNodes) == null ? void 0 : C.groupedNodes;
-  a(this, j, re).call(this, { groupedNodes: i, nodes: s }), a(this, le, St).call(this);
-}, Qe = new WeakSet(), As = function(e) {
+  return this.appendToBody && m(this, F, new ResizeObserver(() => this.updateListPosition())), e.append(s.srcElement), { container: e, list: t, input: s };
+}, Qe = new WeakSet(), Ns = function(e) {
+  var i, a;
+  const t = re(e);
+  (i = n(this, h)) == null || i.updateValue(t);
+  const s = ((a = n(this, h)) == null ? void 0 : a.selectedNodes) ?? {};
+  o(this, te, xt).call(this, s), o(this, ne, Tt).call(this);
+}, et = new WeakSet(), Os = function(e) {
   var t;
   this.isListOpened && ((t = n(this, h)) == null || t.callKeyAction(e));
-}, et = new WeakSet(), Ts = function(e) {
-  n(this, q) && clearTimeout(n(this, q)), m(this, q, setTimeout(() => {
+}, tt = new WeakSet(), Is = function(e) {
+  n(this, q) && clearTimeout(n(this, q)), m(this, q, window.setTimeout(() => {
     var t;
     (t = n(this, h)) == null || t.updateSearchValue(e), this.updateListPosition();
-  }, 350));
-}, tt = new WeakSet(), Ns = function() {
-  a(this, $, ce).call(this, !0), n(this, L) && n(this, L) && n(this, V) && (document.addEventListener("mousedown", n(this, L), !0), document.addEventListener("focus", n(this, L), !0), window.addEventListener("blur", n(this, V)));
-}, st = new WeakSet(), Os = function() {
+  }, 350)), o(this, pt, Ws).call(this, e);
+}, st = new WeakSet(), Ps = function() {
+  o(this, j, de).call(this, !0), n(this, L) && n(this, L) && n(this, B) && (document.addEventListener("mousedown", n(this, L), !0), document.addEventListener("focus", n(this, L), !0), window.addEventListener("blur", n(this, B)));
+}, it = new WeakSet(), Bs = function() {
   setTimeout(() => {
     var s, i;
-    const e = (s = n(this, p)) == null ? void 0 : s.srcElement.contains(document.activeElement), t = (i = n(this, h)) == null ? void 0 : i.srcElement.contains(document.activeElement);
+    const e = (s = n(this, u)) == null ? void 0 : s.srcElement.contains(document.activeElement), t = (i = n(this, h)) == null ? void 0 : i.srcElement.contains(document.activeElement);
     !e && !t && this.blurWindowHandler();
   }, 1);
-}, it = new WeakSet(), Ps = function(e) {
-  var o, d, u, f;
-  const { groupedNodes: t, nodes: s } = e, i = this.grouped || this.isSingleSelect ? t : s;
-  (o = n(this, p)) == null || o.updateValue(i), a(this, j, re).call(this, { groupedNodes: t, nodes: s }), this.isSingleSelect && !this.alwaysOpen && ((d = n(this, p)) == null || d.openClose(), (u = n(this, p)) == null || u.clearSearch()), (f = n(this, p)) == null || f.focus(), a(this, le, St).call(this);
-}, lt = new WeakSet(), Bs = function() {
+}, se = new WeakSet(), St = function(e) {
+  var s;
+  if (!e)
+    return;
+  let t = [];
+  this.isIndependentNodes || this.isSingleSelect ? t = e.allNodes : this.grouped ? t = e.groupedNodes : t = e.nodes, (s = n(this, u)) == null || s.updateValue(t), o(this, te, xt).call(this, e);
+}, lt = new WeakSet(), Vs = function(e) {
+  var t, s, i;
+  o(this, se, St).call(this, e), this.isSingleSelect && !this.alwaysOpen && ((t = n(this, u)) == null || t.openClose(), (s = n(this, u)) == null || s.clearSearch()), (i = n(this, u)) == null || i.focus(), o(this, ne, Tt).call(this);
+}, nt = new WeakSet(), Ds = function() {
   var e;
-  (e = n(this, p)) == null || e.focus(), this.updateListPosition();
-}, nt = new WeakSet(), Vs = function(e) {
-  this.selectedName !== e && (this.selectedName = e, a(this, ct, Gs).call(this));
-}, ot = new WeakSet(), Ds = function() {
+  (e = n(this, u)) == null || e.focus(), this.updateListPosition();
+}, at = new WeakSet(), Hs = function(e) {
+  this.selectedName !== e && (this.selectedName = e, o(this, dt, qs).call(this));
+}, ot = new WeakSet(), Gs = function() {
   var e;
-  this.isListOpened = !0, n(this, x) && n(this, S) && (window.addEventListener("scroll", n(this, x), !0), window.addEventListener("resize", n(this, S))), !(!n(this, h) || !this.srcElement) && (this.appendToBody ? (document.body.appendChild(n(this, h).srcElement), (e = n(this, F)) == null || e.observe(this.srcElement)) : this.srcElement.appendChild(n(this, h).srcElement), this.updateListPosition(), a(this, ie, xt).call(this, !0), a(this, rt, Hs).call(this), a(this, dt, Ms).call(this));
-}, se = new WeakSet(), yt = function() {
+  this.isListOpened = !0, n(this, S) && n(this, _) && (window.addEventListener("scroll", n(this, S), !0), window.addEventListener("resize", n(this, _))), !(!n(this, h) || !this.srcElement) && (this.appendToBody ? (document.body.appendChild(n(this, h).srcElement), (e = n(this, F)) == null || e.observe(this.srcElement)) : this.srcElement.appendChild(n(this, h).srcElement), this.updateListPosition(), o(this, le, At).call(this, !0), o(this, ct, Fs).call(this), o(this, ht, js).call(this));
+}, ie = new WeakSet(), _t = function() {
   var t;
-  this.alwaysOpen || (this.isListOpened = !1, n(this, x) && n(this, S) && (window.removeEventListener("scroll", n(this, x), !0), window.removeEventListener("resize", n(this, S))), !n(this, h) || !this.srcElement) || !(this.appendToBody ? document.body.contains(n(this, h).srcElement) : this.srcElement.contains(n(this, h).srcElement)) || (m(this, ee, n(this, h).srcElement.scrollTop), this.appendToBody ? (document.body.removeChild(n(this, h).srcElement), (t = n(this, F)) == null || t.disconnect()) : this.srcElement.removeChild(n(this, h).srcElement), a(this, ie, xt).call(this, !1), a(this, ht, Fs).call(this));
-}, at = new WeakSet(), Is = function(e, t) {
-  if (!n(this, h) || !n(this, p))
+  this.alwaysOpen || (this.isListOpened = !1, n(this, S) && n(this, _) && (window.removeEventListener("scroll", n(this, S), !0), window.removeEventListener("resize", n(this, _))), !n(this, h) || !this.srcElement) || !(this.appendToBody ? document.body.contains(n(this, h).srcElement) : this.srcElement.contains(n(this, h).srcElement)) || (m(this, Q, n(this, h).srcElement.scrollTop), this.appendToBody ? (document.body.removeChild(n(this, h).srcElement), (t = n(this, F)) == null || t.disconnect()) : this.srcElement.removeChild(n(this, h).srcElement), o(this, le, At).call(this, !1), o(this, ut, $s).call(this));
+}, rt = new WeakSet(), Ms = function(e, t) {
+  if (!n(this, h) || !n(this, u))
     return;
   const s = t ? "treeselect-list--top-to-body" : "treeselect-list--top", i = t ? "treeselect-list--bottom-to-body" : "treeselect-list--bottom";
-  e ? (n(this, h).srcElement.classList.add(s), n(this, h).srcElement.classList.remove(i), n(this, p).srcElement.classList.add("treeselect-input--top"), n(this, p).srcElement.classList.remove("treeselect-input--bottom")) : (n(this, h).srcElement.classList.remove(s), n(this, h).srcElement.classList.add(i), n(this, p).srcElement.classList.remove("treeselect-input--top"), n(this, p).srcElement.classList.add("treeselect-input--bottom"));
-}, $ = new WeakSet(), ce = function(e) {
-  !n(this, p) || !n(this, h) || (e ? (n(this, p).srcElement.classList.add("treeselect-input--focused"), n(this, h).srcElement.classList.add("treeselect-list--focused")) : (n(this, p).srcElement.classList.remove("treeselect-input--focused"), n(this, h).srcElement.classList.remove("treeselect-list--focused")));
-}, ie = new WeakSet(), xt = function(e) {
-  var t, s, i, o;
-  e ? (t = n(this, p)) == null || t.srcElement.classList.add("treeselect-input--opened") : (s = n(this, p)) == null || s.srcElement.classList.remove("treeselect-input--opened"), this.staticList ? (i = n(this, h)) == null || i.srcElement.classList.add("treeselect-list--static") : (o = n(this, h)) == null || o.srcElement.classList.remove("treeselect-list--static");
-}, W = new WeakSet(), de = function(e) {
-  !n(this, x) || !n(this, S) || !n(this, L) || !n(this, V) || ((!this.alwaysOpen || e) && (window.removeEventListener("scroll", n(this, x), !0), window.removeEventListener("resize", n(this, S))), document.removeEventListener("mousedown", n(this, L), !0), document.removeEventListener("focus", n(this, L), !0), window.removeEventListener("blur", n(this, V)));
-}, rt = new WeakSet(), Hs = function() {
+  e ? (n(this, h).srcElement.classList.add(s), n(this, h).srcElement.classList.remove(i), n(this, u).srcElement.classList.add("treeselect-input--top"), n(this, u).srcElement.classList.remove("treeselect-input--bottom")) : (n(this, h).srcElement.classList.remove(s), n(this, h).srcElement.classList.add(i), n(this, u).srcElement.classList.remove("treeselect-input--top"), n(this, u).srcElement.classList.add("treeselect-input--bottom"));
+}, j = new WeakSet(), de = function(e) {
+  !n(this, u) || !n(this, h) || (e ? (n(this, u).srcElement.classList.add("treeselect-input--focused"), n(this, h).srcElement.classList.add("treeselect-list--focused")) : (n(this, u).srcElement.classList.remove("treeselect-input--focused"), n(this, h).srcElement.classList.remove("treeselect-list--focused")));
+}, le = new WeakSet(), At = function(e) {
+  var t, s, i, a;
+  e ? (t = n(this, u)) == null || t.srcElement.classList.add("treeselect-input--opened") : (s = n(this, u)) == null || s.srcElement.classList.remove("treeselect-input--opened"), this.staticList ? (i = n(this, h)) == null || i.srcElement.classList.add("treeselect-list--static") : (a = n(this, h)) == null || a.srcElement.classList.remove("treeselect-list--static");
+}, $ = new WeakSet(), he = function(e) {
+  !n(this, S) || !n(this, _) || !n(this, L) || !n(this, B) || ((!this.alwaysOpen || e) && (window.removeEventListener("scroll", n(this, S), !0), window.removeEventListener("resize", n(this, _))), document.removeEventListener("mousedown", n(this, L), !0), document.removeEventListener("focus", n(this, L), !0), window.removeEventListener("blur", n(this, B)));
+}, ct = new WeakSet(), Fs = function() {
   var t, s, i;
   const e = (t = n(this, h)) == null ? void 0 : t.isLastFocusedElementExist();
-  this.saveScrollPosition && e ? (s = n(this, h)) == null || s.srcElement.scroll(0, n(this, ee)) : (i = n(this, h)) == null || i.focusFirstListElement();
-}, le = new WeakSet(), St = function() {
+  this.saveScrollPosition && e ? (s = n(this, h)) == null || s.srcElement.scroll(0, n(this, Q)) : (i = n(this, h)) == null || i.focusFirstListElement();
+}, ne = new WeakSet(), Tt = function() {
   var e;
   (e = this.srcElement) == null || e.dispatchEvent(new CustomEvent("input", { detail: this.value })), this.inputCallback && this.inputCallback(this.value);
-}, ct = new WeakSet(), Gs = function() {
+}, dt = new WeakSet(), qs = function() {
   var e;
   (e = this.srcElement) == null || e.dispatchEvent(new CustomEvent("name-change", { detail: this.selectedName })), this.nameChangeCallback && this.nameChangeCallback(this.selectedName);
-}, dt = new WeakSet(), Ms = function() {
+}, ht = new WeakSet(), js = function() {
   var e;
   this.alwaysOpen || ((e = this.srcElement) == null || e.dispatchEvent(new CustomEvent("open", { detail: this.value })), this.openCallback && this.openCallback(this.value));
-}, ht = new WeakSet(), Fs = function() {
+}, ut = new WeakSet(), $s = function() {
   var e;
   this.alwaysOpen || ((e = this.srcElement) == null || e.dispatchEvent(new CustomEvent("close", { detail: this.value })), this.closeCallback && this.closeCallback(this.value));
+}, pt = new WeakSet(), Ws = function(e) {
+  var s;
+  const t = (e == null ? void 0 : e.trim()) ?? "";
+  (s = this.srcElement) == null || s.dispatchEvent(new CustomEvent("search", { detail: t })), this.searchCallback && this.searchCallback(t);
 };
 export {
-  _i as default
+  Pi as default
 };
