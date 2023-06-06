@@ -1,6 +1,6 @@
-import { defineComponent as S, ref as r, watch as f, toRaw as c, onMounted as T, onUnmounted as B, openBlock as w, createElementBlock as C, Fragment as b, createElementVNode as h, renderSlot as _ } from "vue";
+import { defineComponent as T, ref as r, watch as f, toRaw as d, onMounted as B, onUnmounted as C, openBlock as b, createElementBlock as w, Fragment as _, createElementVNode as h, renderSlot as N } from "vue";
 import x from "treeselectjs";
-const N = ["value", "id"], E = S({
+const E = ["value", "id"], O = T({
   name: "Treeselect",
   props: {
     value: {
@@ -91,23 +91,27 @@ const N = ["value", "id"], E = S({
       type: Boolean,
       default: !0
     },
+    isIndependentNodes: {
+      type: Boolean,
+      default: !1
+    },
     iconElements: {
       type: Object,
       default: () => ({})
     }
   },
-  emits: ["input", "open", "close", "name-change"],
+  emits: ["input", "open", "close", "name-change", "search"],
   setup(e, { emit: n }) {
-    const o = r(null), i = r(null), l = r(null), y = (t) => n("input", t), p = (t) => n("open", t), g = (t) => n("close", t), m = (t) => n("name-change", t);
+    const o = r(null), c = r(null), l = r(null), y = (t) => n("input", t), p = (t) => n("open", t), g = (t) => n("close", t), v = (t) => n("name-change", t), m = (t) => n("search", t);
     return f(
       () => e,
       (t) => {
         if (l.value) {
-          const a = c(l.value), s = c(t);
+          const a = d(l.value), s = d(t);
           let u = !1;
-          Object.keys(s).forEach((d) => {
-            const v = s[d] === a[d];
-            !N.includes(d) && !v && (a[d] = s[d], u = !0);
+          Object.keys(s).forEach((i) => {
+            const S = s[i] === a[i];
+            !E.includes(i) && !S && (a[i] = s[i], u = !0);
           }), u && a.mount();
         }
       },
@@ -116,7 +120,7 @@ const N = ["value", "id"], E = S({
       () => e.value,
       (t) => {
         if (l.value) {
-          const a = c(l.value), s = c(t);
+          const a = d(l.value), s = d(t);
           JSON.stringify(a.value) !== JSON.stringify(s) && a.updateValue(s);
         }
       }
@@ -124,11 +128,11 @@ const N = ["value", "id"], E = S({
       () => e.id,
       (t) => {
         if (l.value) {
-          const a = c(l.value);
+          const a = d(l.value);
           (a.id || t) && (a.id = t ?? "", a.mount());
         }
       }
-    ), T(() => {
+    ), B(() => {
       if (!o.value)
         throw new Error("Treeselect container ref is not defined");
       l.value = new x({
@@ -155,40 +159,42 @@ const N = ["value", "id"], E = S({
         direction: e.direction,
         expandSelected: e.expandSelected,
         saveScrollPosition: e.saveScrollPosition,
+        isIndependentNodes: e.isIndependentNodes,
         inputCallback: y,
         openCallback: p,
         closeCallback: g,
-        nameChangeCallback: m,
+        nameChangeCallback: v,
+        searchCallback: m,
         // We need a HTMLElement as a prop here. It is an additional component at the end of list.
         // We gets HTMLElement from refs. Vue events work fine.
-        listSlotHtmlComponent: i.value ?? null,
+        listSlotHtmlComponent: c.value ?? null,
         iconElements: e.iconElements
       });
-    }), B(() => {
-      l.value && c(l.value).destroy();
+    }), C(() => {
+      l.value && d(l.value).destroy();
     }), {
       treeselectContainerRef: o,
-      treeselectAfterListSlotRef: i
+      treeselectAfterListSlotRef: c
     };
   }
-}), O = (e, n) => {
+}), V = (e, n) => {
   const o = e.__vccOpts || e;
-  for (const [i, l] of n)
-    o[i] = l;
+  for (const [c, l] of n)
+    o[c] = l;
   return o;
-}, V = { ref: "treeselectContainerRef" }, L = {
+}, L = { ref: "treeselectContainerRef" }, R = {
   ref: "treeselectAfterListSlotRef",
   class: "treeselect__after-list-slot"
 };
-function R(e, n, o, i, l, y) {
-  return w(), C(b, null, [
-    h("div", V, null, 512),
-    h("div", L, [
-      _(e.$slots, "default")
+function k(e, n, o, c, l, y) {
+  return b(), w(_, null, [
+    h("div", L, null, 512),
+    h("div", R, [
+      N(e.$slots, "default")
     ], 512)
   ], 64);
 }
-const P = /* @__PURE__ */ O(E, [["render", R]]);
+const P = /* @__PURE__ */ V(O, [["render", k]]);
 export {
   P as default
 };

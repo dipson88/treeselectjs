@@ -107,12 +107,16 @@ export default defineComponent({
       type: Boolean,
       default: true
     },
+    isIndependentNodes: {
+      type: Boolean,
+      default: false
+    },
     iconElements: {
       type: Object as PropType<Partial<IconsType>>,
       default: () => ({})
     }
   },
-  emits: ['input', 'open', 'close', 'name-change'],
+  emits: ['input', 'open', 'close', 'name-change', 'search'],
   setup(props, { emit }) {
     const treeselectContainerRef = ref<HTMLElement | null>(null)
     const treeselectAfterListSlotRef = ref<HTMLElement | null>(null)
@@ -122,6 +126,7 @@ export default defineComponent({
     const onOpen = (value: TreeselectValue) => emit('open', value)
     const onClose = (value: TreeselectValue) => emit('close', value)
     const onNameChange = (name: string) => emit('name-change', name)
+    const onSearch = (value: string) => emit('search', value)
 
     watch(
       () => props,
@@ -210,10 +215,12 @@ export default defineComponent({
         direction: props.direction,
         expandSelected: props.expandSelected,
         saveScrollPosition: props.saveScrollPosition,
+        isIndependentNodes: props.isIndependentNodes,
         inputCallback: onInput,
         openCallback: onOpen,
         closeCallback: onClose,
         nameChangeCallback: onNameChange,
+        searchCallback: onSearch,
         // We need a HTMLElement as a prop here. It is an additional component at the end of list.
         // We gets HTMLElement from refs. Vue events work fine.
         listSlotHtmlComponent: treeselectAfterListSlotRef.value ?? null,

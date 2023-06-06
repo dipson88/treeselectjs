@@ -90,6 +90,10 @@ declare const _sfc_main: import("vue").DefineComponent<{
         type: BooleanConstructor;
         default: boolean;
     };
+    isIndependentNodes: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
     iconElements: {
         type: PropType<Partial<IconsType>>;
         default: () => {};
@@ -97,7 +101,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
 }, {
     treeselectContainerRef: import("vue").Ref<HTMLElement | null>;
     treeselectAfterListSlotRef: import("vue").Ref<HTMLElement | null>;
-}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("input" | "open" | "close" | "name-change")[], "input" | "open" | "close" | "name-change", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("input" | "open" | "close" | "name-change" | "search")[], "input" | "open" | "close" | "name-change" | "search", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     value: {
         type: PropType<ValueInputType>;
         default: () => never[];
@@ -186,6 +190,10 @@ declare const _sfc_main: import("vue").DefineComponent<{
         type: BooleanConstructor;
         default: boolean;
     };
+    isIndependentNodes: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
     iconElements: {
         type: PropType<Partial<IconsType>>;
         default: () => {};
@@ -195,6 +203,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
     onOpen?: ((...args: any[]) => any) | undefined;
     onClose?: ((...args: any[]) => any) | undefined;
     "onName-change"?: ((...args: any[]) => any) | undefined;
+    onSearch?: ((...args: any[]) => any) | undefined;
 }, {
     value: ValueInputType;
     id: string;
@@ -218,6 +227,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
     direction: DirectionType;
     expandSelected: boolean;
     saveScrollPosition: boolean;
+    isIndependentNodes: boolean;
     iconElements: Partial<IconsType>;
 }>;
 export default _sfc_main;
