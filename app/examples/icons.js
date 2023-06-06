@@ -8,7 +8,6 @@ const options = [
     name: 'England',
     value: 1,
     htmlAttr: { ico: icons.check },
-    disabled: true,
     children: [
       {
         name: 'London',
