@@ -56,7 +56,7 @@ function vr() {
       return typeof r == "function" ? r : null;
     }
     var x = l.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-    function p(e) {
+    function h(e) {
       {
         for (var r = arguments.length, t = new Array(r > 1 ? r - 1 : 0), n = 1; n < r; n++)
           t[n - 1] = arguments[n];
@@ -95,7 +95,7 @@ function vr() {
     function R(e) {
       if (e == null)
         return null;
-      if (typeof e.tag == "number" && p("Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."), typeof e == "function")
+      if (typeof e.tag == "number" && h("Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."), typeof e == "function")
         return e.displayName || e.name || null;
       if (typeof e == "string")
         return e;
@@ -196,7 +196,7 @@ function vr() {
             })
           });
         }
-        D < 0 && p("disabledDepth fell below zero. This is a bug in React. Please file an issue.");
+        D < 0 && h("disabledDepth fell below zero. This is a bug in React. Please file an issue.");
       }
     }
     var U = x.ReactCurrentDispatcher, J;
@@ -267,14 +267,14 @@ function vr() {
       } catch (y) {
         if (y && n && typeof y.stack == "string") {
           for (var a = y.stack.split(`
-`), h = n.stack.split(`
-`), c = a.length - 1, f = h.length - 1; c >= 1 && f >= 0 && a[c] !== h[f]; )
+`), p = n.stack.split(`
+`), c = a.length - 1, f = p.length - 1; c >= 1 && f >= 0 && a[c] !== p[f]; )
             f--;
           for (; c >= 1 && f >= 0; c--, f--)
-            if (a[c] !== h[f]) {
+            if (a[c] !== p[f]) {
               if (c !== 1 || f !== 1)
                 do
-                  if (c--, f--, f < 0 || a[c] !== h[f]) {
+                  if (c--, f--, f < 0 || a[c] !== p[f]) {
                     var m = `
 ` + a[c].replace(" at new ", " at ");
                     return e.displayName && m.includes("<anonymous>") && (m = m.replace("<anonymous>", e.displayName)), typeof e == "function" && Y.set(e, m), m;
@@ -341,14 +341,14 @@ function vr() {
             var a = void 0;
             try {
               if (typeof e[i] != "function") {
-                var h = Error((n || "React class") + ": " + t + " type `" + i + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof e[i] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
-                throw h.name = "Invariant Violation", h;
+                var p = Error((n || "React class") + ": " + t + " type `" + i + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof e[i] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
+                throw p.name = "Invariant Violation", p;
               }
               a = e[i](r, i, n, t, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
             } catch (c) {
               a = c;
             }
-            a && !(a instanceof Error) && (M(o), p("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", n || "React class", t, i, typeof a), M(null)), a instanceof Error && !(a.message in fe) && (fe[a.message] = !0, M(o), p("Failed %s type: %s", t, a.message), M(null));
+            a && !(a instanceof Error) && (M(o), h("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", n || "React class", t, i, typeof a), M(null)), a instanceof Error && !(a.message in fe) && (fe[a.message] = !0, M(o), h("Failed %s type: %s", t, a.message), M(null));
           }
       }
     }
@@ -372,16 +372,16 @@ function vr() {
     function ve(e) {
       return "" + e;
     }
-    function pe(e) {
+    function he(e) {
       if (Ge(e))
-        return p("The provided key is an unsupported type %s. This value must be coerced to a string before before using it here.", qe(e)), ve(e);
+        return h("The provided key is an unsupported type %s. This value must be coerced to a string before before using it here.", qe(e)), ve(e);
     }
     var F = x.ReactCurrentOwner, ze = {
       key: !0,
       ref: !0,
       __self: !0,
       __source: !0
-    }, he, ge, G;
+    }, pe, ge, G;
     G = {};
     function He(e) {
       if (L.call(e, "ref")) {
@@ -402,13 +402,13 @@ function vr() {
     function Xe(e, r) {
       if (typeof e.ref == "string" && F.current && r && F.current.stateNode !== r) {
         var t = R(F.current.type);
-        G[t] || (p('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', R(F.current.type), e.ref), G[t] = !0);
+        G[t] || (h('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', R(F.current.type), e.ref), G[t] = !0);
       }
     }
     function Ze(e, r) {
       {
         var t = function() {
-          he || (he = !0, p("%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", r));
+          pe || (pe = !0, h("%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", r));
         };
         t.isReactWarning = !0, Object.defineProperty(e, "key", {
           get: t,
@@ -419,7 +419,7 @@ function vr() {
     function Qe(e, r) {
       {
         var t = function() {
-          ge || (ge = !0, p("%s: `ref` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", r));
+          ge || (ge = !0, h("%s: `ref` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", r));
         };
         t.isReactWarning = !0, Object.defineProperty(e, "ref", {
           get: t,
@@ -458,8 +458,8 @@ function vr() {
     };
     function rr(e, r, t, n, o) {
       {
-        var u, i = {}, a = null, h = null;
-        t !== void 0 && (pe(t), a = "" + t), Ke(r) && (pe(r.key), a = "" + r.key), He(r) && (h = r.ref, Xe(r, o));
+        var u, i = {}, a = null, p = null;
+        t !== void 0 && (he(t), a = "" + t), Ke(r) && (he(r.key), a = "" + r.key), He(r) && (p = r.ref, Xe(r, o));
         for (u in r)
           L.call(r, u) && !ze.hasOwnProperty(u) && (i[u] = r[u]);
         if (e && e.defaultProps) {
@@ -467,11 +467,11 @@ function vr() {
           for (u in c)
             i[u] === void 0 && (i[u] = c[u]);
         }
-        if (a || h) {
+        if (a || p) {
           var f = typeof e == "function" ? e.displayName || e.name || "Unknown" : e;
-          a && Ze(i, f), h && Qe(i, f);
+          a && Ze(i, f), p && Qe(i, f);
         }
-        return er(e, a, h, o, n, F.current, i);
+        return er(e, a, p, o, n, F.current, i);
       }
     }
     var z = x.ReactCurrentOwner, be = x.ReactDebugCurrentFrame;
@@ -533,7 +533,7 @@ Check the top-level render call using <` + t + ">.");
           return;
         Ee[t] = !0;
         var n = "";
-        e && e._owner && e._owner !== z.current && (n = " It was passed a child from " + R(e._owner.type) + "."), j(e), p('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', t, n), j(null);
+        e && e._owner && e._owner !== z.current && (n = " It was passed a child from " + R(e._owner.type) + "."), j(e), h('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', t, n), j(null);
       }
     }
     function ye(e, r) {
@@ -575,9 +575,9 @@ Check the top-level render call using <` + t + ">.");
         } else if (r.PropTypes !== void 0 && !H) {
           H = !0;
           var o = R(r);
-          p("Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?", o || "Unknown");
+          h("Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?", o || "Unknown");
         }
-        typeof r.getDefaultProps == "function" && !r.getDefaultProps.isReactClassApproved && p("getDefaultProps is only used on classic React.createClass definitions. Use a static property named `defaultProps` instead.");
+        typeof r.getDefaultProps == "function" && !r.getDefaultProps.isReactClassApproved && h("getDefaultProps is only used on classic React.createClass definitions. Use a static property named `defaultProps` instead.");
       }
     }
     function ir(e) {
@@ -585,11 +585,11 @@ Check the top-level render call using <` + t + ">.");
         for (var r = Object.keys(e.props), t = 0; t < r.length; t++) {
           var n = r[t];
           if (n !== "children" && n !== "key") {
-            j(e), p("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", n), j(null);
+            j(e), h("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", n), j(null);
             break;
           }
         }
-        e.ref !== null && (j(e), p("Invalid attribute `ref` supplied to `React.Fragment`."), j(null));
+        e.ref !== null && (j(e), h("Invalid attribute `ref` supplied to `React.Fragment`."), j(null));
       }
     }
     function _e(e, r, t, n, o, u) {
@@ -598,10 +598,10 @@ Check the top-level render call using <` + t + ">.");
         if (!i) {
           var a = "";
           (e === void 0 || typeof e == "object" && e !== null && Object.keys(e).length === 0) && (a += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.");
-          var h = tr(o);
-          h ? a += h : a += me();
+          var p = tr(o);
+          p ? a += p : a += me();
           var c;
-          e === null ? c = "null" : q(e) ? c = "array" : e !== void 0 && e.$$typeof === _ ? (c = "<" + (R(e.type) || "Unknown") + " />", a = " Did you accidentally export a JSX literal instead of a component?") : c = typeof e, p("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", c, a);
+          e === null ? c = "null" : q(e) ? c = "array" : e !== void 0 && e.$$typeof === _ ? (c = "<" + (R(e.type) || "Unknown") + " />", a = " Did you accidentally export a JSX literal instead of a component?") : c = typeof e, h("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", c, a);
         }
         var f = rr(e, r, t, o, u);
         if (f == null)
@@ -615,7 +615,7 @@ Check the top-level render call using <` + t + ">.");
                   ye(m[k], e);
                 Object.freeze && Object.freeze(m);
               } else
-                p("React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead.");
+                h("React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead.");
             else
               ye(m, e);
         }
@@ -635,11 +635,12 @@ Check the top-level render call using <` + t + ">.");
 (function(l) {
   process.env.NODE_ENV === "production" ? l.exports = dr() : l.exports = vr();
 })(fr);
-const pr = W.Fragment, Se = W.jsx, hr = W.jsxs, gr = ["value", "id", "children"], we = {
+const hr = W.Fragment, Se = W.jsx, pr = W.jsxs, gr = ["value", "id", "children"], we = {
   onInput: "inputCallback",
   onOpen: "openCallback",
   onClose: "closeCallback",
-  onNameChange: "nameChangeCallback"
+  onNameChange: "nameChangeCallback",
+  onSearch: "searchCallback"
 }, Er = (l) => {
   const _ = X(null), w = X(null), s = X(null);
   if (s.current) {
@@ -661,11 +662,12 @@ const pr = W.Fragment, Se = W.jsx, hr = W.jsxs, gr = ["value", "id", "children"]
     inputCallback: l.onInput,
     openCallback: l.onOpen,
     closeCallback: l.onClose,
-    nameChangeCallback: l.onNameChange
+    nameChangeCallback: l.onNameChange,
+    searchCallback: l.onSearch
   }), () => {
     var b;
     (b = s.current) == null || b.destroy();
-  }), []), /* @__PURE__ */ hr(pr, { children: [
+  }), []), /* @__PURE__ */ pr(hr, { children: [
     /* @__PURE__ */ Se("div", { ref: _ }),
     /* @__PURE__ */ Se(
       "div",

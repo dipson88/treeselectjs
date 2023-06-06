@@ -9,8 +9,8 @@ A multi-select js component with nested options.
 - Typescript support
 
 Build data:
-- react-treeselectjs.mjs  22.61 kB │ gzip: 6.83 kB
-- react-treeselectjs.umd.js  14.94 kB │ gzip: 5.85 kB
+- react-treeselectjs.mjs  22.67 kB │ gzip: 6.85 kB
+- react-treeselectjs.umd.js  15.00 kB │ gzip: 5.86 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
@@ -28,8 +28,8 @@ import 'treeselectjs/dist/treeselectjs.css // use styles from treeselectjs
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.1.6/dist/react-treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.8.6/dist/treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.2.0/dist/react-treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.0/dist/treeselectjs.css" />
 ```
 
 Example
@@ -119,6 +119,7 @@ Name  | Type (default) | Description
 **id** | String ('') | id attribute for the accessibility.
 **isSingleSelect** | Boolean (false) | Converts multi-select to the single value select. Checkboxes will be removed. You should pass only one id instead of array of values. Also you can set **showTags** to false. It helps to show treeselect as a dropdown.
 **isGroupedValue** | Boolean (false) | Return groups if they selected instead of separate ids. Treeselect returns only leaves ids by default.
+**isIndependentNodes** | Boolean (false) | All nodes in treeselect work as an independent entity. Check/uncheck action ignore children/parent updates workflow. Disabled nodes ignore children/parent workflow as well.
 
 #### List settings props
 Name  | Type (default) | Description
@@ -151,6 +152,7 @@ Name  | Type (default) | Description
 **onOpen** | (value) => void (undefined) | Returns selected values, action is triggered on opening the list.
 **onClose** | (value) => void (undefined) | Returns selected values, action is triggered on closing the list.
 **onNameChange** | (name) => void (undefined) | Returns selected name inside the input, action is triggered on on change the list.
+**search**  | String | Returns entered search value, action is triggered on change search value during the typing. You can try create something like autocomplete with help of this event.
 
 #### Additional props
 Name  | Type (default) | Description

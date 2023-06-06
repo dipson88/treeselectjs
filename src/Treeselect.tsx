@@ -8,6 +8,7 @@ interface TreeselectReactParams extends ITreeselectParams {
   onOpen?: (value: ValueType) => void
   onClose?: (value: ValueType) => void
   onNameChange?: (name: string) => void
+  onSearch?: (value: string) => void
 }
 
 export type TreeselectProps = Omit<
@@ -18,6 +19,7 @@ export type TreeselectProps = Omit<
   | 'openCallback'
   | 'closeCallback'
   | 'nameChangeCallback'
+  | 'searchCallback'
 >
 
 const keysWithoutRender = ['value', 'id', 'children']
@@ -26,7 +28,8 @@ const callbackKeysDictionary = {
   onInput: 'inputCallback',
   onOpen: 'openCallback',
   onClose: 'closeCallback',
-  onNameChange: 'nameChangeCallback'
+  onNameChange: 'nameChangeCallback',
+  onSearch: 'searchCallback'
 }
 
 const Treeselect: FC<PropsWithChildren<TreeselectProps>> = (props) => {
@@ -82,7 +85,8 @@ const Treeselect: FC<PropsWithChildren<TreeselectProps>> = (props) => {
       inputCallback: props.onInput,
       openCallback: props.onOpen,
       closeCallback: props.onClose,
-      nameChangeCallback: props.onNameChange
+      nameChangeCallback: props.onNameChange,
+      searchCallback: props.onSearch
     })
 
     return () => {
