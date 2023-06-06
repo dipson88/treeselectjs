@@ -9,8 +9,8 @@ A multi-select js component with nested options.
 - Typescript support
 
 Build data:
-- treeselectjs.mjs  48.92 kB │ gzip: 11.07 kB
-- treeselectjs.umd.js  39.79 kB │ gzip: 10.17 kB
+- treeselectjs.mjs  49.80 kB │ gzip: 11.27 kB
+- treeselectjs.umd.js  40.41 kB │ gzip: 10.29 kB
 - treeselectjs.css   6.41 kB │ gzip:  1.27 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
@@ -30,8 +30,8 @@ import Treeselect from 'treeselectjs'
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.8.6/dist/treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.8.6/dist/treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.0/dist/treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.0/dist/treeselectjs.css" />
 ...
 <script>
   ...
@@ -125,6 +125,7 @@ Name  | Type (default) | Description
 **id** | String ('') | id attribute for the accessibility.
 **isSingleSelect** | Boolean (false) | Converts multi-select to the single value select. Checkboxes will be removed. You should pass only one id instead of array of values. Also you can set **showTags** to false. It helps to show treeselect as a dropdown.
 **isGroupedValue** | Boolean (false) | Return groups if they selected instead of separate ids. Treeselect returns only leaves ids by default.
+**isIndependentNodes** | Boolean (false) | All nodes in treeselect work as an independent entity. Check/uncheck action ignore children/parent updates workflow. Disabled nodes ignore children/parent workflow as well. 
 
 #### List settings props
 Name  | Type (default) | Description
@@ -158,6 +159,7 @@ Name  | Type (default) | Description
 **openCallback** | (value) => void (undefined) | Callback method for `open` if you don't want to use eventListener.
 **closeCallback** | (value) => void (undefined) | Callback method for `close` if you don't want to use eventListener.
 **nameChangeCallback** | (name) => void (undefined) | Callback method for `name-change` if you don't want to use eventListener.
+**searchCallback** | (value) => void (undefined) | Callback method for `search` if you don't want to use eventListener.
 
 #### Additional props
 Name  | Type (default) | Description
@@ -185,6 +187,7 @@ Name  | Return Type | Description
 **open**  | Array[String \| Number] | Returns selected values, action is triggered on opening the list. Add `eventListener` or use `openCallback` prop to get value.
 **close**  | Array[String \| Number] | Returns selected values, action is triggered on closing the list. Add `eventListener` or use `closeCallback` prop to get value.
 **name-change**  | String | Returns selected name inside the input, action is triggered on on change the list. Add `eventListener` or use `nameChangeCallback` prop to get name.
+**search**  | String | Returns entered search value, action is triggered on change search value during the typing. Add `eventListener` or use `searchCallback` prop to get value. You can try create something like autocomplete with help of this event.
 
 ---
 

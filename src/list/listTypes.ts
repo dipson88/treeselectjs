@@ -10,6 +10,7 @@ export interface ITreeselectListParams {
   showCount: boolean
   disabledBranchNode: boolean
   expandSelected: boolean
+  isIndependentNodes: boolean
   iconElements: IconsType
   inputCallback: (value: SelectedNodesType) => void
   arrowClickCallback: () => void

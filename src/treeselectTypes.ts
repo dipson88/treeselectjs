@@ -39,6 +39,7 @@ export interface ITreeselect {
   direction: DirectionType
   expandSelected: boolean
   saveScrollPosition: boolean
+  isIndependentNodes: boolean
   iconElements: IconsType
   ungroupedValue: ValueOptionType[]
   groupedValue: ValueOptionType[]
@@ -49,6 +50,7 @@ export interface ITreeselect {
   openCallback: ((value: ValueType) => void) | undefined
   closeCallback: ((value: ValueType) => void) | undefined
   nameChangeCallback: ((name: string) => void) | undefined
+  searchCallback: ((value: string) => void) | undefined
   mount: () => void
   updateValue: (newValue: ValueInputType) => void
   destroy: () => void
@@ -81,11 +83,13 @@ export interface ITreeselectParams {
   direction?: DirectionType
   expandSelected?: boolean
   saveScrollPosition?: boolean
+  isIndependentNodes?: boolean
   iconElements?: Partial<IconsType>
   inputCallback?: (value: ValueType) => void
   openCallback?: (value: ValueType) => void
   closeCallback?: (value: ValueType) => void
   nameChangeCallback?: (name: string) => void
+  searchCallback?: (value: string) => void
 }
 
 export type FlattedOptionType = {
@@ -115,4 +119,5 @@ export type IconsType = {
 export type SelectedNodesType = {
   nodes: FlattedOptionType[]
   groupedNodes: FlattedOptionType[]
+  allNodes: FlattedOptionType[]
 }
