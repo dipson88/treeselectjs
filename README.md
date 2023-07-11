@@ -28,8 +28,8 @@ import 'treeselectjs/dist/treeselectjs.css // use styles from treeselectjs
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.3.0/dist/react-treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.1/dist/treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.3.1/dist/react-treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.2/dist/treeselectjs.css" />
 ```
 
 All Available Imports
@@ -122,6 +122,7 @@ Name  | Type (default) | Description
 **options**  | Array[Object] ([]) | It is an array of objects ```{name: String, value: String, disabled?: Boolean, htmlAttr?: object, children: [] }```, where children are the same array of objects. Do not use duplicated `value` field. But you can use duplicated names. [Read more](#option-description).
 **disabled** | Boolean (false) | List will be disabled.
 **id** | String ('') | id attribute for the accessibility.
+**ariaLabel** | String ('') | ariaLabel attribute for the accessibility.
 **isSingleSelect** | Boolean (false) | Converts multi-select to the single value select. Checkboxes will be removed. You should pass only one id instead of array of values. Also you can set **showTags** to false. It helps to show treeselect as a dropdown.
 **isGroupedValue** | Boolean (false) | Return groups if they selected instead of separate ids. Treeselect returns only leaves ids by default.
 **isIndependentNodes** | Boolean (false) | All nodes in treeselect work as an independent entity. Check/uncheck action ignore children/parent updates workflow. Disabled nodes ignore children/parent workflow as well.
@@ -149,7 +150,6 @@ Name  | Type (default) | Description
 **searchable**  | Boolean (true) | Search is available.
 **placeholder**  | String ('Search...') | Placeholder text.
 **grouped** | Boolean (true) | Show groups in the input and group leafs if all group selected.
-**ariaLabel** | String (**placeholder**) | ariaLabel attribute for the accessibility. Prop uses **placeholder** as a default value.
 
 #### Callback props
 Name  | Type (default) | Description
