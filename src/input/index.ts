@@ -348,7 +348,7 @@ export class TreeselectInput implements ITreeselectInput {
       input.setAttribute('tabindex', '-1')
     }
 
-    if (this.ariaLabel) {
+    if (this.ariaLabel.length) {
       input.setAttribute('aria-label', this.ariaLabel)
     }
 

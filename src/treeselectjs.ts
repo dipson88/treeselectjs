@@ -197,7 +197,7 @@ export default class Treeselect implements ITreeselect {
     this.emptyText = emptyText ?? 'No results found...'
     this.staticList = !!(staticList && !this.appendToBody)
     this.id = id ?? ''
-    this.ariaLabel = ariaLabel ?? this.placeholder
+    this.ariaLabel = ariaLabel ?? ''
     this.isSingleSelect = isSingleSelect ?? false
     this.showCount = showCount ?? false
     this.disabledBranchNode = disabledBranchNode ?? false
