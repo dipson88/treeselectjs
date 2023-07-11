@@ -1,10 +1,11 @@
 import { FC, PropsWithChildren } from 'react';
-import { ValueType, ITreeselectParams } from 'treeselectjs';
-export type TreeselectValue = ValueType;
+import { ValueInputType, ITreeselectParams } from 'treeselectjs';
+export { type DirectionType, type IconsType, type OptionType } from 'treeselectjs';
+export type TreeselectValue = ValueInputType;
 interface TreeselectReactParams extends ITreeselectParams {
-    onInput?: (value: ValueType) => void;
-    onOpen?: (value: ValueType) => void;
-    onClose?: (value: ValueType) => void;
+    onInput?: (value: TreeselectValue) => void;
+    onOpen?: (value: TreeselectValue) => void;
+    onClose?: (value: TreeselectValue) => void;
     onNameChange?: (name: string) => void;
     onSearch?: (value: string) => void;
 }

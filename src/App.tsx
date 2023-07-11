@@ -1,4 +1,4 @@
-import Treeselect from './Treeselect'
+import Treeselect, { TreeselectValue } from './Treeselect'
 import React, { useCallback, useState } from 'react'
 import 'treeselectjs/dist/treeselectjs.css'
 
@@ -17,7 +17,7 @@ const App = () => {
   ])
 
   const [isSingleSelect, setIsSingleSelect] = useState(false)
-  const [value, setValue] = useState([1])
+  const [value, setValue] = useState<TreeselectValue>([1])
 
   const onClickValue = () => {
     setValue([2])
@@ -35,7 +35,8 @@ const App = () => {
     setOptions((prev) => [...prev, { name: 'test3', value: 3, children: [] }])
   }
 
-  const onInput = useCallback((value: string | number | (string | number)[] | null) => {
+  // Also for value type, you can use value: string | number | (string | number)[] | null | undefined
+  const onInput = useCallback((value: TreeselectValue) => {
     console.log('onInput', value)
   }, [])
 

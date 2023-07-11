@@ -1,12 +1,14 @@
 import React, { FC, PropsWithChildren, useEffect, useRef } from 'react'
-import TreeselectJS, { ValueType, ITreeselectParams } from 'treeselectjs'
+import TreeselectJS, { ValueInputType, ITreeselectParams } from 'treeselectjs'
 
-export type TreeselectValue = ValueType
+export { type DirectionType, type IconsType, type OptionType } from 'treeselectjs'
+
+export type TreeselectValue = ValueInputType
 
 interface TreeselectReactParams extends ITreeselectParams {
-  onInput?: (value: ValueType) => void
-  onOpen?: (value: ValueType) => void
-  onClose?: (value: ValueType) => void
+  onInput?: (value: TreeselectValue) => void
+  onOpen?: (value: TreeselectValue) => void
+  onClose?: (value: TreeselectValue) => void
   onNameChange?: (name: string) => void
   onSearch?: (value: string) => void
 }
@@ -22,7 +24,7 @@ export type TreeselectProps = Omit<
   | 'searchCallback'
 >
 
-const keysWithoutRender = ['value', 'id', 'children']
+const keysWithoutRender = ['value', 'id', 'options', 'iconElements', 'children']
 
 const callbackKeysDictionary = {
   onInput: 'inputCallback',
@@ -30,6 +32,10 @@ const callbackKeysDictionary = {
   onClose: 'closeCallback',
   onNameChange: 'nameChangeCallback',
   onSearch: 'searchCallback'
+}
+
+const isDifferentValues = (firstValue: any, secondValue: any) => {
+  return JSON.stringify(firstValue) !== JSON.stringify(secondValue)
 }
 
 const Treeselect: FC<PropsWithChildren<TreeselectProps>> = (props) => {
@@ -41,10 +47,10 @@ const Treeselect: FC<PropsWithChildren<TreeselectProps>> = (props) => {
     let isAnyChanged = false
     Object.keys(props).forEach((key) => {
       const isTheSameValue = Object.keys(callbackKeysDictionary).includes(key)
-        // @ts-ignore
-        ? treeselect.current[callbackKeysDictionary[key]] === props[key]
-        // @ts-ignore
-        : treeselect.current[key] === props[key]
+        ? // @ts-ignore
+          treeselect.current[callbackKeysDictionary[key]] === props[key]
+        : // @ts-ignore
+          treeselect.current[key] === props[key]
       const isWithRender = keysWithoutRender.includes(key)
 
       if (!isWithRender && !isTheSameValue) {
@@ -61,7 +67,7 @@ const Treeselect: FC<PropsWithChildren<TreeselectProps>> = (props) => {
 
   useEffect(() => {
     if (treeselect.current) {
-      const isValueChanged = JSON.stringify(treeselect.current.value) !== JSON.stringify(props.value)
+      const isValueChanged = isDifferentValues(treeselect.current.value, props.value)
 
       if (isValueChanged) {
         treeselect.current.updateValue(props.value)
@@ -76,6 +82,29 @@ const Treeselect: FC<PropsWithChildren<TreeselectProps>> = (props) => {
       treeselect.current.mount()
     }
   }, [props.id])
+
+  useEffect(() => {
+    if (treeselect.current) {
+      const isValueChanged = isDifferentValues(treeselect.current.options, props.options)
+
+      if (isValueChanged) {
+        treeselect.current.options = props.options ?? []
+        treeselect.current.mount()
+      }
+    }
+  }, [props.options])
+
+  useEffect(() => {
+    if (treeselect.current) {
+      const newIconElements = { ...treeselect.current.iconElements, ...props.iconElements }
+      const isValueChanged = isDifferentValues(treeselect.current.iconElements, newIconElements)
+
+      if (isValueChanged) {
+        treeselect.current.iconElements = newIconElements
+        treeselect.current.mount()
+      }
+    }
+  }, [props.iconElements])
 
   useEffect(() => {
     treeselect.current = new TreeselectJS({

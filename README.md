@@ -9,8 +9,8 @@ A multi-select js component with nested options.
 - Typescript support
 
 Build data:
-- react-treeselectjs.mjs  22.67 kB │ gzip: 6.85 kB
-- react-treeselectjs.umd.js  15.00 kB │ gzip: 5.86 kB
+- react-treeselectjs.mjs  23.16 kB │ gzip: 6.96 kB
+- react-treeselectjs.umd.js  15.34 kB │ gzip: 5.95 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
@@ -28,14 +28,19 @@ import 'treeselectjs/dist/treeselectjs.css // use styles from treeselectjs
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.2.0/dist/react-treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.0/dist/treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.3.0/dist/react-treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.1/dist/treeselectjs.css" />
+```
+
+All Available Imports
+```
+import Treeselect, { DirectionType, IconsType, OptionType, TreeselectProps, TreeselectValue } from 'react-treeselectjs'
 ```
 
 Example
 ```
 import React, { useCallback } from 'react'
-import Treeselect from 'react-treeselectjs'
+import Treeselect, { TreeselectValue } from 'react-treeselectjs'
 import 'treeselectjs/dist/treeselectjs.css'
 
 const options = [
@@ -85,8 +90,8 @@ const options = [
 ]
 
 function App() {
-  // Also for value type, you can import { TreeselectValue } from 'react-treeselectjs'
-  const onInput = useCallback((value: string | number | (string | number)[] | null) => {
+  // Also for value type, you can use value: string | number | (string | number)[] | null | undefined
+  const onInput = useCallback((value: TreeselectValue) => {
     console.log('onInput', value)
   }, [])
 
@@ -144,6 +149,7 @@ Name  | Type (default) | Description
 **searchable**  | Boolean (true) | Search is available.
 **placeholder**  | String ('Search...') | Placeholder text.
 **grouped** | Boolean (true) | Show groups in the input and group leafs if all group selected.
+**ariaLabel** | String (**placeholder**) | ariaLabel attribute for the accessibility. Prop uses **placeholder** as a default value.
 
 #### Callback props
 Name  | Type (default) | Description
