@@ -83,7 +83,7 @@ export default defineComponent({
     },
     ariaLabel: {
       type: String,
-      default: 'Select...'
+      default: ''
     },
     isSingleSelect: {
       type: Boolean,

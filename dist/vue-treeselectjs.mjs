@@ -65,7 +65,7 @@ const R = ["modelValue", "options", "id", "iconElements"], k = C({
     },
     ariaLabel: {
       type: String,
-      default: "Select..."
+      default: ""
     },
     isSingleSelect: {
       type: Boolean,
@@ -108,7 +108,7 @@ const R = ["modelValue", "options", "id", "iconElements"], k = C({
   setup(e, { emit: a }) {
     const n = r(null), c = r(null), l = r(null), m = (t) => {
       a("update:modelValue", t), a("input", t);
-    }, S = (t) => a("open", t), g = (t) => a("close", t), v = (t) => a("name-change", t), p = (t) => a("search", t), T = f(() => JSON.stringify(e.modelValue)), b = f(() => JSON.stringify(e.options)), B = f(() => JSON.stringify(e.iconElements));
+    }, g = (t) => a("open", t), S = (t) => a("close", t), v = (t) => a("name-change", t), p = (t) => a("search", t), T = f(() => JSON.stringify(e.modelValue)), b = f(() => JSON.stringify(e.options)), B = f(() => JSON.stringify(e.iconElements));
     return d(
       () => e,
       (t) => {
@@ -184,8 +184,8 @@ const R = ["modelValue", "options", "id", "iconElements"], k = C({
         saveScrollPosition: e.saveScrollPosition,
         isIndependentNodes: e.isIndependentNodes,
         inputCallback: m,
-        openCallback: S,
-        closeCallback: g,
+        openCallback: g,
+        closeCallback: S,
         nameChangeCallback: v,
         searchCallback: p,
         // We need a HTMLElement as a prop here. It is an additional component at the end of list.
