@@ -33,6 +33,7 @@ export interface ITreeselect {
   emptyText: string
   staticList: boolean
   id: string
+  ariaLabel: string
   isSingleSelect: boolean
   showCount: boolean
   disabledBranchNode: boolean
@@ -77,6 +78,7 @@ export interface ITreeselectParams {
   emptyText?: string
   staticList?: boolean
   id?: string
+  ariaLabel?: string
   isSingleSelect?: boolean
   showCount?: boolean
   disabledBranchNode?: boolean

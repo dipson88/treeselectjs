@@ -11,6 +11,7 @@ export interface ITreeselectInputParams {
   disabled: boolean
   isSingleSelect: boolean
   id: string
+  ariaLabel: string
   iconElements: IconsType
   inputCallback: (value: FlattedOptionType[]) => void
   searchCallback: (value: string) => void

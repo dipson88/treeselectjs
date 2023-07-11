@@ -26,6 +26,7 @@ export class TreeselectInput implements ITreeselectInput {
   disabled: boolean
   isSingleSelect: boolean
   id: string
+  ariaLabel: string
   iconElements: IconsType
 
   // InnerState
@@ -60,6 +61,7 @@ export class TreeselectInput implements ITreeselectInput {
     disabled,
     isSingleSelect,
     id,
+    ariaLabel,
     iconElements,
     inputCallback,
     searchCallback,
@@ -80,6 +82,7 @@ export class TreeselectInput implements ITreeselectInput {
     this.disabled = disabled
     this.isSingleSelect = isSingleSelect
     this.id = id
+    this.ariaLabel = ariaLabel
     this.iconElements = iconElements
 
     this.isOpened = false
@@ -343,6 +346,10 @@ export class TreeselectInput implements ITreeselectInput {
 
     if (this.disabled) {
       input.setAttribute('tabindex', '-1')
+    }
+
+    if (this.ariaLabel) {
+      input.setAttribute('aria-label', this.ariaLabel)
     }
 
     input.addEventListener('keydown', (e) => this.#controlKeydown(e))

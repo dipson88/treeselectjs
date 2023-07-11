@@ -9,8 +9,8 @@ A multi-select js component with nested options.
 - Typescript support
 
 Build data:
-- treeselectjs.mjs  49.80 kB │ gzip: 11.27 kB
-- treeselectjs.umd.js  40.41 kB │ gzip: 10.29 kB
+- treeselectjs.mjs  50.05 kB │ gzip: 11.33 kB
+- treeselectjs.umd.js  40.62 kB │ gzip: 10.35 kB
 - treeselectjs.css   6.41 kB │ gzip:  1.27 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
@@ -30,8 +30,8 @@ import Treeselect from 'treeselectjs'
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.0/dist/treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.0/dist/treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.1/dist/treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.1/dist/treeselectjs.css" />
 ...
 <script>
   ...
@@ -151,6 +151,7 @@ Name  | Type (default) | Description
 **searchable**  | Boolean (true) | Search is available.
 **placeholder**  | String ('Search...') | Placeholder text.
 **grouped** | Boolean (true) | Show groups in the input and group leafs if all group selected.
+**ariaLabel** | String (**placeholder**) | ariaLabel attribute for the accessibility. Prop uses **placeholder** as a default value.
 
 #### Callback props
 Name  | Type (default) | Description
