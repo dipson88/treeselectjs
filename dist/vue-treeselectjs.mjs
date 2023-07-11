@@ -1,9 +1,9 @@
-import { defineComponent as T, ref as r, watch as f, toRaw as d, onMounted as B, onUnmounted as C, openBlock as b, createElementBlock as w, Fragment as _, createElementVNode as h, renderSlot as N } from "vue";
-import x from "treeselectjs";
-const E = ["value", "id"], O = T({
+import { defineComponent as C, ref as r, computed as f, watch as d, toRaw as s, onMounted as E, onUnmounted as _, openBlock as N, createElementBlock as x, Fragment as V, createElementVNode as h, renderSlot as L } from "vue";
+import O from "treeselectjs";
+const R = ["modelValue", "options", "id", "iconElements"], k = C({
   name: "Treeselect",
   props: {
-    value: {
+    modelValue: {
       type: [Array, Number, String],
       default: () => []
     },
@@ -63,6 +63,10 @@ const E = ["value", "id"], O = T({
       type: String,
       default: ""
     },
+    ariaLabel: {
+      type: String,
+      default: "Select..."
+    },
     isSingleSelect: {
       type: Boolean,
       default: !1
@@ -100,44 +104,62 @@ const E = ["value", "id"], O = T({
       default: () => ({})
     }
   },
-  emits: ["input", "open", "close", "name-change", "search"],
-  setup(e, { emit: n }) {
-    const o = r(null), c = r(null), l = r(null), y = (t) => n("input", t), p = (t) => n("open", t), g = (t) => n("close", t), v = (t) => n("name-change", t), m = (t) => n("search", t);
-    return f(
+  emits: ["input", "open", "close", "name-change", "search", "update:modelValue"],
+  setup(e, { emit: a }) {
+    const n = r(null), c = r(null), l = r(null), m = (t) => {
+      a("update:modelValue", t), a("input", t);
+    }, S = (t) => a("open", t), g = (t) => a("close", t), v = (t) => a("name-change", t), p = (t) => a("search", t), T = f(() => JSON.stringify(e.modelValue)), b = f(() => JSON.stringify(e.options)), B = f(() => JSON.stringify(e.iconElements));
+    return d(
       () => e,
       (t) => {
         if (l.value) {
-          const a = d(l.value), s = d(t);
-          let u = !1;
-          Object.keys(s).forEach((i) => {
-            const S = s[i] === a[i];
-            !E.includes(i) && !S && (a[i] = s[i], u = !0);
-          }), u && a.mount();
+          const o = s(l.value), u = s(t);
+          let y = !1;
+          Object.keys(u).forEach((i) => {
+            const w = u[i] === o[i];
+            !R.includes(i) && !w && (o[i] = u[i], y = !0);
+          }), y && o.mount();
         }
       },
       { deep: !0 }
-    ), f(
-      () => e.value,
-      (t) => {
-        if (l.value) {
-          const a = d(l.value), s = d(t);
-          JSON.stringify(a.value) !== JSON.stringify(s) && a.updateValue(s);
-        }
+    ), d(
+      () => T.value,
+      () => {
+        l.value && s(l.value).updateValue(e.modelValue);
       }
-    ), f(
+    ), d(
       () => e.id,
       (t) => {
         if (l.value) {
-          const a = d(l.value);
-          (a.id || t) && (a.id = t ?? "", a.mount());
+          const o = s(l.value);
+          (o.id || t) && (o.id = t ?? "", o.mount());
         }
       }
-    ), B(() => {
-      if (!o.value)
+    ), d(
+      () => b.value,
+      () => {
+        if (l.value) {
+          const t = s(l.value);
+          t.options = e.options, t.mount();
+        }
+      }
+    ), d(
+      () => B.value,
+      () => {
+        if (l.value) {
+          const t = s(l.value);
+          t.iconElements = {
+            ...t.iconElements,
+            ...e.iconElements
+          }, t.mount();
+        }
+      }
+    ), E(() => {
+      if (!n.value)
         throw new Error("Treeselect container ref is not defined");
-      l.value = new x({
-        parentHtmlContainer: o.value,
-        value: e.value,
+      l.value = new O({
+        parentHtmlContainer: n.value,
+        value: e.modelValue,
         options: e.options,
         openLevel: e.openLevel,
         appendToBody: e.appendToBody,
@@ -152,6 +174,7 @@ const E = ["value", "id"], O = T({
         emptyText: e.emptyText,
         staticList: e.staticList,
         id: e.id,
+        ariaLabel: e.ariaLabel,
         isSingleSelect: e.isSingleSelect,
         showCount: e.showCount,
         isGroupedValue: e.isGroupedValue,
@@ -160,41 +183,41 @@ const E = ["value", "id"], O = T({
         expandSelected: e.expandSelected,
         saveScrollPosition: e.saveScrollPosition,
         isIndependentNodes: e.isIndependentNodes,
-        inputCallback: y,
-        openCallback: p,
+        inputCallback: m,
+        openCallback: S,
         closeCallback: g,
         nameChangeCallback: v,
-        searchCallback: m,
+        searchCallback: p,
         // We need a HTMLElement as a prop here. It is an additional component at the end of list.
         // We gets HTMLElement from refs. Vue events work fine.
         listSlotHtmlComponent: c.value ?? null,
         iconElements: e.iconElements
       });
-    }), C(() => {
-      l.value && d(l.value).destroy();
+    }), _(() => {
+      l.value && s(l.value).destroy();
     }), {
-      treeselectContainerRef: o,
+      treeselectContainerRef: n,
       treeselectAfterListSlotRef: c
     };
   }
-}), V = (e, n) => {
-  const o = e.__vccOpts || e;
-  for (const [c, l] of n)
-    o[c] = l;
-  return o;
-}, L = { ref: "treeselectContainerRef" }, R = {
+}), A = (e, a) => {
+  const n = e.__vccOpts || e;
+  for (const [c, l] of a)
+    n[c] = l;
+  return n;
+}, $ = { ref: "treeselectContainerRef" }, I = {
   ref: "treeselectAfterListSlotRef",
   class: "treeselect__after-list-slot"
 };
-function k(e, n, o, c, l, y) {
-  return b(), w(_, null, [
-    h("div", L, null, 512),
-    h("div", R, [
-      N(e.$slots, "default")
+function P(e, a, n, c, l, m) {
+  return N(), x(V, null, [
+    h("div", $, null, 512),
+    h("div", I, [
+      L(e.$slots, "default")
     ], 512)
   ], 64);
 }
-const P = /* @__PURE__ */ V(O, [["render", k]]);
+const j = /* @__PURE__ */ A(k, [["render", P]]);
 export {
-  P as default
+  j as default
 };

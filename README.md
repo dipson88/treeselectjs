@@ -9,8 +9,8 @@ A multi-select js component with nested options.
 - Typescript support
 
 Build data:
-- vue-treeselectjs.mjs  4.90 kB │ gzip: 1.57 kB
-- vue-treeselectjs.umd.js  3.37 kB │ gzip: 1.32 kB
+- vue-treeselectjs.mjs  5.55 kB │ gzip: 1.69 kB
+- vue-treeselectjs.umd.js  3.83 kB │ gzip: 1.42 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
@@ -28,16 +28,39 @@ import 'treeselectjs/dist/treeselectjs.css // use styles from treeselectjs
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.2.0/dist/vue-treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.0/dist/treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.3.0/dist/vue-treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.1/dist/treeselectjs.css" />
+```
+
+All Available Imports
+```
+import Treeselect, { DirectionType, IconsType, OptionType, TreeselectValue } from 'vue-treeselectjs'
 ```
 
 Example
 ```
 <template>
   <div class="App">
+    <!-- Option 1 -->
     <Treeselect
-      :value="value"
+      :model-value="modelValue"
+      :options="options"
+      @update:modelValue="onInput"
+    >
+      <div>Slot Content</div>
+    </Treeselect>
+
+    <!-- Option 2 -->
+    <Treeselect
+      v-model="modelValue"
+      :options="options"
+    >
+      <div>Slot Content</div>
+    </Treeselect>
+
+    <!-- Option 3 -->
+    <Treeselect
+      :model-value="modelValue"
       :options="options"
       @input="onInput"
     >
@@ -48,7 +71,7 @@ Example
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import Treeselect from 'vue-treeselectjs'
+import Treeselect, { TreeselectValue } from 'vue-treeselectjs'
 import 'treeselectjs/dist/treeselectjs.css'
 
 export default defineComponent({
@@ -103,10 +126,10 @@ export default defineComponent({
       }
     ])
 
-    const value = ref<number[]>([3])
+    const value = ref<TreeselectValue>([3])
 
-    // Also for value type, you can import { TreeselectValue } from 'vue-treeselectjs'
-    const onInput = (value: string | number | (string | number)[] | null) => {
+    // Also for value type, you can use value: string | number | (string | number)[] | null
+    const onInput = (value: TreeselectValue) => {
       console.log('onInput', value)
     }
 
@@ -157,6 +180,7 @@ Name  | Type (default) | Description
 **searchable**  | Boolean (true) | Search is available.
 **placeholder**  | String ('Search...') | Placeholder text.
 **grouped** | Boolean (true) | Show groups in the input and group leafs if all group selected.
+**ariaLabel** | String ('Search...') | aria-label attribute for the accessibility.
 
 #### Emits
 Name  | Type (default) | Description

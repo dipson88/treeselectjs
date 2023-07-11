@@ -1,8 +1,9 @@
 import { PropType } from 'vue';
-import { IconsType, DirectionType, OptionType, ValueType, ValueInputType } from 'treeselectjs';
-export type TreeselectValue = ValueType;
+import { IconsType, DirectionType, OptionType, ValueInputType } from 'treeselectjs';
+export { type IconsType, type DirectionType, type OptionType } from 'treeselectjs';
+export type TreeselectValue = ValueInputType;
 declare const _sfc_main: import("vue").DefineComponent<{
-    value: {
+    modelValue: {
         type: PropType<ValueInputType>;
         default: () => never[];
     };
@@ -59,6 +60,10 @@ declare const _sfc_main: import("vue").DefineComponent<{
         default: boolean;
     };
     id: {
+        type: StringConstructor;
+        default: string;
+    };
+    ariaLabel: {
         type: StringConstructor;
         default: string;
     };
@@ -101,8 +106,8 @@ declare const _sfc_main: import("vue").DefineComponent<{
 }, {
     treeselectContainerRef: import("vue").Ref<HTMLElement | null>;
     treeselectAfterListSlotRef: import("vue").Ref<HTMLElement | null>;
-}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("input" | "open" | "close" | "name-change" | "search")[], "input" | "open" | "close" | "name-change" | "search", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
-    value: {
+}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("input" | "open" | "close" | "name-change" | "search" | "update:modelValue")[], "input" | "open" | "close" | "name-change" | "search" | "update:modelValue", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+    modelValue: {
         type: PropType<ValueInputType>;
         default: () => never[];
     };
@@ -159,6 +164,10 @@ declare const _sfc_main: import("vue").DefineComponent<{
         default: boolean;
     };
     id: {
+        type: StringConstructor;
+        default: string;
+    };
+    ariaLabel: {
         type: StringConstructor;
         default: string;
     };
@@ -204,10 +213,12 @@ declare const _sfc_main: import("vue").DefineComponent<{
     onClose?: ((...args: any[]) => any) | undefined;
     "onName-change"?: ((...args: any[]) => any) | undefined;
     onSearch?: ((...args: any[]) => any) | undefined;
+    "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
 }, {
-    value: ValueInputType;
-    id: string;
+    modelValue: ValueInputType;
     options: OptionType[];
+    id: string;
+    iconElements: Partial<IconsType>;
     openLevel: number;
     appendToBody: boolean;
     alwaysOpen: boolean;
@@ -220,6 +231,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
     disabled: boolean;
     emptyText: string;
     staticList: boolean;
+    ariaLabel: string;
     isSingleSelect: boolean;
     showCount: boolean;
     isGroupedValue: boolean;
@@ -228,6 +240,5 @@ declare const _sfc_main: import("vue").DefineComponent<{
     expandSelected: boolean;
     saveScrollPosition: boolean;
     isIndependentNodes: boolean;
-    iconElements: Partial<IconsType>;
 }>;
 export default _sfc_main;

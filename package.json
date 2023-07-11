@@ -1,6 +1,6 @@
 {
   "name": "vue-treeselectjs",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Treeselect Vue Component",
   "main": "./dist/vue-treeselectjs.umd.js",
   "module": "./dist/vue-treeselectjs.mjs",
@@ -41,7 +41,7 @@
   },
   "homepage": "https://github.com/dipson88/vue-treeselectjs#readme",
   "dependencies": {
-    "treeselectjs": "^0.9.0"
+    "treeselectjs": "0.9.1"
   },
   "devDependencies": {
     "@types/node": "^18.15.11",

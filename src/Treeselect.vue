@@ -9,18 +9,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted, PropType, ref, toRaw, watch } from 'vue'
-import Treeselect, { IconsType, DirectionType, OptionType, ValueType, ValueInputType } from 'treeselectjs'
+import { computed, defineComponent, onMounted, onUnmounted, PropType, ref, toRaw, watch } from 'vue'
+import Treeselect, { IconsType, DirectionType, OptionType, ValueInputType } from 'treeselectjs'
 
-export type TreeselectValue = ValueType
+export { type IconsType, type DirectionType, type OptionType } from 'treeselectjs'
 
-const keysWithoutRender = ['value', 'id']
+export type TreeselectValue = ValueInputType
+
+const keysWithoutRender = ['modelValue', 'options', 'id', 'iconElements']
 
 export default defineComponent({
   name: 'Treeselect',
   props: {
-    value: {
-      type: [Array, Number, String] as PropType<ValueInputType>,
+    modelValue: {
+      type: [Array, Number, String] as PropType<TreeselectValue>,
       default: () => []
     },
     options: {
@@ -79,6 +81,10 @@ export default defineComponent({
       type: String,
       default: ''
     },
+    ariaLabel: {
+      type: String,
+      default: 'Select...'
+    },
     isSingleSelect: {
       type: Boolean,
       default: false
@@ -116,17 +122,24 @@ export default defineComponent({
       default: () => ({})
     }
   },
-  emits: ['input', 'open', 'close', 'name-change', 'search'],
+  emits: ['input', 'open', 'close', 'name-change', 'search', 'update:modelValue'],
   setup(props, { emit }) {
     const treeselectContainerRef = ref<HTMLElement | null>(null)
     const treeselectAfterListSlotRef = ref<HTMLElement | null>(null)
     const treeselect = ref<Treeselect | null>(null)
 
-    const onInput = (value: TreeselectValue) => emit('input', value)
+    const onInput = (modelValue: TreeselectValue) => {
+      emit('update:modelValue', modelValue)
+      emit('input', modelValue)
+    }
     const onOpen = (value: TreeselectValue) => emit('open', value)
     const onClose = (value: TreeselectValue) => emit('close', value)
     const onNameChange = (name: string) => emit('name-change', name)
     const onSearch = (value: string) => emit('search', value)
+
+    const valueString = computed(() => JSON.stringify(props.modelValue))
+    const optionsArrayString = computed(() => JSON.stringify(props.options))
+    const iconsElementsString = computed(() => JSON.stringify(props.iconElements))
 
     watch(
       () => props,
@@ -157,16 +170,11 @@ export default defineComponent({
     )
 
     watch(
-      () => props.value,
-      (newValue) => {
+      () => valueString.value,
+      () => {
         if (treeselect.value) {
           const rawTreeselect = toRaw(treeselect.value)
-          const rawNewValue = toRaw(newValue)
-          const isValueChanged = JSON.stringify(rawTreeselect.value) !== JSON.stringify(rawNewValue)
-
-          if (isValueChanged) {
-            rawTreeselect.updateValue(rawNewValue)
-          }
+          rawTreeselect.updateValue(props.modelValue)
         }
       }
     )
@@ -186,6 +194,31 @@ export default defineComponent({
       }
     )
 
+    watch(
+      () => optionsArrayString.value,
+      () => {
+        if (treeselect.value) {
+          const rawTreeselect = toRaw(treeselect.value)
+          rawTreeselect.options = props.options
+          rawTreeselect.mount()
+        }
+      }
+    )
+
+    watch(
+      () => iconsElementsString.value,
+      () => {
+        if (treeselect.value) {
+          const rawTreeselect = toRaw(treeselect.value)
+          rawTreeselect.iconElements = {
+            ...rawTreeselect.iconElements,
+            ...props.iconElements
+          }
+          rawTreeselect.mount()
+        }
+      }
+    )
+
     onMounted(() => {
       if (!treeselectContainerRef.value) {
         throw new Error('Treeselect container ref is not defined')
@@ -193,7 +226,7 @@ export default defineComponent({
 
       treeselect.value = new Treeselect({
         parentHtmlContainer: treeselectContainerRef.value,
-        value: props.value,
+        value: props.modelValue,
         options: props.options,
         openLevel: props.openLevel,
         appendToBody: props.appendToBody,
@@ -208,6 +241,7 @@ export default defineComponent({
         emptyText: props.emptyText,
         staticList: props.staticList,
         id: props.id,
+        ariaLabel: props.ariaLabel,
         isSingleSelect: props.isSingleSelect,
         showCount: props.showCount,
         isGroupedValue: props.isGroupedValue,

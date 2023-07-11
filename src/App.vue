@@ -1,7 +1,25 @@
 <template>
   <div class="App">
+    <!-- Option 1 -->
     <Treeselect
-      :value="value"
+      :model-value="modelValue"
+      :options="options"
+      @update:modelValue="onInput"
+    >
+      <div>Slot Content</div>
+    </Treeselect>
+
+    <!-- Option 2 -->
+    <Treeselect
+      v-model="modelValue"
+      :options="options"
+    >
+      <div>Slot Content</div>
+    </Treeselect>
+
+    <!-- Option 3 -->
+    <Treeselect
+      :model-value="modelValue"
       :options="options"
       @input="onInput"
     >
@@ -12,7 +30,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import Treeselect from './Treeselect.vue'
+import Treeselect, { TreeselectValue } from './Treeselect.vue'
 import 'treeselectjs/dist/treeselectjs.css'
 
 export default defineComponent({
@@ -67,17 +85,18 @@ export default defineComponent({
       }
     ])
 
-    const value = ref<number[]>([3])
+    const modelValue = ref<TreeselectValue>([3])
 
-    // Also for value type, you can import { TreeselectValue } from 'vue-treeselectjs'
-    const onInput = (value: string | number | (string | number)[] | null) => {
+    // Also for value type, you can use value: string | number | (string | number)[] | null
+    const onInput = (value: TreeselectValue) => {
+      modelValue.value = value
       console.log('onInput', value)
     }
 
     return {
       onInput,
       options,
-      value
+      modelValue
     }
   }
 })
