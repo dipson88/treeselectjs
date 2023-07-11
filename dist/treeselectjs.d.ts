@@ -30,6 +30,7 @@ declare interface ITreeselect {
     emptyText: string;
     staticList: boolean;
     id: string;
+    ariaLabel: string;
     isSingleSelect: boolean;
     showCount: boolean;
     disabledBranchNode: boolean;
@@ -74,6 +75,7 @@ export declare interface ITreeselectParams {
     emptyText?: string;
     staticList?: boolean;
     id?: string;
+    ariaLabel?: string;
     isSingleSelect?: boolean;
     showCount?: boolean;
     disabledBranchNode?: boolean;
@@ -117,6 +119,7 @@ declare class Treeselect implements ITreeselect {
     emptyText: string;
     staticList: boolean;
     id: string;
+    ariaLabel: string;
     isSingleSelect: boolean;
     showCount: boolean;
     disabledBranchNode: boolean;
@@ -136,7 +139,7 @@ declare class Treeselect implements ITreeselect {
     isListOpened: boolean;
     selectedName: string;
     srcElement: HTMLElement | null;
-    constructor({ parentHtmlContainer, value, options, openLevel, appendToBody, alwaysOpen, showTags, tagsCountText, clearable, searchable, placeholder, grouped, isGroupedValue, listSlotHtmlComponent, disabled, emptyText, staticList, id, isSingleSelect, showCount, disabledBranchNode, direction, expandSelected, saveScrollPosition, isIndependentNodes, iconElements, inputCallback, openCallback, closeCallback, nameChangeCallback, searchCallback }: ITreeselectParams);
+    constructor({ parentHtmlContainer, value, options, openLevel, appendToBody, alwaysOpen, showTags, tagsCountText, clearable, searchable, placeholder, grouped, isGroupedValue, listSlotHtmlComponent, disabled, emptyText, staticList, id, ariaLabel, isSingleSelect, showCount, disabledBranchNode, direction, expandSelected, saveScrollPosition, isIndependentNodes, iconElements, inputCallback, openCallback, closeCallback, nameChangeCallback, searchCallback }: ITreeselectParams);
     mount(): void;
     updateValue(newValue: ValueInputType): void;
     destroy(): void;
