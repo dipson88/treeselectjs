@@ -95,6 +95,7 @@ export default class Treeselect implements ITreeselect {
   emptyText: string
   staticList: boolean
   id: string
+  ariaLabel: string
   isSingleSelect: boolean
   showCount: boolean
   disabledBranchNode: boolean
@@ -155,6 +156,7 @@ export default class Treeselect implements ITreeselect {
     emptyText,
     staticList,
     id,
+    ariaLabel,
     isSingleSelect,
     showCount,
     disabledBranchNode,
@@ -195,6 +197,7 @@ export default class Treeselect implements ITreeselect {
     this.emptyText = emptyText ?? 'No results found...'
     this.staticList = !!(staticList && !this.appendToBody)
     this.id = id ?? ''
+    this.ariaLabel = ariaLabel ?? this.placeholder
     this.isSingleSelect = isSingleSelect ?? false
     this.showCount = showCount ?? false
     this.disabledBranchNode = disabledBranchNode ?? false
@@ -351,6 +354,7 @@ export default class Treeselect implements ITreeselect {
       disabled: this.disabled,
       isSingleSelect: this.isSingleSelect,
       id: this.id,
+      ariaLabel: this.ariaLabel,
       iconElements: this.iconElements,
       inputCallback: (value) => this.#inputInputListener(value),
       searchCallback: (value) => this.#inputSearchListener(value),
