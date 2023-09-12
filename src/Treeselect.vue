@@ -1,5 +1,8 @@
 <template>
-  <div ref="treeselectContainerRef" />
+  <div
+    :class="$attrs.class"
+    ref="treeselectContainerRef"
+  />
   <div
     ref="treeselectAfterListSlotRef"
     class="treeselect__after-list-slot"

@@ -1,6 +1,6 @@
-import { defineComponent as C, ref as r, computed as f, watch as d, toRaw as s, onMounted as E, onUnmounted as _, openBlock as N, createElementBlock as x, Fragment as V, createElementVNode as h, renderSlot as L } from "vue";
-import O from "treeselectjs";
-const R = ["modelValue", "options", "id", "iconElements"], k = C({
+import { defineComponent as C, ref as r, computed as f, watch as d, toRaw as s, onMounted as E, onUnmounted as N, openBlock as x, createElementBlock as V, Fragment as _, createElementVNode as h, normalizeClass as L, renderSlot as O } from "vue";
+import R from "treeselectjs";
+const $ = ["modelValue", "options", "id", "iconElements"], k = C({
   name: "Treeselect",
   props: {
     modelValue: {
@@ -117,7 +117,7 @@ const R = ["modelValue", "options", "id", "iconElements"], k = C({
           let y = !1;
           Object.keys(u).forEach((i) => {
             const w = u[i] === o[i];
-            !R.includes(i) && !w && (o[i] = u[i], y = !0);
+            !$.includes(i) && !w && (o[i] = u[i], y = !0);
           }), y && o.mount();
         }
       },
@@ -157,7 +157,7 @@ const R = ["modelValue", "options", "id", "iconElements"], k = C({
     ), E(() => {
       if (!n.value)
         throw new Error("Treeselect container ref is not defined");
-      l.value = new O({
+      l.value = new R({
         parentHtmlContainer: n.value,
         value: e.modelValue,
         options: e.options,
@@ -193,7 +193,7 @@ const R = ["modelValue", "options", "id", "iconElements"], k = C({
         listSlotHtmlComponent: c.value ?? null,
         iconElements: e.iconElements
       });
-    }), _(() => {
+    }), N(() => {
       l.value && s(l.value).destroy();
     }), {
       treeselectContainerRef: n,
@@ -205,15 +205,18 @@ const R = ["modelValue", "options", "id", "iconElements"], k = C({
   for (const [c, l] of a)
     n[c] = l;
   return n;
-}, $ = { ref: "treeselectContainerRef" }, I = {
+}, I = {
   ref: "treeselectAfterListSlotRef",
   class: "treeselect__after-list-slot"
 };
 function P(e, a, n, c, l, m) {
-  return N(), x(V, null, [
-    h("div", $, null, 512),
+  return x(), V(_, null, [
+    h("div", {
+      class: L(e.$attrs.class),
+      ref: "treeselectContainerRef"
+    }, null, 2),
     h("div", I, [
-      L(e.$slots, "default")
+      O(e.$slots, "default")
     ], 512)
   ], 64);
 }

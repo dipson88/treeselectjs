@@ -28,7 +28,7 @@ import 'treeselectjs/dist/treeselectjs.css // use styles from treeselectjs
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.3.1/dist/vue-treeselectjs.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.4.0/dist/vue-treeselectjs.umd.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.2/dist/treeselectjs.css" />
 ```
 
@@ -149,7 +149,7 @@ export default defineComponent({
 #### Core props
 Name  | Type (default) | Description
 ------------- | ------------- | -------------
-**value**  | Array[String \| Number] ([]) | An array of `value` from `options` prop. This value will be selected on load of the treeselect. The `value` changes if you check/uncheck checkboxes or remove tags from the input.
+**model-value**  | Array[String \| Number] ([]) | An array of `value` from `options` prop. This value will be selected on load of the treeselect. The `value` changes if you check/uncheck checkboxes or remove tags from the input.
 **options**  | Array[Object] ([]) | It is an array of objects ```{name: String, value: String, disabled?: Boolean, htmlAttr?: object, children: [] }```, where children are the same array of objects. Do not use duplicated `value` field. But you can use duplicated names. [Read more](#option-description).
 **disabled** | Boolean (false) | List will be disabled.
 **id** | String ('') | id attribute for the accessibility.
@@ -195,6 +195,13 @@ Name  | Type (default) | Description
 Name  | Type (default) | Description
 ------------- | ------------- | -------------
 **iconElements** | Object({ arrowUp, ... }) | Object contains all svg icons. You can use HTMLElement or a String to reset values from the default Object. Object: ```iconElements: { arrowUp, arrowDown, arrowRight, attention, clear, cross, check, partialCheck }```. After reset of icon you have to update styles if it is necessary, use `alwaysOpen` prop for more comfortable work with styles changes.
+
+---
+
+#### Slots
+Name  | Type (default) | Description
+------------- | ------------- | -------------
+**default** | undefined | The slot's content will be mounted at the end of the list.
 
 ---
 
