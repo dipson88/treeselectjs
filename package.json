@@ -1,6 +1,6 @@
 {
   "name": "vue-treeselectjs",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Treeselect Vue Component",
   "main": "./dist/vue-treeselectjs.umd.js",
   "module": "./dist/vue-treeselectjs.mjs",
@@ -9,6 +9,10 @@
     ".": {
       "import": "./dist/vue-treeselectjs.mjs",
       "require": "./dist/vue-treeselectjs.umd.js"
+    },
+    "./dist/vue-treeselectjs.css": {
+      "import": "./dist/vue-treeselectjs.css",
+      "require": "./dist/vue-treeselectjs.css"
     }
   },
   "scripts": {

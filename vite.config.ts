@@ -13,6 +13,13 @@ export default defineConfig({
     rollupOptions: {
       external: ['vue', 'treeselectjs'],
       output: {
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name === 'style.css') {
+            return 'vue-treeselectjs.css'
+          }
+
+          return assetInfo.name
+        },
         globals: {
           vue: 'Vue',
           treeselectjs: 'TreeselectJS',

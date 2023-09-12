@@ -23,13 +23,13 @@ npm install --save vue-treeselectjs
 Import vue-treeselectjs (ES)
 ```
 import Treeselect from 'vue-treeselectjs'
-import 'treeselectjs/dist/treeselectjs.css // use styles from treeselectjs
+import 'vue-treeselectjs/dist/vue-treeselectjs.css
 ```
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.4.0/dist/vue-treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.2/dist/treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.4.1/dist/vue-treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.4.1/dist/vue-treeselectjs.css" />
 ```
 
 All Available Imports

@@ -1,13 +1,12 @@
 <template>
-  <div
-    :class="$attrs.class"
-    ref="treeselectContainerRef"
-  />
-  <div
-    ref="treeselectAfterListSlotRef"
-    class="treeselect__after-list-slot"
-  >
-    <slot />
+  <div class="vue-treeselect">
+    <div ref="treeselectContainerRef" />
+    <div
+      ref="treeselectAfterListSlotRef"
+      class="treeselect__after-list-slot"
+    >
+      <slot />
+    </div>
   </div>
 </template>
 
@@ -279,3 +278,13 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="css">
+@import 'treeselectjs/dist/treeselectjs.css';
+
+.vue-treeselect {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+</style>
