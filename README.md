@@ -154,7 +154,7 @@ Name  | Type (default) | Description
 **grouped** | Boolean (true) | Show groups in the input and group leafs if all group selected.
 
 #### Callback props
-Check [Emits](####Emits) section for more info.
+Check [Emits](#Emits) section for more info.
 
 Name  | Type (default) | Description
 ------------- | ------------- | -------------
