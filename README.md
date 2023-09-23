@@ -223,3 +223,8 @@ Name  | Type | Description
 3) **Value** prop inside the **options** prop should be a **String** or **Number**.
 4) If you use **isSingleSelect** prop, you should pass only a single **value** without an array.
 5) If you use **isSingleSelect** prop, you can set **showTags** to false. It helps to show treeselect as a dropdown. Also you can disable selecting of group's nodes with help of **disabledBranchNode**.
+
+### Support
+You can buy me a coffee if you want to support my work. Thank you!
+
+<a href="https://www.buymeacoffee.com/dipson88" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
