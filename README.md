@@ -1,4 +1,4 @@
-# Treeselect JS component
+# Treeselect JS component 
 
 A multi-select js component with nested options.
 
@@ -9,8 +9,8 @@ A multi-select js component with nested options.
 - Typescript support
 
 Build data:
-- treeselectjs.mjs  50.04 kB │ gzip: 11.33 kB
-- treeselectjs.umd.js  40.61 kB │ gzip: 10.35 kB
+- treeselectjs.mjs  50.48 kB │ gzip: 11.43 kB
+- treeselectjs.umd.js  40.99 kB │ gzip: 10.43 kB
 - treeselectjs.css   6.41 kB │ gzip:  1.27 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
@@ -30,8 +30,8 @@ import Treeselect from 'treeselectjs'
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.2/dist/treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.2/dist/treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.3/dist/treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.3/dist/treeselectjs.css" />
 ...
 <script>
   ...
@@ -154,6 +154,8 @@ Name  | Type (default) | Description
 **grouped** | Boolean (true) | Show groups in the input and group leafs if all group selected.
 
 #### Callback props
+Check [Emits](####Emits) section for more info.
+
 Name  | Type (default) | Description
 ------------- | ------------- | -------------
 **inputCallback** | (value) => void (undefined) | Callback method for `input` if you don't want to to eventListener.
@@ -161,6 +163,7 @@ Name  | Type (default) | Description
 **closeCallback** | (value) => void (undefined) | Callback method for `close` if you don't want to use eventListener.
 **nameChangeCallback** | (name) => void (undefined) | Callback method for `name-change` if you don't want to use eventListener.
 **searchCallback** | (value) => void (undefined) | Callback method for `search` if you don't want to use eventListener.
+**openCloseGroupCallback** | (groupId: ValueOptionType, isClosed: boolean) => void (undefined) | Callback method for `open-close-group` if you don't want to use eventListener.
 
 #### Additional props
 Name  | Type (default) | Description
@@ -189,6 +192,7 @@ Name  | Return Type | Description
 **close**  | Array[String \| Number] | Returns selected values, action is triggered on closing the list. Add `eventListener` or use `closeCallback` prop to get value.
 **name-change**  | String | Returns selected name inside the input, action is triggered on on change the list. Add `eventListener` or use `nameChangeCallback` prop to get name.
 **search**  | String | Returns entered search value, action is triggered on change search value during the typing. Add `eventListener` or use `searchCallback` prop to get value. You can try create something like autocomplete with help of this event.
+**open-close-group**  | { groupId: [String \| Number], isClosed: Boolean } | Returns groupId and closed/open status of this group, action is triggered on open/close group in the list. Add `eventListener` or use `openCloseGroupCallback` prop to get value.
 
 ---
 

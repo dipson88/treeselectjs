@@ -49,6 +49,7 @@ declare interface ITreeselect {
     closeCallback: ((value: ValueType) => void) | undefined;
     nameChangeCallback: ((name: string) => void) | undefined;
     searchCallback: ((value: string) => void) | undefined;
+    openCloseGroupCallback: ((groupId: ValueOptionType, isClosed: boolean) => void) | undefined;
     mount: () => void;
     updateValue: (newValue: ValueInputType) => void;
     destroy: () => void;
@@ -89,6 +90,7 @@ export declare interface ITreeselectParams {
     closeCallback?: (value: ValueType) => void;
     nameChangeCallback?: (name: string) => void;
     searchCallback?: (value: string) => void;
+    openCloseGroupCallback?: (groupId: ValueOptionType, isClosed: boolean) => void;
 }
 
 export declare type OptionType = {
@@ -133,13 +135,14 @@ declare class Treeselect implements ITreeselect {
     closeCallback: ((value: ValueType) => void) | undefined;
     nameChangeCallback: ((name: string) => void) | undefined;
     searchCallback: ((value: string) => void) | undefined;
+    openCloseGroupCallback: ((groupId: ValueOptionType, isClosed: boolean) => void) | undefined;
     ungroupedValue: ValueOptionType[];
     groupedValue: ValueOptionType[];
     allValue: ValueOptionType[];
     isListOpened: boolean;
     selectedName: string;
     srcElement: HTMLElement | null;
-    constructor({ parentHtmlContainer, value, options, openLevel, appendToBody, alwaysOpen, showTags, tagsCountText, clearable, searchable, placeholder, grouped, isGroupedValue, listSlotHtmlComponent, disabled, emptyText, staticList, id, ariaLabel, isSingleSelect, showCount, disabledBranchNode, direction, expandSelected, saveScrollPosition, isIndependentNodes, iconElements, inputCallback, openCallback, closeCallback, nameChangeCallback, searchCallback }: ITreeselectParams);
+    constructor({ parentHtmlContainer, value, options, openLevel, appendToBody, alwaysOpen, showTags, tagsCountText, clearable, searchable, placeholder, grouped, isGroupedValue, listSlotHtmlComponent, disabled, emptyText, staticList, id, ariaLabel, isSingleSelect, showCount, disabledBranchNode, direction, expandSelected, saveScrollPosition, isIndependentNodes, iconElements, inputCallback, openCallback, closeCallback, nameChangeCallback, searchCallback, openCloseGroupCallback }: ITreeselectParams);
     mount(): void;
     updateValue(newValue: ValueInputType): void;
     destroy(): void;
