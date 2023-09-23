@@ -235,7 +235,7 @@ export class TreeselectList implements ITreeselectList {
 
   // Callbacks
   inputCallback: (value: SelectedNodesType) => void
-  arrowClickCallback: () => void
+  arrowClickCallback: (groupId: ValueOptionType, isClosed: boolean) => void
   mouseupCallback: () => void
 
   // PrivateInnerState
@@ -733,7 +733,7 @@ export class TreeselectList implements ITreeselectList {
       hideShowChildrenOptions(this.flattedOptions, flattedOption)
       updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue)
 
-      this.arrowClickCallback()
+      this.arrowClickCallback(flattedOption.id, flattedOption.isClosed)
     }
   }
 

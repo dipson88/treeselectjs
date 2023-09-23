@@ -52,6 +52,7 @@ export interface ITreeselect {
   closeCallback: ((value: ValueType) => void) | undefined
   nameChangeCallback: ((name: string) => void) | undefined
   searchCallback: ((value: string) => void) | undefined
+  openCloseGroupCallback: ((groupId: ValueOptionType, isClosed: boolean) => void) | undefined
   mount: () => void
   updateValue: (newValue: ValueInputType) => void
   destroy: () => void
@@ -92,6 +93,7 @@ export interface ITreeselectParams {
   closeCallback?: (value: ValueType) => void
   nameChangeCallback?: (name: string) => void
   searchCallback?: (value: string) => void
+  openCloseGroupCallback?: (groupId: ValueOptionType, isClosed: boolean) => void
 }
 
 export type FlattedOptionType = {
