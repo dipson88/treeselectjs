@@ -109,6 +109,7 @@ export default class Treeselect implements ITreeselect {
   closeCallback: ((value: ValueType) => void) | undefined
   nameChangeCallback: ((name: string) => void) | undefined
   searchCallback: ((value: string) => void) | undefined
+  openCloseGroupCallback: ((groupId: ValueOptionType, isClosed: boolean) => void) | undefined
 
   // InnerState
   ungroupedValue: ValueOptionType[]
@@ -169,7 +170,8 @@ export default class Treeselect implements ITreeselect {
     openCallback,
     closeCallback,
     nameChangeCallback,
-    searchCallback
+    searchCallback,
+    openCloseGroupCallback
   }: ITreeselectParams) {
     validateProps({
       parentHtmlContainer,
@@ -211,6 +213,7 @@ export default class Treeselect implements ITreeselect {
     this.closeCallback = closeCallback
     this.nameChangeCallback = nameChangeCallback
     this.searchCallback = searchCallback
+    this.openCloseGroupCallback = openCloseGroupCallback
 
     this.ungroupedValue = []
     this.groupedValue = []
@@ -339,7 +342,7 @@ export default class Treeselect implements ITreeselect {
       isIndependentNodes: this.isIndependentNodes,
       iconElements: this.iconElements,
       inputCallback: (value) => this.#listInputListener(value),
-      arrowClickCallback: () => this.#listArrowClickListener(),
+      arrowClickCallback: (groupId, isClosed) => this.#listArrowClickListener(groupId, isClosed),
       mouseupCallback: () => this.#treeselectInput?.focus()
     })
 
@@ -459,9 +462,10 @@ export default class Treeselect implements ITreeselect {
     this.#emitInput()
   }
 
-  #listArrowClickListener() {
+  #listArrowClickListener(groupId: ValueOptionType, isClosed: boolean) {
     this.#treeselectInput?.focus()
     this.updateListPosition()
+    this.#emitOpenCloseGroup(groupId, isClosed)
   }
 
   #inputNameChangeListener(name: string) {
@@ -728,6 +732,14 @@ export default class Treeselect implements ITreeselect {
 
     if (this.searchCallback) {
       this.searchCallback(valueToEmit)
+    }
+  }
+
+  #emitOpenCloseGroup(groupId: ValueOptionType, isClosed: boolean) {
+    this.srcElement?.dispatchEvent(new CustomEvent('open-close-group', { detail: { groupId, isClosed } }))
+
+    if (this.openCloseGroupCallback) {
+      this.openCloseGroupCallback(groupId, isClosed)
     }
   }
 }
