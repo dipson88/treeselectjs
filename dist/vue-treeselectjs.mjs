@@ -1,6 +1,6 @@
-import { defineComponent as w, ref as r, computed as f, watch as d, toRaw as s, onMounted as C, onUnmounted as E, openBlock as x, createElementBlock as N, createElementVNode as h, renderSlot as V } from "vue";
-import L from "treeselectjs";
-const O = ["modelValue", "options", "id", "iconElements"], R = w({
+import { defineComponent as w, ref as r, computed as f, watch as d, toRaw as s, onMounted as E, onUnmounted as x, openBlock as N, createElementBlock as V, createElementVNode as p, renderSlot as L } from "vue";
+import O from "treeselectjs";
+const R = ["modelValue", "options", "id", "iconElements"], k = w({
   name: "Treeselect",
   props: {
     modelValue: {
@@ -104,26 +104,29 @@ const O = ["modelValue", "options", "id", "iconElements"], R = w({
       default: () => ({})
     }
   },
-  emits: ["input", "open", "close", "name-change", "search", "update:modelValue"],
+  emits: ["input", "open", "close", "name-change", "search", "open-close-group", "update:modelValue"],
   setup(e, { emit: a }) {
-    const n = r(null), c = r(null), l = r(null), y = (t) => {
+    const o = r(null), c = r(null), l = r(null), y = (t) => {
       a("update:modelValue", t), a("input", t);
-    }, v = (t) => a("open", t), g = (t) => a("close", t), S = (t) => a("name-change", t), p = (t) => a("search", t), T = f(() => JSON.stringify(e.modelValue)), b = f(() => JSON.stringify(e.options)), _ = f(() => JSON.stringify(e.iconElements));
+    }, h = (t) => a("open", t), v = (t) => a("close", t), g = (t) => a("name-change", t), S = (t) => a("search", t), T = (t, n) => a("open-close-group", {
+      groupId: t,
+      isClosed: n
+    }), b = f(() => JSON.stringify(e.modelValue)), _ = f(() => JSON.stringify(e.options)), B = f(() => JSON.stringify(e.iconElements));
     return d(
       () => e,
       (t) => {
         if (l.value) {
-          const o = s(l.value), u = s(t);
+          const n = s(l.value), u = s(t);
           let m = !1;
           Object.keys(u).forEach((i) => {
-            const B = u[i] === o[i];
-            !O.includes(i) && !B && (o[i] = u[i], m = !0);
-          }), m && o.mount();
+            const C = u[i] === n[i];
+            !R.includes(i) && !C && (n[i] = u[i], m = !0);
+          }), m && n.mount();
         }
       },
       { deep: !0 }
     ), d(
-      () => T.value,
+      () => b.value,
       () => {
         l.value && s(l.value).updateValue(e.modelValue);
       }
@@ -131,12 +134,12 @@ const O = ["modelValue", "options", "id", "iconElements"], R = w({
       () => e.id,
       (t) => {
         if (l.value) {
-          const o = s(l.value);
-          (o.id || t) && (o.id = t ?? "", o.mount());
+          const n = s(l.value);
+          (n.id || t) && (n.id = t ?? "", n.mount());
         }
       }
     ), d(
-      () => b.value,
+      () => _.value,
       () => {
         if (l.value) {
           const t = s(l.value);
@@ -144,7 +147,7 @@ const O = ["modelValue", "options", "id", "iconElements"], R = w({
         }
       }
     ), d(
-      () => _.value,
+      () => B.value,
       () => {
         if (l.value) {
           const t = s(l.value);
@@ -154,11 +157,11 @@ const O = ["modelValue", "options", "id", "iconElements"], R = w({
           }, t.mount();
         }
       }
-    ), C(() => {
-      if (!n.value)
+    ), E(() => {
+      if (!o.value)
         throw new Error("Treeselect container ref is not defined");
-      l.value = new L({
-        parentHtmlContainer: n.value,
+      l.value = new O({
+        parentHtmlContainer: o.value,
         value: e.modelValue,
         options: e.options,
         openLevel: e.openLevel,
@@ -184,41 +187,42 @@ const O = ["modelValue", "options", "id", "iconElements"], R = w({
         saveScrollPosition: e.saveScrollPosition,
         isIndependentNodes: e.isIndependentNodes,
         inputCallback: y,
-        openCallback: v,
-        closeCallback: g,
-        nameChangeCallback: S,
-        searchCallback: p,
+        openCallback: h,
+        closeCallback: v,
+        nameChangeCallback: g,
+        searchCallback: S,
+        openCloseGroupCallback: T,
         // We need a HTMLElement as a prop here. It is an additional component at the end of list.
         // We gets HTMLElement from refs. Vue events work fine.
         listSlotHtmlComponent: c.value ?? null,
         iconElements: e.iconElements
       });
-    }), E(() => {
+    }), x(() => {
       l.value && s(l.value).destroy();
     }), {
-      treeselectContainerRef: n,
+      treeselectContainerRef: o,
       treeselectAfterListSlotRef: c
     };
   }
 });
-const k = (e, a) => {
-  const n = e.__vccOpts || e;
+const A = (e, a) => {
+  const o = e.__vccOpts || e;
   for (const [c, l] of a)
-    n[c] = l;
-  return n;
-}, A = { class: "vue-treeselect" }, $ = { ref: "treeselectContainerRef" }, I = {
+    o[c] = l;
+  return o;
+}, $ = { class: "vue-treeselect" }, G = { ref: "treeselectContainerRef" }, I = {
   ref: "treeselectAfterListSlotRef",
   class: "treeselect__after-list-slot"
 };
-function P(e, a, n, c, l, y) {
-  return x(), N("div", A, [
-    h("div", $, null, 512),
-    h("div", I, [
-      V(e.$slots, "default")
+function P(e, a, o, c, l, y) {
+  return N(), V("div", $, [
+    p("div", G, null, 512),
+    p("div", I, [
+      L(e.$slots, "default")
     ], 512)
   ]);
 }
-const j = /* @__PURE__ */ k(R, [["render", P]]);
+const H = /* @__PURE__ */ A(k, [["render", P]]);
 export {
-  j as default
+  H as default
 };

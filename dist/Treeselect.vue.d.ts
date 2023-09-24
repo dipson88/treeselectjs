@@ -106,7 +106,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
 }, {
     treeselectContainerRef: import("vue").Ref<HTMLElement | null>;
     treeselectAfterListSlotRef: import("vue").Ref<HTMLElement | null>;
-}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("input" | "open" | "close" | "name-change" | "search" | "update:modelValue")[], "input" | "open" | "close" | "name-change" | "search" | "update:modelValue", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("input" | "open" | "close" | "name-change" | "search" | "open-close-group" | "update:modelValue")[], "input" | "open" | "close" | "name-change" | "search" | "open-close-group" | "update:modelValue", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     modelValue: {
         type: PropType<ValueInputType>;
         default: () => never[];
@@ -213,6 +213,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
     onClose?: ((...args: any[]) => any) | undefined;
     "onName-change"?: ((...args: any[]) => any) | undefined;
     onSearch?: ((...args: any[]) => any) | undefined;
+    "onOpen-close-group"?: ((...args: any[]) => any) | undefined;
     "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
 }, {
     modelValue: ValueInputType;

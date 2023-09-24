@@ -28,8 +28,8 @@ import 'vue-treeselectjs/dist/vue-treeselectjs.css
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.4.1/dist/vue-treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.4.1/dist/vue-treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.4.2/dist/vue-treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.4.2/dist/vue-treeselectjs.css" />
 ```
 
 All Available Imports
@@ -190,6 +190,7 @@ Name  | Type (default) | Description
 **close** | (value) => void (undefined) | Returns selected values, action is triggered on closing the list.
 **name-change** | (name) => void (undefined) | Returns selected name inside the input, action is triggered on on change the list.
 **search**  | (value) => void (undefined) | Returns entered search value, action is triggered on change search value during the typing. You can try create something like autocomplete with help of this emit.
+**open-close-group** | ({ groupId, isClosed }: { groupId: ValueOptionType, isClosed: boolean }) => void (undefined) | Returns groupId and closed/open status of this group, action is triggered on open/close group in the list.
 
 #### Additional props
 Name  | Type (default) | Description

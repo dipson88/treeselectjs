@@ -124,7 +124,7 @@ export default defineComponent({
       default: () => ({})
     }
   },
-  emits: ['input', 'open', 'close', 'name-change', 'search', 'update:modelValue'],
+  emits: ['input', 'open', 'close', 'name-change', 'search', 'open-close-group', 'update:modelValue'],
   setup(props, { emit }) {
     const treeselectContainerRef = ref<HTMLElement | null>(null)
     const treeselectAfterListSlotRef = ref<HTMLElement | null>(null)
@@ -138,6 +138,11 @@ export default defineComponent({
     const onClose = (value: TreeselectValue) => emit('close', value)
     const onNameChange = (name: string) => emit('name-change', name)
     const onSearch = (value: string) => emit('search', value)
+    const onOpenCloseGroup = (groupId: TreeselectValue, isClosed: boolean) =>
+      emit('open-close-group', {
+        groupId,
+        isClosed
+      })
 
     const valueString = computed(() => JSON.stringify(props.modelValue))
     const optionsArrayString = computed(() => JSON.stringify(props.options))
@@ -257,6 +262,7 @@ export default defineComponent({
         closeCallback: onClose,
         nameChangeCallback: onNameChange,
         searchCallback: onSearch,
+        openCloseGroupCallback: onOpenCloseGroup,
         // We need a HTMLElement as a prop here. It is an additional component at the end of list.
         // We gets HTMLElement from refs. Vue events work fine.
         listSlotHtmlComponent: treeselectAfterListSlotRef.value ?? null,
