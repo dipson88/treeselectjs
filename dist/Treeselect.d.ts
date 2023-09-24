@@ -8,6 +8,7 @@ interface TreeselectReactParams extends ITreeselectParams {
     onClose?: (value: TreeselectValue) => void;
     onNameChange?: (name: string) => void;
     onSearch?: (value: string) => void;
+    onOpenCloseGroup?: (groupId: TreeselectValue, isClosed: boolean) => void;
 }
 export type TreeselectProps = Omit<TreeselectReactParams, 'parentHtmlContainer' | 'listSlotHtmlComponent' | 'inputCallback' | 'openCallback' | 'closeCallback' | 'nameChangeCallback' | 'searchCallback'>;
 declare const Treeselect: FC<PropsWithChildren<TreeselectProps>>;

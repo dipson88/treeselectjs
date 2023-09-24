@@ -11,6 +11,7 @@ interface TreeselectReactParams extends ITreeselectParams {
   onClose?: (value: TreeselectValue) => void
   onNameChange?: (name: string) => void
   onSearch?: (value: string) => void
+  onOpenCloseGroup?: (groupId: TreeselectValue, isClosed: boolean) => void
 }
 
 export type TreeselectProps = Omit<
@@ -31,7 +32,8 @@ const callbackKeysDictionary = {
   onOpen: 'openCallback',
   onClose: 'closeCallback',
   onNameChange: 'nameChangeCallback',
-  onSearch: 'searchCallback'
+  onSearch: 'searchCallback',
+  onOpenCloseGroup: 'openCloseGroupCallback'
 }
 
 const isDifferentValues = (firstValue: any, secondValue: any) => {
@@ -115,7 +117,8 @@ const Treeselect: FC<PropsWithChildren<TreeselectProps>> = (props) => {
       openCallback: props.onOpen,
       closeCallback: props.onClose,
       nameChangeCallback: props.onNameChange,
-      searchCallback: props.onSearch
+      searchCallback: props.onSearch,
+      openCloseGroupCallback: props.onOpenCloseGroup
     })
 
     return () => {

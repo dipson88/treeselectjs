@@ -9,8 +9,8 @@ A multi-select js component with nested options.
 - Typescript support
 
 Build data:
-- react-treeselectjs.mjs  23.16 kB │ gzip: 6.96 kB
-- react-treeselectjs.umd.js  15.34 kB │ gzip: 5.95 kB
+- react-treeselectjs.mjs  23.25 kB │ gzip: 6.98 kB
+- react-treeselectjs.umd.js  15.43 kB │ gzip: 5.97 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
@@ -28,8 +28,8 @@ import 'treeselectjs/dist/treeselectjs.css // use styles from treeselectjs
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.3.1/dist/react-treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.2/dist/treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.3.2/dist/react-treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.3/dist/treeselectjs.css" />
 ```
 
 All Available Imports
@@ -158,7 +158,8 @@ Name  | Type (default) | Description
 **onOpen** | (value) => void (undefined) | Returns selected values, action is triggered on opening the list.
 **onClose** | (value) => void (undefined) | Returns selected values, action is triggered on closing the list.
 **onNameChange** | (name) => void (undefined) | Returns selected name inside the input, action is triggered on on change the list.
-**search**  | String | Returns entered search value, action is triggered on change search value during the typing. You can try create something like autocomplete with help of this event.
+**onSearch**  | String | Returns entered search value, action is triggered on change search value during the typing. You can try create something like autocomplete with help of this event.
+**onOpenCloseGroup** | (groupId: ValueOptionType, isClosed: boolean) => void (undefined) | Returns groupId and closed/open status of this group, action is triggered on open/close group in the list.
 
 #### Additional props
 Name  | Type (default) | Description
