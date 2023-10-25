@@ -13,7 +13,10 @@
   background-color: #ffffff;
   cursor: text;
 }
-
+[dir='rtl'] .treeselect-input{
+  padding-left: 40px;
+  padding-right: 4px;
+}
 .treeselect-input--unsearchable {
   cursor: default;
 }
@@ -128,7 +131,10 @@
   position: absolute;
   right: 2px;
 }
-
+[dir='rtl'] .treeselect-input__operators{
+  left: 2px;
+  right: unset;
+}
 .treeselect-input__clear {
   display: flex;
   cursor: pointer;

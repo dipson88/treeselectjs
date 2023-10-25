@@ -153,15 +153,24 @@ const updateLeftPaddingItems = (
   const isZeroLevel = option.level === 0
   const defaultPadding = 20
   const zeroLevelItemPadding = 5
-
   if (isZeroLevel) {
     const isGroupsExistOnLevel = flattedOptions.some((item) => item.isGroup && item.level === option.level)
     const itemPadding = !option.isGroup && isGroupsExistOnLevel ? `${defaultPadding}px` : `${zeroLevelItemPadding}px`
-    listItem.style.paddingLeft = option.isGroup ? '0' : itemPadding
+    if (document.dir === 'ltr')
+        listItem.style.paddingLeft = option.isGroup ? '0' : itemPadding
+      else
+        listItem.style.paddingRight = option.isGroup ? '0' : itemPadding
   } else {
-    listItem.style.paddingLeft = option.isGroup
-      ? `${option.level * defaultPadding}px`
-      : `${option.level * defaultPadding + defaultPadding}px`
+      if (document.dir === 'ltr'){
+          listItem.style.paddingLeft = option.isGroup
+              ? `${option.level * defaultPadding}px`
+              : `${option.level * defaultPadding + defaultPadding}px`
+      }else{
+          listItem.style.paddingRight = option.isGroup
+              ? `${option.level * defaultPadding}px`
+              : `${option.level * defaultPadding + defaultPadding}px`
+      }
+
   }
 
   // You can use css selectors to reset params with !important

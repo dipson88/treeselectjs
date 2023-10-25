@@ -90,7 +90,9 @@
   top: 0;
   text-align: left;
 }
-
+[dir='rtl'] .treeselect-list__item-checkbox-icon{
+  text-align: right;
+}
 .treeselect-list__item-label {
   width: 100%;
   overflow: hidden;
@@ -102,7 +104,10 @@
   pointer-events: none;
   text-align: left;
 }
-
+[dir='rtl'] .treeselect-list__item-label{
+  text-align: right;
+  padding-right: 5px;
+}
 .treeselect-list__item-label-counter {
   margin-left: 3px;
   color: #838790;
@@ -115,7 +120,10 @@
   height: 30px;
   padding-left: 4px;
 }
-
+[dir='rtl'] .treeselect-list__empty{
+  padding-right: 4px;
+  padding-left: unset;
+}
 .treeselect-list__empty--hidden {
   display: none;
 }
@@ -133,7 +141,10 @@
   word-break: keep-all;
   white-space: nowrap;
 }
-
+[dir='rtl'] .treeselect-list__empty-text{
+  padding-left: unset;
+  padding-right: 5px;
+}
 .treeselect-list__slot {
   position: sticky;
   box-sizing: border-box;
