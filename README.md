@@ -24,7 +24,7 @@ npm install --save react-treeselectjs
 Import react-treeselectjs (ES)
 ```
 import Treeselect from 'react-treeselectjs'
-import 'react-treeselectjs/dist/react-treeselectjs.css
+import 'react-treeselectjs/dist/react-treeselectjs.css'
 ```
 
 Import treeselectjs (UMD)
@@ -42,7 +42,7 @@ Example
 ```
 import React, { useCallback } from 'react'
 import Treeselect, { TreeselectValue } from 'react-treeselectjs'
-import 'treeselectjs/dist/treeselectjs.css'
+import 'react-treeselectjs/dist/react-treeselectjs.css'
 
 const options = [
   {
