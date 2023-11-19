@@ -1,14 +1,20 @@
 {
   "name": "vue-treeselectjs",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "Treeselect Vue Component",
   "main": "./dist/vue-treeselectjs.umd.js",
   "module": "./dist/vue-treeselectjs.mjs",
-  "types": "./dist/vue-treeselectjs.d.ts",
+  "types": "./dist/Treeselect.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/vue-treeselectjs.mjs",
-      "require": "./dist/vue-treeselectjs.umd.js"
+      "import": {
+        "default": "./dist/vue-treeselectjs.mjs",
+        "types": "./dist/Treeselect.d.ts"
+      },
+      "require": {
+        "default": "./dist/vue-treeselectjs.umd.js",
+        "types": "./dist/Treeselect.d.ts"
+      }
     },
     "./dist/vue-treeselectjs.css": {
       "import": "./dist/vue-treeselectjs.css",
@@ -45,7 +51,7 @@
   },
   "homepage": "https://github.com/dipson88/vue-treeselectjs#readme",
   "dependencies": {
-    "treeselectjs": "0.9.3"
+    "treeselectjs": "0.10.0"
   },
   "devDependencies": {
     "@types/node": "^18.15.11",

@@ -99,6 +99,10 @@ declare const _sfc_main: import("vue").DefineComponent<{
         type: BooleanConstructor;
         default: boolean;
     };
+    rtl: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
     iconElements: {
         type: PropType<Partial<IconsType>>;
         default: () => {};
@@ -203,6 +207,10 @@ declare const _sfc_main: import("vue").DefineComponent<{
         type: BooleanConstructor;
         default: boolean;
     };
+    rtl: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
     iconElements: {
         type: PropType<Partial<IconsType>>;
         default: () => {};
@@ -241,5 +249,6 @@ declare const _sfc_main: import("vue").DefineComponent<{
     expandSelected: boolean;
     saveScrollPosition: boolean;
     isIndependentNodes: boolean;
+    rtl: boolean;
 }>;
 export default _sfc_main;

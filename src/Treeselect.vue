@@ -119,6 +119,10 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
+    rtl: {
+      type: Boolean,
+      default: false
+    },
     iconElements: {
       type: Object as PropType<Partial<IconsType>>,
       default: () => ({})
@@ -257,6 +261,7 @@ export default defineComponent({
         expandSelected: props.expandSelected,
         saveScrollPosition: props.saveScrollPosition,
         isIndependentNodes: props.isIndependentNodes,
+        rtl: props.rtl,
         inputCallback: onInput,
         openCallback: onOpen,
         closeCallback: onClose,

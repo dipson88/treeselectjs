@@ -9,8 +9,9 @@ A multi-select js component with nested options.
 - Typescript support
 
 Build data:
-- vue-treeselectjs.mjs  5.54 kB │ gzip: 1.69 kB
-- vue-treeselectjs.umd.js  3.82 kB │ gzip: 1.42 kB
+- vue-treeselectjs.mjs  5.78 kB │ gzip: 1.75 kB
+- vue-treeselectjs.umd.js  3.98 kB │ gzip: 1.48 kB
+- vue-treeselectjs.css  6.99 kB │ gzip: 1.39 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
@@ -28,8 +29,8 @@ import 'vue-treeselectjs/dist/vue-treeselectjs.css
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.4.2/dist/vue-treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.4.2/dist/vue-treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.5.0/dist/vue-treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.5.0/dist/vue-treeselectjs.css" />
 ```
 
 All Available Imports
@@ -156,7 +157,8 @@ Name  | Type (default) | Description
 **ariaLabel** | String ('') | aria-label attribute for the accessibility.
 **isSingleSelect** | Boolean (false) | Converts multi-select to the single value select. Checkboxes will be removed. You should pass only one id instead of array of values. Also you can set **showTags** to false. It helps to show treeselect as a dropdown.
 **isGroupedValue** | Boolean (false) | Return groups if they selected instead of separate ids. Treeselect returns only leaves ids by default.
-**isIndependentNodes** | Boolean (false) | All nodes in treeselect work as an independent entity. Check/uncheck action ignore children/parent updates workflow. Disabled nodes ignore children/parent workflow as well. 
+**isIndependentNodes** | Boolean (false) | All nodes in treeselect work as an independent entity. Check/uncheck action ignore children/parent updates workflow. Disabled nodes ignore children/parent workflow as well.
+**rtl** | Boolean (false) | RTL mode.
 
 #### List settings props
 Name  | Type (default) | Description

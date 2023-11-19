@@ -99,6 +99,10 @@ const R = ["modelValue", "options", "id", "iconElements"], k = w({
       type: Boolean,
       default: !1
     },
+    rtl: {
+      type: Boolean,
+      default: !1
+    },
     iconElements: {
       type: Object,
       default: () => ({})
@@ -111,7 +115,7 @@ const R = ["modelValue", "options", "id", "iconElements"], k = w({
     }, h = (t) => a("open", t), v = (t) => a("close", t), g = (t) => a("name-change", t), S = (t) => a("search", t), T = (t, n) => a("open-close-group", {
       groupId: t,
       isClosed: n
-    }), b = f(() => JSON.stringify(e.modelValue)), _ = f(() => JSON.stringify(e.options)), B = f(() => JSON.stringify(e.iconElements));
+    }), b = f(() => JSON.stringify(e.modelValue)), B = f(() => JSON.stringify(e.options)), _ = f(() => JSON.stringify(e.iconElements));
     return d(
       () => e,
       (t) => {
@@ -139,7 +143,7 @@ const R = ["modelValue", "options", "id", "iconElements"], k = w({
         }
       }
     ), d(
-      () => _.value,
+      () => B.value,
       () => {
         if (l.value) {
           const t = s(l.value);
@@ -147,7 +151,7 @@ const R = ["modelValue", "options", "id", "iconElements"], k = w({
         }
       }
     ), d(
-      () => B.value,
+      () => _.value,
       () => {
         if (l.value) {
           const t = s(l.value);
@@ -186,6 +190,7 @@ const R = ["modelValue", "options", "id", "iconElements"], k = w({
         expandSelected: e.expandSelected,
         saveScrollPosition: e.saveScrollPosition,
         isIndependentNodes: e.isIndependentNodes,
+        rtl: e.rtl,
         inputCallback: y,
         openCallback: h,
         closeCallback: v,
