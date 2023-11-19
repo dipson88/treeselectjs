@@ -13,6 +13,13 @@ export default defineConfig({
     rollupOptions: {
       external: ['react', 'react-dom', 'treeselectjs'],
       output: {
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name === 'style.css') {
+            return 'react-treeselectjs.css'
+          }
+
+          return assetInfo.name
+        },
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
@@ -22,10 +29,5 @@ export default defineConfig({
       }
     }
   },
-  plugins: [
-    react(),
-    dts({
-      insertTypesEntry: true
-    })
-  ],
+  plugins: [react(), dts()]
 })

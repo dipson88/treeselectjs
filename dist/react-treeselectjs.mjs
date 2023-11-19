@@ -635,7 +635,8 @@ Check the top-level render call using <` + t + ">.");
 (function(i) {
   process.env.NODE_ENV === "production" ? i.exports = vr() : i.exports = hr();
 })(dr);
-const mr = V.Fragment, we = V.jsx, pr = V.jsxs, gr = ["value", "id", "options", "iconElements", "children"], Pe = {
+const mr = V.Fragment, we = V.jsx, pr = V.jsxs;
+const gr = ["value", "id", "options", "iconElements", "children"], Pe = {
   onInput: "inputCallback",
   onOpen: "openCallback",
   onClose: "closeCallback",

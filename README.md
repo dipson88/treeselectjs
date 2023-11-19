@@ -9,8 +9,9 @@ A multi-select js component with nested options.
 - Typescript support
 
 Build data:
-- react-treeselectjs.mjs  23.25 kB │ gzip: 6.98 kB
-- react-treeselectjs.umd.js  15.43 kB │ gzip: 5.97 kB
+- react-treeselectjs.mjs  23.26 kB │ gzip: 6.98 kB
+- react-treeselectjs.umd.js  15.43 kB │ gzip: 5.98 kB
+- react-treeselectjs.css  6.93 kB │ gzip: 1.38 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
@@ -23,13 +24,13 @@ npm install --save react-treeselectjs
 Import react-treeselectjs (ES)
 ```
 import Treeselect from 'react-treeselectjs'
-import 'treeselectjs/dist/treeselectjs.css // use styles from treeselectjs
+import 'react-treeselectjs/dist/react-treeselectjs.css
 ```
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.3.2/dist/react-treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.3/dist/treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.4.0/dist/react-treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.4.0/dist/react-treeselectjs.css" />
 ```
 
 All Available Imports
@@ -126,6 +127,7 @@ Name  | Type (default) | Description
 **isSingleSelect** | Boolean (false) | Converts multi-select to the single value select. Checkboxes will be removed. You should pass only one id instead of array of values. Also you can set **showTags** to false. It helps to show treeselect as a dropdown.
 **isGroupedValue** | Boolean (false) | Return groups if they selected instead of separate ids. Treeselect returns only leaves ids by default.
 **isIndependentNodes** | Boolean (false) | All nodes in treeselect work as an independent entity. Check/uncheck action ignore children/parent updates workflow. Disabled nodes ignore children/parent workflow as well.
+**rtl** | Boolean (false) | RTL mode.
 
 #### List settings props
 Name  | Type (default) | Description

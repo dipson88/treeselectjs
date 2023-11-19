@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 import { ValueInputType, ITreeselectParams } from 'treeselectjs';
 export { type DirectionType, type IconsType, type OptionType } from 'treeselectjs';
 export type TreeselectValue = ValueInputType;
@@ -11,5 +11,5 @@ interface TreeselectReactParams extends ITreeselectParams {
     onOpenCloseGroup?: (groupId: TreeselectValue, isClosed: boolean) => void;
 }
 export type TreeselectProps = Omit<TreeselectReactParams, 'parentHtmlContainer' | 'listSlotHtmlComponent' | 'inputCallback' | 'openCallback' | 'closeCallback' | 'nameChangeCallback' | 'searchCallback'>;
-declare const Treeselect: FC<PropsWithChildren<TreeselectProps>>;
+declare const Treeselect: (props: PropsWithChildren<TreeselectProps>) => JSX.Element;
 export default Treeselect;

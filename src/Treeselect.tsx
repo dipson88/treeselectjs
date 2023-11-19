@@ -1,5 +1,6 @@
-import React, { FC, PropsWithChildren, useEffect, useRef } from 'react'
+import React, { PropsWithChildren, useEffect, useRef } from 'react'
 import TreeselectJS, { ValueInputType, ITreeselectParams } from 'treeselectjs'
+import 'treeselectjs/dist/treeselectjs.css'
 
 export { type DirectionType, type IconsType, type OptionType } from 'treeselectjs'
 
@@ -40,7 +41,7 @@ const isDifferentValues = (firstValue: any, secondValue: any) => {
   return JSON.stringify(firstValue) !== JSON.stringify(secondValue)
 }
 
-const Treeselect: FC<PropsWithChildren<TreeselectProps>> = (props) => {
+const Treeselect = (props: PropsWithChildren<TreeselectProps>) => {
   const treeselectRef = useRef<HTMLDivElement | null>(null)
   const treeselectAfterListSlotRef = useRef<HTMLDivElement | null>(null)
   const treeselect = useRef<TreeselectJS | null>(null)

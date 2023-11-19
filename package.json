@@ -1,14 +1,24 @@
 {
   "name": "react-treeselectjs",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Treeselect React Component",
   "main": "./dist/react-treeselectjs.umd.js",
   "module": "./dist/react-treeselectjs.mjs",
   "types": "./dist/react-treeselectjs.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/react-treeselectjs.mjs",
-      "require": "./dist/react-treeselectjs.umd.js"
+      "import": {
+        "default": "./dist/react-treeselectjs.mjs",
+        "types": "./dist/Treeselect.d.ts"
+      },
+      "require": {
+        "default": "./dist/react-treeselectjs.umd.js",
+        "types": "./dist/Treeselect.d.ts"
+      }
+    },
+    "./dist/react-treeselectjs.css": {
+      "import": "./dist/react-treeselectjs.css",
+      "require": "./dist/react-treeselectjs.css"
     }
   },
   "scripts": {
@@ -40,7 +50,7 @@
   },
   "homepage": "https://github.com/dipson88/react-treeselectjs#readme",
   "dependencies": {
-    "treeselectjs": "0.9.3"
+    "treeselectjs": "0.10.0"
   },
   "devDependencies": {
     "@types/node": "^18.15.11",
