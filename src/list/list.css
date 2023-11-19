@@ -189,3 +189,29 @@
 .treeselect-list__item--disabled .treeselect-list__item-label {
   color: #c5c7cb;
 }
+
+/* rtl */
+[dir='rtl'] .treeselect-list__item-checkbox-icon {
+  text-align: right;
+}
+
+[dir='rtl'] .treeselect-list__item-label {
+  text-align: right;
+  padding-right: 5px;
+  padding-left: unset;
+}
+
+[dir='rtl'] .treeselect-list__item--closed .treeselect-list__item-icon {
+  transform: rotate(180deg);
+}
+
+[dir='rtl'] .treeselect-list__empty {
+  padding-right: 4px;
+  padding-left: unset;
+}
+
+[dir='rtl'] .treeselect-list__empty-text {
+  padding-right: 5px;
+  padding-left: unset;
+}
+/* rtl end */

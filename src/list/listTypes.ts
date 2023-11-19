@@ -11,6 +11,7 @@ export interface ITreeselectListParams {
   disabledBranchNode: boolean
   expandSelected: boolean
   isIndependentNodes: boolean
+  rtl: boolean
   iconElements: IconsType
   inputCallback: (value: SelectedNodesType) => void
   arrowClickCallback: (groupId: ValueOptionType, isClosed: boolean) => void
