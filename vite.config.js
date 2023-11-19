@@ -4,6 +4,7 @@ import dts from 'vite-plugin-dts'
 
 export default defineConfig({
   build: {
+    copyPublicDir: false,
     lib: {
       entry: resolve(__dirname, 'src/treeselectjs.ts'),
       name: 'treeselectjs',

@@ -43,6 +43,18 @@
   gap: 0;
 }
 
+/* rtl */
+[dir='rtl'] .treeselect-input {
+  padding-right: 4px;
+  padding-left: 40px;
+}
+
+[dir='rtl'] .treeselect-input__operators {
+  right: unset;
+  left: 2px;
+}
+/* rtl end */
+
 .treeselect-input__tags {
   display: inline-flex;
   align-items: center;

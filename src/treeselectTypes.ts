@@ -41,6 +41,7 @@ export interface ITreeselect {
   expandSelected: boolean
   saveScrollPosition: boolean
   isIndependentNodes: boolean
+  rtl: boolean
   iconElements: IconsType
   ungroupedValue: ValueOptionType[]
   groupedValue: ValueOptionType[]
@@ -87,6 +88,7 @@ export interface ITreeselectParams {
   expandSelected?: boolean
   saveScrollPosition?: boolean
   isIndependentNodes?: boolean
+  rtl?: boolean
   iconElements?: Partial<IconsType>
   inputCallback?: (value: ValueType) => void
   openCallback?: (value: ValueType) => void

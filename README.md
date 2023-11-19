@@ -9,9 +9,9 @@ A multi-select js component with nested options.
 - Typescript support
 
 Build data:
-- treeselectjs.mjs  50.48 kB │ gzip: 11.43 kB
-- treeselectjs.umd.js  40.99 kB │ gzip: 10.43 kB
-- treeselectjs.css   6.41 kB │ gzip:  1.27 kB
+- treeselectjs.mjs  50.80 kB │ gzip: 11.51 kB
+- treeselectjs.umd.js  41.22 kB │ gzip: 10.51 kB
+- treeselectjs.css   6.93 kB │ gzip:  1.38 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
@@ -30,8 +30,8 @@ import Treeselect from 'treeselectjs'
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.3/dist/treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.9.3/dist/treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.10.0/dist/treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.10.0/dist/treeselectjs.css" />
 ...
 <script>
   ...
@@ -126,7 +126,8 @@ Name  | Type (default) | Description
 **ariaLabel** | String ('') | ariaLabel attribute for the accessibility.
 **isSingleSelect** | Boolean (false) | Converts multi-select to the single value select. Checkboxes will be removed. You should pass only one id instead of array of values. Also you can set **showTags** to false. It helps to show treeselect as a dropdown.
 **isGroupedValue** | Boolean (false) | Return groups if they selected instead of separate ids. Treeselect returns only leaves ids by default.
-**isIndependentNodes** | Boolean (false) | All nodes in treeselect work as an independent entity. Check/uncheck action ignore children/parent updates workflow. Disabled nodes ignore children/parent workflow as well. 
+**isIndependentNodes** | Boolean (false) | All nodes in treeselect work as an independent entity. Check/uncheck action ignore children/parent updates workflow. Disabled nodes ignore children/parent workflow as well.
+**rtl** | Boolean (false) | RTL mode.
 
 #### List settings props
 Name  | Type (default) | Description
