@@ -25,7 +25,7 @@ Import treeselectjs (ES)
 ```
 import Treeselect from 'treeselectjs'
 
-@import 'treeselectjs/dist/treeselectjs.css // Styles
+@import 'treeselectjs/dist/treeselectjs.css' // Styles
 ```
 
 Import treeselectjs (UMD)
