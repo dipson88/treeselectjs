@@ -1,4 +1,4 @@
-import Treeselect from '../dist/treeselectjs.mjs'
+import Treeselect from './static/treeselectjs.mjs'
 import { runDefaultExample } from '../app/examples/default.js'
 import { runSlotExample } from '../app/examples/slot.js'
 import { runDisabledExample } from '../app/examples/disabled.js'
