@@ -23,7 +23,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && node postBuild.js",
     "preview": "vite preview",
     "prettier": "prettier --w src && prettier --w app && prettier --w demo"
   },  
