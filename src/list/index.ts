@@ -41,7 +41,9 @@ const updateListValue = (
   expandSelected: boolean,
   isFirstValueUpdate: boolean,
   isIndependentNodes: boolean,
-  rtl: boolean
+  rtl: boolean,
+  defaultPadding: number,
+  zeroLevelItemPadding: number
 ) => {
   updateOptionsByValue(newValue, flattedOptions, isSingleSelect, isIndependentNodes)
 
@@ -49,7 +51,15 @@ const updateListValue = (
     expandSelectedItems(flattedOptions)
   }
 
-  updateDOM(flattedOptions, srcElement, iconElements, previousSingleSelectedValue, rtl)
+  updateDOM(
+    flattedOptions,
+    srcElement,
+    iconElements,
+    previousSingleSelectedValue,
+    rtl,
+    defaultPadding,
+    zeroLevelItemPadding
+  )
 }
 
 const updateDOM = (
@@ -57,7 +67,9 @@ const updateDOM = (
   srcElement: HTMLElement | Element,
   iconElements: IconsType,
   previousSingleSelectedValue: ValueOptionType[],
-  rtl: boolean
+  rtl: boolean,
+  defaultPadding: number,
+  zeroLevelItemPadding: number
 ) => {
   flattedOptions.forEach((option) => {
     const input = srcElement.querySelector(`[input-id="${option.id}"]`) as HTMLInputElement
@@ -71,7 +83,7 @@ const updateDOM = (
     updateClosedClass(option, listItem, iconElements)
     updateHiddenClass(option, listItem)
 
-    updateLeftPaddingItems(option, listItem, flattedOptions, rtl)
+    updateLeftPaddingItems(option, listItem, flattedOptions, rtl, defaultPadding, zeroLevelItemPadding)
     updateCheckboxClass(option, input, iconElements)
   })
 
@@ -151,16 +163,16 @@ const updateLeftPaddingItems = (
   option: FlattedOptionType,
   listItem: HTMLElement,
   flattedOptions: FlattedOptionType[],
-  rtl: boolean
+  rtl: boolean,
+  defaultPadding: number,
+  zeroLevelItemPadding: number
 ) => {
   const isZeroLevel = option.level === 0
-  const defaultPadding = 20
-  const zeroLevelItemPadding = 5
 
   if (isZeroLevel) {
     const isGroupsExistOnLevel = flattedOptions.some((item) => item.isGroup && item.level === option.level)
     const itemPadding = !option.isGroup && isGroupsExistOnLevel ? `${defaultPadding}px` : `${zeroLevelItemPadding}px`
-    const padding = option.isGroup ? '0' : itemPadding
+    const padding = itemPadding
 
     if (rtl) {
       listItem.style.paddingRight = padding
@@ -240,6 +252,8 @@ export class TreeselectList implements ITreeselectList {
   expandSelected: boolean
   isIndependentNodes: boolean
   rtl: boolean
+  defaultPadding: number
+  zeroLevelItemPadding: number
   iconElements: IconsType
 
   // InnerState
@@ -273,6 +287,8 @@ export class TreeselectList implements ITreeselectList {
     expandSelected,
     isIndependentNodes,
     rtl,
+    defaultPadding,
+    zeroLevelItemPadding,
     inputCallback,
     arrowClickCallback,
     mouseupCallback
@@ -288,6 +304,8 @@ export class TreeselectList implements ITreeselectList {
     this.expandSelected = expandSelected ?? false
     this.isIndependentNodes = isIndependentNodes ?? false
     this.rtl = rtl ?? false
+    this.defaultPadding = defaultPadding ?? 20
+    this.zeroLevelItemPadding = zeroLevelItemPadding ?? 5
     this.iconElements = iconElements
 
     this.searchText = ''
@@ -317,7 +335,9 @@ export class TreeselectList implements ITreeselectList {
       this.expandSelected,
       this.#isFirstValueUpdate,
       this.isIndependentNodes,
-      this.rtl
+      this.rtl,
+      this.defaultPadding,
+      this.zeroLevelItemPadding
     )
     this.#isFirstValueUpdate = false
     this.#updateSelectedNodes()
@@ -352,7 +372,15 @@ export class TreeselectList implements ITreeselectList {
       updateVisibleBySearchFlattedOptions(this.flattedOptions, searchText)
     }
 
-    updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue, this.rtl)
+    updateDOM(
+      this.flattedOptions,
+      this.srcElement,
+      this.iconElements,
+      this.#previousSingleSelectedValue,
+      this.rtl,
+      this.defaultPadding,
+      this.zeroLevelItemPadding
+    )
     this.focusFirstListElement()
   }
 
@@ -738,7 +766,15 @@ export class TreeselectList implements ITreeselectList {
       target.checked = resultChecked
     }
 
-    updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue, this.rtl)
+    updateDOM(
+      this.flattedOptions,
+      this.srcElement,
+      this.iconElements,
+      this.#previousSingleSelectedValue,
+      this.rtl,
+      this.defaultPadding,
+      this.zeroLevelItemPadding
+    )
     this.#emitInput()
   }
 
@@ -750,7 +786,15 @@ export class TreeselectList implements ITreeselectList {
     if (flattedOption) {
       flattedOption.isClosed = !flattedOption.isClosed
       hideShowChildrenOptions(this.flattedOptions, flattedOption)
-      updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue, this.rtl)
+      updateDOM(
+        this.flattedOptions,
+        this.srcElement,
+        this.iconElements,
+        this.#previousSingleSelectedValue,
+        this.rtl,
+        this.defaultPadding,
+        this.zeroLevelItemPadding
+      )
 
       this.arrowClickCallback(flattedOption.id, flattedOption.isClosed)
     }
