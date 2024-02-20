@@ -28,6 +28,7 @@ export class TreeselectInput implements ITreeselectInput {
   id: string
   ariaLabel: string
   iconElements: IconsType
+  showPlaceholderOnOpen: boolean
 
   // InnerState
   isOpened: boolean
@@ -63,6 +64,7 @@ export class TreeselectInput implements ITreeselectInput {
     id,
     ariaLabel,
     iconElements,
+    showPlaceholderOnOpen,
     inputCallback,
     searchCallback,
     openCallback,
@@ -84,6 +86,7 @@ export class TreeselectInput implements ITreeselectInput {
     this.id = id
     this.ariaLabel = ariaLabel
     this.iconElements = iconElements
+    this.showPlaceholderOnOpen = showPlaceholderOnOpen ?? false
 
     this.isOpened = false
     this.searchText = ''
@@ -229,9 +232,19 @@ export class TreeselectInput implements ITreeselectInput {
     this.isOpened = !this.isOpened
     this.#updateArrowDirection()
 
+    const singleSelectTagsText = this.#htmlTagsSection.querySelector('.treeselect-input__tags-count')
+
     if (!this.isOpened) {
+      if (this.showPlaceholderOnOpen && this.isSingleSelect && this.value.length) {
+        singleSelectTagsText?.setAttribute('style', 'display: block;')
+        this.#htmlEditControl.removeAttribute('placeholder')
+      }
       this.closeCallback()
     } else {
+      if (this.showPlaceholderOnOpen && this.isSingleSelect && this.value.length) {
+        singleSelectTagsText?.setAttribute('style', 'display: none;')
+        this.#htmlEditControl.setAttribute('placeholder', this.placeholder)
+      }
       this.openCallback()
     }
   }

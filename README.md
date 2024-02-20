@@ -142,6 +142,8 @@ Name  | Type (default) | Description
 **direction** | String (auto) | A force direction for the list. Supported values: `auto`, `top`, `bottom`.
 **expandSelected** | Boolean (false) | All groups which have checked values will be expanded on the init.
 **saveScrollPosition** | Boolean (true) | The list saves the last scroll position before close. If you open the list your scroll will be on the previous position. If you set the value to `false` - the scroll will have position 0 and the first item will be focused every time.
+**showPlaceholderOnOpen** | Boolean (false) | Show placeholder text in input when list is opened
+**unselectOnClickSingleSelected** | Boolean (false) | When click in the current selected item, it will unselect it (only works when isSingleSelect is true)
 
 #### Input settings props
 Name  | Type (default) | Description

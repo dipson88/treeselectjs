@@ -13,6 +13,7 @@ export interface ITreeselectListParams {
   isIndependentNodes: boolean
   rtl: boolean
   iconElements: IconsType
+  unselectOnClickSingleSelected: boolean
   inputCallback: (value: SelectedNodesType) => void
   arrowClickCallback: (groupId: ValueOptionType, isClosed: boolean) => void
   mouseupCallback: () => void
