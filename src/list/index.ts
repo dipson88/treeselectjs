@@ -171,8 +171,8 @@ const updateLeftPaddingItems = (
 
   if (isZeroLevel) {
     const isGroupsExistOnLevel = flattedOptions.some((item) => item.isGroup && item.level === option.level)
-    const itemPadding = !option.isGroup && isGroupsExistOnLevel ? `${defaultPadding}px` : `${zeroLevelItemPadding}px`
-    const padding = itemPadding
+    const itemPadding = !option.isGroup && isGroupsExistOnLevel ? defaultPadding : zeroLevelItemPadding
+    const padding = (option.isGroup ? zeroLevelItemPadding : itemPadding) + 'px'
 
     if (rtl) {
       listItem.style.paddingRight = padding
@@ -181,8 +181,8 @@ const updateLeftPaddingItems = (
     }
   } else {
     const padding = option.isGroup
-      ? `${option.level * defaultPadding}px`
-      : `${option.level * defaultPadding + defaultPadding}px`
+      ? `${zeroLevelItemPadding + option.level * defaultPadding}px`
+      : `${zeroLevelItemPadding + option.level * defaultPadding + defaultPadding}px`
 
     if (rtl) {
       listItem.style.paddingRight = padding
