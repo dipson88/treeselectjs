@@ -12,6 +12,8 @@ export interface ITreeselectListParams {
   expandSelected: boolean
   isIndependentNodes: boolean
   rtl: boolean
+  defaultPadding: number
+  zeroLevelItemPadding: number
   iconElements: IconsType
   inputCallback: (value: SelectedNodesType) => void
   arrowClickCallback: (groupId: ValueOptionType, isClosed: boolean) => void

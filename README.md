@@ -142,6 +142,8 @@ Name  | Type (default) | Description
 **direction** | String (auto) | A force direction for the list. Supported values: `auto`, `top`, `bottom`.
 **expandSelected** | Boolean (false) | All groups which have checked values will be expanded on the init.
 **saveScrollPosition** | Boolean (true) | The list saves the last scroll position before close. If you open the list your scroll will be on the previous position. If you set the value to `false` - the scroll will have position 0 and the first item will be focused every time.
+**defaultPadding** | Number (20) | Default padding-left for items in groups (each level add this value as padding-left)
+**zeroLevelItemPadding** | Number (5) | Default padding-left for main item in group or single items
 
 #### Input settings props
 Name  | Type (default) | Description

@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="../public/tree.png" />
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./app.css" />
-    <script type="module" src="./app.js"></script>
-    <title>Treeselect JS App</title>
-    <base href="." />
-  </head>
-  <body>
-    <main class="root">
-      <h1 class="root__title">Treeselect JS Demo</h1>
-      <!-- Default section -->
-      <section class="section">
-        <p class="section__title">Treeselect with default props</p>
-        <div class="section__data">
-          <div class="section__select treeselect-demo-default"></div>
-          <pre class="section__props">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="../public/tree.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./app.css" />
+  <script type="module" src="./app.js"></script>
+  <title>Treeselect JS App</title>
+  <base href="." />
+</head>
+
+<body>
+  <main class="root">
+    <h1 class="root__title">Treeselect JS Demo</h1>
+    <!-- Default section -->
+    <section class="section">
+      <p class="section__title">Treeselect with default props</p>
+      <div class="section__data">
+        <div class="section__select treeselect-demo-default"></div>
+        <pre class="section__props">
 <code data-language="javascript">
   <b>parentHtmlContainer:</b> document.querySelector(className),
   <b>value:</b> [4, 7, 8],
@@ -70,16 +72,16 @@
   ]
 </code>
           </pre>
-        </div>
-      </section>
+      </div>
+    </section>
 
-      <hr />
-      <!-- Slot section -->
-      <section class="section">
-        <p class="section__title">Treeselect with slot</p>
-        <div class="section__data">
-          <div class="section__select treeselect-demo-slot"></div>
-          <pre class="section__props">
+    <hr />
+    <!-- Slot section -->
+    <section class="section">
+      <p class="section__title">Treeselect with slot</p>
+      <div class="section__data">
+        <div class="section__select treeselect-demo-slot"></div>
+        <pre class="section__props">
 <code data-language="javascript">
   const slot = document.createElement('div')
   slot.innerHTML = '&lt;a href=""&gt;Click!&lt;/a&gt;'
@@ -118,16 +120,16 @@
   ]
 </code>
           </pre>
-        </div>
-      </section>
+      </div>
+    </section>
 
-      <hr />
-      <!-- Disabled section -->
-      <section class="section">
-        <p class="section__title">Treeselect with disabled</p>
-        <div class="section__data">
-          <div class="section__select treeselect-demo-disabled"></div>
-          <pre class="section__props">
+    <hr />
+    <!-- Disabled section -->
+    <section class="section">
+      <p class="section__title">Treeselect with disabled</p>
+      <div class="section__data">
+        <div class="section__select treeselect-demo-disabled"></div>
+        <pre class="section__props">
 <code data-language="javascript">
   <b>parentHtmlContainer:</b> document.querySelector(className),
   <b>value:</b> [],
@@ -180,16 +182,16 @@
   ]
 </code>
           </pre>
-        </div>
-      </section>
+      </div>
+    </section>
 
-      <hr />
-      <!-- Single select section -->
-      <section class="section">
-        <p class="section__title">Treeselect with single select prop</p>
-        <div class="section__data">
-          <div class="section__select treeselect-demo-single-select"></div>
-          <pre class="section__props">
+    <hr />
+    <!-- Single select section -->
+    <section class="section">
+      <p class="section__title">Treeselect with single select prop</p>
+      <div class="section__data">
+        <div class="section__select treeselect-demo-single-select"></div>
+        <pre class="section__props">
 <code data-language="javascript">
   <b>parentHtmlContainer:</b> document.querySelector(className),
   <b>value:</b> 4,
@@ -242,16 +244,67 @@
   ]
 </code>
           </pre>
-        </div>
-      </section>
+      </div>
+    </section>
 
-      <hr />
-      <!-- Independent Nodes section -->
-      <section class="section">
-        <p class="section__title">Treeselect with independent nodes prop</p>
-        <div class="section__data">
-          <div class="section__select treeselect-demo-independent-nodes"></div>
-          <pre class="section__props">
+    <hr />
+    <!-- No Groups section -->
+    <section class="section">
+      <p class="section__title">Treeselect with no groups</p>
+      <div class="section__data">
+        <div class="section__select treeselect-demo-no-groups"></div>
+        <pre class="section__props">
+      <code data-language="javascript">
+        <b>parentHtmlContainer:</b> document.querySelector(className),
+        <b>value:</b> 4,
+        <b>isSingleSelect:</b> true,
+        <b>showTags:</b> false,
+        <b>options:</b> [
+          {
+          name: 'England',
+          value: 1,
+          },
+          {
+          name: 'London',
+          value: 2,
+          },
+          {
+          name: 'Chelsea',
+          value: 3
+          },
+          {
+          name: 'West End',
+          value: 4
+          },
+          {
+          name: 'Brighton',
+          value: 5
+          },
+          {
+          name: 'France',
+          value: 6
+          },
+          {
+          name: 'Paris',
+          value: 7
+          },
+          {
+          name: 'Lyon',
+          value: 8
+          },
+        ]
+      </code>
+                </pre>
+      </div>
+    </section>
+
+    <hr />
+    <!-- Independent Nodes section -->
+    <section class="section">
+      <p class="section__title">Treeselect with independent nodes prop</p>
+      <div class="section__data">
+        <div class="section__select treeselect-demo-independent-nodes"></div>
+        <pre class="section__props">
 <code data-language="javascript">
   <b>parentHtmlContainer:</b> document.querySelector(className),
   <b>value:</b> [1, 4, 7, 8],
@@ -303,16 +356,16 @@
   ]
 </code>
           </pre>
-        </div>
-      </section>
+      </div>
+    </section>
 
-      <hr />
-      <!-- Example with icons (workaround) -->
-      <section class="section" style="max-width: 1980px; margin: 0 auto">
-        <p class="section__title">Treeselect example with icons for appendToBody: false (workaround approach)</p>
-        <div class="section__data" style="flex-wrap: wrap">
-          <div class="section__select treeselect-demo-icons"></div>
-          <pre class="section__props" style="width: 100%; max-width: 100%">
+    <hr />
+    <!-- Example with icons (workaround) -->
+    <section class="section" style="max-width: 1980px; margin: 0 auto">
+      <p class="section__title">Treeselect example with icons for appendToBody: false (workaround approach)</p>
+      <div class="section__data" style="flex-wrap: wrap">
+        <div class="section__select treeselect-demo-icons"></div>
+        <pre class="section__props" style="width: 100%; max-width: 100%">
 <code data-language="javascript">
   const icons = {
     check: 'ico-check',
@@ -424,8 +477,9 @@
   }
 </code>
           </pre>
-        </div>
-      </section>
-    </main>
-  </body>
+      </div>
+    </section>
+  </main>
+</body>
+
 </html>
