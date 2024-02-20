@@ -13,6 +13,7 @@ export interface ITreeselectInputParams {
   id: string
   ariaLabel: string
   iconElements: IconsType
+  showPlaceholderOnOpen: boolean
   inputCallback: (value: FlattedOptionType[]) => void
   searchCallback: (value: string) => void
   openCallback: () => void
