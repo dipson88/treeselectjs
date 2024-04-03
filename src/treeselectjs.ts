@@ -58,7 +58,7 @@ const validateProps = ({
 const getOnlyIds = (nodes: FlattedOptionType[]) => nodes.map((node) => node.id)
 
 const getDefaultValue = (value: ValueInputType) => {
-  if (!value) {
+  if (value === undefined || value === null) {
     return []
   }
 
