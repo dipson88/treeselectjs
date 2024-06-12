@@ -241,6 +241,7 @@ export class TreeselectList implements ITreeselectList {
   isIndependentNodes: boolean
   rtl: boolean
   iconElements: IconsType
+  unselectOnClickSingleSelected: boolean
 
   // InnerState
   searchText: string
@@ -268,6 +269,7 @@ export class TreeselectList implements ITreeselectList {
     emptyText,
     isSingleSelect,
     iconElements,
+    unselectOnClickSingleSelected,
     showCount,
     disabledBranchNode,
     expandSelected,
@@ -289,6 +291,7 @@ export class TreeselectList implements ITreeselectList {
     this.isIndependentNodes = isIndependentNodes ?? false
     this.rtl = rtl ?? false
     this.iconElements = iconElements
+    this.unselectOnClickSingleSelected = unselectOnClickSingleSelected ?? false
 
     this.searchText = ''
     this.flattedOptions = getFlattedOptions(this.options, this.openLevel, this.isIndependentNodes)
@@ -727,11 +730,16 @@ export class TreeselectList implements ITreeselectList {
 
       // Prevent emit the same value.
       if (flattedOption.id === previousValue) {
-        return
+        if (this.unselectOnClickSingleSelected) {
+          this.#previousSingleSelectedValue = []
+          updateOptionsByValue([], this.flattedOptions, this.isSingleSelect, this.isIndependentNodes)
+        } else {
+          return
+        }
+      } else {
+        this.#previousSingleSelectedValue = [flattedOption.id]
+        updateOptionsByValue([flattedOption.id], this.flattedOptions, this.isSingleSelect, this.isIndependentNodes)
       }
-
-      this.#previousSingleSelectedValue = [flattedOption.id]
-      updateOptionsByValue([flattedOption.id], this.flattedOptions, this.isSingleSelect, this.isIndependentNodes)
     } else {
       flattedOption.checked = target.checked
       const resultChecked = updateOptionByCheckState(flattedOption, this.flattedOptions, this.isIndependentNodes)

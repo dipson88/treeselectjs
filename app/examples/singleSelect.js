@@ -53,6 +53,8 @@ export const runSingleSelectExample = (Treeselect) => {
     value: 4,
     options: options,
     isSingleSelect: true,
+    showPlaceholderOnOpen: true,
+    unselectOnClickSingleSelected: true,
     showTags: false
   })
 
