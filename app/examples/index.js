@@ -4,6 +4,7 @@ import { runDisabledExample } from './disabled'
 import { runSingleSelectExample } from './singleSelect'
 import { runIndependentNodesExample } from './independentNodes'
 import { runIconsExample } from './icons'
+import { runNoGroupsExample } from './noGroups'
 
 export const runApp = (Treeselect) => {
   runDefaultExample(Treeselect)
@@ -12,4 +13,5 @@ export const runApp = (Treeselect) => {
   runSingleSelectExample(Treeselect)
   runIndependentNodesExample(Treeselect)
   runIconsExample(Treeselect)
+  runNoGroupsExample(Treeselect)
 }
