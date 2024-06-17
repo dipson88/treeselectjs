@@ -104,6 +104,7 @@ export default class Treeselect implements ITreeselect {
   saveScrollPosition: boolean
   isIndependentNodes: boolean
   rtl: boolean
+  listClassName: string
   iconElements: IconsType
   inputCallback: ((value: ValueType) => void) | undefined
   openCallback: ((value: ValueType) => void) | undefined
@@ -167,6 +168,7 @@ export default class Treeselect implements ITreeselect {
     saveScrollPosition,
     isIndependentNodes,
     rtl,
+    listClassName,
     iconElements,
     inputCallback,
     openCallback,
@@ -210,6 +212,7 @@ export default class Treeselect implements ITreeselect {
     this.saveScrollPosition = saveScrollPosition ?? true
     this.isIndependentNodes = isIndependentNodes ?? false
     this.rtl = rtl ?? false
+    this.listClassName = listClassName ?? ''
     this.iconElements = getDefaultIcons(iconElements)
     this.inputCallback = inputCallback
     this.openCallback = openCallback
@@ -348,6 +351,7 @@ export default class Treeselect implements ITreeselect {
       expandSelected: this.expandSelected,
       isIndependentNodes: this.isIndependentNodes,
       rtl: this.rtl,
+      listClassName: this.listClassName,
       iconElements: this.iconElements,
       inputCallback: (value) => this.#listInputListener(value),
       arrowClickCallback: (groupId, isClosed) => this.#listArrowClickListener(groupId, isClosed),
