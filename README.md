@@ -29,8 +29,8 @@ import 'react-treeselectjs/dist/react-treeselectjs.css'
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.4.1/dist/react-treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.4.1/dist/react-treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.5.0/dist/react-treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.5.0/dist/react-treeselectjs.css" />
 ```
 
 All Available Imports
@@ -141,6 +141,7 @@ Name  | Type (default) | Description
 **direction** | String (auto) | A force direction for the list. Supported values: `auto`, `top`, `bottom`.
 **expandSelected** | Boolean (false) | All groups which have checked values will be expanded on the init.
 **saveScrollPosition** | Boolean (true) | The list saves the last scroll position before close. If you open the list your scroll will be on the previous position. If you set the value to `false` - the scroll will have position 0 and the first item will be focused every time.
+**listClassName** | String ('') | A class name for list. Useful to change styles for `appendToBody` mode.
 
 #### Input settings props
 Name  | Type (default) | Description
