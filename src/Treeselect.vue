@@ -123,6 +123,10 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
+    listClassName: {
+      type: String,
+      default: ''
+    },
     iconElements: {
       type: Object as PropType<Partial<IconsType>>,
       default: () => ({})
@@ -262,6 +266,7 @@ export default defineComponent({
         saveScrollPosition: props.saveScrollPosition,
         isIndependentNodes: props.isIndependentNodes,
         rtl: props.rtl,
+        listClassName: props.listClassName,
         inputCallback: onInput,
         openCallback: onOpen,
         closeCallback: onClose,

@@ -9,8 +9,8 @@ A multi-select js component with nested options.
 - Typescript support
 
 Build data:
-- vue-treeselectjs.mjs  5.78 kB │ gzip: 1.75 kB
-- vue-treeselectjs.umd.js  3.98 kB │ gzip: 1.48 kB
+- vue-treeselectjs.mjs  5.89 kB │ gzip: 1.77 kB
+- vue-treeselectjs.umd.js  4.05 kB │ gzip: 1.49 kB
 - vue-treeselectjs.css  6.99 kB │ gzip: 1.39 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
@@ -29,8 +29,8 @@ import 'vue-treeselectjs/dist/vue-treeselectjs.css'
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.5.1/dist/vue-treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.5.1/dist/vue-treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.6.0/dist/vue-treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.6.0/dist/vue-treeselectjs.css" />
 ```
 
 All Available Imports
@@ -172,6 +172,7 @@ Name  | Type (default) | Description
 **direction** | String (auto) | A force direction for the list. Supported values: `auto`, `top`, `bottom`.
 **expandSelected** | Boolean (false) | All groups which have checked values will be expanded on the init.
 **saveScrollPosition** | Boolean (true) | The list saves the last scroll position before close. If you open the list your scroll will be on the previous position. If you set the value to `false` - the scroll will have position 0 and the first item will be focused every time.
+**listClassName** | String ('') | A class name for list. Useful to change styles for `appendToBody` mode.
 
 #### Input settings props
 Name  | Type (default) | Description
