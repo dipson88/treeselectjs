@@ -9,8 +9,8 @@ A multi-select js component with nested options.
 - Typescript support
 
 Build data:
-- treeselectjs.mjs  50.80 kB │ gzip: 11.51 kB
-- treeselectjs.umd.js  41.22 kB │ gzip: 10.51 kB
+- treeselectjs.mjs  51.08 kB │ gzip: 11.59 kB
+- treeselectjs.umd.js  41.45 kB │ gzip: 10.57 kB
 - treeselectjs.css   6.93 kB │ gzip:  1.38 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
@@ -30,8 +30,8 @@ import Treeselect from 'treeselectjs'
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.10.0/dist/treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.10.0/dist/treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.11.0/dist/treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.11.0/dist/treeselectjs.css" />
 ...
 <script>
   ...
@@ -142,6 +142,7 @@ Name  | Type (default) | Description
 **direction** | String (auto) | A force direction for the list. Supported values: `auto`, `top`, `bottom`.
 **expandSelected** | Boolean (false) | All groups which have checked values will be expanded on the init.
 **saveScrollPosition** | Boolean (true) | The list saves the last scroll position before close. If you open the list your scroll will be on the previous position. If you set the value to `false` - the scroll will have position 0 and the first item will be focused every time.
+**listClassName** | String ('') | A class name for list. Useful to change styles for `appendToBody` mode.
 
 #### Input settings props
 Name  | Type (default) | Description
