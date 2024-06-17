@@ -89,6 +89,7 @@ export interface ITreeselectParams {
   saveScrollPosition?: boolean
   isIndependentNodes?: boolean
   rtl?: boolean
+  listClassName?: string
   iconElements?: Partial<IconsType>
   inputCallback?: (value: ValueType) => void
   openCallback?: (value: ValueType) => void

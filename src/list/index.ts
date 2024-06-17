@@ -240,6 +240,7 @@ export class TreeselectList implements ITreeselectList {
   expandSelected: boolean
   isIndependentNodes: boolean
   rtl: boolean
+  listClassName: string
   iconElements: IconsType
 
   // InnerState
@@ -273,6 +274,7 @@ export class TreeselectList implements ITreeselectList {
     expandSelected,
     isIndependentNodes,
     rtl,
+    listClassName,
     inputCallback,
     arrowClickCallback,
     mouseupCallback
@@ -288,6 +290,7 @@ export class TreeselectList implements ITreeselectList {
     this.expandSelected = expandSelected ?? false
     this.isIndependentNodes = isIndependentNodes ?? false
     this.rtl = rtl ?? false
+    this.listClassName = listClassName ?? ''
     this.iconElements = iconElements
 
     this.searchText = ''
@@ -505,6 +508,10 @@ export class TreeselectList implements ITreeselectList {
   #createList() {
     const list = document.createElement('div')
     list.classList.add('treeselect-list')
+
+    if (this.listClassName.length > 0) {
+      list.classList.add(this.listClassName)
+    }
 
     if (this.isSingleSelect) {
       list.classList.add('treeselect-list--single-select')
