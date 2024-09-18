@@ -41,7 +41,8 @@ const updateListValue = (
   expandSelected: boolean,
   isFirstValueUpdate: boolean,
   isIndependentNodes: boolean,
-  rtl: boolean
+  rtl: boolean,
+  optionsNodes: {[key: string]: HTMLInputElement}
 ) => {
   updateOptionsByValue(newValue, flattedOptions, isSingleSelect, isIndependentNodes)
 
@@ -49,7 +50,7 @@ const updateListValue = (
     expandSelectedItems(flattedOptions)
   }
 
-  updateDOM(flattedOptions, srcElement, iconElements, previousSingleSelectedValue, rtl)
+  updateDOM(flattedOptions, srcElement, iconElements, previousSingleSelectedValue, rtl, optionsNodes)
 }
 
 const updateDOM = (
@@ -57,10 +58,11 @@ const updateDOM = (
   srcElement: HTMLElement | Element,
   iconElements: IconsType,
   previousSingleSelectedValue: ValueOptionType[],
-  rtl: boolean
+  rtl: boolean,
+  optionsNodes: {[key: string]: HTMLInputElement}
 ) => {
   flattedOptions.forEach((option) => {
-    const input = srcElement.querySelector(`[input-id="${option.id}"]`) as HTMLInputElement
+    const input = optionsNodes[option.id];
     const listItem = getListItemByCheckbox(input)
 
     input.checked = option.checked
@@ -247,6 +249,7 @@ export class TreeselectList implements ITreeselectList {
   searchText: string
   flattedOptions: FlattedOptionType[]
   flattedOptionsBeforeSearch: FlattedOptionType[]
+  optionsNodes: {[key: string]: HTMLInputElement}
   selectedNodes: SelectedNodesType
   srcElement: HTMLElement
 
@@ -298,6 +301,10 @@ export class TreeselectList implements ITreeselectList {
     this.flattedOptionsBeforeSearch = this.flattedOptions
     this.selectedNodes = { nodes: [], groupedNodes: [], allNodes: [] }
     this.srcElement = this.#createSrcElement()
+    this.optionsNodes = {}
+    this.flattedOptions.forEach((option) => {
+      this.optionsNodes[option.id] = this.srcElement.querySelector(`[input-id="${option.id}"]`) as HTMLInputElement
+    })
 
     this.inputCallback = inputCallback
     this.arrowClickCallback = arrowClickCallback
@@ -320,7 +327,8 @@ export class TreeselectList implements ITreeselectList {
       this.expandSelected,
       this.#isFirstValueUpdate,
       this.isIndependentNodes,
-      this.rtl
+      this.rtl,
+      this.optionsNodes
     )
     this.#isFirstValueUpdate = false
     this.#updateSelectedNodes()
@@ -355,7 +363,7 @@ export class TreeselectList implements ITreeselectList {
       updateVisibleBySearchFlattedOptions(this.flattedOptions, searchText)
     }
 
-    updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue, this.rtl)
+    updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue, this.rtl, this.optionsNodes)
     this.focusFirstListElement()
   }
 
@@ -745,7 +753,7 @@ export class TreeselectList implements ITreeselectList {
       target.checked = resultChecked
     }
 
-    updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue, this.rtl)
+    updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue, this.rtl, this.optionsNodes)
     this.#emitInput()
   }
 
@@ -757,7 +765,7 @@ export class TreeselectList implements ITreeselectList {
     if (flattedOption) {
       flattedOption.isClosed = !flattedOption.isClosed
       hideShowChildrenOptions(this.flattedOptions, flattedOption)
-      updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue, this.rtl)
+      updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue, this.rtl, this.optionsNodes)
 
       this.arrowClickCallback(flattedOption.id, flattedOption.isClosed)
     }
