@@ -1,8 +1,7 @@
-import { renderTreeselect } from '../../helpers/renderTreeselect'
-
+import { renderTreeselect } from '../../helpers'
 
 describe('id prop', () => {
-  it('should render a Treeselect with the given id', async () => {
+  it('should render a Treeselect with the given id', () => {
     const id = 'test-id'
 
     const treeselect = renderTreeselect({

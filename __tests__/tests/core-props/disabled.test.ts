@@ -1,8 +1,8 @@
 import { fireEvent } from '@testing-library/dom'
-import { renderTreeselect } from '../../helpers/renderTreeselect'
+import { renderTreeselect } from '../../helpers'
 
 describe('disabled prop', () => {
-  it('should render a disabled Treeselect', async () => {
+  it('should render a disabled Treeselect', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: [],
@@ -12,7 +12,7 @@ describe('disabled prop', () => {
     expect(treeselect.parentHtmlContainer.classList.contains('treeselect--disabled')).toBe(true)
   })
 
-  it('should not open the dropdown when Treeselect is disabled', async () => {
+  it('should not open the dropdown when Treeselect is disabled', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: [],
@@ -24,7 +24,7 @@ describe('disabled prop', () => {
     expect(document.body.innerHTML).not.toContain('.treeselect-list')
   })
 
-  it('should not remove tags when Treeselect is disabled', async () => {
+  it('should not remove tags when Treeselect is disabled', () => {
     const name = 'Option 1'
 
     const treeselect = renderTreeselect({
@@ -38,7 +38,7 @@ describe('disabled prop', () => {
     expect(tagsElement.innerHTML).toContain(name)
   })
 
-  it('should not be focused when Treeselect is disabled', async () => {
+  it('should not be focused when Treeselect is disabled', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: [],
@@ -49,7 +49,7 @@ describe('disabled prop', () => {
     expect(input.getAttribute('tabindex')).toBe('-1')
   })
 
-  it('should be focused when Treeselect is enabled', async () => {
+  it('should be focused when Treeselect is enabled', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: []

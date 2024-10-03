@@ -1,7 +1,7 @@
 import { renderTreeselect, getTagsElements } from '../../helpers'
 
 describe('updateValue method', () => {
-  it('should update valid value', async () => {
+  it('should update valid value', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: [

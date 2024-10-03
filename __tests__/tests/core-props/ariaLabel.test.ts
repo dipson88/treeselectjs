@@ -1,8 +1,7 @@
-import { renderTreeselect } from '../../helpers/renderTreeselect'
-
+import { renderTreeselect } from '../../helpers'
 
 describe('ariaLabel prop', () => {
-  it('should render a Treeselect with the given aria-label', async () => {
+  it('should render a Treeselect with the given aria-label', () => {
     const ariaLabel = 'test-aria-label'
 
     const treeselect = renderTreeselect({

@@ -1,8 +1,8 @@
 import { fireEvent } from '@testing-library/dom'
-import { renderTreeselect } from '../../helpers/renderTreeselect'
+import { renderTreeselect } from '../../helpers'
 
 describe('options prop', () => {
-  it('should render a Treeselect with empty options', async () => {
+  it('should render a Treeselect with empty options', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: []
@@ -15,7 +15,7 @@ describe('options prop', () => {
     expect(treeselect.options).toEqual([])
   })
 
-  it('should render a Treeselect with options', async () => {
+  it('should render a Treeselect with options', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: [
@@ -33,7 +33,7 @@ describe('options prop', () => {
     expect(treeselect.options.length).toEqual(3)
   })
 
-  it('should contain attributes in options', async () => {
+  it('should contain attributes in options', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: [
@@ -51,7 +51,7 @@ describe('options prop', () => {
     expect(option.innerHTML).toContain('Option 1')
   })
 
-  it('should contain attributes in children options', async () => {
+  it('should contain attributes in children options', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: [
@@ -75,7 +75,7 @@ describe('options prop', () => {
     expect(secondOption.innerHTML).toContain('Option 2')
   })
 
-  it('should contain disabled class in options', async () => {
+  it('should contain disabled class in options', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: [
@@ -92,7 +92,7 @@ describe('options prop', () => {
     expect(option.classList.contains('treeselect-list__item--disabled')).toBe(true)
   })
 
-  it('should not select disabled option', async () => {
+  it('should not select disabled option', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: [
@@ -112,7 +112,7 @@ describe('options prop', () => {
     expect(tagsElement.innerHTML).not.toContain('Option 1')
   })
 
-  it('should render a Treeselect with children options', async () => {
+  it('should render a Treeselect with children options', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: [
@@ -136,7 +136,7 @@ describe('options prop', () => {
     expect(treeselect.options[0].children.length).toEqual(2)
   })
 
-  it('should not select disabled children option', async () => {
+  it('should not select disabled children option', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: [
@@ -162,7 +162,7 @@ describe('options prop', () => {
     expect(tagsElement.innerHTML).not.toContain('Option 2')
   })
 
-  it('should select children if all children are selected', async () => {
+  it('should select children if all children are selected', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: [
@@ -190,7 +190,7 @@ describe('options prop', () => {
     expect(tagsElement.innerHTML).toContain('Option 1')
   })
 
-  it('should select non disabled children if all children are selected and one is disabled', async () => {
+  it('should select non disabled children if all children are selected and one is disabled', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: [

@@ -1,7 +1,7 @@
-import { renderTreeselect } from '../../helpers/renderTreeselect'
+import { renderTreeselect } from '../../helpers'
 
 describe('parentHtmlContainer prop', () => {
-  it('should render a Treeselect component', async () => {
+  it('should render a Treeselect component', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: [
