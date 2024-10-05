@@ -1,4 +1,4 @@
-import { renderTreeselect } from '../../helpers'
+import { renderTreeselect, getEditElement } from '../../helpers'
 
 describe('focus method', () => {
   it('should focus on the input', async () => {
@@ -8,15 +8,10 @@ describe('focus method', () => {
     })
 
     treeselect.focus()
-
     await new Promise((resolve) => setTimeout(resolve, 0))
+    const input = getEditElement(treeselect.parentHtmlContainer)
 
-    console.log(treeselect.parentHtmlContainer.outerHTML)
-
-    const input = treeselect.parentHtmlContainer.querySelector('.treeselect-input__edit') as HTMLElement
     expect(document.activeElement).toBe(input)
-
-    const inputContainer = treeselect.parentHtmlContainer.querySelector('.treeselect-input') as HTMLElement
-    expect(inputContainer.classList.contains('treeselect-input--focused')).toBe(true)
+    expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })
 })

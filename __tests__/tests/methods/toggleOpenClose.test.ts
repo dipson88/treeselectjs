@@ -8,13 +8,13 @@ describe('toggleOpenClose method', () => {
     })
 
     treeselect.toggleOpenClose()
-    const openedList = treeselect.parentHtmlContainer.querySelector('.treeselect-list') as HTMLElement
-    expect(openedList).toBeTruthy()
+
     expect(treeselect.isListOpened).toBe(true)
+    expect(treeselect.parentHtmlContainer).toMatchSnapshot()
 
     treeselect.toggleOpenClose()
-    const closedList = treeselect.parentHtmlContainer.querySelector('.treeselect-list') as HTMLElement
-    expect(closedList).toBeFalsy()
+
     expect(treeselect.isListOpened).toBe(false)
+    expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })
 })

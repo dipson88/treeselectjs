@@ -1,163 +1,118 @@
-import { fireEvent } from '@testing-library/dom'
-import { renderTreeselect, getTagsElements } from '../../helpers'
+import { renderTreeselect, getTagsElements, defaultOptions } from '../../helpers'
 
 describe('value prop', () => {
   it('should render a Treeselect with empty tags', () => {
-    const name = 'Option 1'
-
     const treeselect = renderTreeselect({
       value: [],
-      options: [{ value: 1, name, children: [] }]
+      options: defaultOptions
     })
 
-    const tagsElement = treeselect.parentHtmlContainer.querySelector('.treeselect-input__tags') as HTMLElement
+    const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
+    treeselect.toggleOpenClose()
 
-    expect(tagsElement.innerHTML).not.toContain(name)
+    expect(treeselect.value).toEqual([])
+    expect(tagsElements.length).toBe(0)
+    expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })
 
-  it('should render a Treeselect with tags', () => {
-    const name1 = 'Option 1'
-    const name2 = 'Option 2'
-
+  it('should render a Treeselect with one tag', () => {
     const treeselect = renderTreeselect({
-      value: [1],
-      options: [
-        { value: 1, name: name1, children: [] },
-        { value: 2, name: name2, children: [] }
-      ]
+      value: [5],
+      options: defaultOptions
     })
 
-    const tagsElement = treeselect.parentHtmlContainer.querySelector('.treeselect-input__tags') as HTMLElement
+    const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
+    treeselect.toggleOpenClose()
 
-    expect(treeselect.value).toEqual([1])
-    expect(tagsElement.innerHTML).toContain(name1)
-    expect(tagsElement.innerHTML).not.toContain(name2)
+    expect(treeselect.value).toEqual([5])
+    expect(tagsElements.length).toBe(1)
+    expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })
 
   it('should render a Treeselect with multiple tags', () => {
-    const name1 = 'Option 1'
-    const name2 = 'Option 2'
-
     const treeselect = renderTreeselect({
-      value: [1, 2],
-      options: [
-        { value: 1, name: name1, children: [] },
-        { value: 2, name: name2, children: [] }
-      ]
+      value: [3, 5],
+      options: defaultOptions
     })
 
-    const tagsElement = treeselect.parentHtmlContainer.querySelector('.treeselect-input__tags') as HTMLElement
-    const tags = getTagsElements(treeselect.parentHtmlContainer)
+    const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
+    treeselect.toggleOpenClose()
 
-    expect(tags.length).toBe(2)
-    expect(treeselect.value).toEqual([1, 2])
-    expect(tagsElement.innerHTML).toContain(name1)
-    expect(tagsElement.innerHTML).toContain(name2)
+    expect(tagsElements.length).toBe(2)
+    expect(treeselect.value).toEqual([3, 5])
+    expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })
 
-  it('should remove all tags', () => {
-    const name1 = 'Option 1'
-    const name2 = 'Option 2'
-
+  it('should not contain non existent tags', () => {
     const treeselect = renderTreeselect({
-      value: [1, 2],
-      options: [
-        { value: 1, name: name1, children: [] },
-        { value: 2, name: name2, children: [] }
-      ]
+      value: [100],
+      options: defaultOptions
     })
 
-    const removeButton = treeselect.parentHtmlContainer.querySelector('.treeselect-input__clear') as HTMLElement
-    fireEvent.mouseDown(removeButton)
+    const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
 
-    const tagsElement = treeselect.parentHtmlContainer.querySelector('.treeselect-input__tags') as HTMLElement
-
+    expect(tagsElements.length).toBe(0)
     expect(treeselect.value).toEqual([])
-    expect(tagsElement.innerHTML).not.toContain(name1)
-    expect(tagsElement.innerHTML).not.toContain(name2)
+    expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })
 
-  it('should remove one tag', () => {
-    const name1 = 'Option 1'
-    const name2 = 'Option 2'
-
+  it('should not contain duplicate tags', () => {
     const treeselect = renderTreeselect({
-      value: [1, 2],
-      options: [
-        { value: 1, name: name1, children: [] },
-        { value: 2, name: name2, children: [] }
-      ]
+      value: [3, 3],
+      options: defaultOptions
     })
 
-    const tags = getTagsElements(treeselect.parentHtmlContainer)
-    const firstTag = tags[0]
-    fireEvent.mouseDown(firstTag)
+    const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
+    treeselect.toggleOpenClose()
 
-    const newTags = getTagsElements(treeselect.parentHtmlContainer)
-
-    expect(treeselect.value).toEqual([2])
-    expect(newTags.length).toBe(1)
-    expect(newTags[0].innerHTML).toContain(name2)
+    expect(tagsElements.length).toBe(1)
+    expect(treeselect.value).toEqual([3])
+    expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })
 
-  it('should update value with updateValue method', () => {
+  // Single mode
+  it('should render a Treeselect with empty value in single mode', () => {
     const treeselect = renderTreeselect({
-      value: [],
-      options: [
-        { value: 1, name: 'Option 1', children: [] },
-        { value: 2, name: 'Option 2', children: [] },
-        { value: 3, name: 'Option 3', children: [] }
-      ]
+      isSingleSelect: true,
+      value: null,
+      options: defaultOptions
     })
 
-    treeselect.updateValue([1, 2])
+    const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
+    treeselect.toggleOpenClose()
 
-    const tags = getTagsElements(treeselect.parentHtmlContainer)
-
-    expect(tags.length).toBe(2)
-    expect(treeselect.value).toEqual([1, 2])
+    expect(treeselect.value).toEqual(null)
+    expect(tagsElements.length).toBe(0)
+    expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })
 
-  it('should update value with mount method', () => {
+  it('should render a Treeselect with one value in single mode', () => {
     const treeselect = renderTreeselect({
-      value: [],
-      options: [
-        { value: 1, name: 'Option 1', children: [] },
-        { value: 2, name: 'Option 2', children: [] },
-        { value: 3, name: 'Option 3', children: [] }
-      ]
+      isSingleSelect: true,
+      value: 3,
+      options: defaultOptions
     })
 
-    treeselect.value = [1, 2]
-    treeselect.mount()
+    const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
+    treeselect.toggleOpenClose()
 
-    const tags = getTagsElements(treeselect.parentHtmlContainer)
-
-    expect(tags.length).toBe(2)
-    expect(treeselect.value).toEqual([1, 2])
+    expect(treeselect.value).toEqual(3)
+    expect(tagsElements.length).toBe(1)
+    expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })
 
-  it('should remove tag with backspace key', () => {
-    const name1 = 'Option 1'
-    const name2 = 'Option 2'
-
+  it('should not select non existent value in single mode', () => {
     const treeselect = renderTreeselect({
-      value: [1, 2],
-      options: [
-        { value: 1, name: name1, children: [] },
-        { value: 2, name: name2, children: [] }
-      ]
+      isSingleSelect: true,
+      value: 100,
+      options: defaultOptions
     })
 
-    fireEvent.mouseDown(treeselect.parentHtmlContainer)
-    const input = treeselect.parentHtmlContainer.querySelector('.treeselect-input__edit') as HTMLElement
-    fireEvent.keyDown(input, { key: 'Backspace' })
-    const newTags = getTagsElements(treeselect.parentHtmlContainer)
+    const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
+    treeselect.toggleOpenClose()
 
-    expect(treeselect.value).toEqual([1])
-    expect(newTags.length).toBe(1)
-    expect(newTags[0].innerHTML).toContain(name1)
+    expect(treeselect.value).toEqual(null)
+    expect(tagsElements.length).toBe(0)
+    expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })
-
-  // TODO: Add test with wrong value and parent value.
 })

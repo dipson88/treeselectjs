@@ -1,4 +1,4 @@
-import { renderTreeselect } from '../../helpers'
+import { renderTreeselect, getEditElement } from '../../helpers'
 
 describe('ariaLabel prop', () => {
   it('should render a Treeselect with the given aria-label', () => {
@@ -10,7 +10,7 @@ describe('ariaLabel prop', () => {
       ariaLabel
     })
 
-    const input = treeselect.parentHtmlContainer.querySelector('.treeselect-input__edit') as HTMLElement
+    const input = getEditElement(treeselect.parentHtmlContainer)
     expect(input.getAttribute('aria-label')).toBe(ariaLabel)
   })
 })

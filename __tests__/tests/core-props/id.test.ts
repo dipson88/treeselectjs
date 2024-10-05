@@ -1,4 +1,4 @@
-import { renderTreeselect } from '../../helpers'
+import { renderTreeselect, getEditElement } from '../../helpers'
 
 describe('id prop', () => {
   it('should render a Treeselect with the given id', () => {
@@ -10,7 +10,7 @@ describe('id prop', () => {
       id
     })
 
-    const input = treeselect.parentHtmlContainer.querySelector('.treeselect-input__edit') as HTMLElement
+    const input = getEditElement(treeselect.parentHtmlContainer)
     expect(input.getAttribute('id')).toBe(id)
   })
 })
