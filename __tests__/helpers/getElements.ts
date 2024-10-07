@@ -9,3 +9,12 @@ export const getEditElement = (parentHtmlContainer: HTMLElement) =>
 
 export const getArrowElement = (parentHtmlContainer: HTMLElement) =>
   parentHtmlContainer.querySelector('.treeselect-input__arrow') as HTMLElement
+
+export const getClearElement = (parentHtmlContainer: HTMLElement) =>
+  parentHtmlContainer.querySelector('.treeselect-input__clear') as HTMLElement
+
+export const getListItems = (parentHtmlContainer: HTMLElement) =>
+  parentHtmlContainer.querySelectorAll('.treeselect-list__item') as NodeListOf<HTMLElement>
+
+export const getNoResultsElement = (parentHtmlContainer: HTMLElement) =>
+  parentHtmlContainer.querySelector('.treeselect-list__empty') as HTMLElement
