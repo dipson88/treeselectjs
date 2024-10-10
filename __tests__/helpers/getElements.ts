@@ -18,3 +18,12 @@ export const getListItems = (parentHtmlContainer: HTMLElement) =>
 
 export const getNoResultsElement = (parentHtmlContainer: HTMLElement) =>
   parentHtmlContainer.querySelector('.treeselect-list__empty') as HTMLElement
+
+export const getListGroupsItems = (parentHtmlContainer: HTMLElement) =>
+  parentHtmlContainer.querySelectorAll('.treeselect-list__item--group') as NodeListOf<HTMLElement>
+
+export const getListElement = (parentHtmlContainer: HTMLElement) =>
+  parentHtmlContainer.querySelector('.treeselect-list') as HTMLElement
+
+export const getListSlotElement = (parentHtmlContainer: HTMLElement) =>
+  parentHtmlContainer.querySelector('.treeselect-list__slot') as HTMLElement

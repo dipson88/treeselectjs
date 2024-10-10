@@ -43,3 +43,9 @@ export const defaultOptions = [
     ]
   }
 ]
+
+export const largeOptionsList = Array.from({ length: 30 }, (_, index) => ({
+  name: `Option ${index}`,
+  value: index,
+  children: []
+}))
