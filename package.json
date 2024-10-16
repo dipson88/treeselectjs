@@ -25,8 +25,11 @@
     "dev": "vite",
     "build": "tsc && vite build && node postBuild.js",
     "preview": "vite preview",
-    "prettier": "prettier --w src && prettier --w app && prettier --w demo"
-  },  
+    "prettier": "prettier --w src && prettier --w app && prettier --w demo",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test:e2e": "start-server-and-test dev http://localhost:5173 cy:run"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/dipson88/treeselectjs.git"
@@ -47,7 +50,9 @@
   },
   "homepage": "https://github.com/dipson88/treeselectjs#readme",
   "devDependencies": {
+    "cypress": "^13.15.0",
     "prettier": "^2.8.7",
+    "start-server-and-test": "^2.0.8",
     "typescript": "^4.9.3",
     "vite": "^4.5.2",
     "vite-plugin-dts": "^2.2.0"
