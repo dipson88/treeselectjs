@@ -27,7 +27,8 @@
     "typecheck": "tsc --project tsconfig.app.json --noEmit",
     "preview": "vite preview",
     "prettier": "prettier --w src && prettier --w app && prettier --w demo",
-    "test": "jest --watch",
+    "jest": "jest",
+    "jets:watch": "jest --watch",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },
