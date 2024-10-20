@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["jest", "node"]
+  },
+  "include": ["__tests__/**/*.test.ts", "__tests__/**/*.spec.ts"]
+}

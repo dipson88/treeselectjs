@@ -12,14 +12,49 @@ export const titleSelectors = {
 export const classes = {
   parent: 'treeselect',
   input: {
-    base: 'treeselect-input',
     arrow: 'treeselect-input__arrow',
+    base: 'treeselect-input',
+    bottom: 'treeselect-input--bottom',
+    clear: 'treeselect-input__clear',
+    focused: 'treeselect-input--focused',
     opened: 'treeselect-input--opened',
-    focused: 'treeselect-input--focused'
+    tagsElement: 'treeselect-input__tags-element',
+    top: 'treeselect-input--top'
   },
   list: {
     base: 'treeselect-list',
+    bottom: 'treeselect-list--bottom',
     itemArrow: 'treeselect-list__item-icon',
-    itemHidden: 'treeselect-list__item--hidden'
+    itemChecked: 'treeselect-list__item--checked',
+    itemFocused: 'treeselect-list__item--focused',
+    itemGroup: 'treeselect-list__item--group',
+    itemHidden: 'treeselect-list__item--hidden',
+    itemPartialChecked: 'treeselect-list__item--partial-checked',
+    top: 'treeselect-list--top'
+  }
+}
+
+export const classesSelectors = {
+  parent: `.${classes.parent}`,
+  input: {
+    arrow: `.${classes.input.arrow}`,
+    base: `.${classes.input.base}`,
+    bottom: `.${classes.input.bottom}`,
+    clear: `.${classes.input.clear}`,
+    focused: `.${classes.input.focused}`,
+    opened: `.${classes.input.opened}`,
+    tagsElement: `.${classes.input.tagsElement}`,
+    top: `.${classes.input.top}`
+  },
+  list: {
+    base: `.${classes.list.base}`,
+    bottom: `.${classes.list.bottom}`,
+    itemArrow: `.${classes.list.itemArrow}`,
+    itemChecked: `.${classes.list.itemChecked}`,
+    itemFocused: `.${classes.list.itemFocused}`,
+    itemGroup: `.${classes.list.itemGroup}`,
+    itemHidden: `.${classes.list.itemHidden}`,
+    itemPartialChecked: `.${classes.list.itemPartialChecked}`,
+    top: `.${classes.list.top}`
   }
 }
