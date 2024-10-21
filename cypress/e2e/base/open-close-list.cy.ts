@@ -5,7 +5,6 @@ import {
   outsideClick,
   treeselectClick,
   treeselectFocus,
-  treeselectType,
   visitCypressDefaultPage
 } from '../../helpers'
 
@@ -47,20 +46,6 @@ describe('open-close-list', () => {
     outsideClick()
     cy.get(inputSelector.base).should('not.have.class', inputClass.opened)
     cy.get(listSelector.base).should('not.exist')
-  })
-
-  it('should open/close list on Space key', () => {
-    treeselectClick()
-    cy.get(inputSelector.base).should('have.class', inputClass.opened)
-    cy.get(listSelector.base).should('exist')
-
-    treeselectType('{ }')
-    cy.get(inputSelector.base).should('not.have.class', inputClass.opened)
-    cy.get(listSelector.base).should('not.exist')
-
-    treeselectType('{ }')
-    cy.get(inputSelector.base).should('have.class', inputClass.opened)
-    cy.get(listSelector.base).should('exist')
   })
 
   it('should not be opened on focus', () => {

@@ -26,9 +26,9 @@
     "build": "tsc && vite build && node postBuild.js",
     "typecheck": "tsc --project tsconfig.app.json --noEmit",
     "preview": "vite preview",
-    "prettier": "prettier --w src && prettier --w app && prettier --w demo",
-    "jest": "jest",
+    "prettier": "prettier --w .",
     "jets:watch": "jest --watch",
+    "jest:run": "jest",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },

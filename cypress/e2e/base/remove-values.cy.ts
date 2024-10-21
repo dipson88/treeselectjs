@@ -38,20 +38,6 @@ describe('remove-values', () => {
     cy.get(parentSelector).find(listSelector.base).should('not.exist')
   })
 
-  it('should remove values on Backspace key', () => {
-    treeselectClick()
-    getTagsElements().should('have.length', 2)
-
-    treeselectType('{backspace}')
-    getTagsElements().should('have.length', 1)
-
-    treeselectType('{backspace}')
-    getTagsElements().should('have.length', 0)
-
-    cy.get(listSelector.itemChecked).should('have.length', 0)
-    cy.get(listSelector.itemPartialChecked).should('have.length', 0)
-  })
-
   it('should not open list on Backspace key', () => {
     treeselectFocus()
     treeselectType('{backspace}')

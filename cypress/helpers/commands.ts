@@ -1,9 +1,22 @@
 import { classesSelectors } from './constants'
 
 const { parent: parentSelector, input: inputSelector, list: listSelector } = classesSelectors
+const port = '5173'
 
 export const visitCypressDefaultPage = () => {
-  cy.visit('http://localhost:5173/app/cypress/cypress-default.html')
+  cy.visit(`http://localhost:${port}/cypress/pages/cypress-base.html`)
+}
+
+export const visitCypressSinglePage = () => {
+  cy.visit(`http://localhost:${port}/cypress/pages/cypress-single.html`)
+}
+
+export const visitCypressDisabledPage = () => {
+  cy.visit(`http://localhost:${port}/cypress/pages/cypress-disabled.html`)
+}
+
+export const visitCypressLargeDataPage = () => {
+  cy.visit(`http://localhost:${port}/cypress/pages/cypress-large-data.html`)
 }
 
 export const treeselectClick = () => {
