@@ -1,5 +1,5 @@
-import '../../src/treeselectjs.css'
-import Treeselect from '../../src/treeselectjs'
+import '../../../src/treeselectjs.css'
+import Treeselect from '../../../src/treeselectjs'
 
 export const options = [
   {

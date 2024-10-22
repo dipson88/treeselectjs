@@ -5,8 +5,9 @@ export default {
     '^.+\\.ts?$': 'ts-jest'
   },
   moduleFileExtensions: ['ts', 'js'],
-  modulePathIgnorePatterns: ['<rootDir>/jest/helpers'],
+  modulePathIgnorePatterns: ['<rootDir>/__tests__/jest/helpers'],
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy'
-  }
+  },
+  testMatch: ['**/__tests__/**/*.test.ts']
 }
