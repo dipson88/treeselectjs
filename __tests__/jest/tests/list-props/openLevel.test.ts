@@ -1,4 +1,6 @@
-import { defaultOptions, renderTreeselect, getListItems } from '../../helpers'
+import { defaultOptions, renderTreeselect, getListItems, classes } from '../../helpers'
+
+const { list: listClasses } = classes
 
 describe('openLevel prop', () => {
   it('groups should be closed by default', () => {
@@ -10,7 +12,7 @@ describe('openLevel prop', () => {
     treeselect.toggleOpenClose()
 
     const topGroups = Array.from(getListItems(treeselect.parentHtmlContainer)).filter(
-      (item) => !item.classList.contains('treeselect-list__item--hidden')
+      (item) => !item.classList.contains(listClasses.itemHidden)
     )
 
     expect(topGroups).toHaveLength(2)
@@ -27,7 +29,7 @@ describe('openLevel prop', () => {
     treeselect.toggleOpenClose()
 
     const hiddenItems = Array.from(getListItems(treeselect.parentHtmlContainer)).filter((item) =>
-      item.classList.contains('treeselect-list__item--hidden')
+      item.classList.contains(listClasses.itemHidden)
     )
 
     expect(hiddenItems).toHaveLength(0)

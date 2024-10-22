@@ -15,9 +15,6 @@ const { input: inputSelector, list: listSelector } = classesSelectors
 describe('keyboard', () => {
   beforeEach(() => {
     visitCypressDefaultPage()
-    // clearClick()
-    // treeselectClick()
-    // expandAllGroups()
   })
 
   it('should open/close list on Space key', () => {

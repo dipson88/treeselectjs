@@ -1,29 +1,38 @@
+import { classesSelectors } from '../../testHelpers'
+
+const { input: inputSelectors, list: listSelectors } = classesSelectors
+
+// Input
 export const getTagsElements = (parentHtmlContainer: HTMLElement) =>
-  parentHtmlContainer.querySelectorAll('.treeselect-input__tags-element') as NodeListOf<HTMLElement>
+  parentHtmlContainer.querySelectorAll(inputSelectors.tagsElement) as NodeListOf<HTMLElement>
 
 export const getTagsElement = (parentHtmlContainer: HTMLElement) =>
-  parentHtmlContainer.querySelector('.treeselect-input__tags') as HTMLElement
+  parentHtmlContainer.querySelector(inputSelectors.tags) as HTMLElement
 
 export const getEditElement = (parentHtmlContainer: HTMLElement) =>
-  parentHtmlContainer.querySelector('.treeselect-input__edit') as HTMLElement
+  parentHtmlContainer.querySelector(inputSelectors.edit) as HTMLElement
 
 export const getArrowElement = (parentHtmlContainer: HTMLElement) =>
-  parentHtmlContainer.querySelector('.treeselect-input__arrow') as HTMLElement
+  parentHtmlContainer.querySelector(inputSelectors.arrow) as HTMLElement
 
 export const getClearElement = (parentHtmlContainer: HTMLElement) =>
-  parentHtmlContainer.querySelector('.treeselect-input__clear') as HTMLElement
+  parentHtmlContainer.querySelector(inputSelectors.clear) as HTMLElement
+
+// List
+export const getListElement = (parentHtmlContainer: HTMLElement) =>
+  parentHtmlContainer.querySelector(listSelectors.base) as HTMLElement
 
 export const getListItems = (parentHtmlContainer: HTMLElement) =>
-  parentHtmlContainer.querySelectorAll('.treeselect-list__item') as NodeListOf<HTMLElement>
+  parentHtmlContainer.querySelectorAll(listSelectors.item) as NodeListOf<HTMLElement>
 
 export const getNoResultsElement = (parentHtmlContainer: HTMLElement) =>
-  parentHtmlContainer.querySelector('.treeselect-list__empty') as HTMLElement
+  parentHtmlContainer.querySelector(listSelectors.empty) as HTMLElement
 
 export const getListGroupsItems = (parentHtmlContainer: HTMLElement) =>
-  parentHtmlContainer.querySelectorAll('.treeselect-list__item--group') as NodeListOf<HTMLElement>
-
-export const getListElement = (parentHtmlContainer: HTMLElement) =>
-  parentHtmlContainer.querySelector('.treeselect-list') as HTMLElement
+  parentHtmlContainer.querySelectorAll(listSelectors.itemGroup) as NodeListOf<HTMLElement>
 
 export const getListSlotElement = (parentHtmlContainer: HTMLElement) =>
-  parentHtmlContainer.querySelector('.treeselect-list__slot') as HTMLElement
+  parentHtmlContainer.querySelector(listSelectors.slot) as HTMLElement
+
+export const getGroupArrowIcons = (parentHtmlContainer: HTMLElement) =>
+  parentHtmlContainer.querySelectorAll(listSelectors.itemArrow) as NodeListOf<HTMLElement>

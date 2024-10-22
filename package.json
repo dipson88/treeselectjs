@@ -24,7 +24,7 @@
   "scripts": {
     "dev": "vite --port 5173",
     "build": "tsc && vite build && node postBuild.js",
-    "typecheck": "tsc --project tsconfig.app.json --noEmit",
+    "typecheck": "tsc --project tsconfig.app.json --noEmit && tsc --project tsconfig.jest.json --noEmit && tsc --project tsconfig.cypress.json --noEmit",
     "preview": "vite preview",
     "prettier": "prettier --w .",
     "jets:watch": "jest --watch",

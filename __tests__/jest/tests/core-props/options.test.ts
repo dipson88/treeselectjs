@@ -1,5 +1,7 @@
 import { fireEvent } from '@testing-library/dom'
-import { renderTreeselect } from '../../helpers'
+import { renderTreeselect, getArrowElement, getListItems, getTagsElement, classes } from '../../helpers'
+
+const { list: listClasses } = classes
 
 describe('options prop', () => {
   it('should render a Treeselect with empty options', () => {
@@ -8,7 +10,7 @@ describe('options prop', () => {
       options: []
     })
 
-    const arrow = treeselect.parentHtmlContainer.querySelector('.treeselect-input__arrow') as HTMLElement
+    const arrow = getArrowElement(treeselect.parentHtmlContainer)
     fireEvent.mouseDown(arrow)
 
     expect(document.body.innerHTML).toContain('No results found...')
@@ -25,9 +27,9 @@ describe('options prop', () => {
       ]
     })
 
-    const arrow = treeselect.parentHtmlContainer.querySelector('.treeselect-input__arrow') as HTMLElement
+    const arrow = getArrowElement(treeselect.parentHtmlContainer)
     fireEvent.mouseDown(arrow)
-    const options = treeselect.parentHtmlContainer.querySelectorAll('.treeselect-list__item') as NodeListOf<HTMLElement>
+    const options = getListItems(treeselect.parentHtmlContainer)
 
     expect(options.length).toBe(3)
     expect(treeselect.options.length).toEqual(3)
@@ -43,12 +45,12 @@ describe('options prop', () => {
       ]
     })
 
-    const arrow = treeselect.parentHtmlContainer.querySelector('.treeselect-input__arrow') as HTMLElement
+    const arrow = getArrowElement(treeselect.parentHtmlContainer)
     fireEvent.mouseDown(arrow)
-    const option = treeselect.parentHtmlContainer.querySelector('.treeselect-list__item') as HTMLElement
+    const firstOption = getListItems(treeselect.parentHtmlContainer)[0]
 
-    expect(option.getAttribute('test')).toBe('test-data-1')
-    expect(option.innerHTML).toContain('Option 1')
+    expect(firstOption.getAttribute('test')).toBe('test-data-1')
+    expect(firstOption.innerHTML).toContain('Option 1')
   })
 
   it('should contain attributes in children options', () => {
@@ -66,9 +68,9 @@ describe('options prop', () => {
       ]
     })
 
-    const arrow = treeselect.parentHtmlContainer.querySelector('.treeselect-input__arrow') as HTMLElement
+    const arrow = getArrowElement(treeselect.parentHtmlContainer)
     fireEvent.mouseDown(arrow)
-    const options = treeselect.parentHtmlContainer.querySelectorAll('.treeselect-list__item') as NodeListOf<HTMLElement>
+    const options = getListItems(treeselect.parentHtmlContainer)
     const secondOption = options[1]
 
     expect(secondOption.getAttribute('test')).toBe('test-data-2')
@@ -85,11 +87,11 @@ describe('options prop', () => {
       ]
     })
 
-    const arrow = treeselect.parentHtmlContainer.querySelector('.treeselect-input__arrow') as HTMLElement
+    const arrow = getArrowElement(treeselect.parentHtmlContainer)
     fireEvent.mouseDown(arrow)
-    const option = treeselect.parentHtmlContainer.querySelector('.treeselect-list__item') as HTMLElement
+    const firstOption = getListItems(treeselect.parentHtmlContainer)[0]
 
-    expect(option.classList.contains('treeselect-list__item--disabled')).toBe(true)
+    expect(firstOption.classList.contains(listClasses.itemDisabled)).toBe(true)
   })
 
   it('should not select disabled option', () => {
@@ -102,11 +104,11 @@ describe('options prop', () => {
       ]
     })
 
-    const arrow = treeselect.parentHtmlContainer.querySelector('.treeselect-input__arrow') as HTMLElement
+    const arrow = getArrowElement(treeselect.parentHtmlContainer)
     fireEvent.mouseDown(arrow)
-    const option = treeselect.parentHtmlContainer.querySelector('.treeselect-list__item') as HTMLElement
-    fireEvent.mouseDown(option)
-    const tagsElement = treeselect.parentHtmlContainer.querySelector('.treeselect-input__tags') as HTMLElement
+    const firstOption = getListItems(treeselect.parentHtmlContainer)[0]
+    fireEvent.mouseDown(firstOption)
+    const tagsElement = getTagsElement(treeselect.parentHtmlContainer)
 
     expect(treeselect.value).toEqual([])
     expect(tagsElement.innerHTML).not.toContain('Option 1')
@@ -127,9 +129,9 @@ describe('options prop', () => {
       ]
     })
 
-    const arrow = treeselect.parentHtmlContainer.querySelector('.treeselect-input__arrow') as HTMLElement
+    const arrow = getArrowElement(treeselect.parentHtmlContainer)
     fireEvent.mouseDown(arrow)
-    const options = treeselect.parentHtmlContainer.querySelectorAll('.treeselect-list__item') as NodeListOf<HTMLElement>
+    const options = getListItems(treeselect.parentHtmlContainer)
 
     expect(options.length).toBe(3)
     expect(treeselect.options.length).toEqual(1)
@@ -151,12 +153,12 @@ describe('options prop', () => {
       ]
     })
 
-    const arrow = treeselect.parentHtmlContainer.querySelector('.treeselect-input__arrow') as HTMLElement
+    const arrow = getArrowElement(treeselect.parentHtmlContainer)
     fireEvent.mouseDown(arrow)
-    const options = treeselect.parentHtmlContainer.querySelectorAll('.treeselect-list__item') as NodeListOf<HTMLElement>
+    const options = getListItems(treeselect.parentHtmlContainer)
     const secondOption = options[1]
     fireEvent.mouseDown(secondOption)
-    const tagsElement = treeselect.parentHtmlContainer.querySelector('.treeselect-input__tags') as HTMLElement
+    const tagsElement = getTagsElement(treeselect.parentHtmlContainer)
 
     expect(treeselect.value).toEqual([])
     expect(tagsElement.innerHTML).not.toContain('Option 2')
@@ -177,14 +179,14 @@ describe('options prop', () => {
       ]
     })
 
-    const arrow = treeselect.parentHtmlContainer.querySelector('.treeselect-input__arrow') as HTMLElement
+    const arrow = getArrowElement(treeselect.parentHtmlContainer)
     fireEvent.mouseDown(arrow)
-    const options = treeselect.parentHtmlContainer.querySelectorAll('.treeselect-list__item') as NodeListOf<HTMLElement>
+    const options = getListItems(treeselect.parentHtmlContainer)
     const secondOption = options[1]
     const thirdOption = options[2]
     fireEvent.mouseDown(secondOption)
     fireEvent.mouseDown(thirdOption)
-    const tagsElement = treeselect.parentHtmlContainer.querySelector('.treeselect-input__tags') as HTMLElement
+    const tagsElement = getTagsElement(treeselect.parentHtmlContainer)
 
     expect(treeselect.value).toEqual([2, 3])
     expect(tagsElement.innerHTML).toContain('Option 1')
@@ -205,12 +207,12 @@ describe('options prop', () => {
       ]
     })
 
-    const arrow = treeselect.parentHtmlContainer.querySelector('.treeselect-input__arrow') as HTMLElement
+    const arrow = getArrowElement(treeselect.parentHtmlContainer)
     fireEvent.mouseDown(arrow)
-    const options = treeselect.parentHtmlContainer.querySelectorAll('.treeselect-list__item') as NodeListOf<HTMLElement>
+    const options = getListItems(treeselect.parentHtmlContainer)
     const thirdOption = options[2]
     fireEvent.mouseDown(thirdOption)
-    const tagsElement = treeselect.parentHtmlContainer.querySelector('.treeselect-input__tags') as HTMLElement
+    const tagsElement = getTagsElement(treeselect.parentHtmlContainer)
 
     expect(treeselect.value).toEqual([3])
     expect(tagsElement.innerHTML).toContain('Option 3')

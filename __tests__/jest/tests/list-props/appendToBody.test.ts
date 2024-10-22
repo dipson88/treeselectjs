@@ -1,5 +1,7 @@
 import ResizeObserver from 'resize-observer-polyfill'
-import { defaultOptions, renderTreeselect } from '../../helpers'
+import { defaultOptions, renderTreeselect, classes } from '../../helpers'
+
+const { list: listClasses } = classes
 
 describe('appendToBody prop', () => {
   beforeAll(() => {
@@ -15,8 +17,8 @@ describe('appendToBody prop', () => {
 
     treeselect.toggleOpenClose()
 
-    expect(treeselect.parentHtmlContainer.innerHTML).not.toContain('treeselect-list')
-    expect(document.body.innerHTML).toContain('treeselect-list')
+    expect(treeselect.parentHtmlContainer.innerHTML).not.toContain(listClasses.base)
+    expect(document.body.innerHTML).toContain(listClasses.base)
     expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })
 })

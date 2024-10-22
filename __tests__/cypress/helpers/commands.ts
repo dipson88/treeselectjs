@@ -1,4 +1,4 @@
-import { classesSelectors } from './constants'
+import { classesSelectors } from '../../testHelpers'
 
 const { parent: parentSelector, input: inputSelector, list: listSelector } = classesSelectors
 const baseUrl = 'http://localhost:5173/__tests__/cypress/pages'
@@ -50,7 +50,7 @@ export const expandAllGroups = () => {
 }
 
 // Get Elements
-export const getTreeselct = () => {
+export const getTreeselect = () => {
   return cy.get(parentSelector)
 }
 

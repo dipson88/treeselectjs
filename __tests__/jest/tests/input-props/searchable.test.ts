@@ -1,5 +1,14 @@
 import { fireEvent } from '@testing-library/dom'
-import { renderTreeselect, getEditElement, getListItems, getNoResultsElement, defaultOptions } from '../../helpers'
+import {
+  classes,
+  defaultOptions,
+  getEditElement,
+  getListItems,
+  getNoResultsElement,
+  renderTreeselect
+} from '../../helpers'
+
+const { list: listClasses } = classes
 
 describe('searchable prop', () => {
   const awaitInput = async () => new Promise((resolve) => setTimeout(resolve, 400))
@@ -15,7 +24,7 @@ describe('searchable prop', () => {
     await awaitInput()
 
     const listItems = Array.from(getListItems(treeselect.parentHtmlContainer)).filter(
-      (item) => !item.classList.contains('treeselect-list__item--hidden')
+      (item) => !item.classList.contains(listClasses.itemHidden)
     )
     const visibleItems = ['France', 'Paris']
 
@@ -36,7 +45,7 @@ describe('searchable prop', () => {
     await awaitInput()
 
     const listItems = Array.from(getListItems(treeselect.parentHtmlContainer)).filter(
-      (item) => !item.classList.contains('treeselect-list__item--hidden')
+      (item) => !item.classList.contains(listClasses.itemHidden)
     )
 
     expect(listItems).toHaveLength(0)
@@ -54,14 +63,14 @@ describe('searchable prop', () => {
     await awaitInput()
 
     const listItems = Array.from(getListItems(treeselect.parentHtmlContainer)).filter(
-      (item) => !item.classList.contains('treeselect-list__item--hidden')
+      (item) => !item.classList.contains(listClasses.itemHidden)
     )
 
     const emptyElement = getNoResultsElement(treeselect.parentHtmlContainer)
 
     expect(listItems).toHaveLength(0)
     expect(emptyElement).toBeDefined()
-    expect(emptyElement.classList.contains('treeselect-list__empty--hidden')).toBe(false)
+    expect(emptyElement.classList.contains(listClasses.itemHidden)).toBe(false)
     expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })
 })

@@ -3,5 +3,5 @@
   "compilerOptions": {
     "types": ["cypress"]
   },
-  "include": ["cypress/**/*.ts"]
+  "include": ["__tests__/cypress/**/*.ts", "__tests__/testHelpers/**/*.ts"]
 }

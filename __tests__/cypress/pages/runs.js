@@ -1,105 +1,6 @@
 import '../../../src/treeselectjs.css'
 import Treeselect from '../../../src/treeselectjs'
-
-export const options = [
-  {
-    name: 'England',
-    value: 1,
-    children: [
-      {
-        name: 'London',
-        value: 2,
-        children: [
-          {
-            name: 'Chelsea',
-            value: 3,
-            children: []
-          },
-          {
-            name: 'West End',
-            value: 4,
-            children: []
-          }
-        ]
-      },
-      {
-        name: 'Brighton',
-        value: 5,
-        children: []
-      }
-    ]
-  },
-  {
-    name: 'France',
-    value: 6,
-    children: [
-      {
-        name: 'Paris',
-        value: 7,
-        children: []
-      },
-      {
-        name: 'Lyon',
-        value: 8,
-        children: []
-      }
-    ]
-  }
-]
-
-const optionsWithDisabled = [
-  {
-    name: 'England',
-    value: 1,
-    children: [
-      {
-        name: 'London',
-        value: 2,
-        children: [
-          {
-            name: 'Chelsea',
-            value: 3,
-            children: [],
-            disabled: true
-          },
-          {
-            name: 'West End',
-            value: 4,
-            children: []
-          }
-        ]
-      },
-      {
-        name: 'Brighton',
-        value: 5,
-        children: []
-      }
-    ]
-  },
-  {
-    name: 'France',
-    value: 6,
-    disabled: true,
-    children: [
-      {
-        name: 'Paris',
-        value: 7,
-        children: []
-      },
-      {
-        name: 'Lyon',
-        value: 8,
-        children: []
-      }
-    ]
-  }
-]
-
-const largeOptions = Array.from({ length: 50 }, (_, i) => ({
-  name: `Option ${i}`,
-  value: i,
-  children: []
-}))
+import { defaultOptions, largeOptionsList, optionsWithDisabled } from '../../testHelpers'
 
 export const runBaseTest = () => {
   const className = '.treeselect-demo-base'
@@ -107,7 +8,7 @@ export const runBaseTest = () => {
   const treeselect = new Treeselect({
     parentHtmlContainer: domElement,
     value: [4, 7, 8],
-    options: options
+    options: defaultOptions
   })
 }
 
@@ -117,7 +18,7 @@ export const runSingleTest = () => {
   const treeselect = new Treeselect({
     parentHtmlContainer: domElement,
     value: 4,
-    options: options,
+    options: defaultOptions,
     isSingleSelect: true,
     showTags: false
   })
@@ -139,7 +40,7 @@ export const runLargeDataTest = () => {
   const treeselect = new Treeselect({
     parentHtmlContainer: domElement,
     value: [],
-    options: largeOptions,
+    options: largeOptionsList,
     saveScrollPosition: true
   })
 }

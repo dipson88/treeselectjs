@@ -1,5 +1,7 @@
 import { fireEvent } from '@testing-library/dom'
-import { renderTreeselect, getTagsElements } from '../../helpers'
+import { renderTreeselect, getTagsElement, getTagsElements, getArrowElement, classesSelectors } from '../../helpers'
+
+const { list: listSelectors } = classesSelectors
 
 describe('disabled prop', () => {
   it('should render a disabled Treeselect', () => {
@@ -19,9 +21,9 @@ describe('disabled prop', () => {
       disabled: true
     })
 
-    const arrow = treeselect.parentHtmlContainer.querySelector('.treeselect-input__arrow') as HTMLElement
+    const arrow = getArrowElement(treeselect.parentHtmlContainer)
     fireEvent.mouseDown(arrow)
-    expect(document.body.innerHTML).not.toContain('.treeselect-list')
+    expect(document.body.innerHTML).not.toContain(listSelectors.base)
   })
 
   it('should not remove tags when Treeselect is disabled', () => {
@@ -31,7 +33,7 @@ describe('disabled prop', () => {
       disabled: true
     })
 
-    const tagsElement = treeselect.parentHtmlContainer.querySelector('.treeselect-input__tags') as HTMLElement
+    const tagsElement = getTagsElement(treeselect.parentHtmlContainer)
     fireEvent.mouseDown(tagsElement)
     const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
 

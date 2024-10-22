@@ -1,5 +1,5 @@
 import { fireEvent } from '@testing-library/dom'
-import { renderTreeselect, getTagsElements, getArrowElement, getEditElement } from '../../helpers'
+import { renderTreeselect, getTagsElements, getArrowElement, getEditElement, getGroupArrowIcons } from '../../helpers'
 
 describe('emits-callbacks method', () => {
   it('should call input callback if change value', () => {
@@ -132,8 +132,8 @@ describe('emits-callbacks method', () => {
 
     const arrow = getArrowElement(treeselect.parentHtmlContainer)
     fireEvent.mouseDown(arrow)
-    const groupArrow = treeselect.parentHtmlContainer.querySelector('.treeselect-list__item-icon') as HTMLElement
-    fireEvent.mouseDown(groupArrow)
+    const firstGroupArrow = getGroupArrowIcons(treeselect.parentHtmlContainer)[0]
+    fireEvent.mouseDown(firstGroupArrow)
 
     expect(openCloseGroupListener).toHaveBeenNthCalledWith(1, { groupId: 1, isClosed: false })
     expect(openCloseGroupFn).toHaveBeenNthCalledWith(1, 1, false)
