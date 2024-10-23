@@ -1,42 +1,53 @@
+export const optionNames = {
+  EnglandGroup: 'England',
+  LondonGroup: 'London',
+  ChelseaItem: 'Chelsea',
+  WestEndItem: 'West End',
+  BrightonItem: 'Brighton',
+  FranceGroup: 'France',
+  ParisItem: 'Paris',
+  LyonItem: 'Lyon'
+}
+
 export const defaultOptions = [
   {
-    name: 'England',
+    name: optionNames.EnglandGroup,
     value: 1,
     children: [
       {
-        name: 'London',
+        name: optionNames.LondonGroup,
         value: 2,
         children: [
           {
-            name: 'Chelsea',
+            name: optionNames.ChelseaItem,
             value: 3,
             children: []
           },
           {
-            name: 'West End',
+            name: optionNames.WestEndItem,
             value: 4,
             children: []
           }
         ]
       },
       {
-        name: 'Brighton',
+        name: optionNames.BrightonItem,
         value: 5,
         children: []
       }
     ]
   },
   {
-    name: 'France',
+    name: optionNames.FranceGroup,
     value: 6,
     children: [
       {
-        name: 'Paris',
+        name: optionNames.ParisItem,
         value: 7,
         children: []
       },
       {
-        name: 'Lyon',
+        name: optionNames.LyonItem,
         value: 8,
         children: []
       }
@@ -46,45 +57,45 @@ export const defaultOptions = [
 
 export const optionsWithDisabled = [
   {
-    name: 'England',
+    name: optionNames.EnglandGroup,
     value: 1,
     children: [
       {
-        name: 'London',
+        name: optionNames.LondonGroup,
         value: 2,
         children: [
           {
-            name: 'Chelsea',
+            name: optionNames.ChelseaItem,
             value: 3,
             children: [],
             disabled: true
           },
           {
-            name: 'West End',
+            name: optionNames.WestEndItem,
             value: 4,
             children: []
           }
         ]
       },
       {
-        name: 'Brighton',
+        name: optionNames.BrightonItem,
         value: 5,
         children: []
       }
     ]
   },
   {
-    name: 'France',
+    name: optionNames.FranceGroup,
     value: 6,
     disabled: true,
     children: [
       {
-        name: 'Paris',
+        name: optionNames.ParisItem,
         value: 7,
         children: []
       },
       {
-        name: 'Lyon',
+        name: optionNames.LyonItem,
         value: 8,
         children: []
       }

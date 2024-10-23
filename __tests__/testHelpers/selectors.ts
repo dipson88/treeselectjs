@@ -1,14 +1,3 @@
-export const titleSelectors = {
-  EnglandGroup: '[title="England"]',
-  LondonGroup: '[title="London"]',
-  ChelseaItem: '[title="Chelsea"]',
-  WestEndItem: '[title="West End"]',
-  BrightonItem: '[title="Brighton"]',
-  FranceGroup: '[title="France"]',
-  ParisItem: '[title="Paris"]',
-  LyonItem: '[title="Lyon"]'
-}
-
 export const classes = {
   parent: 'treeselect',
   input: {

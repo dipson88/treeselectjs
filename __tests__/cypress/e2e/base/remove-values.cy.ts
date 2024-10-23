@@ -1,46 +1,38 @@
-import {
-  classesSelectors,
-  clearClick,
-  getTagsElements,
-  treeselectClick,
-  treeselectFocus,
-  treeselectType,
-  visitCypressDefaultPage
-} from '../../helpers'
+import { classesSelectors } from '../../helpers'
 
 const { parent: parentSelector, list: listSelector } = classesSelectors
 
 describe('remove-values', () => {
   beforeEach(() => {
-    visitCypressDefaultPage()
+    cy.visitBasePage()
   })
 
   it('should remove values on clear click', () => {
-    treeselectClick()
-    clearClick()
+    cy.treeselectClick()
+    cy.clearClick()
 
     cy.get(parentSelector).find(listSelector.itemChecked).should('not.exist')
     cy.get(parentSelector).find(listSelector.itemPartialChecked).should('not.exist')
   })
 
   it('should remove values on tag click', () => {
-    treeselectClick()
-    getTagsElements().should('have.length', 2)
+    cy.treeselectClick()
+    cy.getTagsElements().should('have.length', 2)
 
-    getTagsElements().first().click()
-    getTagsElements().should('have.length', 1)
+    cy.getTagsElements().first().click()
+    cy.getTagsElements().should('have.length', 1)
   })
 
   it('should not open list on clear click', () => {
-    treeselectFocus()
-    clearClick()
+    cy.treeselectFocus()
+    cy.clearClick()
 
     cy.get(parentSelector).find(listSelector.base).should('not.exist')
   })
 
   it('should not open list on Backspace key', () => {
-    treeselectFocus()
-    treeselectType('{backspace}')
+    cy.treeselectFocus()
+    cy.treeselectType('{backspace}')
 
     cy.get(parentSelector).find(listSelector.base).should('not.exist')
   })

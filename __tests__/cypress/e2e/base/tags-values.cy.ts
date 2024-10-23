@@ -1,38 +1,31 @@
-import {
-  clearClick,
-  expandAllGroups,
-  getTagsElements,
-  titleSelectors,
-  treeselectClick,
-  visitCypressDefaultPage
-} from '../../helpers'
+import { optionNames } from '../../helpers'
 
 describe('input-tags-values', () => {
   beforeEach(() => {
-    visitCypressDefaultPage()
-    clearClick()
-    treeselectClick()
-    expandAllGroups()
+    cy.visitBasePage()
+    cy.clearClick()
+    cy.treeselectClick()
+    cy.expandAllGroups()
   })
 
   it('should show group tag on group click', () => {
-    cy.get(titleSelectors.EnglandGroup).click()
-    getTagsElements().should('have.length', 1).should('contain', 'England')
+    cy.getListItem(optionNames.EnglandGroup).click()
+    cy.getTagsElements().should('have.length', 1).should('contain', 'England')
   })
 
   it('should show item tag on item click', () => {
-    cy.get(titleSelectors.BrightonItem).click()
-    getTagsElements().should('have.length', 1).should('contain', 'Brighton')
+    cy.getListItem(optionNames.BrightonItem).click()
+    cy.getTagsElements().should('have.length', 1).should('contain', 'Brighton')
   })
 
   it('should show sub group tag on sub group click', () => {
-    cy.get(titleSelectors.LondonGroup).click()
-    getTagsElements().should('have.length', 1).should('contain', 'London')
+    cy.getListItem(optionNames.LondonGroup).click()
+    cy.getTagsElements().should('have.length', 1).should('contain', 'London')
   })
 
   it('should show all tags on groups click', () => {
-    cy.get(titleSelectors.EnglandGroup).click()
-    cy.get(titleSelectors.FranceGroup).click()
-    getTagsElements().should('have.length', 2).should('contain', 'England').should('contain', 'France')
+    cy.getListItem(optionNames.EnglandGroup).click()
+    cy.getListItem(optionNames.FranceGroup).click()
+    cy.getTagsElements().should('have.length', 2).should('contain', 'England').should('contain', 'France')
   })
 })

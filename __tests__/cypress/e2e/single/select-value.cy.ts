@@ -1,39 +1,31 @@
-import {
-  clearClick,
-  expandAllGroups,
-  getInput,
-  getList,
-  titleSelectors,
-  treeselectClick,
-  visitCypressSinglePage
-} from '../../helpers'
+import { optionNames } from '../../helpers'
 
 describe('select-value', () => {
   beforeEach(() => {
-    visitCypressSinglePage()
-    clearClick()
-    treeselectClick()
-    expandAllGroups()
+    cy.visitSinglePage()
+    cy.clearClick()
+    cy.treeselectClick()
+    cy.expandAllGroups()
   })
 
   it('should select one element on click', () => {
-    cy.get(titleSelectors.BrightonItem).click()
-    getInput().should('contain', 'Brighton')
+    cy.getListItem(optionNames.BrightonItem).click()
+    cy.getInput().should('contain', 'Brighton')
   })
 
   it('should not unselect selected element on click', () => {
-    cy.get(titleSelectors.BrightonItem).click()
-    cy.get(titleSelectors.BrightonItem).click()
-    getInput().should('contain', 'Brighton')
+    cy.getListItem(optionNames.BrightonItem).click()
+    cy.getListItem(optionNames.BrightonItem).click()
+    cy.getInput().should('contain', 'Brighton')
   })
 
   it('should select group on click', () => {
-    cy.get(titleSelectors.LondonGroup).click()
-    getInput().should('contain', 'London')
+    cy.getListItem(optionNames.LondonGroup).click()
+    cy.getInput().should('contain', 'London')
   })
 
   it('should close list on select', () => {
-    cy.get(titleSelectors.BrightonItem).click()
-    getList().should('not.exist')
+    cy.getListItem(optionNames.BrightonItem).click()
+    cy.getList().should('not.exist')
   })
 })
