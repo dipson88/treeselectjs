@@ -1,0 +1,38 @@
+name: Cypress Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  cypress-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Start the dev server in the background
+      - name: Start dev server
+        run: npm run dev &
+        env:
+          NODE_ENV: development
+
+      # Run Cypress tests
+      - name: Run Cypress tests
+        run: npm run cypress:run

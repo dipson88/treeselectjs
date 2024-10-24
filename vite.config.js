@@ -8,7 +8,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/treeselectjs.ts'),
       name: 'treeselectjs',
-      fileName: 'treeselectjs',
+      fileName: 'treeselectjs'
     },
     rollupOptions: {
       output: {
@@ -28,8 +28,10 @@ export default defineConfig({
   server: {
     open: './app/index.html'
   },
-  plugins: [dts({
-    insertTypesEntry: true,
-    rollupTypes: true
-  })]
+  plugins: [
+    dts({
+      insertTypesEntry: true,
+      rollupTypes: true
+    })
+  ]
 })

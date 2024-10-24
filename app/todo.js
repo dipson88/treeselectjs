@@ -7,7 +7,6 @@
 // create update function for the list to avoid a remount
 // disable change focused element on fast scroll appendToBody
 // Should we add a list direction if we use staticList prop?
-// Add className for list
 
 // FEATURES (TODO)
 // select node as a separate node without children (individual mode)
