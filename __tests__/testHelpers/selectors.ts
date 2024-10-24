@@ -15,6 +15,7 @@ export const classes = {
   list: {
     base: 'treeselect-list',
     bottom: 'treeselect-list--bottom',
+    bottomToBody: 'treeselect-list--bottom-to-body',
     empty: 'treeselect-list__empty',
     item: 'treeselect-list__item',
     itemArrow: 'treeselect-list__item-icon',
@@ -25,7 +26,8 @@ export const classes = {
     itemHidden: 'treeselect-list__item--hidden',
     itemPartialChecked: 'treeselect-list__item--partial-checked',
     slot: 'treeselect-list__slot',
-    top: 'treeselect-list--top'
+    top: 'treeselect-list--top',
+    topToBody: 'treeselect-list--top-to-body'
   }
 }
 
@@ -46,6 +48,7 @@ export const classesSelectors = {
   list: {
     base: `.${classes.list.base}`,
     bottom: `.${classes.list.bottom}`,
+    bottomToBody: `.${classes.list.bottomToBody}`,
     empty: `.${classes.list.empty}`,
     item: `.${classes.list.item}`,
     itemArrow: `.${classes.list.itemArrow}`,
@@ -56,6 +59,7 @@ export const classesSelectors = {
     itemHidden: `.${classes.list.itemHidden}`,
     itemPartialChecked: `.${classes.list.itemPartialChecked}`,
     slot: `.${classes.list.slot}`,
-    top: `.${classes.list.top}`
+    top: `.${classes.list.top}`,
+    topToBody: `.${classes.list.topToBody}`
   }
 }
