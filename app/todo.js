@@ -7,13 +7,12 @@
 // create update function for the list to avoid a remount
 // disable change focused element on fast scroll appendToBody
 // Should we add a list direction if we use staticList prop?
-// Add className for list
 
 // FEATURES (TODO)
-// select node as a separate node without children (individual mode)
 // opportunity to add empty groups without children
 // select input text with mouse (now it is unselectable) (done - experimental)
-// e2e tests (cypress)
+// Add more e2e tests (cypress, jest)
+// Add "+ Count elements" additional text if tags are hidden
 
 // REQUESTS
 // Investigate an ability to add a diff names but the same values, and check them.

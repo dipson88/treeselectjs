@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`disabled prop should render a disabled Treeselect 1`] = `
+<div
+  class="treeselect treeselect--disabled"
+  id="test-container"
+>
+  <div
+    class="treeselect-input treeselect-input--value-not-selected"
+    tabindex="-1"
+  >
+    <div
+      class="treeselect-input__tags"
+    >
+      <input
+        class="treeselect-input__edit"
+        placeholder="Search..."
+        readonly="readonly"
+        tabindex="-1"
+      />
+    </div>
+    <div
+      class="treeselect-input__operators"
+    >
+      <span
+        class="treeselect-input__clear"
+        tabindex="-1"
+      >
+        <svg
+          fill="none"
+          height="15"
+          stroke="#000000"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 25 25"
+          width="15"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="10"
+          />
+          <line
+            x1="15"
+            x2="9"
+            y1="9"
+            y2="15"
+          />
+          <line
+            x1="9"
+            x2="15"
+            y1="9"
+            y2="15"
+          />
+        </svg>
+      </span>
+      <span
+        class="treeselect-input__arrow"
+      >
+        <svg
+          fill="none"
+          height="15"
+          stroke="#000000"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 25 25"
+          width="15"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M6 9l6 6 6-6"
+          />
+        </svg>
+      </span>
+    </div>
+  </div>
+</div>
+`;

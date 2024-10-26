@@ -15,6 +15,11 @@
     "noImplicitReturns": true,
     "skipLibCheck": true
   },
-  "include": ["src"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.jest.json" },
+    { "path": "./tsconfig.cypress.json" }
+  ]
 }
