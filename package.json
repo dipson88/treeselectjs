@@ -30,7 +30,8 @@
     "jest:watch": "jest --watch",
     "jest:run": "jest",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "test": "npm run typecheck && npm run jest:run && npm run cypress:run"
   },
   "repository": {
     "type": "git",
