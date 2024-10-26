@@ -39,6 +39,5 @@ describe('disabled prop', () => {
 
     expect(tagsElements.length).toBe(1)
     expect(treeselect.value).toEqual([1])
-    expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })
 })

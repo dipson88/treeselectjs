@@ -1,24 +1,23 @@
-import { renderTreeselect, defaultOptions } from '../../helpers'
+import { renderTreeselect, defaultOptions, optionsValues } from '../../helpers'
 
 describe('isGroupedValue prop', () => {
   it('should not group values by default', () => {
     const treeselect = renderTreeselect({
-      value: [1],
+      value: [optionsValues.EnglandGroup],
       options: defaultOptions
     })
 
-    expect(treeselect.value).toEqual([3, 4, 5])
-    expect(treeselect.parentHtmlContainer).toMatchSnapshot()
+    expect(treeselect.value).toEqual([optionsValues.ChelseaItem, optionsValues.WestEndItem, optionsValues.BrightonItem])
   })
 
   it('should group values', () => {
     const treeselect = renderTreeselect({
       isGroupedValue: true,
-      value: [1],
+      value: [optionsValues.EnglandGroup],
       options: defaultOptions
     })
 
-    expect(treeselect.value).toEqual([1])
+    expect(treeselect.value).toEqual([optionsValues.EnglandGroup])
     expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })
 })

@@ -1,9 +1,9 @@
-import { renderTreeselect, getTagsElement, defaultOptions } from '../../helpers'
+import { renderTreeselect, getTagsElement, defaultOptions, optionsValues } from '../../helpers'
 
 describe('tagsCountText prop', () => {
   it('should render a Treeselect with the default tagsCountText', () => {
     const treeselect = renderTreeselect({
-      value: [1, 6],
+      value: [optionsValues.EnglandGroup, optionsValues.FranceGroup],
       options: defaultOptions,
       showTags: false
     })
@@ -14,7 +14,7 @@ describe('tagsCountText prop', () => {
 
   it('should render a Treeselect with the given tagsCountText', () => {
     const treeselect = renderTreeselect({
-      value: [1, 6],
+      value: [optionsValues.EnglandGroup, optionsValues.FranceGroup],
       options: defaultOptions,
       showTags: false,
       tagsCountText: 'test elements'

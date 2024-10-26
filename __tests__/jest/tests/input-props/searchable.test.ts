@@ -5,6 +5,7 @@ import {
   getEditElement,
   getListItems,
   getNoResultsElement,
+  optionNames,
   renderTreeselect
 } from '../../helpers'
 
@@ -20,13 +21,13 @@ describe('searchable prop', () => {
     })
 
     const input = getEditElement(treeselect.parentHtmlContainer)
-    fireEvent.input(input, { target: { value: 'Paris' } })
+    fireEvent.input(input, { target: { value: optionNames.ParisItem } })
     await awaitInput()
 
     const listItems = Array.from(getListItems(treeselect.parentHtmlContainer)).filter(
       (item) => !item.classList.contains(listClasses.itemHidden)
     )
-    const visibleItems = ['France', 'Paris']
+    const visibleItems = [optionNames.FranceGroup, optionNames.ParisItem]
 
     expect(listItems).toHaveLength(2)
     expect(listItems.every((item) => visibleItems.includes(item.textContent!))).toBe(true)
@@ -41,7 +42,7 @@ describe('searchable prop', () => {
     })
 
     const input = getEditElement(treeselect.parentHtmlContainer)
-    fireEvent.input(input, { target: { value: 'Paris' } })
+    fireEvent.input(input, { target: { value: optionNames.ParisItem } })
     await awaitInput()
 
     const listItems = Array.from(getListItems(treeselect.parentHtmlContainer)).filter(

@@ -1,5 +1,5 @@
 import { fireEvent } from '@testing-library/dom'
-import { renderTreeselect, getArrowElement, getListItems, getTagsElement, classes } from '../../helpers'
+import { renderTreeselect, getArrowElement, getListItems, getTagsElement, classes, noResultsText } from '../../helpers'
 
 const { list: listClasses } = classes
 
@@ -13,7 +13,7 @@ describe('options prop', () => {
     const arrow = getArrowElement(treeselect.parentHtmlContainer)
     fireEvent.mouseDown(arrow)
 
-    expect(document.body.innerHTML).toContain('No results found...')
+    expect(document.body.innerHTML).toContain(noResultsText)
     expect(treeselect.options).toEqual([])
   })
 

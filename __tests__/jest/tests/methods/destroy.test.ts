@@ -1,4 +1,4 @@
-import { renderTreeselect, defaultOptions } from '../../helpers'
+import { renderTreeselect, getEditElement, getListElement, defaultOptions } from '../../helpers'
 
 describe('destroy method', () => {
   it('should remove treeselect form the DOM', () => {
@@ -9,6 +9,10 @@ describe('destroy method', () => {
 
     treeselect.destroy()
 
-    expect(treeselect.parentHtmlContainer).toMatchSnapshot()
+    const input = getEditElement(document.body)
+    const list = getListElement(document.body)
+
+    expect(input).toBeFalsy()
+    expect(list).toBeFalsy()
   })
 })

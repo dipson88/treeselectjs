@@ -1,9 +1,9 @@
-import { renderTreeselect, defaultOptions, getTagsElements } from '../../helpers'
+import { renderTreeselect, defaultOptions, getTagsElements, optionsValues } from '../../helpers'
 
 describe('grouped prop', () => {
   it('should grouped by default', () => {
     const treeselect = renderTreeselect({
-      value: [1],
+      value: [optionsValues.EnglandGroup],
       options: defaultOptions
     })
 
@@ -16,7 +16,7 @@ describe('grouped prop', () => {
   it('should not be grouped', () => {
     const treeselect = renderTreeselect({
       grouped: false,
-      value: [1],
+      value: [optionsValues.EnglandGroup],
       options: defaultOptions
     })
 

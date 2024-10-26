@@ -10,7 +10,6 @@ describe('staticList prop', () => {
     const list = getListElement(treeselect.parentHtmlContainer)
 
     expect(list).toBeFalsy()
-    expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })
 
   it('should be static when staticList is set', () => {

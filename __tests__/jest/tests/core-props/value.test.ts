@@ -1,4 +1,4 @@
-import { renderTreeselect, getTagsElements, defaultOptions } from '../../helpers'
+import { renderTreeselect, getTagsElements, defaultOptions, optionsValues } from '../../helpers'
 
 describe('value prop', () => {
   it('should render a Treeselect with empty tags', () => {
@@ -17,21 +17,21 @@ describe('value prop', () => {
 
   it('should render a Treeselect with one tag', () => {
     const treeselect = renderTreeselect({
-      value: [5],
+      value: [optionsValues.BrightonItem],
       options: defaultOptions
     })
 
     const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
     treeselect.toggleOpenClose()
 
-    expect(treeselect.value).toEqual([5])
+    expect(treeselect.value).toEqual([optionsValues.BrightonItem])
     expect(tagsElements.length).toBe(1)
     expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })
 
   it('should render a Treeselect with multiple tags', () => {
     const treeselect = renderTreeselect({
-      value: [3, 5],
+      value: [optionsValues.ChelseaItem, optionsValues.BrightonItem],
       options: defaultOptions
     })
 
@@ -39,7 +39,7 @@ describe('value prop', () => {
     treeselect.toggleOpenClose()
 
     expect(tagsElements.length).toBe(2)
-    expect(treeselect.value).toEqual([3, 5])
+    expect(treeselect.value).toEqual([optionsValues.ChelseaItem, optionsValues.BrightonItem])
     expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })
 
@@ -58,7 +58,7 @@ describe('value prop', () => {
 
   it('should not contain duplicate tags', () => {
     const treeselect = renderTreeselect({
-      value: [3, 3],
+      value: [optionsValues.ChelseaItem, optionsValues.ChelseaItem],
       options: defaultOptions
     })
 
@@ -66,7 +66,7 @@ describe('value prop', () => {
     treeselect.toggleOpenClose()
 
     expect(tagsElements.length).toBe(1)
-    expect(treeselect.value).toEqual([3])
+    expect(treeselect.value).toEqual([optionsValues.ChelseaItem])
     expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })
 
@@ -89,14 +89,14 @@ describe('value prop', () => {
   it('should render a Treeselect with one value in single mode', () => {
     const treeselect = renderTreeselect({
       isSingleSelect: true,
-      value: 3,
+      value: optionsValues.ChelseaItem,
       options: defaultOptions
     })
 
     const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
     treeselect.toggleOpenClose()
 
-    expect(treeselect.value).toEqual(3)
+    expect(treeselect.value).toEqual(optionsValues.ChelseaItem)
     expect(tagsElements.length).toBe(1)
     expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })

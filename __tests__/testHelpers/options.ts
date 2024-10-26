@@ -9,46 +9,59 @@ export const optionNames = {
   LyonItem: 'Lyon'
 }
 
+export const optionsValues = {
+  EnglandGroup: 1,
+  LondonGroup: 2,
+  ChelseaItem: 3,
+  WestEndItem: 4,
+  BrightonItem: 5,
+  FranceGroup: 6,
+  ParisItem: 7,
+  LyonItem: 8
+}
+
+export const noResultsText = 'No results found...'
+
 export const defaultOptions = [
   {
     name: optionNames.EnglandGroup,
-    value: 1,
+    value: optionsValues.EnglandGroup,
     children: [
       {
         name: optionNames.LondonGroup,
-        value: 2,
+        value: optionsValues.LondonGroup,
         children: [
           {
             name: optionNames.ChelseaItem,
-            value: 3,
+            value: optionsValues.ChelseaItem,
             children: []
           },
           {
             name: optionNames.WestEndItem,
-            value: 4,
+            value: optionsValues.WestEndItem,
             children: []
           }
         ]
       },
       {
         name: optionNames.BrightonItem,
-        value: 5,
+        value: optionsValues.BrightonItem,
         children: []
       }
     ]
   },
   {
     name: optionNames.FranceGroup,
-    value: 6,
+    value: optionsValues.FranceGroup,
     children: [
       {
         name: optionNames.ParisItem,
-        value: 7,
+        value: optionsValues.ParisItem,
         children: []
       },
       {
         name: optionNames.LyonItem,
-        value: 8,
+        value: optionsValues.LyonItem,
         children: []
       }
     ]
@@ -58,45 +71,45 @@ export const defaultOptions = [
 export const optionsWithDisabled = [
   {
     name: optionNames.EnglandGroup,
-    value: 1,
+    value: optionsValues.EnglandGroup,
     children: [
       {
         name: optionNames.LondonGroup,
-        value: 2,
+        value: optionsValues.LondonGroup,
         children: [
           {
             name: optionNames.ChelseaItem,
-            value: 3,
+            value: optionsValues.ChelseaItem,
             children: [],
             disabled: true
           },
           {
             name: optionNames.WestEndItem,
-            value: 4,
+            value: optionsValues.WestEndItem,
             children: []
           }
         ]
       },
       {
         name: optionNames.BrightonItem,
-        value: 5,
+        value: optionsValues.BrightonItem,
         children: []
       }
     ]
   },
   {
     name: optionNames.FranceGroup,
-    value: 6,
+    value: optionsValues.FranceGroup,
     disabled: true,
     children: [
       {
         name: optionNames.ParisItem,
-        value: 7,
+        value: optionsValues.ParisItem,
         children: []
       },
       {
         name: optionNames.LyonItem,
-        value: 8,
+        value: optionsValues.LyonItem,
         children: []
       }
     ]

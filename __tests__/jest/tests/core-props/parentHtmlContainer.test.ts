@@ -7,6 +7,8 @@ describe('parentHtmlContainer prop', () => {
       options: defaultOptions
     })
 
+    treeselect.toggleOpenClose()
+
     expect(treeselect).toBeDefined()
     expect(document.body.contains(treeselect.parentHtmlContainer)).toBe(true)
     expect(treeselect.parentHtmlContainer).toMatchSnapshot()

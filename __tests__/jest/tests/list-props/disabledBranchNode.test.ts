@@ -1,5 +1,5 @@
 import { fireEvent } from '@testing-library/dom'
-import { defaultOptions, renderTreeselect, getListGroupsItems } from '../../helpers'
+import { defaultOptions, renderTreeselect, getListGroupsItems, optionsValues, optionNames } from '../../helpers'
 
 describe('disabledBranchNode prop', () => {
   it('group should be selectable by default', () => {
@@ -12,7 +12,7 @@ describe('disabledBranchNode prop', () => {
     treeselect.toggleOpenClose()
 
     const [groupItem] = Array.from(getListGroupsItems(treeselect.parentHtmlContainer)).filter(
-      (item) => item.getAttribute('title') === 'France'
+      (item) => item.getAttribute('title') === optionNames.FranceGroup
     )
 
     fireEvent.mouseDown(groupItem)
@@ -20,7 +20,7 @@ describe('disabledBranchNode prop', () => {
     const checkboxes = groupItem.querySelectorAll('input') as NodeListOf<HTMLInputElement>
     const isEveryIsChecked = Array.from(checkboxes).every((checkbox) => checkbox.checked)
 
-    expect(treeselect.value).toEqual([7, 8])
+    expect(treeselect.value).toEqual([optionsValues.ParisItem, optionsValues.LyonItem])
     expect(isEveryIsChecked).toBe(true)
     expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })
@@ -36,7 +36,7 @@ describe('disabledBranchNode prop', () => {
     treeselect.toggleOpenClose()
 
     const [groupItem] = Array.from(getListGroupsItems(treeselect.parentHtmlContainer)).filter(
-      (item) => item.getAttribute('title') === 'France'
+      (item) => item.getAttribute('title') === optionNames.FranceGroup
     )
 
     fireEvent.mouseDown(groupItem)

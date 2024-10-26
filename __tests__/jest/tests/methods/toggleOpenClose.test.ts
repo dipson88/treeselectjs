@@ -1,4 +1,4 @@
-import { renderTreeselect } from '../../helpers'
+import { renderTreeselect, getListElement } from '../../helpers'
 
 describe('toggleOpenClose method', () => {
   it('should open and close the dropdown', () => {
@@ -8,13 +8,15 @@ describe('toggleOpenClose method', () => {
     })
 
     treeselect.toggleOpenClose()
+    const listElementOpened = getListElement(treeselect.parentHtmlContainer)
 
     expect(treeselect.isListOpened).toBe(true)
-    expect(treeselect.parentHtmlContainer).toMatchSnapshot()
+    expect(listElementOpened).toBeTruthy()
 
     treeselect.toggleOpenClose()
+    const listElementClosed = getListElement(treeselect.parentHtmlContainer)
 
     expect(treeselect.isListOpened).toBe(false)
-    expect(treeselect.parentHtmlContainer).toMatchSnapshot()
+    expect(listElementClosed).toBeFalsy()
   })
 })

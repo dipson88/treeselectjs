@@ -1,8 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`destroy method should remove treeselect form the DOM 1`] = `
-<div
-  class="treeselect"
-  id="test-container"
-/>
-`;

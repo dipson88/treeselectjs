@@ -27,7 +27,7 @@
     "typecheck": "tsc --project tsconfig.app.json --noEmit && tsc --project tsconfig.jest.json --noEmit && tsc --project tsconfig.cypress.json --noEmit",
     "preview": "vite preview",
     "prettier": "prettier --w .",
-    "jets:watch": "jest --watch",
+    "jest:watch": "jest --watch",
     "jest:run": "jest",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"

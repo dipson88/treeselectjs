@@ -1,25 +1,30 @@
 import { renderTreeselect, getTagsElements } from '../../helpers'
 
+const values = { Option1: 1, Option2: 2, Option3: 3 }
+const options = [
+  { value: values.Option1, name: 'Option 1', children: [] },
+  { value: values.Option2, name: 'Option 2', children: [] },
+  { value: values.Option3, name: 'Option 3', children: [] }
+]
+
 describe('mount method', () => {
   it('should update params with mount method', () => {
+    const newValue = [values.Option1, values.Option2]
+    const ariaLabel = 'test-aria-label'
     const treeselect = renderTreeselect({
       value: [],
-      options: [
-        { value: 1, name: 'Option 1', children: [] },
-        { value: 2, name: 'Option 2', children: [] },
-        { value: 3, name: 'Option 3', children: [] }
-      ]
+      options: options
     })
 
-    treeselect.value = [1, 2]
-    treeselect.ariaLabel = 'test-aria-label'
+    treeselect.value = newValue
+    treeselect.ariaLabel = ariaLabel
     treeselect.mount()
 
     const tags = getTagsElements(treeselect.parentHtmlContainer)
 
-    expect(tags.length).toBe(2)
-    expect(treeselect.value).toEqual([1, 2])
-    expect(treeselect.parentHtmlContainer.innerHTML).toContain('test-aria-label')
-    expect(treeselect.ariaLabel).toBe('test-aria-label')
+    expect(tags.length).toBe(newValue.length)
+    expect(treeselect.value).toEqual(newValue)
+    expect(treeselect.parentHtmlContainer.innerHTML).toContain(ariaLabel)
+    expect(treeselect.ariaLabel).toBe(ariaLabel)
   })
 })
