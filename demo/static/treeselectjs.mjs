@@ -691,7 +691,7 @@ const Dt = ({
   direction: a
 }) => {
   l || console.error("Validation: parentHtmlContainer prop is required!"), e && t && console.error("Validation: You should set staticList to false if you use appendToBody!"), s && Array.isArray(i) && console.error("Validation: if you use isSingleSelect prop, you should pass a single value!"), !s && !Array.isArray(i) && console.error("Validation: you should pass an array as a value!"), a && a !== "auto" && a !== "bottom" && a !== "top" && console.error("Validation: you should pass (auto | top | bottom | undefined) as a value for the direction prop!");
-}, re = (l) => l.map((e) => e.id), Di = (l) => l ? Array.isArray(l) ? l : [l] : [], Hi = (l, e) => {
+}, re = (l) => l.map((e) => e.id), Di = (l) => l == null ? [] : Array.isArray(l) ? l : [l], Hi = (l, e) => {
   if (e) {
     const [t] = l;
     return t ?? null;
