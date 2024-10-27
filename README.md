@@ -9,8 +9,8 @@ A multi-select js component with nested options.
 - Typescript support
 
 Build data:
-- treeselectjs.mjs  51.08 kB │ gzip: 11.59 kB
-- treeselectjs.umd.js  41.45 kB │ gzip: 10.57 kB
+- treeselectjs.mjs  51.09 kB │ gzip: 11.58 kB
+- treeselectjs.umd.js  41.45 kB │ gzip: 10.54 kB
 - treeselectjs.css   6.93 kB │ gzip:  1.38 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
@@ -30,8 +30,8 @@ import Treeselect from 'treeselectjs'
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.11.0/dist/treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.11.0/dist/treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.12.0/dist/treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.12.0/dist/treeselectjs.css" />
 ...
 <script>
   ...
