@@ -29,8 +29,8 @@ import 'react-treeselectjs/dist/react-treeselectjs.css'
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.5.0/dist/react-treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.5.0/dist/react-treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.5.1/dist/react-treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.5.1/dist/react-treeselectjs.css" />
 ```
 
 All Available Imports
