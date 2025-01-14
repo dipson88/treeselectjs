@@ -29,8 +29,31 @@ import 'vue-treeselectjs/dist/vue-treeselectjs.css'
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.6.1/dist/vue-treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.6.1/dist/vue-treeselectjs.css" />
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.12.0/dist/treeselectjs.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.7.0/dist/vue-treeselectjs.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.7.0/dist/vue-treeselectjs.css" />
+  </head>
+  <body>
+      <div id="app">
+        <vue-treeselect />
+      </div>
+      
+      <script>
+        const { createApp } = Vue
+        const Treeselect = window.VueTreeselect;
+
+        createApp({
+          components: {
+            VueTreeselect: Treeselect,
+          }
+        }).mount('#app')
+      </script>
+  </body>
+</html>
 ```
 
 All Available Imports

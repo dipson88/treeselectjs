@@ -22,8 +22,8 @@ export default defineConfig({
         },
         globals: {
           vue: 'Vue',
-          treeselectjs: 'TreeselectJS',
-          'vue-treeselectjs': 'Treeselect'
+          treeselectjs: 'Treeselect',
+          'vue-treeselectjs': 'VueTreeselect'
         }
       }
     }

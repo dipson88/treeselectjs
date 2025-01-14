@@ -21,7 +21,7 @@ export type TreeselectValue = ValueInputType
 const keysWithoutRender = ['modelValue', 'options', 'id', 'iconElements']
 
 export default defineComponent({
-  name: 'Treeselect',
+  name: 'VueTreeselect',
   props: {
     modelValue: {
       type: [Array, Number, String] as PropType<TreeselectValue>,
@@ -216,6 +216,9 @@ export default defineComponent({
           const rawTreeselect = toRaw(treeselect.value)
           rawTreeselect.options = props.options
           rawTreeselect.mount()
+
+          // Update value after options change
+          rawTreeselect.updateValue(props.modelValue)
         }
       }
     )
