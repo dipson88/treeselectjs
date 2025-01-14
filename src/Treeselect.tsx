@@ -93,6 +93,9 @@ const Treeselect = (props: PropsWithChildren<TreeselectProps>) => {
       if (isValueChanged) {
         treeselect.current.options = props.options ?? []
         treeselect.current.mount()
+
+        // Update value if options changed
+        treeselect.current.updateValue(props.value)
       }
     }
   }, [props.options])

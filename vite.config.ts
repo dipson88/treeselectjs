@@ -23,11 +23,17 @@ export default defineConfig({
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
-          treeselectjs: 'TreeselectJS',
-          'react-treeselectjs': 'Treeselect'
+          treeselectjs: 'Treeselect',
+          'react-treeselectjs': 'ReactTreeselect'
         }
       }
     }
   },
-  plugins: [react(), dts()]
+  plugins: [
+    react({
+      // Using the classic runtime to avoid JSX in the bundle. This needs to be tested over time.
+      jsxRuntime: 'classic'
+    }),
+    dts()
+  ]
 })
