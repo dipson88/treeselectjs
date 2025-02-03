@@ -434,8 +434,13 @@ export default class Treeselect implements ITreeselect {
     // Because after actions on list we call focus with help of timeout with 0.
     // We call timeout with 1 because it should call after focus timeout.
     setTimeout(() => {
-      const isInput = this.#treeselectInput?.srcElement.contains(document.activeElement)
-      const isList = this.#treeselectList?.srcElement.contains(document.activeElement)
+      let activeElement = document.activeElement;
+      while (activeElement?.shadowRoot) {
+        activeElement = activeElement?.shadowRoot.activeElement;
+      }
+      
+      const isInput = this.#treeselectInput?.srcElement.contains(activeElement)
+      const isList = this.#treeselectList?.srcElement.contains(activeElement)
 
       if (!isInput && !isList) {
         this.blurWindowHandler()
@@ -632,9 +637,14 @@ export default class Treeselect implements ITreeselect {
   }
 
   focusWindowHandler(e: Event) {
+    let target = e.target as HTMLElement;
+    if(target?.shadowRoot && e.composedPath().length > 0) {
+      target = e.composedPath()[0] as HTMLElement;
+    }
+
     const isInsideClick =
-      this.srcElement?.contains(e.target as HTMLElement) ||
-      this.#treeselectList?.srcElement.contains(e.target as HTMLElement)
+      this.srcElement?.contains(target) ||
+      this.#treeselectList?.srcElement.contains(target)
 
     if (!isInsideClick) {
       this.#treeselectInput?.blur()
