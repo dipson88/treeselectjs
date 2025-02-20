@@ -9,8 +9,8 @@ A multi-select js component with nested options.
 - Typescript support
 
 Build data:
-- treeselectjs.mjs  51.09 kB │ gzip: 11.58 kB
-- treeselectjs.umd.js  41.45 kB │ gzip: 10.54 kB
+- treeselectjs.mjs  49.05 kB │ gzip: 11.13 kB
+- treeselectjs.umd.js  40.06 kB │ gzip: 10.11 kB
 - treeselectjs.css   6.93 kB │ gzip:  1.38 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
@@ -30,8 +30,8 @@ import Treeselect from 'treeselectjs'
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.12.0/dist/treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.12.0/dist/treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.12.1/dist/treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.12.1/dist/treeselectjs.css" />
 ...
 <script>
   ...
@@ -150,6 +150,7 @@ Name  | Type (default) | Description
 ------------- | ------------- | -------------
 **showTags**  | Boolean (true) | Selected values look like tags. The false value shows results as '{count} elements selected'. You can change text if you use `tagsCountText` prop. For one selected element, you will see a name of this element.
 **tagsCountText**  | String ('elements selected') | This text will be shown if you use 'showTags'. This text will be inserted after the count of the selected elements - ```'{count} {tagsCountText}'```.
+**tagsSort** | `id` \| `name` \| `value` \| `null` (null) | Defines the sorting order for tags in the input field.<br>`id` - sorts tags by their ID.<br>`name` - sorts tags alphabetically by name.<br>`value` - preserves the order in which tags were added.<br>`null` - uses the default sorting, keeping tags in the same order as they appear in the options list.
 **clearable**  | Boolean (true) | Clear icon is available.
 **searchable**  | Boolean (true) | Search is available.
 **placeholder**  | String ('Search...') | Placeholder text.
