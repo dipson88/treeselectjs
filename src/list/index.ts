@@ -1,4 +1,11 @@
-import { OptionType, ValueOptionType, FlattedOptionType, IconsType, SelectedNodesType } from '../treeselectTypes'
+import {
+  OptionType,
+  ValueOptionType,
+  FlattedOptionType,
+  IconsType,
+  SelectedNodesType,
+  TagsSortType
+} from '../treeselectTypes'
 import { ITreeselectListParams, ITreeselectList } from './listTypes'
 import { getFlattedOptions, getCheckedOptions } from './helpers/listOptionsHelper'
 import { updateOptionByCheckState, updateOptionsByValue } from './helpers/listCheckStateHelper'
@@ -233,6 +240,7 @@ export class TreeselectList implements ITreeselectList {
   value: ValueOptionType[]
   openLevel: number
   listSlotHtmlComponent: HTMLElement | null
+  tagsSort: TagsSortType
   emptyText: string
   isSingleSelect: boolean
   showCount: boolean
@@ -266,6 +274,7 @@ export class TreeselectList implements ITreeselectList {
     value,
     openLevel,
     listSlotHtmlComponent,
+    tagsSort,
     emptyText,
     isSingleSelect,
     iconElements,
@@ -283,6 +292,7 @@ export class TreeselectList implements ITreeselectList {
     this.value = value
     this.openLevel = openLevel ?? 0
     this.listSlotHtmlComponent = listSlotHtmlComponent ?? null
+    this.tagsSort = tagsSort ?? null
     this.emptyText = emptyText ?? 'No results found...'
     this.isSingleSelect = isSingleSelect ?? false
     this.showCount = showCount ?? false
@@ -779,9 +789,55 @@ export class TreeselectList implements ITreeselectList {
     }
   }
 
+  #sortNodesByValue(nodes: FlattedOptionType[]) {
+    const valueSet = new Set(this.value)
+    const valueIndexMap = new Map(this.value.map((id, index) => [id, index]))
+
+    const existedItems: FlattedOptionType[] = []
+    const newItems: FlattedOptionType[] = []
+
+    for (const node of nodes) {
+      if (valueSet.has(node.id)) {
+        existedItems.push(node)
+      } else {
+        newItems.push(node)
+      }
+    }
+
+    existedItems.sort((a, b) => (valueIndexMap.get(a.id) ?? 0) - (valueIndexMap.get(b.id) ?? 0))
+
+    return [...existedItems, ...newItems]
+  }
+
+  #sortNodesById(nodes: FlattedOptionType[]) {
+    return [...nodes].sort((a, b) => a.id.toString().localeCompare(b.id.toString()))
+  }
+
+  #sortNodesByName(nodes: FlattedOptionType[]) {
+    return [...nodes].sort((a, b) => a.name.localeCompare(b.name))
+  }
+
+  #sortNodes(nodes: FlattedOptionType[]) {
+    switch (this.tagsSort) {
+      case 'id':
+        return this.#sortNodesById(nodes)
+      case 'name':
+        return this.#sortNodesByName(nodes)
+      case 'value':
+        return this.#sortNodesByValue(nodes)
+      default:
+        return nodes
+    }
+  }
+
   #updateSelectedNodes() {
     const { ungroupedNodes, groupedNodes, allNodes } = getCheckedOptions(this.flattedOptions)
-    this.selectedNodes = { nodes: ungroupedNodes, groupedNodes, allNodes }
+
+    this.selectedNodes = {
+      nodes: this.#sortNodes(ungroupedNodes),
+      groupedNodes: this.#sortNodes(groupedNodes),
+      allNodes: this.#sortNodes(allNodes)
+    }
   }
 
   // Emits

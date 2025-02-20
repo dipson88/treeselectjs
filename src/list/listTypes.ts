@@ -1,10 +1,18 @@
-import { ValueOptionType, OptionType, FlattedOptionType, IconsType, SelectedNodesType } from '../treeselectTypes'
+import {
+  ValueOptionType,
+  OptionType,
+  FlattedOptionType,
+  IconsType,
+  SelectedNodesType,
+  TagsSortType
+} from '../treeselectTypes'
 
 export interface ITreeselectListParams {
   options: OptionType[]
   value: ValueOptionType[]
   openLevel: number
   listSlotHtmlComponent: HTMLElement | null
+  tagsSort: TagsSortType
   emptyText: string
   isSingleSelect: boolean
   showCount: boolean

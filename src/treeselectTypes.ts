@@ -14,6 +14,8 @@ export type OptionType = {
 
 export type DirectionType = 'auto' | 'top' | 'bottom'
 
+export type TagsSortType = 'id' | 'name' | 'value' | null
+
 export interface ITreeselect {
   parentHtmlContainer: HTMLElement
   value: ValueType
@@ -23,6 +25,7 @@ export interface ITreeselect {
   alwaysOpen: boolean
   showTags: boolean
   tagsCountText: string
+  tagsSort: TagsSortType
   clearable: boolean
   searchable: boolean
   placeholder: string
@@ -70,6 +73,7 @@ export interface ITreeselectParams {
   alwaysOpen?: boolean
   showTags?: boolean
   tagsCountText?: string
+  tagsSort?: TagsSortType
   clearable?: boolean
   searchable?: boolean
   placeholder?: string

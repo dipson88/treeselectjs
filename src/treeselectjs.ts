@@ -12,6 +12,7 @@ import {
   IconsType,
   SelectedNodesType,
   DirectionType,
+  TagsSortType,
   ValueType,
   ValueInputType
 } from './treeselectTypes'
@@ -85,6 +86,7 @@ export default class Treeselect implements ITreeselect {
   alwaysOpen: boolean
   showTags: boolean
   tagsCountText: string
+  tagsSort: TagsSortType
   clearable: boolean
   searchable: boolean
   placeholder: string
@@ -149,6 +151,7 @@ export default class Treeselect implements ITreeselect {
     alwaysOpen,
     showTags,
     tagsCountText,
+    tagsSort,
     clearable,
     searchable,
     placeholder,
@@ -193,6 +196,7 @@ export default class Treeselect implements ITreeselect {
     this.alwaysOpen = !!(alwaysOpen && !disabled)
     this.showTags = showTags ?? true
     this.tagsCountText = tagsCountText ?? 'elements selected'
+    this.tagsSort = tagsSort ?? null
     this.clearable = clearable ?? true
     this.searchable = searchable ?? true
     this.placeholder = placeholder ?? 'Search...'
@@ -344,6 +348,7 @@ export default class Treeselect implements ITreeselect {
       options: this.options,
       openLevel: this.openLevel,
       listSlotHtmlComponent: this.listSlotHtmlComponent,
+      tagsSort: this.tagsSort,
       emptyText: this.emptyText,
       isSingleSelect: this.isSingleSelect,
       showCount: this.showCount,
