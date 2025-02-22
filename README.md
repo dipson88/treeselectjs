@@ -150,7 +150,7 @@ Name  | Type (default) | Description
 ------------- | ------------- | -------------
 **showTags**  | Boolean (true) | Selected values look like tags. The false value shows results as '{count} elements selected'. You can change text if you use `tagsCountText` prop. For one selected element, you will see a name of this element.
 **tagsCountText**  | String ('elements selected') | This text will be shown if you use 'showTags'. This text will be inserted after the count of the selected elements - ```'{count} {tagsCountText}'```.
-**tagsSort** | `id` \| `name` \| `value` \| `null` (null) | Defines the sorting order for tags in the input field.<br>`id` - sorts tags by their ID.<br>`name` - sorts tags alphabetically by name.<br>`value` - preserves the order in which tags were added.<br>`null` - uses the default sorting, keeping tags in the same order as they appear in the options list.
+**tagsSortFn** | `(a: TagsSortItem, b: TagsSortItem) => number` \| `null` (null) | Defines the sorting order for tags in the input field.<br>`TagsSortItem` - `{ value: ValueOptionType, name: string }`.
 **clearable**  | Boolean (true) | Clear icon is available.
 **searchable**  | Boolean (true) | Search is available.
 **placeholder**  | String ('Search...') | Placeholder text.

@@ -4,7 +4,7 @@ import {
   FlattedOptionType,
   IconsType,
   SelectedNodesType,
-  TagsSortType
+  TagsSortFnType
 } from '../treeselectTypes'
 
 export interface ITreeselectListParams {
@@ -12,7 +12,7 @@ export interface ITreeselectListParams {
   value: ValueOptionType[]
   openLevel: number
   listSlotHtmlComponent: HTMLElement | null
-  tagsSort: TagsSortType
+  tagsSortFn: TagsSortFnType
   emptyText: string
   isSingleSelect: boolean
   showCount: boolean
