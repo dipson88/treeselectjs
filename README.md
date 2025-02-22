@@ -9,8 +9,8 @@ A multi-select js component with nested options.
 - Typescript support
 
 Build data:
-- react-treeselectjs.mjs  23.26 kB │ gzip: 6.98 kB
-- react-treeselectjs.umd.js  15.43 kB │ gzip: 5.98 kB
+- react-treeselectjs.mjs  2.14 kB │ gzip: 0.83 kB
+- react-treeselectjs.umd.js  1.91 kB │ gzip: 0.80 kB
 - react-treeselectjs.css  6.93 kB │ gzip: 1.38 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
@@ -36,9 +36,9 @@ Import treeselectjs (UMD)
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   
-  <script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.12.0/dist/treeselectjs.umd.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.6.0/dist/react-treeselectjs.umd.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.6.0/dist/react-treeselectjs.css" />
+  <script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.12.2/dist/treeselectjs.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.6.1/dist/react-treeselectjs.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.6.1/dist/react-treeselectjs.css" />
 </head>
 <body>
   <div id="root"></div>
@@ -168,6 +168,7 @@ Name  | Type (default) | Description
 **showTags**  | Boolean (true) | Selected values look like tags. The false value shows results as '{count} elements selected'. You can change text if you use `tagsCountText` prop. For one selected element, you will see a name of this element.
 **tagsCountText**  | String ('elements selected') | This text will be shown if you use 'showTags'. This text will be inserted after the count of the selected elements - ```'{count} {tagsCountText}'```.
 **showCount** | Boolean (false) | Shows count of children near the group's name.
+**tagsSortFn** | `(a: TagsSortItem, b: TagsSortItem) => number` \| `null` (null) | Defines the sorting order for tags in the input field.<br>`TagsSortItem` - `{ value: ValueOptionType, name: string }`.
 **clearable**  | Boolean (true) | Clear icon is available.
 **searchable**  | Boolean (true) | Search is available.
 **placeholder**  | String ('Search...') | Placeholder text.
