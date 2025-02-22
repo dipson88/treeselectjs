@@ -1,4 +1,11 @@
-import { OptionType, ValueOptionType, FlattedOptionType, IconsType, SelectedNodesType } from '../treeselectTypes'
+import {
+  OptionType,
+  ValueOptionType,
+  FlattedOptionType,
+  IconsType,
+  SelectedNodesType,
+  TagsSortFnType
+} from '../treeselectTypes'
 import { ITreeselectListParams, ITreeselectList } from './listTypes'
 import { getFlattedOptions, getCheckedOptions } from './helpers/listOptionsHelper'
 import { updateOptionByCheckState, updateOptionsByValue } from './helpers/listCheckStateHelper'
@@ -233,6 +240,7 @@ export class TreeselectList implements ITreeselectList {
   value: ValueOptionType[]
   openLevel: number
   listSlotHtmlComponent: HTMLElement | null
+  tagsSortFn: TagsSortFnType
   emptyText: string
   isSingleSelect: boolean
   showCount: boolean
@@ -266,6 +274,7 @@ export class TreeselectList implements ITreeselectList {
     value,
     openLevel,
     listSlotHtmlComponent,
+    tagsSortFn,
     emptyText,
     isSingleSelect,
     iconElements,
@@ -283,6 +292,7 @@ export class TreeselectList implements ITreeselectList {
     this.value = value
     this.openLevel = openLevel ?? 0
     this.listSlotHtmlComponent = listSlotHtmlComponent ?? null
+    this.tagsSortFn = tagsSortFn ?? null
     this.emptyText = emptyText ?? 'No results found...'
     this.isSingleSelect = isSingleSelect ?? false
     this.showCount = showCount ?? false
@@ -779,9 +789,20 @@ export class TreeselectList implements ITreeselectList {
     }
   }
 
+  #sortNodes(nodes: FlattedOptionType[]) {
+    return this.tagsSortFn === null
+      ? nodes
+      : [...nodes].sort((a, b) => this.tagsSortFn!({ value: a.id, name: a.name }, { value: b.id, name: b.name }))
+  }
+
   #updateSelectedNodes() {
     const { ungroupedNodes, groupedNodes, allNodes } = getCheckedOptions(this.flattedOptions)
-    this.selectedNodes = { nodes: ungroupedNodes, groupedNodes, allNodes }
+
+    this.selectedNodes = {
+      nodes: this.#sortNodes(ungroupedNodes),
+      groupedNodes: this.#sortNodes(groupedNodes),
+      allNodes: this.#sortNodes(allNodes)
+    }
   }
 
   // Emits
