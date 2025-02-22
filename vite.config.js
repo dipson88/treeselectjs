@@ -13,11 +13,11 @@ export default defineConfig({
     rollupOptions: {
       output: {
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name === 'style.css') {
+          if (assetInfo.names.includes('style.css')) {
             return 'treeselectjs.css'
           }
 
-          return assetInfo.name
+          return assetInfo.names[0]
         },
         globals: {
           treeselectjs: 'Treeselect'
@@ -31,7 +31,8 @@ export default defineConfig({
   plugins: [
     dts({
       insertTypesEntry: true,
-      rollupTypes: true
+      rollupTypes: true,
+      tsconfigPath: './tsconfig.app.json'
     })
   ]
 })
