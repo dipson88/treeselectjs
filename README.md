@@ -9,8 +9,8 @@ A multi-select js component with nested options.
 - Typescript support
 
 Build data:
-- vue-treeselectjs.mjs  5.89 kB │ gzip: 1.77 kB
-- vue-treeselectjs.umd.js  4.05 kB │ gzip: 1.49 kB
+- vue-treeselectjs.mjs  6.02 kB │ gzip: 1.79 kB
+- vue-treeselectjs.umd.js  4.14 kB │ gzip: 1.52 kB
 - vue-treeselectjs.css  6.99 kB │ gzip: 1.39 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
@@ -33,9 +33,9 @@ Import treeselectjs (UMD)
 <html>
   <head>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.12.0/dist/treeselectjs.umd.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.7.0/dist/vue-treeselectjs.umd.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.7.0/dist/vue-treeselectjs.css" />
+    <script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.12.2/dist/treeselectjs.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.7.1/dist/vue-treeselectjs.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.7.1/dist/vue-treeselectjs.css" />
   </head>
   <body>
       <div id="app">
@@ -58,7 +58,7 @@ Import treeselectjs (UMD)
 
 All Available Imports
 ```
-import Treeselect, { DirectionType, IconsType, OptionType, TreeselectValue } from 'vue-treeselectjs'
+import Treeselect, { DirectionType, IconsType, OptionType, TreeselectValue, ... } from 'vue-treeselectjs'
 ```
 
 Example
@@ -202,6 +202,7 @@ Name  | Type (default) | Description
 ------------- | ------------- | -------------
 **showTags**  | Boolean (true) | Selected values look like tags. The false value shows results as '{count} elements selected'. You can change text if you use `tagsCountText` prop. For one selected element, you will see a name of this element.
 **tagsCountText**  | String ('elements selected') | This text will be shown if you use 'showTags'. This text will be inserted after the count of the selected elements - ```'{count} {tagsCountText}'```.
+**tagsSortFn** | `(a: TagsSortItem, b: TagsSortItem) => number` \| `null` (null) | Defines the sorting order for tags in the input field.<br>`TagsSortItem` - `{ value: ValueOptionType, name: string }`.
 **showCount** | Boolean (false) | Shows count of children near the group's name.
 **clearable**  | Boolean (true) | Clear icon is available.
 **searchable**  | Boolean (true) | Search is available.

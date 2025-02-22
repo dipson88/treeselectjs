@@ -12,9 +12,9 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, onUnmounted, PropType, ref, toRaw, watch } from 'vue'
-import Treeselect, { IconsType, DirectionType, OptionType, ValueInputType } from 'treeselectjs'
+import Treeselect, { IconsType, DirectionType, OptionType, ValueInputType, TagsSortItem } from 'treeselectjs'
 
-export { type IconsType, type DirectionType, type OptionType } from 'treeselectjs'
+export { type IconsType, type DirectionType, type OptionType, type TagsSortItem } from 'treeselectjs'
 
 export type TreeselectValue = ValueInputType
 
@@ -50,6 +50,10 @@ export default defineComponent({
     tagsCountText: {
       type: String,
       default: 'elements selected'
+    },
+    tagsSortFn: {
+      type: Function as PropType<(a: TagsSortItem, b: TagsSortItem) => number> | null,
+      default: null
     },
     clearable: {
       type: Boolean,
@@ -251,6 +255,7 @@ export default defineComponent({
         alwaysOpen: props.alwaysOpen,
         showTags: props.showTags,
         tagsCountText: props.tagsCountText,
+        tagsSortFn: props.tagsSortFn,
         clearable: props.clearable,
         searchable: props.searchable,
         placeholder: props.placeholder,
