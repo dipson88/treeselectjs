@@ -13,6 +13,7 @@ import {
   SelectedNodesType,
   DirectionType,
   TagsSortFnType,
+  TagsSortItem,
   ValueType,
   ValueInputType
 } from './treeselectTypes'
@@ -24,7 +25,9 @@ export {
   type OptionType,
   type DirectionType,
   type IconsType,
-  type ITreeselectParams
+  type ITreeselectParams,
+  type TagsSortFnType,
+  type TagsSortItem
 }
 
 const validateProps = ({
