@@ -1,6 +1,6 @@
 {
   "name": "treeselectjs",
-  "version": "0.12.2",
+  "version": "0.12.3",
   "description": "Treeselect JS",
   "main": "./dist/treeselectjs.umd.js",
   "module": "./dist/treeselectjs.mjs",
@@ -65,7 +65,7 @@
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3",
-    "vite": "^6.1.1",
+    "vite": "^6.2.0",
     "vite-plugin-dts": "^4.5.0"
   },
   "files": [
