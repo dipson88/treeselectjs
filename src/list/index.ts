@@ -628,9 +628,9 @@ export class TreeselectList implements ITreeselectList {
 
   #createItemElement(option: OptionType) {
     const itemElement = document.createElement('div')
-    setAttributesFromHtmlAttr(itemElement, option.htmlAttr)
     itemElement.setAttribute('tabindex', '-1')
     itemElement.setAttribute('title', option.name)
+    setAttributesFromHtmlAttr(itemElement, option.htmlAttr)
     itemElement.classList.add('treeselect-list__item')
 
     itemElement.addEventListener('mouseover', () => this.#itemElementMouseover(itemElement), true)
