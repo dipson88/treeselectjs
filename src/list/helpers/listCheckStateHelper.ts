@@ -1,12 +1,17 @@
-import { ValueOptionType, FlattedOptionType } from '../../treeselectTypes'
+import { type ValueOptionType, type FlattedOptionType } from '../../treeselectTypes'
 import { getChildrenOptions } from './listOptionsHelper'
 
-export const updateOptionsByValue = (
-  newValue: ValueOptionType[],
-  flattedOptions: FlattedOptionType[],
-  isSingleSelect: boolean,
+export const updateOptionsByValue = ({
+  newValue,
+  flattedOptions,
+  isSingleSelect,
+  isIndependentNodes
+}: {
+  newValue: ValueOptionType[]
+  flattedOptions: FlattedOptionType[]
+  isSingleSelect: boolean
   isIndependentNodes: boolean
-) => {
+}) => {
   uncheckedAllFlattedOptions(flattedOptions)
   const optionsToCheck = flattedOptions.filter((option) => !option.disabled && newValue.some((id) => id === option.id))
 
@@ -19,16 +24,24 @@ export const updateOptionsByValue = (
   optionsToCheck.forEach((option) => {
     option.checked = true
     // option.isPartialChecked = false
-    const resultChecked = updateOptionByCheckState(option, flattedOptions, isIndependentNodes)
+    const resultChecked = updateOptionByCheckState({
+      option,
+      flattedOptions,
+      isIndependentNodes
+    })
     option.checked = resultChecked
   })
 }
 
-export const updateOptionByCheckState = (
-  { id, checked }: Partial<FlattedOptionType>,
-  flattedOptions: FlattedOptionType[],
+export const updateOptionByCheckState = ({
+  option: { id, checked },
+  flattedOptions,
+  isIndependentNodes
+}: {
+  option: Partial<FlattedOptionType>
+  flattedOptions: FlattedOptionType[]
   isIndependentNodes: boolean
-) => {
+}) => {
   const currentOption = flattedOptions.find((option) => option.id === id)
 
   if (!currentOption) {
@@ -41,17 +54,25 @@ export const updateOptionByCheckState = (
     return currentOption.checked
   }
 
-  const resultCheckedState = updateFlattedOptionStateWithChildren(!!checked, currentOption, flattedOptions)
+  const resultCheckedState = updateFlattedOptionStateWithChildren({
+    checked: !!checked,
+    currentOption,
+    flattedOptions
+  })
   updateParentFlattedOptions(currentOption, flattedOptions)
 
   return resultCheckedState
 }
 
-const updateFlattedOptionStateWithChildren = (
-  checked: boolean,
-  currentOption: FlattedOptionType,
+const updateFlattedOptionStateWithChildren = ({
+  checked,
+  currentOption,
+  flattedOptions
+}: {
+  checked: boolean
+  currentOption: FlattedOptionType
   flattedOptions: FlattedOptionType[]
-) => {
+}) => {
   if (!currentOption.isGroup) {
     currentOption.checked = currentOption.disabled ? false : !!checked
     currentOption.isPartialChecked = false
@@ -65,7 +86,11 @@ const updateFlattedOptionStateWithChildren = (
   if (falseOrDisabledOrPartial) {
     currentOption.checked = false
     currentOption.isPartialChecked = false
-    checkUncheckAllChildren(currentOption, childrenOptions, flattedOptions)
+    checkUncheckAllChildren({
+      option: currentOption,
+      children: childrenOptions,
+      flattedOptions
+    })
 
     return currentOption.checked
   }
@@ -75,7 +100,11 @@ const updateFlattedOptionStateWithChildren = (
   if (canWeCheckAllChildren) {
     currentOption.checked = true
     currentOption.isPartialChecked = false
-    checkUncheckAllChildren(currentOption, childrenOptions, flattedOptions)
+    checkUncheckAllChildren({
+      option: currentOption,
+      children: childrenOptions,
+      flattedOptions
+    })
 
     return currentOption.checked
   }
@@ -94,7 +123,11 @@ const updateFlattedOptionStateWithChildren = (
   currentOption.isPartialChecked = true
 
   childrenOptions.forEach((option) => {
-    updateFlattedOptionStateWithChildren(checked, option, flattedOptions)
+    updateFlattedOptionStateWithChildren({
+      checked,
+      currentOption: option,
+      flattedOptions
+    })
   })
 
   return currentOption.checked
@@ -145,17 +178,25 @@ const updateParentOption = (parentOption: FlattedOptionType, flattedOptions: Fla
   parentOption.isPartialChecked = false
 }
 
-const checkUncheckAllChildren = (
-  { checked, disabled }: Partial<FlattedOptionType>,
-  children: FlattedOptionType[],
+const checkUncheckAllChildren = ({
+  option: { checked, disabled },
+  children,
+  flattedOptions
+}: {
+  option: Partial<FlattedOptionType>
+  children: FlattedOptionType[]
   flattedOptions: FlattedOptionType[]
-) => {
+}) => {
   children.forEach((option) => {
     option.disabled = !!disabled || !!option.disabled
     option.checked = !!checked && !option.disabled
     option.isPartialChecked = false
     const subChildren = getChildrenOptions(option, flattedOptions)
-    checkUncheckAllChildren({ checked, disabled }, subChildren, flattedOptions)
+    checkUncheckAllChildren({
+      option: { checked, disabled },
+      children: subChildren,
+      flattedOptions
+    })
   })
 }
 

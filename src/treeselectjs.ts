@@ -1,21 +1,21 @@
 import './treeselectjs.css'
-import { ITreeselectInput } from './input/inputTypes'
-import { ITreeselectList } from './list/listTypes'
+import { type ITreeselectInput } from './input/inputTypes'
+import { type ITreeselectList } from './list/listTypes'
 import { TreeselectInput } from './input/index'
 import { TreeselectList } from './list/index'
 import {
-  ITreeselect,
-  ITreeselectParams,
-  OptionType,
-  ValueOptionType,
-  FlattedOptionType,
-  IconsType,
-  SelectedNodesType,
-  DirectionType,
-  TagsSortFnType,
-  TagsSortItem,
-  ValueType,
-  ValueInputType
+  type ITreeselect,
+  type ITreeselectParams,
+  type OptionType,
+  type ValueOptionType,
+  type FlattedOptionType,
+  type IconsType,
+  type SelectedNodesType,
+  type DirectionType,
+  type TagsSortFnType,
+  type TagsSortItem,
+  type ValueType,
+  type ValueInputType
 } from './treeselectTypes'
 import { getDefaultIcons } from './svgIcons'
 

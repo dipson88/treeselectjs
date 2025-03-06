@@ -1,4 +1,4 @@
-import { ValueOptionType, FlattedOptionType } from '../../treeselectTypes'
+import { type ValueOptionType, type FlattedOptionType } from '../../treeselectTypes'
 import { getChildrenOptions } from './listOptionsHelper'
 
 export const hideShowChildrenOptions = (

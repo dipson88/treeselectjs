@@ -1,10 +1,10 @@
 import {
-  ValueOptionType,
-  OptionType,
-  FlattedOptionType,
-  IconsType,
-  SelectedNodesType,
-  TagsSortFnType
+  type ValueOptionType,
+  type OptionType,
+  type FlattedOptionType,
+  type IconsType,
+  type SelectedNodesType,
+  type TagsSortFnType
 } from '../treeselectTypes'
 
 export type CachedOptionsNodesType = { [optionId: string]: HTMLInputElement }

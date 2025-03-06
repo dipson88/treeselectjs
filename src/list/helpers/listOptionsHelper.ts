@@ -1,15 +1,38 @@
-import { OptionType, ValueOptionType, FlattedOptionType } from '../../treeselectTypes'
+import { type OptionType, type ValueOptionType, type FlattedOptionType } from '../../treeselectTypes'
 import { updateOptionByCheckState } from './listCheckStateHelper'
 
-export const getFlattedOptions = (options: OptionType[], openLevel: number, isIndependentNodes: boolean) => {
+export const getFlattedOptions = ({
+  options,
+  openLevel,
+  isIndependentNodes
+}: {
+  options: OptionType[]
+  openLevel: number
+  isIndependentNodes: boolean
+}) => {
   const defaultParams = { level: 0, groupId: '' }
-  const flattedOptions = getInitFlattedOptions(options, openLevel, defaultParams.groupId, defaultParams.level)
+  const flattedOptions = getInitFlattedOptions({
+    options,
+    openLevel,
+    groupId: defaultParams.groupId,
+    level: defaultParams.level
+  })
   const adjustedFlattedOptions = getAdjustedFlattenOptionsUpdate(flattedOptions, isIndependentNodes)
 
   return adjustedFlattedOptions
 }
 
-const getInitFlattedOptions = (options: OptionType[], openLevel: number, groupId: ValueOptionType, level: number) => {
+const getInitFlattedOptions = ({
+  options,
+  openLevel,
+  groupId,
+  level
+}: {
+  options: OptionType[]
+  openLevel: number
+  groupId: ValueOptionType
+  level: number
+}) => {
   return options.reduce((acc, curr) => {
     const isGroup = !!curr.children?.length
     const isClosed = level >= openLevel && isGroup
@@ -29,12 +52,21 @@ const getInitFlattedOptions = (options: OptionType[], openLevel: number, groupId
     })
 
     if (isGroup) {
-      const children = getInitFlattedOptions(curr.children, openLevel, curr.value, level + 1)
+      const children = getInitFlattedOptions({
+        options: curr.children,
+        openLevel,
+        groupId: curr.value,
+        level: level + 1
+      })
       acc.push(...children)
     }
 
     return acc
   }, [] as FlattedOptionType[])
+}
+
+export const getFlattedOptionByInputId = (inputId: string | null, flattedOptions: FlattedOptionType[]) => {
+  return flattedOptions.find((fo) => fo.id.toString() === inputId)
 }
 
 export const getChildrenOptions = ({ id }: Partial<FlattedOptionType>, flattedOptions: FlattedOptionType[]) => {
@@ -74,7 +106,11 @@ const getAdjustedFlattenOptionsUpdate = (flattedOptions: FlattedOptionType[], is
   // Disabled update
   const disabledNodes = flattedOptions.filter((option) => !!option.disabled)
   disabledNodes.forEach(({ id }) =>
-    updateOptionByCheckState({ id, checked: false }, flattedOptions, isIndependentNodes)
+    updateOptionByCheckState({
+      option: { id, checked: false },
+      flattedOptions,
+      isIndependentNodes
+    })
   )
   // TODO etc updates
 

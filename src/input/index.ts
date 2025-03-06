@@ -1,5 +1,5 @@
-import { ValueOptionType, FlattedOptionType, IconsType } from '../treeselectTypes'
-import { ITreeselectInputParams, ITreeselectInput } from './inputTypes'
+import { type ValueOptionType, type FlattedOptionType, type IconsType } from '../treeselectTypes'
+import { type ITreeselectInputParams, type ITreeselectInput } from './inputTypes'
 import { appendIconToElement } from '../svgIcons'
 
 const getTagsSelectedName = (value: FlattedOptionType[]) => {
@@ -102,7 +102,11 @@ export class TreeselectInput implements ITreeselectInput {
     this.blurCallback = blurCallback
     this.nameChangeCallback = nameChangeCallback
 
-    this.srcElement = this.#createTreeselectInput(this.#htmlTagsSection, this.#htmlEditControl, this.#htmlOperators)
+    this.srcElement = this.#createTreeselectInput({
+      htmlTagsSection: this.#htmlTagsSection,
+      htmlEditControl: this.#htmlEditControl,
+      htmlOperators: this.#htmlOperators
+    })
 
     this.#updateDOM()
   }
@@ -236,7 +240,15 @@ export class TreeselectInput implements ITreeselectInput {
     }
   }
 
-  #createTreeselectInput(htmlTagsSection: HTMLElement, htmlEditControl: HTMLElement, htmlOperators: HTMLElement) {
+  #createTreeselectInput({
+    htmlTagsSection,
+    htmlEditControl,
+    htmlOperators
+  }: {
+    htmlTagsSection: HTMLElement
+    htmlEditControl: HTMLElement
+    htmlOperators: HTMLElement
+  }) {
     const container = document.createElement('div')
     container.classList.add('treeselect-input')
     container.setAttribute('tabindex', '-1')

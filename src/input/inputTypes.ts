@@ -1,4 +1,4 @@
-import { FlattedOptionType, IconsType } from '../treeselectTypes'
+import { type FlattedOptionType, type IconsType } from '../treeselectTypes'
 
 export interface ITreeselectInputParams {
   value: FlattedOptionType[]
