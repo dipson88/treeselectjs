@@ -1,12 +1,16 @@
 import {
-  OptionType,
-  ValueOptionType,
-  FlattedOptionType,
-  IconsType,
-  SelectedNodesType,
-  TagsSortFnType
+  type OptionType,
+  type ValueOptionType,
+  type FlattedOptionType,
+  type IconsType,
+  type SelectedNodesType,
+  type TagsSortFnType
 } from '../treeselectTypes'
-import { ITreeselectListParams, ITreeselectList } from './listTypes'
+import {
+  type ITreeselectListParams,
+  type ITreeselectList,
+  type CachedOptionsNodesType
+} from './listTypes'
 import { getFlattedOptions, getCheckedOptions } from './helpers/listOptionsHelper'
 import { updateOptionByCheckState, updateOptionsByValue } from './helpers/listCheckStateHelper'
 import {
@@ -48,7 +52,8 @@ const updateListValue = (
   expandSelected: boolean,
   isFirstValueUpdate: boolean,
   isIndependentNodes: boolean,
-  rtl: boolean
+  rtl: boolean,
+  cachedOptionsNodes: CachedOptionsNodesType
 ) => {
   updateOptionsByValue(newValue, flattedOptions, isSingleSelect, isIndependentNodes)
 
@@ -56,7 +61,7 @@ const updateListValue = (
     expandSelectedItems(flattedOptions)
   }
 
-  updateDOM(flattedOptions, srcElement, iconElements, previousSingleSelectedValue, rtl)
+  updateDOM(flattedOptions, srcElement, iconElements, previousSingleSelectedValue, rtl, cachedOptionsNodes)
 }
 
 const updateDOM = (
@@ -64,10 +69,11 @@ const updateDOM = (
   srcElement: HTMLElement | Element,
   iconElements: IconsType,
   previousSingleSelectedValue: ValueOptionType[],
-  rtl: boolean
+  rtl: boolean,
+  cachedOptionsNodes: CachedOptionsNodesType
 ) => {
   flattedOptions.forEach((option) => {
-    const input = srcElement.querySelector(`[input-id="${option.id}"]`) as HTMLInputElement
+    const input = cachedOptionsNodes[option.id]
     const listItem = getListItemByCheckbox(input)
 
     input.checked = option.checked
@@ -234,6 +240,14 @@ const setAttributesFromHtmlAttr = (itemElement: HTMLDivElement, htmlAttr?: objec
   })
 }
 
+const getCachedOptionsNodes = (flattedOptions: FlattedOptionType[], srcElement: HTMLElement | Element) => {
+  return flattedOptions.reduce((acc, option) => {
+    const input = srcElement.querySelector(`[input-id="${option.id}"]`) as HTMLInputElement
+    acc[option.id] = input
+    return acc
+  }, {} as CachedOptionsNodesType)
+}
+
 export class TreeselectList implements ITreeselectList {
   // Props
   options: OptionType[]
@@ -257,6 +271,7 @@ export class TreeselectList implements ITreeselectList {
   flattedOptionsBeforeSearch: FlattedOptionType[]
   selectedNodes: SelectedNodesType
   srcElement: HTMLElement
+  cachedOptionsNodes: CachedOptionsNodesType = {}
 
   // Callbacks
   inputCallback: (value: SelectedNodesType) => void
@@ -308,6 +323,7 @@ export class TreeselectList implements ITreeselectList {
     this.flattedOptionsBeforeSearch = this.flattedOptions
     this.selectedNodes = { nodes: [], groupedNodes: [], allNodes: [] }
     this.srcElement = this.#createSrcElement()
+    this.cachedOptionsNodes = getCachedOptionsNodes(this.flattedOptions, this.srcElement)
 
     this.inputCallback = inputCallback
     this.arrowClickCallback = arrowClickCallback
@@ -330,7 +346,8 @@ export class TreeselectList implements ITreeselectList {
       this.expandSelected,
       this.#isFirstValueUpdate,
       this.isIndependentNodes,
-      this.rtl
+      this.rtl,
+      this.cachedOptionsNodes
     )
     this.#isFirstValueUpdate = false
     this.#updateSelectedNodes()
@@ -365,7 +382,7 @@ export class TreeselectList implements ITreeselectList {
       updateVisibleBySearchFlattedOptions(this.flattedOptions, searchText)
     }
 
-    updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue, this.rtl)
+    updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue, this.rtl, this.cachedOptionsNodes)
     this.focusFirstListElement()
   }
 
@@ -755,7 +772,7 @@ export class TreeselectList implements ITreeselectList {
       target.checked = resultChecked
     }
 
-    updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue, this.rtl)
+    updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue, this.rtl, this.cachedOptionsNodes)
     this.#emitInput()
   }
 
@@ -767,7 +784,7 @@ export class TreeselectList implements ITreeselectList {
     if (flattedOption) {
       flattedOption.isClosed = !flattedOption.isClosed
       hideShowChildrenOptions(this.flattedOptions, flattedOption)
-      updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue, this.rtl)
+      updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue, this.rtl, this.cachedOptionsNodes)
 
       this.arrowClickCallback(flattedOption.id, flattedOption.isClosed)
     }

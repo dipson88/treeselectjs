@@ -7,6 +7,8 @@ import {
   TagsSortFnType
 } from '../treeselectTypes'
 
+export type CachedOptionsNodesType = { [optionId: string]: HTMLInputElement }
+
 export interface ITreeselectListParams {
   options: OptionType[]
   value: ValueOptionType[]
@@ -33,6 +35,7 @@ export interface ITreeselectList extends ITreeselectListParams {
   flattedOptionsBeforeSearch: FlattedOptionType[]
   selectedNodes: SelectedNodesType
   srcElement: HTMLElement
+  cachedOptionsNodes: CachedOptionsNodesType
   updateValue: (value: ValueOptionType[]) => void
   updateSearchValue: (searchText: string) => void
   callKeyAction: (e: KeyboardEvent) => void
