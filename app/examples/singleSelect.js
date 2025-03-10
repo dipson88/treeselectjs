@@ -1,3 +1,5 @@
+import { renderExampleSection } from '../render/renderExampleSection'
+
 const options = [
   {
     name: 'England',
@@ -44,14 +46,18 @@ const options = [
   }
 ]
 
-const className = '.treeselect-demo-single-select'
+const value = 4
+
+const treeselectId = 'treeselect-demo-single-select'
 
 export const runSingleSelectExample = (Treeselect) => {
-  const domElement = document.querySelector(className)
+  renderExampleSection({ sectionId: 'single-select-section', options, value, treeselectId })
+
+  const domElement = document.getElementById(treeselectId)
   const treeselect = new Treeselect({
     parentHtmlContainer: domElement,
-    value: 4,
-    options: options,
+    value,
+    options,
     isSingleSelect: true,
     showTags: false
   })
