@@ -342,10 +342,6 @@ export default class Treeselect implements ITreeselect {
     const container = this.parentHtmlContainer
     container.classList.add('treeselect')
 
-    if (this.rtl) {
-      container.setAttribute('dir', 'rtl')
-    }
-
     const list = new TreeselectList({
       value: [], // updateValue method calls in initMount method to set actual value
       options: this.options,
@@ -388,6 +384,11 @@ export default class Treeselect implements ITreeselect {
       blurCallback: () => this.#inputBlurListener(),
       nameChangeCallback: (name) => this.#inputNameChangeListener(name)
     })
+
+    if (this.rtl) {
+      container.setAttribute('dir', 'rtl')
+      list.srcElement.setAttribute('dir', 'rtl')
+    }
 
     if (this.appendToBody) {
       this.#containerResizer = new ResizeObserver(() => this.updateListPosition())
