@@ -1,4 +1,38 @@
-export const classes = {
+type Classes = {
+  parent: string
+  input: {
+    arrow: string
+    base: string
+    bottom: string
+    clear: string
+    edit: string
+    focused: string
+    opened: string
+    tags: string
+    tagsElement: string
+    top: string
+  }
+  list: {
+    base: string
+    bottom: string
+    bottomToBody: string
+    empty: string
+    item: string
+    itemArrow: string
+    itemChecked: string
+    itemDisabled: string
+    itemFocused: string
+    itemGroup: string
+    itemHidden: string
+    itemPartialChecked: string
+    slot: string
+    top: string
+    topToBody: string
+    static: string
+  }
+}
+
+export const classes: Classes = {
   parent: 'treeselect',
   input: {
     arrow: 'treeselect-input__arrow',
@@ -27,11 +61,12 @@ export const classes = {
     itemPartialChecked: 'treeselect-list__item--partial-checked',
     slot: 'treeselect-list__slot',
     top: 'treeselect-list--top',
-    topToBody: 'treeselect-list--top-to-body'
+    topToBody: 'treeselect-list--top-to-body',
+    static: 'treeselect-list--static'
   }
 }
 
-export const classesSelectors = {
+export const classesSelectors: Classes = {
   parent: `.${classes.parent}`,
   input: {
     arrow: `.${classes.input.arrow}`,
@@ -60,6 +95,7 @@ export const classesSelectors = {
     itemPartialChecked: `.${classes.list.itemPartialChecked}`,
     slot: `.${classes.list.slot}`,
     top: `.${classes.list.top}`,
-    topToBody: `.${classes.list.topToBody}`
+    topToBody: `.${classes.list.topToBody}`,
+    static: `.${classes.list.static}`
   }
 }

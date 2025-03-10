@@ -666,6 +666,13 @@ export default class Treeselect implements ITreeselect {
       return
     }
 
+    if (this.staticList) {
+      list.setAttribute('direction', 'bottom')
+      this.#updateDirectionClasses(false, this.appendToBody)
+      return
+    }
+
+
     const { height: listHeight } = list.getBoundingClientRect()
     const {
       x: containerX,
