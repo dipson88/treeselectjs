@@ -6,8 +6,20 @@ import {
   type SelectedNodesType,
   type TagsSortFnType
 } from '../treeselectTypes'
-import { type ITreeselectListParams, type ITreeselectList, type CachedOptionsNodesType } from './listTypes'
-import { getFlattedOptions, getCheckedOptions, getFlattedOptionByInputId } from './helpers/listOptionsHelper'
+import {
+  type ITreeselectListParams,
+  type ITreeselectList,
+  type CachedOptionsNodesType,
+  type OptionsTreeMap
+} from './listTypes'
+
+// ------------------------------
+import {
+  getFlattedOptions,
+  getCheckedOptions,
+  getFlattedOptionByInputId,
+  getOptionsTreeMap
+} from './helpers/listOptionsHelper'
 import { updateOptionByCheckState, updateOptionsByValue } from './helpers/listCheckStateHelper'
 import {
   hideShowChildrenOptions,
@@ -20,6 +32,8 @@ import {
   setAttributesFromHtmlAttr,
   getArrowOfItemByCheckbox
 } from './helpers/domHelper'
+// ------------------------------
+
 import { appendIconToElement } from '../svgIcons'
 
 const validateOptions = (flatOptions: FlattedOptionType[]) => {
@@ -98,6 +112,10 @@ const getCachedOptionsNodes = (flattedOptions: FlattedOptionType[], srcElement: 
   }, {} as CachedOptionsNodesType)
 }
 
+const copyMap = (originalMap: OptionsTreeMap): OptionsTreeMap => {
+  return new Map(JSON.parse(JSON.stringify([...originalMap])))
+}
+
 export class TreeselectList implements ITreeselectList {
   // Props
   options: OptionType[]
@@ -122,6 +140,9 @@ export class TreeselectList implements ITreeselectList {
   selectedNodes: SelectedNodesType
   srcElement: HTMLElement
   cachedOptionsNodes: CachedOptionsNodesType = {}
+
+  optionsTreeMap: OptionsTreeMap = new Map()
+  optionsTreeMapBeforeSearch: OptionsTreeMap = new Map()
 
   // Callbacks
   inputCallback: (value: SelectedNodesType) => void
@@ -178,6 +199,14 @@ export class TreeselectList implements ITreeselectList {
     this.selectedNodes = { nodes: [], groupedNodes: [], allNodes: [] }
     this.srcElement = this.#createSrcElement()
     this.cachedOptionsNodes = getCachedOptionsNodes(this.flattedOptions, this.srcElement)
+
+    this.optionsTreeMap = getOptionsTreeMap({
+      srcElement: this.srcElement,
+      options: this.options,
+      openLevel: this.openLevel,
+      isIndependentNodes: this.isIndependentNodes
+    })
+    this.optionsTreeMapBeforeSearch = copyMap(this.optionsTreeMap)
 
     this.inputCallback = inputCallback
     this.arrowClickCallback = arrowClickCallback
