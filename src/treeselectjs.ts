@@ -673,7 +673,6 @@ export default class Treeselect implements ITreeselect {
       return
     }
 
-
     const { height: listHeight } = list.getBoundingClientRect()
     const {
       x: containerX,

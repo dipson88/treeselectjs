@@ -1,55 +1,55 @@
-import { type ValueOptionType, type FlattedOptionType, type IconsType } from '../../treeselectTypes'
-import { type OptionsTreeMap, type CachedOptionsNodesType, TreeItem } from '../listTypes'
+import { type ValueOptionType, type IconsType } from '../../treeselectTypes'
+import { type OptionsTreeMap, type TreeItem } from '../listTypes'
 import { appendIconToElement } from '../../svgIcons'
 
+// TODO: recheck method
 export const getListItemById = (id: string, optionsTreeMap: OptionsTreeMap) => {
   return optionsTreeMap.get(id)?.itemHtmlElement as HTMLElement
 }
 
+// TODO: recheck method
 export const getArrowItemById = (id: string, optionsTreeMap: OptionsTreeMap) => {
   return optionsTreeMap.get(id)?.arrowItemHtmlElement as HTMLElement
 }
 
-export const updateDOM2 = ({
+export const updateDOM = ({
   optionsTreeMap,
-  srcElement,
+  emptyListHtmlElement,
   iconElements,
   previousSingleSelectedValue,
   rtl
 }: {
   optionsTreeMap: OptionsTreeMap
-  srcElement: HTMLElement | Element
+  emptyListHtmlElement: HTMLElement | null
   iconElements: IconsType
   previousSingleSelectedValue: ValueOptionType[]
   rtl: boolean
 }) => {
   optionsTreeMap.forEach((option) => {
     const input = option.checkboxHtmlElement
-    const listItem = option.itemHtmlElement
 
-    input.checked = option.checked
+    if (input) {
+      input.checked = option.checked
+    }
 
-    updateCheckedClass({ option, listItem, previousSingleSelectedValue })
-    updatePartialCheckedClass(option, listItem)
-    updateDisabledCheckedClass(option, listItem)
-    updateClosedClass({ option, listItem, iconElements })
-    updateHiddenClass(option, listItem)
-
-    updateLeftPaddingItems2({ option, listItem, optionsTreeMap, rtl })
-    updateCheckboxClass({ option, input, iconElements })
+    updateCheckedClass({ option, previousSingleSelectedValue })
+    updatePartialCheckedClass(option)
+    updateDisabledCheckedClass(option)
+    updateClosedClass({ option, iconElements })
+    updateHiddenClass(option)
+    updateLeftPaddingItems({ option, optionsTreeMap, rtl })
+    updateCheckboxClass({ option, iconElements })
   })
 
-  updateEmptyListClass2({ optionsTreeMap, srcElement })
+  updateEmptyListClass({ optionsTreeMap, emptyListHtmlElement })
 }
 
-const updateLeftPaddingItems2 = ({
+const updateLeftPaddingItems = ({
   option,
-  listItem,
   optionsTreeMap,
   rtl
 }: {
   option: TreeItem
-  listItem: HTMLElement
   optionsTreeMap: OptionsTreeMap
   rtl: boolean
 }) => {
@@ -59,9 +59,15 @@ const updateLeftPaddingItems2 = ({
   let padding = '0'
 
   if (isZeroLevel) {
-    const isGroupsExistOnLevel = Array.from(optionsTreeMap.values()).some(
-      (item) => item.isGroup && item.level === option.level
-    )
+    let isGroupsExistOnLevel = false
+
+    for (const [_, item] of optionsTreeMap) {
+      if (item.isGroup && item.level === option.level) {
+        isGroupsExistOnLevel = true
+        break
+      }
+    }
+
     const itemPadding = !option.isGroup && isGroupsExistOnLevel ? `${defaultPadding}px` : `${zeroLevelItemPadding}px`
     padding = option.isGroup ? '0' : itemPadding
   } else {
@@ -70,34 +76,41 @@ const updateLeftPaddingItems2 = ({
       : `${option.level * defaultPadding + defaultPadding}px`
   }
 
-  if (rtl) {
-    listItem.style.paddingRight = padding
-  } else {
-    listItem.style.paddingLeft = padding
-  }
+  const listItem = option.itemHtmlElement
 
-  // You can use css selectors to reset params with !important
-  listItem.setAttribute('level', option.level.toString())
-  listItem.setAttribute('group', option.isGroup.toString())
+  if (listItem) {
+    if (rtl) {
+      listItem.style.paddingRight = padding
+    } else {
+      listItem.style.paddingLeft = padding
+    }
+
+    // We can use css selectors to reset params with !important
+    listItem.setAttribute('level', option.level.toString())
+    listItem.setAttribute('group', option.isGroup.toString())
+  }
 }
 
-const updateEmptyListClass2 = ({
+const updateEmptyListClass = ({
   optionsTreeMap,
-  srcElement
+  emptyListHtmlElement
 }: {
   optionsTreeMap: OptionsTreeMap
-  srcElement: HTMLElement | Element
+  emptyListHtmlElement: HTMLElement | null
 }) => {
-  const isNotEmpty = Array.from(optionsTreeMap.values()).some((option) => !option.hidden)
-  const emptyList = srcElement.querySelector('.treeselect-list__empty') as HTMLElement
+  let isNotEmpty = false
 
-  if (isNotEmpty) {
-    emptyList.classList.add('treeselect-list__empty--hidden')
-  } else {
-    emptyList.classList.remove('treeselect-list__empty--hidden')
+  for (const [_, option] of optionsTreeMap) {
+    if (!option.hidden) {
+      isNotEmpty = true
+      break
+    }
   }
+
+  emptyListHtmlElement?.classList.toggle('treeselect-list__empty--hidden', isNotEmpty)
 }
 
+// TODO: recheck method
 export const getListItemByCheckbox = (checkbox: HTMLElement | Element) => {
   const checkboxContainer = checkbox.parentNode as HTMLElement
   const listItem = checkboxContainer.parentNode as HTMLElement
@@ -105,6 +118,7 @@ export const getListItemByCheckbox = (checkbox: HTMLElement | Element) => {
   return listItem
 }
 
+// TODO: recheck method
 export const getArrowOfItemByCheckbox = (checkbox: HTMLElement | Element) => {
   const item = getListItemByCheckbox(checkbox)
   const arrow = item.querySelector('.treeselect-list__item-icon')
@@ -126,178 +140,57 @@ export const setAttributesFromHtmlAttr = (itemElement: HTMLDivElement, htmlAttr?
   })
 }
 
-export const updateDOM = ({
-  flattedOptions,
-  srcElement,
-  iconElements,
-  previousSingleSelectedValue,
-  rtl,
-  cachedOptionsNodes
-}: {
-  flattedOptions: FlattedOptionType[]
-  srcElement: HTMLElement | Element
-  iconElements: IconsType
-  previousSingleSelectedValue: ValueOptionType[]
-  rtl: boolean
-  cachedOptionsNodes: CachedOptionsNodesType
-}) => {
-  flattedOptions.forEach((option) => {
-    const input = cachedOptionsNodes[option.id]
-    const listItem = getListItemByCheckbox(input)
-
-    input.checked = option.checked
-
-    updateCheckedClass({ option, listItem, previousSingleSelectedValue })
-    updatePartialCheckedClass(option, listItem)
-    updateDisabledCheckedClass(option, listItem)
-    updateClosedClass({ option, listItem, iconElements })
-    updateHiddenClass(option, listItem)
-
-    updateLeftPaddingItems({ option, listItem, flattedOptions, rtl })
-    updateCheckboxClass({ option, input, iconElements })
-  })
-
-  updateEmptyListClass(flattedOptions, srcElement)
-}
-
 const updateCheckedClass = ({
   option,
-  listItem,
   previousSingleSelectedValue
 }: {
-  option: FlattedOptionType
-  listItem: HTMLElement
+  option: TreeItem
   previousSingleSelectedValue: ValueOptionType[]
 }) => {
-  if (option.checked) {
-    listItem.classList.add('treeselect-list__item--checked')
-  } else {
-    listItem.classList.remove('treeselect-list__item--checked')
-  }
-
-  if (Array.isArray(previousSingleSelectedValue) && previousSingleSelectedValue[0] === option.id && !option.disabled) {
-    listItem.classList.add('treeselect-list__item--single-selected')
-  } else {
-    listItem.classList.remove('treeselect-list__item--single-selected')
-  }
+  const listItem = option.itemHtmlElement
+  listItem?.classList.toggle('treeselect-list__item--checked', option.checked)
+  const isCheckSingleSelected =
+    Array.isArray(previousSingleSelectedValue) && previousSingleSelectedValue[0] === option.id && !option.disabled
+  listItem?.classList.toggle('treeselect-list__item--single-selected', isCheckSingleSelected)
 }
 
-const updatePartialCheckedClass = (option: FlattedOptionType, listItem: HTMLElement) => {
-  if (option.isPartialChecked) {
-    listItem.classList.add('treeselect-list__item--partial-checked')
-  } else {
-    listItem.classList.remove('treeselect-list__item--partial-checked')
-  }
+const updatePartialCheckedClass = (option: TreeItem) => {
+  const listItem = option.itemHtmlElement
+  listItem?.classList.toggle('treeselect-list__item--partial-checked', option.isPartialChecked)
 }
 
-const updateDisabledCheckedClass = (option: FlattedOptionType, listItem: HTMLElement) => {
-  if (option.disabled) {
-    listItem.classList.add('treeselect-list__item--disabled')
-  } else {
-    listItem.classList.remove('treeselect-list__item--disabled')
-  }
+const updateDisabledCheckedClass = (option: TreeItem) => {
+  const listItem = option.itemHtmlElement
+  listItem?.classList.toggle('treeselect-list__item--disabled', option.disabled)
 }
 
-const updateClosedClass = ({
-  option,
-  listItem,
-  iconElements
-}: {
-  option: FlattedOptionType
-  listItem: HTMLElement
-  iconElements: IconsType
-}) => {
-  if (option.isGroup) {
-    const icon = listItem.querySelector('.treeselect-list__item-icon') as HTMLElement
+const updateClosedClass = ({ option, iconElements }: { option: TreeItem; iconElements: IconsType }) => {
+  const arrowIcon = option.arrowItemHtmlElement
+
+  if (option.isGroup && arrowIcon) {
     const iconInnerElement = option.isClosed ? iconElements.arrowRight : iconElements.arrowDown
-    appendIconToElement(iconInnerElement, icon)
+    appendIconToElement(iconInnerElement, arrowIcon)
 
-    if (option.isClosed) {
-      listItem.classList.add('treeselect-list__item--closed')
+    const listItem = option.itemHtmlElement
+    listItem?.classList.toggle('treeselect-list__item--closed', option.isClosed)
+  }
+}
+
+const updateHiddenClass = (option: TreeItem) => {
+  const listItem = option.itemHtmlElement
+  listItem?.classList.toggle('treeselect-list__item--hidden', option.hidden)
+}
+
+const updateCheckboxClass = ({ option, iconElements }: { option: TreeItem; iconElements: IconsType }) => {
+  const icon = option.checkboxIconHtmlElement
+
+  if (icon) {
+    if (option.checked) {
+      appendIconToElement(iconElements.check, icon)
+    } else if (option.isPartialChecked) {
+      appendIconToElement(iconElements.partialCheck, icon)
     } else {
-      listItem.classList.remove('treeselect-list__item--closed')
+      icon.innerHTML = ''
     }
-  }
-}
-
-const updateHiddenClass = (option: FlattedOptionType, listItem: HTMLElement) => {
-  if (option.hidden) {
-    listItem.classList.add('treeselect-list__item--hidden')
-  } else {
-    listItem.classList.remove('treeselect-list__item--hidden')
-  }
-}
-
-const updateCheckboxClass = ({
-  option,
-  input,
-  iconElements
-}: {
-  option: FlattedOptionType
-  input: HTMLInputElement
-  iconElements: IconsType
-}) => {
-  const inputContainer = input.parentNode as HTMLElement
-  const icon = inputContainer.querySelector('.treeselect-list__item-checkbox-icon') as HTMLElement
-
-  if (option.checked) {
-    appendIconToElement(iconElements.check, icon)
-  } else if (option.isPartialChecked) {
-    appendIconToElement(iconElements.partialCheck, icon)
-  } else {
-    icon.innerHTML = ''
-  }
-}
-
-const updateLeftPaddingItems = ({
-  option,
-  listItem,
-  flattedOptions,
-  rtl
-}: {
-  option: FlattedOptionType
-  listItem: HTMLElement
-  flattedOptions: FlattedOptionType[]
-  rtl: boolean
-}) => {
-  const isZeroLevel = option.level === 0
-  const defaultPadding = 20
-  const zeroLevelItemPadding = 5
-
-  if (isZeroLevel) {
-    const isGroupsExistOnLevel = flattedOptions.some((item) => item.isGroup && item.level === option.level)
-    const itemPadding = !option.isGroup && isGroupsExistOnLevel ? `${defaultPadding}px` : `${zeroLevelItemPadding}px`
-    const padding = option.isGroup ? '0' : itemPadding
-
-    if (rtl) {
-      listItem.style.paddingRight = padding
-    } else {
-      listItem.style.paddingLeft = padding
-    }
-  } else {
-    const padding = option.isGroup
-      ? `${option.level * defaultPadding}px`
-      : `${option.level * defaultPadding + defaultPadding}px`
-
-    if (rtl) {
-      listItem.style.paddingRight = padding
-    } else {
-      listItem.style.paddingLeft = padding
-    }
-  }
-
-  // You can use css selectors to reset params with !important
-  listItem.setAttribute('level', option.level.toString())
-  listItem.setAttribute('group', option.isGroup.toString())
-}
-
-const updateEmptyListClass = (flattedOptions: FlattedOptionType[], srcElement: HTMLElement | Element) => {
-  const isNotEmpty = flattedOptions.some((option) => !option.hidden)
-  const emptyList = srcElement.querySelector('.treeselect-list__empty') as HTMLElement
-
-  if (isNotEmpty) {
-    emptyList.classList.add('treeselect-list__empty--hidden')
-  } else {
-    emptyList.classList.remove('treeselect-list__empty--hidden')
   }
 }

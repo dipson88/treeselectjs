@@ -7,16 +7,18 @@ import {
   type TagsSortFnType
 } from '../treeselectTypes'
 
+// TODO: Change FlattedOptionType to TreeItem
 export interface TreeItem extends FlattedOptionType {
   children: (number | string)[]
-  checkboxHtmlElement: HTMLInputElement
-  itemHtmlElement: HTMLElement
-  arrowItemHtmlElement: HTMLElement
+  checkboxHtmlElement: HTMLInputElement | null
+  itemHtmlElement: HTMLElement | null
+  arrowItemHtmlElement: HTMLElement | null
+  checkboxIconHtmlElement: HTMLElement | null
 }
 
 export type OptionsTreeMap = Map<string | number, TreeItem>
 
-export type CachedOptionsNodesType = { [optionId: string]: HTMLInputElement }
+export type BeforeSearchStateMap = Map<string | number, Pick<TreeItem, 'hidden' | 'isClosed'>>
 
 export interface ITreeselectListParams {
   options: OptionType[]
@@ -40,13 +42,11 @@ export interface ITreeselectListParams {
 
 export interface ITreeselectList extends ITreeselectListParams {
   searchText: string
-  flattedOptions: FlattedOptionType[]
-  flattedOptionsBeforeSearch: FlattedOptionType[]
   selectedNodes: SelectedNodesType
   srcElement: HTMLElement
-  cachedOptionsNodes: CachedOptionsNodesType
+  emptyListHtmlElement: HTMLElement | null
   optionsTreeMap: OptionsTreeMap
-  optionsTreeMapBeforeSearch: OptionsTreeMap
+  beforeSearchStateMap: BeforeSearchStateMap
   updateValue: (value: ValueOptionType[]) => void
   updateSearchValue: (searchText: string) => void
   callKeyAction: (e: KeyboardEvent) => void
