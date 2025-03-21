@@ -58,4 +58,19 @@ describe('staticList prop', () => {
     const list = getListElement(treeselect.parentHtmlContainer)
     expect(list).toBeFalsy()
   })
+
+  it('should correctly render static list with alwaysOpen', () => {
+    const treeselect = renderTreeselect({
+      value: [],
+      options: defaultOptions,
+      alwaysOpen: true,
+      staticList: true
+    })
+
+    const list = getListElement(treeselect.parentHtmlContainer)
+
+    expect(list).toBeTruthy()
+    expect(list.classList).toContain(classes.list.static)
+    expect(treeselect.parentHtmlContainer).toMatchSnapshot()
+  })
 })
