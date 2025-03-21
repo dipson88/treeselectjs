@@ -1,6 +1,6 @@
 import '../../../src/treeselectjs.css'
 import Treeselect from '../../../src/treeselectjs'
-import { defaultOptions, largeOptionsList, optionsWithDisabled } from '../../testHelpers'
+import { defaultOptions, largeOptionsList, largeNestedOptionsList, optionsWithDisabled } from '../../testHelpers'
 
 export const runBaseTest = () => {
   const className = '.treeselect-demo-base'
@@ -81,8 +81,25 @@ export const runAppendedToBodyTest = () => {
   })
 }
 
+export const runBoostRenderingTest = () => {
+  const className = '.treeselect-demo-boost-rendering'
+  const domElement = document.querySelector(className)
+
+  if (!domElement) {
+    return
+  }
+
+  const treeselect = new Treeselect({
+    parentHtmlContainer: domElement,
+    value: [],
+    options: largeNestedOptionsList,
+    isBoostedRendering: true
+  })
+}
+
 runBaseTest()
 runSingleTest()
 runDisabledTest()
 runLargeDataTest()
 runAppendedToBodyTest()
+runBoostRenderingTest()

@@ -110,6 +110,7 @@ export default class Treeselect implements ITreeselect {
   isIndependentNodes: boolean
   rtl: boolean
   listClassName: string
+  isBoostedRendering: boolean
   iconElements: IconsType
   inputCallback: ((value: ValueType) => void) | undefined
   openCallback: ((value: ValueType) => void) | undefined
@@ -175,6 +176,7 @@ export default class Treeselect implements ITreeselect {
     isIndependentNodes,
     rtl,
     listClassName,
+    isBoostedRendering,
     iconElements,
     inputCallback,
     openCallback,
@@ -220,6 +222,7 @@ export default class Treeselect implements ITreeselect {
     this.isIndependentNodes = isIndependentNodes ?? false
     this.rtl = rtl ?? false
     this.listClassName = listClassName ?? ''
+    this.isBoostedRendering = isBoostedRendering ?? false
     this.iconElements = getDefaultIcons(iconElements)
     this.inputCallback = inputCallback
     this.openCallback = openCallback
@@ -297,6 +300,7 @@ export default class Treeselect implements ITreeselect {
       this.srcElement.innerHTML = ''
       this.srcElement = null
       this.#removeOutsideListeners(true)
+      this.#treeselectList?.destroy()
     }
   }
 
@@ -356,6 +360,7 @@ export default class Treeselect implements ITreeselect {
       isIndependentNodes: this.isIndependentNodes,
       rtl: this.rtl,
       listClassName: this.listClassName,
+      isBoostedRendering: this.isBoostedRendering,
       iconElements: this.iconElements,
       inputCallback: (value) => this.#listInputListener(value),
       arrowClickCallback: (groupId, isClosed) => this.#listArrowClickListener(groupId, isClosed),

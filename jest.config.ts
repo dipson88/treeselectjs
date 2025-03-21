@@ -9,5 +9,6 @@ export default {
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy'
   },
-  testMatch: ['**/__tests__/**/*.test.ts']
+  testMatch: ['**/__tests__/**/*.test.ts'],
+  setupFilesAfterEnv: ['<rootDir>/__tests__/jest/setup.ts']
 }

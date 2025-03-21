@@ -42,6 +42,7 @@ export interface ITreeselectListParams {
   isIndependentNodes: boolean
   rtl: boolean
   listClassName: string
+  isBoostedRendering: boolean
   iconElements: IconsType
   inputCallback: (value: SelectedNodesType) => void
   arrowClickCallback: (groupId: ValueOptionType, isClosed: boolean) => void
@@ -55,9 +56,11 @@ export interface ITreeselectList extends ITreeselectListParams {
   emptyListHtmlElement: HTMLElement | null
   optionsTreeMap: OptionsTreeMap
   beforeSearchStateMap: BeforeSearchStateMap
+  intersectionItemsObserver: IntersectionObserver | null
   updateValue: (value: ValueOptionType[]) => void
   updateSearchValue: (searchText: string) => void
   callKeyAction: (e: KeyboardEvent) => void
   focusFirstListElement: () => void
   isLastFocusedElementExist: () => boolean
+  destroy: () => void
 }

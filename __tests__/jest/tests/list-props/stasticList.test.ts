@@ -1,11 +1,6 @@
-import ResizeObserver from 'resize-observer-polyfill'
 import { defaultOptions, renderTreeselect, getListElement, classes, getInputElement } from '../../helpers'
 
 describe('staticList prop', () => {
-  beforeAll(() => {
-    global.ResizeObserver = ResizeObserver
-  })
-
   it('should not be static by default', () => {
     const treeselect = renderTreeselect({
       value: [],

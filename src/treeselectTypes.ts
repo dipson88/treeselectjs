@@ -95,6 +95,7 @@ export interface ITreeselectParams {
   isIndependentNodes?: boolean
   rtl?: boolean
   listClassName?: string
+  isBoostedRendering?: boolean
   iconElements?: Partial<IconsType>
   inputCallback?: (value: ValueType) => void
   openCallback?: (value: ValueType) => void

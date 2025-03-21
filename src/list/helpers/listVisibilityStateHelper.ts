@@ -89,3 +89,13 @@ export const updateBeforeSearchStateMap = ({
     })
   })
 }
+
+export const createIntersectionScrollObserver = (srcElementList: HTMLElement) =>
+  new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle('treeselect-list__item--scroll-not-visible', !entry.isIntersecting)
+      })
+    },
+    { root: srcElementList, threshold: 0.5 }
+  )

@@ -15,6 +15,7 @@ import {
 import { getOptionsTreeMap, getTreeItemOptionByInputId, getCheckedOptions } from './helpers/listOptionsHelper'
 import { updateOptionByCheckState, updateOptionsByValue } from './helpers/listCheckStateHelper'
 import {
+  createIntersectionScrollObserver,
   expandSelectedItems,
   hideShowChildrenOptions,
   updateBeforeSearchStateMap,
@@ -82,10 +83,12 @@ export class TreeselectList implements ITreeselectList {
   isIndependentNodes: boolean
   rtl: boolean
   listClassName: string
+  isBoostedRendering: boolean
   iconElements: IconsType
 
   // InnerState
   searchText: string
+  intersectionItemsObserver: IntersectionObserver | null
   selectedNodes: SelectedNodesType
   optionsTreeMap: OptionsTreeMap
   beforeSearchStateMap: BeforeSearchStateMap
@@ -118,6 +121,7 @@ export class TreeselectList implements ITreeselectList {
     isIndependentNodes,
     rtl,
     listClassName,
+    isBoostedRendering,
     inputCallback,
     arrowClickCallback,
     mouseupCallback
@@ -135,9 +139,11 @@ export class TreeselectList implements ITreeselectList {
     this.isIndependentNodes = isIndependentNodes ?? false
     this.rtl = rtl ?? false
     this.listClassName = listClassName ?? ''
+    this.isBoostedRendering = isBoostedRendering
     this.iconElements = iconElements
 
     this.searchText = ''
+    this.intersectionItemsObserver = null
     this.selectedNodes = { nodes: [], groupedNodes: [], allNodes: [] }
     this.optionsTreeMap = getOptionsTreeMap({
       options: this.options,
@@ -256,6 +262,12 @@ export class TreeselectList implements ITreeselectList {
     return !!this.#lastFocusedItem
   }
 
+  destroy() {
+    if (this.intersectionItemsObserver) {
+      this.intersectionItemsObserver.disconnect()
+    }
+  }
+
   // Private methods
   #keyActionsLeftRight(itemFocused: HTMLElement | null, e: KeyboardEvent) {
     if (!itemFocused) {
@@ -372,6 +384,10 @@ export class TreeselectList implements ITreeselectList {
     list.addEventListener('mousemove', () => this.#listMouseMove())
     list.addEventListener('mouseup', () => this.mouseupCallback(), true)
 
+    if (this.isBoostedRendering) {
+      this.intersectionItemsObserver = createIntersectionScrollObserver(list)
+    }
+
     return list
   }
 
@@ -477,6 +493,11 @@ export class TreeselectList implements ITreeselectList {
     itemElement.addEventListener('mouseout', () => this.#itemElementMouseout(itemElement), true)
     itemElement.addEventListener('mousedown', (e) => this.#itemElementMousedown(e, option))
 
+    // Set observer for scroll visibility
+    if (this.intersectionItemsObserver) {
+      this.intersectionItemsObserver.observe(itemElement)
+    }
+
     // Add htmlItem to the optionsTreeMap
     const treeOption = this.optionsTreeMap.get(option.value)
     if (treeOption) {
@@ -511,8 +532,8 @@ export class TreeselectList implements ITreeselectList {
     const checkbox = treeOption?.checkboxHtmlElement
 
     if (checkbox) {
-    checkbox.checked = !checkbox.checked
-    this.#checkboxClickEvent(checkbox, option)
+      checkbox.checked = !checkbox.checked
+      this.#checkboxClickEvent(checkbox, option)
     }
   }
 
