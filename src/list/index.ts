@@ -21,14 +21,7 @@ import {
   updateOptionsMapBySearchState,
   updateVisibleBySearchTreeItemOptions
 } from './helpers/listVisibilityStateHelper'
-import {
-  updateDOM,
-  getListItemByCheckbox,
-  setAttributesFromHtmlAttr,
-  getArrowOfItemByCheckbox
-  // getArrowItemById,
-  // getListItemById
-} from './helpers/domHelper'
+import { updateDOM, setAttributesFromHtmlAttr } from './helpers/domHelper'
 import { appendIconToElement } from '../svgIcons'
 
 const updateListValue = ({
@@ -245,11 +238,9 @@ export class TreeselectList implements ITreeselectList {
   focusFirstListElement() {
     const focusedClass = 'treeselect-list__item--focused'
     const itemFocused = this.srcElement.querySelector(`.${focusedClass}`)
-    const allCheckboxes = Array.from(this.srcElement.querySelectorAll('.treeselect-list__item-checkbox')).filter(
-      (checkbox) => window.getComputedStyle(getListItemByCheckbox(checkbox)).display !== 'none'
-    )
+    const allItems = this.#getAllVisibleHtmlItems()
 
-    if (!allCheckboxes.length) {
+    if (!allItems.length) {
       return
     }
 
@@ -257,7 +248,7 @@ export class TreeselectList implements ITreeselectList {
       itemFocused.classList.remove(focusedClass)
     }
 
-    const firstItem = getListItemByCheckbox(allCheckboxes[0] as HTMLElement)
+    const [firstItem] = allItems
     firstItem.classList.add(focusedClass)
   }
 
@@ -275,7 +266,7 @@ export class TreeselectList implements ITreeselectList {
     const checkbox = itemFocused.querySelector('.treeselect-list__item-checkbox')!
     const inputId = checkbox.getAttribute('input-id')
     const option = getTreeItemOptionByInputId(inputId, this.optionsTreeMap)!
-    const arrow = itemFocused.querySelector('.treeselect-list__item-icon')!
+    const arrow = option.arrowItemHtmlElement!
 
     if (key === 'ArrowLeft' && !option.isClosed && option.isGroup) {
       arrow.dispatchEvent(new Event('mousedown'))
@@ -291,34 +282,27 @@ export class TreeselectList implements ITreeselectList {
   }
 
   #keyActionsDownUp(itemFocused: HTMLElement | null, key: string) {
-    // TODO: change too many queries
-    const allCheckboxes = Array.from(this.srcElement.querySelectorAll('.treeselect-list__item-checkbox')).filter(
-      (checkbox) => {
-        const typedParent = checkbox?.parentNode?.parentNode as HTMLElement | undefined
-        return typedParent?.classList.contains('treeselect-list__item--hidden') === false
-      }
-    )
+    const allItems = this.#getAllVisibleHtmlItems()
 
-    if (!allCheckboxes.length) {
+    if (!allItems.length) {
       return
     }
 
-    if (!itemFocused) {
-      const firstNode = getListItemByCheckbox(allCheckboxes[0])
-      firstNode.classList.add('treeselect-list__item--focused')
-    } else {
-      const focusedCheckboxIndex = allCheckboxes.findIndex((el) =>
-        getListItemByCheckbox(el).classList.contains('treeselect-list__item--focused')
-      )
-      const focusedNode = getListItemByCheckbox(allCheckboxes[focusedCheckboxIndex])
-      focusedNode.classList.remove('treeselect-list__item--focused')
+    const focusedClassName = 'treeselect-list__item--focused'
 
-      const nextNodeIndex = key === 'ArrowDown' ? focusedCheckboxIndex + 1 : focusedCheckboxIndex - 1
-      const defaultNodeIndex = key === 'ArrowDown' ? 0 : allCheckboxes.length - 1
-      const nextCheckbox = allCheckboxes[nextNodeIndex] ?? allCheckboxes[defaultNodeIndex]
-      const isDefaultIndex = !allCheckboxes[nextNodeIndex]
-      const nextNodeToFocus = getListItemByCheckbox(nextCheckbox)
-      nextNodeToFocus.classList.add('treeselect-list__item--focused')
+    if (!itemFocused) {
+      const [firstNode] = allItems
+      firstNode.classList.add(focusedClassName)
+    } else {
+      const focusedItemIndex = allItems.findIndex((el) => el.classList.contains(focusedClassName))
+      const focusedNode = allItems[focusedItemIndex]
+      focusedNode.classList.remove(focusedClassName)
+
+      const nextNodeIndex = key === 'ArrowDown' ? focusedItemIndex + 1 : focusedItemIndex - 1
+      const defaultNodeIndex = key === 'ArrowDown' ? 0 : allItems.length - 1
+      const isDefaultIndex = !allItems[nextNodeIndex]
+      const nextNodeToFocus = allItems[nextNodeIndex] ?? allItems[defaultNodeIndex]
+      nextNodeToFocus.classList.add(focusedClassName)
 
       const listCoord = this.srcElement.getBoundingClientRect()
       const nextCoord = nextNodeToFocus.getBoundingClientRect()
@@ -535,7 +519,7 @@ export class TreeselectList implements ITreeselectList {
     arrow.classList.add('treeselect-list__item-icon')
     appendIconToElement(this.iconElements.arrowDown, arrow)
 
-    arrow.addEventListener('mousedown', (e) => this.#arrowMousedown(e))
+    arrow.addEventListener('mousedown', (e) => this.#arrowMousedown(e, option))
 
     // Add arrow to the optionsTreeMap
     const treeOption = this.optionsTreeMap.get(option.value)
@@ -546,10 +530,10 @@ export class TreeselectList implements ITreeselectList {
     return arrow
   }
 
-  #arrowMousedown(e: Event) {
+  #arrowMousedown(e: Event, option: OptionType) {
     e.preventDefault()
     e.stopPropagation()
-    this.#arrowClickEvent(e)
+    this.#arrowClickEvent(option)
   }
 
   #createCheckbox(option: OptionType) {
@@ -599,6 +583,17 @@ export class TreeselectList implements ITreeselectList {
     return counter
   }
 
+  #getAllVisibleHtmlItems() {
+    const allItems: HTMLElement[] = []
+    this.optionsTreeMap.forEach((option) => {
+      if (!option.hidden && option.itemHtmlElement) {
+        allItems.push(option.itemHtmlElement)
+      }
+    })
+
+    return allItems
+  }
+
   // Actions
   #checkboxClickEvent(target: HTMLInputElement, option: OptionType) {
     const treeOption = this.optionsTreeMap.get(option.value) ?? null
@@ -609,7 +604,7 @@ export class TreeselectList implements ITreeselectList {
 
     if (treeOption.isGroup && this.disabledBranchNode) {
       // We need to close/open disabled group on mousedown
-      const arrow = getArrowOfItemByCheckbox(target)
+      const arrow = treeOption.arrowItemHtmlElement
       arrow?.dispatchEvent(new Event('mousedown'))
 
       return
@@ -650,10 +645,8 @@ export class TreeselectList implements ITreeselectList {
     this.#emitInput()
   }
 
-  #arrowClickEvent(e: Event) {
-    const input = (e.target as HTMLElement)?.parentNode?.querySelector('[input-id]')
-    const inputId = input?.getAttribute('input-id') ?? null
-    const treeOption = getTreeItemOptionByInputId(inputId, this.optionsTreeMap)
+  #arrowClickEvent(option: OptionType) {
+    const treeOption = this.optionsTreeMap.get(option.value) ?? null
 
     if (treeOption !== null) {
       treeOption.isClosed = !treeOption.isClosed

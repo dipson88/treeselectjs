@@ -2,16 +2,6 @@ import { type ValueOptionType, type IconsType } from '../../treeselectTypes'
 import { type OptionsTreeMap, type TreeItem } from '../listTypes'
 import { appendIconToElement } from '../../svgIcons'
 
-// TODO: recheck method
-export const getListItemById = (id: string, optionsTreeMap: OptionsTreeMap) => {
-  return optionsTreeMap.get(id)?.itemHtmlElement as HTMLElement
-}
-
-// TODO: recheck method
-export const getArrowItemById = (id: string, optionsTreeMap: OptionsTreeMap) => {
-  return optionsTreeMap.get(id)?.arrowItemHtmlElement as HTMLElement
-}
-
 export const updateDOM = ({
   optionsTreeMap,
   emptyListHtmlElement,
@@ -108,22 +98,6 @@ const updateEmptyListClass = ({
   }
 
   emptyListHtmlElement?.classList.toggle('treeselect-list__empty--hidden', isNotEmpty)
-}
-
-// TODO: recheck method
-export const getListItemByCheckbox = (checkbox: HTMLElement | Element) => {
-  const checkboxContainer = checkbox.parentNode as HTMLElement
-  const listItem = checkboxContainer.parentNode as HTMLElement
-
-  return listItem
-}
-
-// TODO: recheck method
-export const getArrowOfItemByCheckbox = (checkbox: HTMLElement | Element) => {
-  const item = getListItemByCheckbox(checkbox)
-  const arrow = item.querySelector('.treeselect-list__item-icon')
-
-  return arrow
 }
 
 export const setAttributesFromHtmlAttr = (itemElement: HTMLDivElement, htmlAttr?: object) => {
