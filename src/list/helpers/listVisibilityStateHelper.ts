@@ -1,5 +1,5 @@
 import { type ValueOptionType } from '../../treeselectTypes'
-import { type TreeItem, type OptionsTreeMap } from '../listTypes'
+import { type TreeItem, type OptionsTreeMap, type BeforeSearchStateMap } from '../listTypes'
 import { getDirectChildrenOptions } from './listOptionsHelper'
 
 export const hideShowChildrenOptions = (
@@ -27,73 +27,65 @@ export const expandSelectedItems = (optionsTreeMap: OptionsTreeMap) => {
 }
 
 export const updateVisibleBySearchTreeItemOptions = (optionsTreeMap: OptionsTreeMap, searchText: string) => {
-  // TODO: Change
-  const optionsWithSearchText = getSearchedTreeItemOptions(optionsTreeMap, searchText)
-
-  optionsTreeMap.forEach((option) => {
-    const isVisible = optionsWithSearchText.some(({ id }) => id === option.id)
-
-    if (isVisible) {
-      if (option.isGroup) {
-        option.isClosed = false
-        hideShowChildrenOptions(optionsTreeMap, option)
-      }
-
-      option.hidden = false
-    } else {
-      option.hidden = true
-    }
-  })
-}
-
-const getSearchedTreeItemOptions = (optionsTreeMap: OptionsTreeMap, searchText: string) => {
-  const searchedItems: TreeItem[] = []
-
   optionsTreeMap.forEach((option) => {
     const isSearched = option.name.toLowerCase().includes(searchText.toLowerCase())
 
     if (isSearched) {
-      searchedItems.push(option)
-
       if (option.isGroup) {
-        const treeItemChildren = getAllNestedChildren(option.id, optionsTreeMap)
-        searchedItems.push(...treeItemChildren)
+        option.isClosed = true
       }
 
       if (option.childOf) {
-        const treeItemParents = getAllNestedParents(option.childOf, optionsTreeMap)
-        searchedItems.push(...treeItemParents)
+        openShowAllParents(option.childOf, optionsTreeMap)
       }
+    }
+
+    option.hidden = !isSearched
+  })
+}
+
+const openShowAllParents = (childOf: ValueOptionType, optionsTreeMap: OptionsTreeMap) => {
+  const parentNode = optionsTreeMap.get(childOf) ?? null
+
+  if (parentNode) {
+    parentNode.hidden = false
+    parentNode.isClosed = false
+    openShowAllParents(parentNode.childOf, optionsTreeMap)
+  }
+}
+
+export const updateOptionsMapBySearchState = ({
+  optionsTreeMap,
+  beforeSearchStateMap
+}: {
+  optionsTreeMap: OptionsTreeMap
+  beforeSearchStateMap: BeforeSearchStateMap
+}) => {
+  optionsTreeMap.forEach((option) => {
+    const beforeSearchState = beforeSearchStateMap.get(option.id)
+
+    if (beforeSearchState) {
+      option.hidden = beforeSearchState.hidden
+      option.isClosed = beforeSearchState.isClosed
     }
   })
 
-  return searchedItems
+  beforeSearchStateMap.clear()
 }
 
-const getAllNestedChildren = (id: ValueOptionType, optionsTreeMap: OptionsTreeMap) => {
-  const childrenIds = optionsTreeMap.get(id)?.children ?? []
+export const updateBeforeSearchStateMap = ({
+  optionsTreeMap,
+  beforeSearchStateMap
+}: {
+  optionsTreeMap: OptionsTreeMap
+  beforeSearchStateMap: BeforeSearchStateMap
+}) => {
+  beforeSearchStateMap.clear()
 
-  return childrenIds.reduce<TreeItem[]>((acc, curr) => {
-    const child = optionsTreeMap.get(curr) ?? null
-
-    if (child !== null) {
-      acc.push(child)
-      const subChildren = getAllNestedChildren(child.id, optionsTreeMap)
-      acc.push(...subChildren)
-    }
-
-    return acc
-  }, [])
-}
-
-const getAllNestedParents = (childOf: ValueOptionType, optionsTreeMap: OptionsTreeMap): TreeItem[] => {
-  const parentNode = optionsTreeMap.get(childOf) ?? null
-
-  if (parentNode === null) {
-    return []
-  }
-
-  const upperParents = getAllNestedParents(parentNode.childOf, optionsTreeMap)
-
-  return [parentNode, ...upperParents]
+  optionsTreeMap.forEach((option) => {
+    beforeSearchStateMap.set(option.id, {
+      hidden: option.hidden,
+      isClosed: option.isClosed
+    })
+  })
 }

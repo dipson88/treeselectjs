@@ -17,6 +17,8 @@ import { updateOptionByCheckState, updateOptionsByValue } from './helpers/listCh
 import {
   expandSelectedItems,
   hideShowChildrenOptions,
+  updateBeforeSearchStateMap,
+  updateOptionsMapBySearchState,
   updateVisibleBySearchTreeItemOptions
 } from './helpers/listVisibilityStateHelper'
 import {
@@ -69,42 +71,6 @@ const updateListValue = ({
     iconElements,
     previousSingleSelectedValue,
     rtl
-  })
-}
-
-const updateOptionsMapBySearchState = ({
-  optionsTreeMap,
-  beforeSearchStateMap
-}: {
-  optionsTreeMap: OptionsTreeMap
-  beforeSearchStateMap: BeforeSearchStateMap
-}) => {
-  optionsTreeMap.forEach((option) => {
-    const beforeSearchState = beforeSearchStateMap.get(option.id)
-
-    if (beforeSearchState) {
-      option.hidden = beforeSearchState.hidden
-      option.isClosed = beforeSearchState.isClosed
-    }
-  })
-
-  beforeSearchStateMap.clear()
-}
-
-const updateBeforeSearchStateMap = ({
-  optionsTreeMap,
-  beforeSearchStateMap
-}: {
-  optionsTreeMap: OptionsTreeMap
-  beforeSearchStateMap: BeforeSearchStateMap
-}) => {
-  beforeSearchStateMap.clear()
-
-  optionsTreeMap.forEach((option) => {
-    beforeSearchStateMap.set(option.id, {
-      hidden: option.hidden,
-      isClosed: option.isClosed
-    })
   })
 }
 
