@@ -56,7 +56,7 @@ const updateListValue = ({
   })
 
   if (isFirstValueUpdate && expandSelected) {
-    expandSelectedItems(optionsTreeMap)
+    expandSelectedItems(optionsTreeMap, isSingleSelect)
   }
 
   updateDOM({

@@ -17,13 +17,49 @@ export const hideShowChildrenOptions = (
   })
 }
 
-export const expandSelectedItems = (optionsTreeMap: OptionsTreeMap) => {
+export const expandSelectedItems = (optionsTreeMap: OptionsTreeMap, isSingleSelect: boolean) => {
+  if (isSingleSelect) {
+    expandSingleSelect(optionsTreeMap)
+    return
+  }
+
   optionsTreeMap.forEach((option) => {
     if (option.isGroup && !option.disabled && (option.checked || option.isPartialChecked)) {
       option.isClosed = false
       hideShowChildrenOptions(optionsTreeMap, option)
     }
   })
+}
+
+const expandSingleSelect = (optionsTreeMap: OptionsTreeMap) => {
+  let checkedOption: TreeItem | null = null
+  for (const [_, option] of optionsTreeMap) {
+    if (option.checked && !option.disabled) {
+      checkedOption = option
+      break
+    }
+  }
+
+  if (!checkedOption) {
+    return
+  }
+
+  if (checkedOption.isGroup) {
+    checkedOption.isClosed = false
+    hideShowChildrenOptions(optionsTreeMap, checkedOption)
+  }
+
+  expandAllParents(checkedOption.childOf, optionsTreeMap)
+}
+
+const expandAllParents = (childOf: ValueOptionType, optionsTreeMap: OptionsTreeMap) => {
+  const parentNode = optionsTreeMap.get(childOf) ?? null
+
+  if (parentNode) {
+    parentNode.isClosed = false
+    hideShowChildrenOptions(optionsTreeMap, parentNode)
+    expandAllParents(parentNode.childOf, optionsTreeMap)
+  }
 }
 
 export const updateVisibleBySearchTreeItemOptions = (optionsTreeMap: OptionsTreeMap, searchText: string) => {
