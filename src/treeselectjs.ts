@@ -8,7 +8,7 @@ import {
   type ITreeselectParams,
   type OptionType,
   type ValueOptionType,
-  type FlattedOptionType,
+  type InnerOptionType,
   type IconsType,
   type SelectedNodesType,
   type DirectionType,
@@ -59,7 +59,7 @@ const validateProps = ({
   }
 }
 
-const getOnlyIds = (nodes: FlattedOptionType[]) => nodes.map((node) => node.id)
+const getOnlyIds = (nodes: InnerOptionType[]) => nodes.map((node) => node.id)
 
 const getDefaultValue = (value: ValueInputType) => {
   if (value === null || value === undefined) {
@@ -318,9 +318,9 @@ export default class Treeselect implements ITreeselect {
     nodes,
     allNodes
   }: {
-    groupedNodes?: FlattedOptionType[]
-    nodes?: FlattedOptionType[]
-    allNodes?: FlattedOptionType[]
+    groupedNodes?: InnerOptionType[]
+    nodes?: InnerOptionType[]
+    allNodes?: InnerOptionType[]
   }) {
     this.ungroupedValue = nodes ? getOnlyIds(nodes) : []
     this.groupedValue = groupedNodes ? getOnlyIds(groupedNodes) : []
@@ -399,7 +399,7 @@ export default class Treeselect implements ITreeselect {
     return { container, list, input }
   }
 
-  #inputInputListener(value: FlattedOptionType[]) {
+  #inputInputListener(value: InnerOptionType[]) {
     const inputIds = getOnlyIds(value)
     this.#treeselectList?.updateValue(inputIds)
     const selectedNodes = this.#treeselectList?.selectedNodes ?? {}

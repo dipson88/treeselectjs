@@ -1,8 +1,8 @@
-import { type ValueOptionType, type FlattedOptionType, type IconsType } from '../treeselectTypes'
+import { type ValueOptionType, type InnerOptionType, type IconsType } from '../treeselectTypes'
 import { type ITreeselectInputParams, type ITreeselectInput } from './inputTypes'
 import { appendIconToElement } from '../svgIcons'
 
-const getTagsSelectedName = (value: FlattedOptionType[]) => {
+const getTagsSelectedName = (value: InnerOptionType[]) => {
   return value.reduce((acc, { name }, index) => {
     acc += name
 
@@ -16,7 +16,7 @@ const getTagsSelectedName = (value: FlattedOptionType[]) => {
 
 export class TreeselectInput implements ITreeselectInput {
   // Props
-  value: FlattedOptionType[]
+  value: InnerOptionType[]
   showTags: boolean
   tagsCountText: string
   clearable: boolean
@@ -41,7 +41,7 @@ export class TreeselectInput implements ITreeselectInput {
   #htmlArrow: HTMLElement | null
 
   // Callbacks
-  inputCallback: (value: FlattedOptionType[]) => void
+  inputCallback: (value: InnerOptionType[]) => void
   searchCallback: (value: string) => void
   openCallback: () => void
   closeCallback: () => void
@@ -127,7 +127,7 @@ export class TreeselectInput implements ITreeselectInput {
     this.#htmlEditControl.blur()
   }
 
-  updateValue(newValue: FlattedOptionType[]) {
+  updateValue(newValue: InnerOptionType[]) {
     this.value = newValue
     this.#updateTags()
     this.#updateEditControl()

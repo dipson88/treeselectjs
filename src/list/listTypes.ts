@@ -1,15 +1,23 @@
 import {
   type ValueOptionType,
   type OptionType,
-  type FlattedOptionType,
   type IconsType,
   type SelectedNodesType,
   type TagsSortFnType
 } from '../treeselectTypes'
 
-// TODO: Change FlattedOptionType to TreeItem
-export interface TreeItem extends FlattedOptionType {
-  children: (number | string)[]
+export interface TreeItem {
+  id: string | number
+  name: string
+  childOf: string | number
+  isGroup: boolean
+  checked: boolean
+  isPartialChecked: boolean
+  level: number
+  isClosed: boolean
+  hidden: boolean
+  disabled: boolean
+  children: ValueOptionType[]
   checkboxHtmlElement: HTMLInputElement | null
   itemHtmlElement: HTMLElement | null
   arrowItemHtmlElement: HTMLElement | null
