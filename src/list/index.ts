@@ -502,15 +502,18 @@ export class TreeselectList implements ITreeselectList {
   #itemElementMousedown(e: Event, option: OptionType) {
     e.preventDefault()
     e.stopPropagation()
-    const isDisabled = this.optionsTreeMap.get(option.value)?.disabled ?? false
+    const treeOption = this.optionsTreeMap.get(option.value) ?? null
 
-    if (isDisabled) {
+    if (treeOption?.disabled) {
       return
     }
 
-    const checkbox = (e.target as HTMLElement).querySelector('.treeselect-list__item-checkbox') as HTMLInputElement
+    const checkbox = treeOption?.checkboxHtmlElement
+
+    if (checkbox) {
     checkbox.checked = !checkbox.checked
     this.#checkboxClickEvent(checkbox, option)
+    }
   }
 
   #createArrow(option: OptionType) {
