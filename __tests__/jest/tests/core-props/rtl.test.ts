@@ -1,11 +1,6 @@
-import ResizeObserver from 'resize-observer-polyfill'
 import { renderTreeselect, defaultOptions, classesSelectors } from '../../helpers'
 
 describe('rtl prop', () => {
-  beforeAll(() => {
-    global.ResizeObserver = ResizeObserver
-  })
-
   it('should render RTL with rtl prop', () => {
     const treeselect = renderTreeselect({
       value: [],
@@ -24,7 +19,6 @@ describe('rtl prop', () => {
       rtl: true,
       appendToBody: true
     })
-
 
     treeselect.toggleOpenClose()
 

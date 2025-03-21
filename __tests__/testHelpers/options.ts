@@ -121,3 +121,17 @@ export const largeOptionsList = Array.from({ length: 30 }, (_, index) => ({
   value: index,
   children: []
 }))
+
+export const largeNestedOptionsList = Array.from({ length: 1000 }, (_, index) => ({
+  name: `Option ${index}`,
+  value: index,
+  children: Array.from({ length: 3 }, (_, subIndex) => ({
+    name: `SubOption ${index}-${subIndex}`,
+    value: `${index}-${subIndex}`,
+    children: Array.from({ length: 3 }, (_, subSubIndex) => ({
+      name: `SubSubOption ${index}-${subIndex}-${subSubIndex}`,
+      value: `${index}-${subIndex}-${subSubIndex}`,
+      children: []
+    }))
+  }))
+}))

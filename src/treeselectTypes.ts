@@ -95,6 +95,7 @@ export interface ITreeselectParams {
   isIndependentNodes?: boolean
   rtl?: boolean
   listClassName?: string
+  isBoostedRendering?: boolean
   iconElements?: Partial<IconsType>
   inputCallback?: (value: ValueType) => void
   openCallback?: (value: ValueType) => void
@@ -104,17 +105,9 @@ export interface ITreeselectParams {
   openCloseGroupCallback?: (groupId: ValueOptionType, isClosed: boolean) => void
 }
 
-export type FlattedOptionType = {
-  id: string | number
+export type InnerOptionType = {
+  id: ValueOptionType
   name: string
-  childOf: string | number
-  isGroup: boolean
-  checked: boolean
-  isPartialChecked: boolean
-  level: number
-  isClosed: boolean
-  hidden: boolean
-  disabled: boolean
 }
 
 export type IconsType = {
@@ -129,7 +122,7 @@ export type IconsType = {
 }
 
 export type SelectedNodesType = {
-  nodes: FlattedOptionType[]
-  groupedNodes: FlattedOptionType[]
-  allNodes: FlattedOptionType[]
+  nodes: InnerOptionType[]
+  groupedNodes: InnerOptionType[]
+  allNodes: InnerOptionType[]
 }

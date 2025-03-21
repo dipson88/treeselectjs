@@ -1,13 +1,8 @@
-import ResizeObserver from 'resize-observer-polyfill'
 import { defaultOptions, renderTreeselect, classes } from '../../helpers'
 
 const { list: listClasses } = classes
 
 describe('appendToBody prop', () => {
-  beforeAll(() => {
-    global.ResizeObserver = ResizeObserver
-  })
-
   it('should render the dropdown list in the body', () => {
     const treeselect = renderTreeselect({
       value: [],

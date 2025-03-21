@@ -1,7 +1,8 @@
-import { type OptionType, type ValueOptionType, type FlattedOptionType } from '../../treeselectTypes'
+import { type OptionType, type ValueOptionType } from '../../treeselectTypes'
+import { TreeItem, type OptionsTreeMap } from '../listTypes'
 import { updateOptionByCheckState } from './listCheckStateHelper'
 
-export const getFlattedOptions = ({
+export const getOptionsTreeMap = ({
   options,
   openLevel,
   isIndependentNodes
@@ -11,36 +12,51 @@ export const getFlattedOptions = ({
   isIndependentNodes: boolean
 }) => {
   const defaultParams = { level: 0, groupId: '' }
-  const flattedOptions = getInitFlattedOptions({
+  const optionsTreeMap: OptionsTreeMap = new Map()
+
+  getTreeOptions({
+    optionsTreeMap,
     options,
     openLevel,
     groupId: defaultParams.groupId,
     level: defaultParams.level
   })
-  const adjustedFlattedOptions = getAdjustedFlattenOptionsUpdate(flattedOptions, isIndependentNodes)
 
-  return adjustedFlattedOptions
+  adjustTreeItemOptions({ optionsTreeMap, isIndependentNodes })
+
+  return optionsTreeMap
 }
 
-const getInitFlattedOptions = ({
+const getTreeOptions = ({
+  optionsTreeMap,
   options,
   openLevel,
   groupId,
   level
 }: {
+  optionsTreeMap: OptionsTreeMap
   options: OptionType[]
   openLevel: number
   groupId: ValueOptionType
   level: number
 }) => {
-  return options.reduce((acc, curr) => {
-    const isGroup = !!curr.children?.length
+  options.forEach((option) => {
+    const isGroup = (option.children?.length ?? 0) > 0
     const isClosed = level >= openLevel && isGroup
     const hidden = level > openLevel
 
-    acc.push({
-      id: curr.value,
-      name: curr.name,
+    const children = option.children?.map((child) => child.value) ?? []
+    const optionId = option.value
+
+    if (optionsTreeMap.has(optionId)) {
+      console.error(
+        `Validation: You have duplicated option value: ${optionId}! You should use unique values. Duplicates will lead to unexpected behavior.`
+      )
+    }
+
+    optionsTreeMap.set(optionId, {
+      id: optionId,
+      name: option.name,
       childOf: groupId,
       isGroup,
       checked: false,
@@ -48,71 +64,104 @@ const getInitFlattedOptions = ({
       level,
       isClosed,
       hidden,
-      disabled: curr.disabled ?? false
+      disabled: option.disabled ?? false,
+      children,
+      // Html elements will be added during their creation
+      checkboxHtmlElement: null,
+      itemHtmlElement: null,
+      arrowItemHtmlElement: null,
+      checkboxIconHtmlElement: null
     })
 
     if (isGroup) {
-      const children = getInitFlattedOptions({
-        options: curr.children,
+      getTreeOptions({
+        optionsTreeMap,
+        options: option.children,
         openLevel,
-        groupId: curr.value,
+        groupId: optionId,
         level: level + 1
       })
-      acc.push(...children)
+    }
+  })
+}
+
+export const getTreeItemOptionByInputId = (inputId: string | null, optionsTreeMap: OptionsTreeMap) => {
+  if (inputId === null) {
+    return null
+  }
+
+  return optionsTreeMap.get(inputId) ?? optionsTreeMap.get(parseInt(inputId)) ?? null
+}
+
+export const getDirectChildrenOptions = ({
+  id,
+  optionsTreeMap
+}: {
+  id: ValueOptionType
+  optionsTreeMap: OptionsTreeMap
+}) => {
+  const option = optionsTreeMap.get(id) ?? null
+
+  if (option === null) {
+    return []
+  }
+
+  return option.children.reduce<TreeItem[]>((acc, curr) => {
+    const child = optionsTreeMap.get(curr) ?? null
+
+    if (child !== null) {
+      acc.push(child)
     }
 
     return acc
-  }, [] as FlattedOptionType[])
+  }, [])
 }
 
-export const getFlattedOptionByInputId = (inputId: string | null, flattedOptions: FlattedOptionType[]) => {
-  return flattedOptions.find((fo) => fo.id.toString() === inputId)
-}
+export const getCheckedOptions = (optionsTreeMap: OptionsTreeMap) => {
+  const ungroupedNodes: TreeItem[] = []
+  const allGroupedNodes: TreeItem[] = []
+  const allNodes: TreeItem[] = []
 
-export const getChildrenOptions = ({ id }: Partial<FlattedOptionType>, flattedOptions: FlattedOptionType[]) => {
-  return flattedOptions.filter((option) => option.childOf === id)
-}
-
-export const getCheckedOptions = (flattedOptions: FlattedOptionType[]) => {
-  const { ungroupedNodes, allGroupedNodes, allNodes } = flattedOptions.reduce(
-    (acc, curr) => {
-      if (!curr.checked) {
-        return acc
-      }
-
-      acc.allNodes.push(curr)
-
-      if (curr.isGroup) {
-        acc.allGroupedNodes.push(curr)
-      } else {
-        acc.ungroupedNodes.push(curr)
-      }
-
-      return acc
-    },
-    {
-      ungroupedNodes: [] as FlattedOptionType[],
-      allGroupedNodes: [] as FlattedOptionType[],
-      allNodes: [] as FlattedOptionType[]
+  optionsTreeMap.forEach((option) => {
+    if (!option.checked) {
+      return
     }
-  )
+
+    allNodes.push(option)
+
+    if (option.isGroup) {
+      allGroupedNodes.push(option)
+    } else {
+      ungroupedNodes.push(option)
+    }
+  })
 
   const groupedNodes = allNodes.filter((node) => !allGroupedNodes.some(({ id }) => id === node.childOf))
 
   return { ungroupedNodes, groupedNodes, allNodes }
 }
 
-const getAdjustedFlattenOptionsUpdate = (flattedOptions: FlattedOptionType[], isIndependentNodes: boolean) => {
+const adjustTreeItemOptions = ({
+  optionsTreeMap,
+  isIndependentNodes
+}: {
+  optionsTreeMap: OptionsTreeMap
+  isIndependentNodes: boolean
+}) => {
   // Disabled update
-  const disabledNodes = flattedOptions.filter((option) => !!option.disabled)
+  const disabledNodes: TreeItem[] = []
+
+  optionsTreeMap.forEach((option) => {
+    if (option.disabled) {
+      disabledNodes.push(option)
+    }
+  })
+
   disabledNodes.forEach(({ id }) =>
     updateOptionByCheckState({
       option: { id, checked: false },
-      flattedOptions,
+      optionsTreeMap,
       isIndependentNodes
     })
   )
-  // TODO etc updates
-
-  return flattedOptions
 }

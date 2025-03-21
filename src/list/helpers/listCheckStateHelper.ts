@@ -1,32 +1,34 @@
-import { type ValueOptionType, type FlattedOptionType } from '../../treeselectTypes'
-import { getChildrenOptions } from './listOptionsHelper'
+import { type ValueOptionType } from '../../treeselectTypes'
+import { type TreeItem, type OptionsTreeMap } from '../listTypes'
+import { getDirectChildrenOptions } from './listOptionsHelper'
 
 export const updateOptionsByValue = ({
   newValue,
-  flattedOptions,
+  optionsTreeMap,
   isSingleSelect,
   isIndependentNodes
 }: {
   newValue: ValueOptionType[]
-  flattedOptions: FlattedOptionType[]
+  optionsTreeMap: OptionsTreeMap
   isSingleSelect: boolean
   isIndependentNodes: boolean
 }) => {
-  uncheckedAllFlattedOptions(flattedOptions)
-  const optionsToCheck = flattedOptions.filter((option) => !option.disabled && newValue.some((id) => id === option.id))
+  uncheckedAllTreeItemOptions(optionsTreeMap)
+  const optionsToCheck = newValue
+    .map((id) => optionsTreeMap.get(id) ?? null)
+    .filter((option) => option !== null && !option.disabled) as TreeItem[]
+  const [firstItem] = optionsToCheck
 
-  if (isSingleSelect && !!optionsToCheck.length) {
-    optionsToCheck[0].checked = true
-
+  if (isSingleSelect && optionsToCheck.length && firstItem) {
+    firstItem.checked = true
     return
   }
 
   optionsToCheck.forEach((option) => {
     option.checked = true
-    // option.isPartialChecked = false
     const resultChecked = updateOptionByCheckState({
       option,
-      flattedOptions,
+      optionsTreeMap,
       isIndependentNodes
     })
     option.checked = resultChecked
@@ -35,52 +37,55 @@ export const updateOptionsByValue = ({
 
 export const updateOptionByCheckState = ({
   option: { id, checked },
-  flattedOptions,
+  optionsTreeMap,
   isIndependentNodes
 }: {
-  option: Partial<FlattedOptionType>
-  flattedOptions: FlattedOptionType[]
+  option: Pick<TreeItem, 'id' | 'checked'>
+  optionsTreeMap: OptionsTreeMap
   isIndependentNodes: boolean
 }) => {
-  const currentOption = flattedOptions.find((option) => option.id === id)
+  const currentOption = optionsTreeMap.get(id) ?? null
 
-  if (!currentOption) {
+  if (currentOption === null) {
     return false
   }
 
   if (isIndependentNodes) {
-    currentOption.checked = currentOption.disabled ? false : !!checked
+    currentOption.checked = !currentOption.disabled && checked
 
     return currentOption.checked
   }
 
-  const resultCheckedState = updateFlattedOptionStateWithChildren({
-    checked: !!checked,
+  const resultCheckedState = updateTreeItemOptionStateWithChildren({
+    checked,
     currentOption,
-    flattedOptions
+    optionsTreeMap
   })
-  updateParentFlattedOptions(currentOption, flattedOptions)
+  updateParentTreeItemOptions({
+    childOption: currentOption,
+    optionsTreeMap
+  })
 
   return resultCheckedState
 }
 
-const updateFlattedOptionStateWithChildren = ({
+const updateTreeItemOptionStateWithChildren = ({
   checked,
   currentOption,
-  flattedOptions
+  optionsTreeMap
 }: {
   checked: boolean
-  currentOption: FlattedOptionType
-  flattedOptions: FlattedOptionType[]
+  currentOption: TreeItem
+  optionsTreeMap: OptionsTreeMap
 }) => {
   if (!currentOption.isGroup) {
-    currentOption.checked = currentOption.disabled ? false : !!checked
+    currentOption.checked = !currentOption.disabled && checked
     currentOption.isPartialChecked = false
 
     return currentOption.checked
   }
 
-  const childrenOptions = flattedOptions.filter((option) => option.childOf === currentOption.id)
+  const childrenOptions = getDirectChildrenOptions({ id: currentOption.id, optionsTreeMap })
   const falseOrDisabledOrPartial = !checked || currentOption.disabled || currentOption.isPartialChecked
 
   if (falseOrDisabledOrPartial) {
@@ -89,13 +94,16 @@ const updateFlattedOptionStateWithChildren = ({
     checkUncheckAllChildren({
       option: currentOption,
       children: childrenOptions,
-      flattedOptions
+      optionsTreeMap
     })
 
     return currentOption.checked
   }
 
-  const canWeCheckAllChildren = !isSomeChildrenDisabled(childrenOptions, flattedOptions)
+  const canWeCheckAllChildren = !isSomeChildrenDisabled({
+    children: childrenOptions,
+    optionsTreeMap
+  })
 
   if (canWeCheckAllChildren) {
     currentOption.checked = true
@@ -103,13 +111,13 @@ const updateFlattedOptionStateWithChildren = ({
     checkUncheckAllChildren({
       option: currentOption,
       children: childrenOptions,
-      flattedOptions
+      optionsTreeMap
     })
 
     return currentOption.checked
   }
 
-  const isAllDisabled = isAllChildrenDisabled(childrenOptions)
+  const isAllDisabled = isAllDirectChildrenDisabled(childrenOptions)
 
   if (isAllDisabled) {
     currentOption.checked = false
@@ -122,31 +130,46 @@ const updateFlattedOptionStateWithChildren = ({
   currentOption.checked = false
   currentOption.isPartialChecked = true
 
-  childrenOptions.forEach((option) => {
-    updateFlattedOptionStateWithChildren({
+  childrenOptions.forEach((options) => {
+    updateTreeItemOptionStateWithChildren({
       checked,
-      currentOption: option,
-      flattedOptions
+      currentOption: options,
+      optionsTreeMap
     })
   })
 
   return currentOption.checked
 }
 
-const updateParentFlattedOptions = (childNode: FlattedOptionType, flattedOptions: FlattedOptionType[]) => {
-  const parentOption = flattedOptions.find((option) => option.id === childNode.childOf)
+const updateParentTreeItemOptions = ({
+  childOption,
+  optionsTreeMap
+}: {
+  childOption: TreeItem
+  optionsTreeMap: OptionsTreeMap
+}) => {
+  const parentOption = optionsTreeMap.get(childOption.childOf) ?? null
 
-  if (!parentOption) {
+  if (parentOption === null) {
     return
   }
 
-  updateParentOption(parentOption, flattedOptions)
-  updateParentFlattedOptions(parentOption, flattedOptions)
+  updateParentOption({ parentOption, optionsTreeMap })
+  updateParentTreeItemOptions({
+    childOption: parentOption,
+    optionsTreeMap
+  })
 }
 
-const updateParentOption = (parentOption: FlattedOptionType, flattedOptions: FlattedOptionType[]) => {
-  const children = getChildrenOptions(parentOption, flattedOptions)
-  const isAllDisabled = isAllChildrenDisabled(children)
+const updateParentOption = ({
+  parentOption,
+  optionsTreeMap
+}: {
+  parentOption: TreeItem
+  optionsTreeMap: OptionsTreeMap
+}) => {
+  const children = getDirectChildrenOptions({ id: parentOption.id, optionsTreeMap })
+  const isAllDisabled = isAllDirectChildrenDisabled(children)
 
   if (isAllDisabled) {
     parentOption.checked = false
@@ -156,7 +179,7 @@ const updateParentOption = (parentOption: FlattedOptionType, flattedOptions: Fla
     return
   }
 
-  const isAllChecked = isAllChildrenChecked(children)
+  const isAllChecked = isAllDirectChildrenChecked(children)
 
   if (isAllChecked) {
     parentOption.checked = true
@@ -165,7 +188,7 @@ const updateParentOption = (parentOption: FlattedOptionType, flattedOptions: Fla
     return
   }
 
-  const isSomeCheckedOrPartial = isSomeChildrenCheckedOrPartial(children)
+  const isSomeCheckedOrPartial = isSomeDirectChildrenCheckedOrPartial(children)
 
   if (isSomeCheckedOrPartial) {
     parentOption.checked = false
@@ -181,59 +204,64 @@ const updateParentOption = (parentOption: FlattedOptionType, flattedOptions: Fla
 const checkUncheckAllChildren = ({
   option: { checked, disabled },
   children,
-  flattedOptions
+  optionsTreeMap
 }: {
-  option: Partial<FlattedOptionType>
-  children: FlattedOptionType[]
-  flattedOptions: FlattedOptionType[]
+  option: Pick<TreeItem, 'checked' | 'disabled'>
+  children: TreeItem[]
+  optionsTreeMap: OptionsTreeMap
 }) => {
   children.forEach((option) => {
-    option.disabled = !!disabled || !!option.disabled
-    option.checked = !!checked && !option.disabled
+    option.disabled = disabled || option.disabled
+    option.checked = checked && !option.disabled
     option.isPartialChecked = false
-    const subChildren = getChildrenOptions(option, flattedOptions)
+
+    const subChildren = getDirectChildrenOptions({ id: option.id, optionsTreeMap })
     checkUncheckAllChildren({
       option: { checked, disabled },
       children: subChildren,
-      flattedOptions
+      optionsTreeMap
     })
   })
 }
 
-const isSomeChildrenDisabled = (children: FlattedOptionType[], flattedOptions: FlattedOptionType[]) => {
+const isSomeChildrenDisabled = ({
+  children,
+  optionsTreeMap
+}: {
+  children: TreeItem[]
+  optionsTreeMap: OptionsTreeMap
+}): boolean => {
   const isSomeDisabled = children.some((option) => option.disabled)
 
   if (isSomeDisabled) {
     return true
   }
 
-  const isSomeSubChildrenDisabled = children.some((option) => {
-    if (option.isGroup) {
-      const subChildren = getChildrenOptions(option, flattedOptions)
-
-      return isSomeChildrenDisabled(subChildren, flattedOptions)
+  return children.some((option) => {
+    if (!option.isGroup) {
+      return false
     }
 
-    return false
-  })
+    const subChildren = getDirectChildrenOptions({ id: option.id, optionsTreeMap })
 
-  return isSomeSubChildrenDisabled
+    return isSomeChildrenDisabled({ children: subChildren, optionsTreeMap })
+  })
 }
 
-const isAllChildrenDisabled = (children: FlattedOptionType[]) => {
+const isAllDirectChildrenDisabled = (children: TreeItem[]) => {
   return children.every((option) => !!option.disabled)
 }
 
-const isAllChildrenChecked = (children: FlattedOptionType[]) => {
-  return children.every((option) => !!option.checked)
+const isAllDirectChildrenChecked = (children: TreeItem[]) => {
+  return children.every((option) => option.checked)
 }
 
-const isSomeChildrenCheckedOrPartial = (children: FlattedOptionType[]) => {
-  return children.some((option) => !!option.checked || !!option.isPartialChecked)
+const isSomeDirectChildrenCheckedOrPartial = (children: TreeItem[]) => {
+  return children.some((option) => option.checked || option.isPartialChecked)
 }
 
-const uncheckedAllFlattedOptions = (flattedOptions: FlattedOptionType[]) => {
-  flattedOptions.forEach((option) => {
+const uncheckedAllTreeItemOptions = (optionsTreeMap: OptionsTreeMap) => {
+  optionsTreeMap.forEach((option) => {
     option.checked = false
     option.isPartialChecked = false
   })

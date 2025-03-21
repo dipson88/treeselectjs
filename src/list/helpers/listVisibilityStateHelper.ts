@@ -1,95 +1,137 @@
-import { type ValueOptionType, type FlattedOptionType } from '../../treeselectTypes'
-import { getChildrenOptions } from './listOptionsHelper'
+import { type ValueOptionType } from '../../treeselectTypes'
+import { type TreeItem, type OptionsTreeMap, type BeforeSearchStateMap } from '../listTypes'
+import { getDirectChildrenOptions } from './listOptionsHelper'
 
 export const hideShowChildrenOptions = (
-  flattedOptions: FlattedOptionType[],
-  { id, isClosed }: Partial<FlattedOptionType>
+  optionsTreeMap: OptionsTreeMap,
+  { id, isClosed }: Pick<TreeItem, 'id' | 'isClosed'>
 ) => {
-  const allChildrenOptions = getChildrenOptions({ id }, flattedOptions)
+  const allChildrenOptions = getDirectChildrenOptions({ id, optionsTreeMap })
 
   allChildrenOptions.forEach((option) => {
     option.hidden = isClosed ?? false
 
     if (option.isGroup && !option.isClosed) {
-      hideShowChildrenOptions(flattedOptions, { id: option.id, isClosed })
+      hideShowChildrenOptions(optionsTreeMap, { id: option.id, isClosed })
     }
   })
 }
 
-export const expandSelectedItems = (flattedOptions: FlattedOptionType[]) => {
-  flattedOptions
-    .filter((option) => option.isGroup && !option.disabled && (option.checked || option.isPartialChecked))
-    .forEach((option) => {
+export const expandSelectedItems = (optionsTreeMap: OptionsTreeMap, isSingleSelect: boolean) => {
+  if (isSingleSelect) {
+    expandSingleSelect(optionsTreeMap)
+    return
+  }
+
+  optionsTreeMap.forEach((option) => {
+    if (option.isGroup && !option.disabled && (option.checked || option.isPartialChecked)) {
       option.isClosed = false
-      hideShowChildrenOptions(flattedOptions, option)
-    })
-}
-
-export const updateVisibleBySearchFlattedOptions = (flattedOptions: FlattedOptionType[], searchText: string) => {
-  const optionsWithSearchText = getSearchedFlattedOptions(flattedOptions, searchText)
-
-  flattedOptions.forEach((option) => {
-    const isVisible = optionsWithSearchText.some(({ id }) => id === option.id)
-
-    if (isVisible) {
-      if (option.isGroup) {
-        option.isClosed = false
-        hideShowChildrenOptions(flattedOptions, option)
-      }
-
-      option.hidden = false
-    } else {
-      option.hidden = true
+      hideShowChildrenOptions(optionsTreeMap, option)
     }
   })
 }
 
-const getSearchedFlattedOptions = (flattedOptions: FlattedOptionType[], searchText: string) => {
-  return flattedOptions.reduce((acc, curr) => {
-    const isSearched = curr.name.toLowerCase().includes(searchText.toLowerCase())
+const expandSingleSelect = (optionsTreeMap: OptionsTreeMap) => {
+  let checkedOption: TreeItem | null = null
+  for (const [_, option] of optionsTreeMap) {
+    if (option.checked && !option.disabled) {
+      checkedOption = option
+      break
+    }
+  }
+
+  if (!checkedOption) {
+    return
+  }
+
+  if (checkedOption.isGroup) {
+    checkedOption.isClosed = false
+    hideShowChildrenOptions(optionsTreeMap, checkedOption)
+  }
+
+  expandAllParents(checkedOption.childOf, optionsTreeMap)
+}
+
+const expandAllParents = (childOf: ValueOptionType, optionsTreeMap: OptionsTreeMap) => {
+  const parentNode = optionsTreeMap.get(childOf) ?? null
+
+  if (parentNode) {
+    parentNode.isClosed = false
+    hideShowChildrenOptions(optionsTreeMap, parentNode)
+    expandAllParents(parentNode.childOf, optionsTreeMap)
+  }
+}
+
+export const updateVisibleBySearchTreeItemOptions = (optionsTreeMap: OptionsTreeMap, searchText: string) => {
+  optionsTreeMap.forEach((option) => {
+    const isSearched = option.name.toLowerCase().includes(searchText.toLowerCase())
 
     if (isSearched) {
-      acc.push(curr)
-
-      if (curr.isGroup) {
-        const flattedChildren = getAllNestedChildren(curr.id, flattedOptions)
-        acc.push(...flattedChildren)
+      if (option.isGroup) {
+        option.isClosed = true
       }
 
-      if (curr.childOf) {
-        const flattedParents = getAllNestedParents(curr.childOf, flattedOptions)
-        acc.push(...flattedParents)
+      if (option.childOf) {
+        openShowAllParents(option.childOf, optionsTreeMap)
       }
     }
 
-    return acc
-  }, [] as FlattedOptionType[])
+    option.hidden = !isSearched
+  })
 }
 
-const getAllNestedChildren = (childOf: ValueOptionType, flattedOption: FlattedOptionType[]) => {
-  return flattedOption.reduce((acc, curr) => {
-    if (curr.childOf === childOf) {
-      acc.push(curr)
+const openShowAllParents = (childOf: ValueOptionType, optionsTreeMap: OptionsTreeMap) => {
+  const parentNode = optionsTreeMap.get(childOf) ?? null
 
-      if (curr.isGroup) {
-        acc.push(...getAllNestedChildren(curr.id, flattedOption))
-      }
+  if (parentNode) {
+    parentNode.hidden = false
+    parentNode.isClosed = false
+    openShowAllParents(parentNode.childOf, optionsTreeMap)
+  }
+}
+
+export const updateOptionsMapBySearchState = ({
+  optionsTreeMap,
+  beforeSearchStateMap
+}: {
+  optionsTreeMap: OptionsTreeMap
+  beforeSearchStateMap: BeforeSearchStateMap
+}) => {
+  optionsTreeMap.forEach((option) => {
+    const beforeSearchState = beforeSearchStateMap.get(option.id)
+
+    if (beforeSearchState) {
+      option.hidden = beforeSearchState.hidden
+      option.isClosed = beforeSearchState.isClosed
     }
+  })
 
-    return acc
-  }, [] as FlattedOptionType[])
+  beforeSearchStateMap.clear()
 }
 
-const getAllNestedParents = (childOf: ValueOptionType, flatOptions: FlattedOptionType[]) => {
-  return flatOptions.reduce((acc, curr) => {
-    if (curr.id === childOf) {
-      acc.push(curr)
+export const updateBeforeSearchStateMap = ({
+  optionsTreeMap,
+  beforeSearchStateMap
+}: {
+  optionsTreeMap: OptionsTreeMap
+  beforeSearchStateMap: BeforeSearchStateMap
+}) => {
+  beforeSearchStateMap.clear()
 
-      if (curr.childOf) {
-        acc.push(...getAllNestedParents(curr.childOf, flatOptions))
-      }
-    }
-
-    return acc
-  }, [] as FlattedOptionType[])
+  optionsTreeMap.forEach((option) => {
+    beforeSearchStateMap.set(option.id, {
+      hidden: option.hidden,
+      isClosed: option.isClosed
+    })
+  })
 }
+
+export const createIntersectionScrollObserver = (srcElementList: HTMLElement) =>
+  new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle('treeselect-list__item--scroll-not-visible', !entry.isIntersecting)
+      })
+    },
+    { root: srcElementList, threshold: 0.5 }
+  )
