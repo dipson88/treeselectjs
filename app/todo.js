@@ -16,3 +16,8 @@
 
 // REQUESTS
 // Investigate an ability to add a diff names but the same values, and check them.
+
+// PERFORMANCE UPDATES TODO (List)
+// 1. Do we need uncheck all checkboxes if group is partial checked or otherwise we need to check all checkboxes if group is partial checked?
+// 2. Do we need to call disabled nodes and uncheck them? in adjustTreeItemOptions
+// 3. Do we need this functionality with isAllDisabled because we uncheck everything in the start and then we can't check disabled node? in updateFlattedOptionStateWithChildren
