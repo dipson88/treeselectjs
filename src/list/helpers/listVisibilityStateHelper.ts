@@ -24,6 +24,10 @@ export const expandSelectedItems = (optionsTreeMap: OptionsTreeMap, isSingleSele
   }
 
   optionsTreeMap.forEach((option) => {
+    if (option.checked) {
+      expandAllParents(option.childOf, optionsTreeMap)
+    }
+
     if (option.isGroup && !option.disabled && (option.checked || option.isPartialChecked)) {
       option.isClosed = false
       hideShowChildrenOptions(optionsTreeMap, option)
