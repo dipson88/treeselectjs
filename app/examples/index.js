@@ -1,9 +1,9 @@
 import { runDefaultExample } from './default'
-import { runSlotExample } from './slot'
 import { runDisabledExample } from './disabled'
-import { runSingleSelectExample } from './singleSelect'
-import { runIndependentNodesExample } from './independentNodes'
 import { runIconsExample } from './icons'
+import { runIndependentNodesExample } from './independentNodes'
+import { runSingleSelectExample } from './singleSelect'
+import { runSlotExample } from './slot'
 
 export const runApp = (Treeselect) => {
   runDefaultExample(Treeselect)
