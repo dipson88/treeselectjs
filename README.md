@@ -9,9 +9,9 @@ A multi-select js component with nested options.
 - Typescript support
 
 Build data:
-- treeselectjs.mjs  51.67 kB │ gzip: 11.51 kB
-- treeselectjs.umd.js  41.98 kB │ gzip: 10.32 kB
-- treeselectjs.css   6.93 kB │ gzip:  1.38 kB
+- treeselectjs.mjs  52.87 kB │ gzip: 11.77 kB
+- treeselectjs.umd.js  42.65 kB │ gzip: 10.49 kB
+- treeselectjs.css  6.99 kB │ gzip:  1.40 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
@@ -30,8 +30,8 @@ import Treeselect from 'treeselectjs'
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.13.0/dist/treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.13.0/dist/treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.13.0-beta.1/dist/treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.13.0-beta.1/dist/treeselectjs.css" />
 ...
 <script>
   ...
@@ -220,6 +220,7 @@ Name  | Params | Description
 6) **Value** prop inside the **options** prop should be a **String** or **Number**.
 7) If you use **isSingleSelect** prop, you should pass only a single **value** without an array.
 8) If you use **isSingleSelect** prop, you can set **showTags** to false. It helps to show treeselect as a dropdown. Also you can disable selecting of group's nodes with help of **disabledBranchNode**.
+9) If you use a large list of options and see a problem with performance, try to use **isBoostedRendering** prop.
 
 ### Support
 You can buy me a coffee if you want to support my work. Thank you!
