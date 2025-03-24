@@ -1,4 +1,4 @@
-import { renderExampleSection } from '../render/renderExampleSection'
+import { renderExampleSection } from '../render/renderExampleSection.js'
 
 const codeSnipped = `
 const icons = {
