@@ -127,6 +127,10 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
+    isBoostedRendering: {
+      type: Boolean,
+      default: false
+    },
     listClassName: {
       type: String,
       default: ''
@@ -274,6 +278,7 @@ export default defineComponent({
         saveScrollPosition: props.saveScrollPosition,
         isIndependentNodes: props.isIndependentNodes,
         rtl: props.rtl,
+        isBoostedRendering: props.isBoostedRendering,
         listClassName: props.listClassName,
         inputCallback: onInput,
         openCallback: onOpen,
