@@ -31,6 +31,10 @@
   display: none;
 }
 
+.treeselect-list__item--scroll-not-visible {
+  visibility: hidden;
+}
+
 .treeselect-list__item-icon {
   display: flex;
   align-items: center;
@@ -152,6 +156,10 @@
 .treeselect-list.treeselect-list--disabled-branch-node
   .treeselect-list__item--group
   .treeselect-list__item-checkbox-container {
+  display: none;
+}
+
+.treeselect-list__item--non-selectable-group .treeselect-list__item-checkbox-container {
   display: none;
 }
 

@@ -1,3 +1,5 @@
+import { renderExampleSection } from '../render/renderExampleSection.js'
+
 const options = [
   {
     name: 'England',
@@ -28,17 +30,21 @@ const options = [
   }
 ]
 
-const className = '.treeselect-demo-slot'
+const value = []
+
+const treeselectId = 'treeselect-demo-slot'
 
 export const runSlotExample = (Treeselect) => {
+  renderExampleSection({ sectionId: 'slot-section', options, value, treeselectId })
+
   const slot = document.createElement('div')
   slot.innerHTML = '<a class="treeselect-demo-slot__slot" href="">Click!</a>'
 
-  const domElement = document.querySelector(className)
+  const domElement = document.getElementById(treeselectId)
   const treeselect = new Treeselect({
     parentHtmlContainer: domElement,
-    value: [],
-    options: options,
+    value,
+    options,
     listSlotHtmlComponent: slot
   })
 

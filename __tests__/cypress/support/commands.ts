@@ -12,6 +12,7 @@ declare global {
       visitDisabledPage(): void
       visitLargeDataPage(): void
       visitAppendToBodyPage(): void
+      visitBoostRenderingPage(): void
 
       // Actions
       treeselectClick(): void
@@ -51,6 +52,10 @@ Cypress.Commands.add('visitLargeDataPage', () => {
 
 Cypress.Commands.add('visitAppendToBodyPage', () => {
   cy.visit(`${baseUrl}/cypress-append-to-body.html`)
+})
+
+Cypress.Commands.add('visitBoostRenderingPage', () => {
+  cy.visit(`${baseUrl}/cypress-boost-rendering.html`)
 })
 
 // Actions

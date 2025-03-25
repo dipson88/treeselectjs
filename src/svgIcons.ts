@@ -1,4 +1,4 @@
-import { IconsType } from './treeselectTypes'
+import { type IconsType } from './treeselectTypes'
 
 export const icons: IconsType = {
   arrowUp:
@@ -30,7 +30,7 @@ export const appendIconToElement = (icon: string | HTMLElement, element: HTMLEle
   }
 }
 
-export const getDefaultIcons = (iconsFromProps: Partial<IconsType> | undefined) => {
+export const getDefaultIcons = (iconsFromProps?: Partial<IconsType>) => {
   const newIcons = iconsFromProps ? { ...iconsFromProps } : {}
 
   Object.keys(icons).forEach((key) => {

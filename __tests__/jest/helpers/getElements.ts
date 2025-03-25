@@ -3,6 +3,9 @@ import { classesSelectors } from '../../testHelpers'
 const { input: inputSelectors, list: listSelectors } = classesSelectors
 
 // Input
+export const getInputElement = (parentHtmlContainer: HTMLElement) =>
+  parentHtmlContainer.querySelector(inputSelectors.base) as HTMLElement
+
 export const getTagsElements = (parentHtmlContainer: HTMLElement) =>
   parentHtmlContainer.querySelectorAll(inputSelectors.tagsElement) as NodeListOf<HTMLElement>
 

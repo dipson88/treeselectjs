@@ -15,12 +15,24 @@ body {
   margin: 0;
 }
 
-hr {
-  margin: 30px 0;
+.loaded .root {
+  opacity: 1;
 }
 
 .root {
+  opacity: 0;
+  transition: opacity 0.3s;
   padding: 40px 20px;
+}
+
+.section {
+  min-height: 445px;
+}
+
+.section__separator {
+  margin: 30px 0;
+  height: 1px;
+  background-color: #e5e5e5;
 }
 
 .root__title {
@@ -37,6 +49,7 @@ hr {
   align-items: flex-start;
   justify-content: center;
   gap: 15px;
+  flex-wrap: wrap;
 }
 
 .section__select {
@@ -45,6 +58,7 @@ hr {
 }
 
 .section__props {
+  padding-left: 10px;
   width: 50%;
   max-width: 400px;
   border: 1px solid #e5e5e5;

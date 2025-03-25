@@ -1,237 +1,55 @@
 import {
-  OptionType,
-  ValueOptionType,
-  FlattedOptionType,
-  IconsType,
-  SelectedNodesType,
-  TagsSortFnType
+  type IconsType,
+  type OptionType,
+  type SelectedNodesType,
+  type TagsSortFnType,
+  type ValueOptionType
 } from '../treeselectTypes'
-import { ITreeselectListParams, ITreeselectList } from './listTypes'
-import { getFlattedOptions, getCheckedOptions } from './helpers/listOptionsHelper'
+import {
+  type BeforeSearchStateMap,
+  type ITreeselectList,
+  type ITreeselectListParams,
+  type OptionsTreeMap,
+  type TreeItem
+} from './listTypes'
+import { getOptionsTreeMap, getTreeItemOptionByInputId, getCheckedOptions } from './helpers/listOptionsHelper'
 import { updateOptionByCheckState, updateOptionsByValue } from './helpers/listCheckStateHelper'
 import {
+  createIntersectionScrollObserver,
+  expandSelectedItems,
   hideShowChildrenOptions,
-  updateVisibleBySearchFlattedOptions,
-  expandSelectedItems
+  updateBeforeSearchStateMap,
+  updateOptionsMapBySearchState,
+  updateVisibleBySearchTreeItemOptions
 } from './helpers/listVisibilityStateHelper'
+import { updateDOM, setAttributesFromHtmlAttr } from './helpers/domHelper'
 import { appendIconToElement } from '../svgIcons'
 
-const validateOptions = (flatOptions: FlattedOptionType[]) => {
-  const { duplications } = flatOptions.reduce(
-    (acc, curr) => {
-      if (acc.allItems.some((id) => id.toString() === curr.id.toString())) {
-        acc.duplications.push(curr.id)
-      }
-
-      acc.allItems.push(curr.id)
-
-      return acc
-    },
-    {
-      duplications: [] as ValueOptionType[],
-      allItems: [] as ValueOptionType[]
-    }
-  )
-
-  if (duplications.length) {
-    console.error(`Validation: You have duplicated values: ${duplications.join(', ')}! You should use unique values.`)
-  }
-}
-
-const updateListValue = (
-  newValue: ValueOptionType[],
-  flattedOptions: FlattedOptionType[],
-  srcElement: HTMLElement | Element,
-  iconElements: IconsType,
-  isSingleSelect: boolean,
-  previousSingleSelectedValue: ValueOptionType[],
-  expandSelected: boolean,
-  isFirstValueUpdate: boolean,
-  isIndependentNodes: boolean,
-  rtl: boolean
-) => {
-  updateOptionsByValue(newValue, flattedOptions, isSingleSelect, isIndependentNodes)
+const updateListValue = ({
+  newValue,
+  optionsTreeMap,
+  isSingleSelect,
+  expandSelected,
+  isFirstValueUpdate,
+  isIndependentNodes
+}: {
+  newValue: ValueOptionType[]
+  optionsTreeMap: OptionsTreeMap
+  isSingleSelect: boolean
+  expandSelected: boolean
+  isFirstValueUpdate: boolean
+  isIndependentNodes: boolean
+}) => {
+  updateOptionsByValue({
+    newValue,
+    optionsTreeMap,
+    isSingleSelect,
+    isIndependentNodes
+  })
 
   if (isFirstValueUpdate && expandSelected) {
-    expandSelectedItems(flattedOptions)
+    expandSelectedItems(optionsTreeMap, isSingleSelect)
   }
-
-  updateDOM(flattedOptions, srcElement, iconElements, previousSingleSelectedValue, rtl)
-}
-
-const updateDOM = (
-  flattedOptions: FlattedOptionType[],
-  srcElement: HTMLElement | Element,
-  iconElements: IconsType,
-  previousSingleSelectedValue: ValueOptionType[],
-  rtl: boolean
-) => {
-  flattedOptions.forEach((option) => {
-    const input = srcElement.querySelector(`[input-id="${option.id}"]`) as HTMLInputElement
-    const listItem = getListItemByCheckbox(input)
-
-    input.checked = option.checked
-
-    updateCheckedClass(option, listItem, previousSingleSelectedValue)
-    updatePartialCheckedClass(option, listItem)
-    updateDisabledCheckedClass(option, listItem)
-    updateClosedClass(option, listItem, iconElements)
-    updateHiddenClass(option, listItem)
-
-    updateLeftPaddingItems(option, listItem, flattedOptions, rtl)
-    updateCheckboxClass(option, input, iconElements)
-  })
-
-  updateEmptyListClass(flattedOptions, srcElement)
-}
-
-const updateCheckedClass = (
-  option: FlattedOptionType,
-  listItem: HTMLElement,
-  previousSingleSelectedValue: ValueOptionType[]
-) => {
-  if (option.checked) {
-    listItem.classList.add('treeselect-list__item--checked')
-  } else {
-    listItem.classList.remove('treeselect-list__item--checked')
-  }
-
-  if (Array.isArray(previousSingleSelectedValue) && previousSingleSelectedValue[0] === option.id && !option.disabled) {
-    listItem.classList.add('treeselect-list__item--single-selected')
-  } else {
-    listItem.classList.remove('treeselect-list__item--single-selected')
-  }
-}
-
-const updatePartialCheckedClass = (option: FlattedOptionType, listItem: HTMLElement) => {
-  if (option.isPartialChecked) {
-    listItem.classList.add('treeselect-list__item--partial-checked')
-  } else {
-    listItem.classList.remove('treeselect-list__item--partial-checked')
-  }
-}
-
-const updateDisabledCheckedClass = (option: FlattedOptionType, listItem: HTMLElement) => {
-  if (option.disabled) {
-    listItem.classList.add('treeselect-list__item--disabled')
-  } else {
-    listItem.classList.remove('treeselect-list__item--disabled')
-  }
-}
-
-const updateClosedClass = (option: FlattedOptionType, listItem: HTMLElement, iconElements: IconsType) => {
-  if (option.isGroup) {
-    const icon = listItem.querySelector('.treeselect-list__item-icon') as HTMLElement
-    const iconInnerElement = option.isClosed ? iconElements.arrowRight : iconElements.arrowDown
-    appendIconToElement(iconInnerElement, icon)
-
-    if (option.isClosed) {
-      listItem.classList.add('treeselect-list__item--closed')
-    } else {
-      listItem.classList.remove('treeselect-list__item--closed')
-    }
-  }
-}
-
-const updateHiddenClass = (option: FlattedOptionType, listItem: HTMLElement) => {
-  if (option.hidden) {
-    listItem.classList.add('treeselect-list__item--hidden')
-  } else {
-    listItem.classList.remove('treeselect-list__item--hidden')
-  }
-}
-
-const updateCheckboxClass = (option: FlattedOptionType, input: HTMLInputElement, iconElements: IconsType) => {
-  const inputContainer = input.parentNode as HTMLElement
-  const icon = inputContainer.querySelector('.treeselect-list__item-checkbox-icon') as HTMLElement
-
-  if (option.checked) {
-    appendIconToElement(iconElements.check, icon)
-  } else if (option.isPartialChecked) {
-    appendIconToElement(iconElements.partialCheck, icon)
-  } else {
-    icon.innerHTML = ''
-  }
-}
-
-const updateLeftPaddingItems = (
-  option: FlattedOptionType,
-  listItem: HTMLElement,
-  flattedOptions: FlattedOptionType[],
-  rtl: boolean
-) => {
-  const isZeroLevel = option.level === 0
-  const defaultPadding = 20
-  const zeroLevelItemPadding = 5
-
-  if (isZeroLevel) {
-    const isGroupsExistOnLevel = flattedOptions.some((item) => item.isGroup && item.level === option.level)
-    const itemPadding = !option.isGroup && isGroupsExistOnLevel ? `${defaultPadding}px` : `${zeroLevelItemPadding}px`
-    const padding = option.isGroup ? '0' : itemPadding
-
-    if (rtl) {
-      listItem.style.paddingRight = padding
-    } else {
-      listItem.style.paddingLeft = padding
-    }
-  } else {
-    const padding = option.isGroup
-      ? `${option.level * defaultPadding}px`
-      : `${option.level * defaultPadding + defaultPadding}px`
-
-    if (rtl) {
-      listItem.style.paddingRight = padding
-    } else {
-      listItem.style.paddingLeft = padding
-    }
-  }
-
-  // You can use css selectors to reset params with !important
-  listItem.setAttribute('level', option.level.toString())
-  listItem.setAttribute('group', option.isGroup.toString())
-}
-
-const updateEmptyListClass = (flattedOptions: FlattedOptionType[], srcElement: HTMLElement | Element) => {
-  const isNotEmpty = flattedOptions.some((option) => !option.hidden)
-  const emptyList = srcElement.querySelector('.treeselect-list__empty') as HTMLElement
-
-  if (isNotEmpty) {
-    emptyList.classList.add('treeselect-list__empty--hidden')
-  } else {
-    emptyList.classList.remove('treeselect-list__empty--hidden')
-  }
-}
-
-const getListItemByCheckbox = (checkbox: HTMLElement | Element) => {
-  const checkboxContainer = checkbox.parentNode as HTMLElement
-  const listItem = checkboxContainer.parentNode as HTMLElement
-
-  return listItem
-}
-
-const getFlattedOptionByInputId = (inputId: string | null, flattedOptions: FlattedOptionType[]) => {
-  return flattedOptions.find((fo) => fo.id.toString() === inputId)
-}
-
-const getArrowOfItemByCheckbox = (checkbox: HTMLElement | Element) => {
-  const item = getListItemByCheckbox(checkbox)
-  const arrow = item.querySelector('.treeselect-list__item-icon')
-
-  return arrow
-}
-
-const setAttributesFromHtmlAttr = (itemElement: HTMLDivElement, htmlAttr?: object) => {
-  if (!htmlAttr) {
-    return
-  }
-
-  Object.keys(htmlAttr).forEach((key) => {
-    const value = htmlAttr[key as keyof object]
-
-    if (typeof value === 'string') {
-      itemElement.setAttribute(key, value)
-    }
-  })
 }
 
 export class TreeselectList implements ITreeselectList {
@@ -249,13 +67,16 @@ export class TreeselectList implements ITreeselectList {
   isIndependentNodes: boolean
   rtl: boolean
   listClassName: string
+  isBoostedRendering: boolean
   iconElements: IconsType
 
   // InnerState
   searchText: string
-  flattedOptions: FlattedOptionType[]
-  flattedOptionsBeforeSearch: FlattedOptionType[]
+  intersectionItemsObserver: IntersectionObserver | null
   selectedNodes: SelectedNodesType
+  optionsTreeMap: OptionsTreeMap
+  beforeSearchStateMap: BeforeSearchStateMap
+  emptyListHtmlElement: HTMLElement | null
   srcElement: HTMLElement
 
   // Callbacks
@@ -284,6 +105,7 @@ export class TreeselectList implements ITreeselectList {
     isIndependentNodes,
     rtl,
     listClassName,
+    isBoostedRendering,
     inputCallback,
     arrowClickCallback,
     mouseupCallback
@@ -301,37 +123,39 @@ export class TreeselectList implements ITreeselectList {
     this.isIndependentNodes = isIndependentNodes ?? false
     this.rtl = rtl ?? false
     this.listClassName = listClassName ?? ''
+    this.isBoostedRendering = isBoostedRendering
     this.iconElements = iconElements
 
     this.searchText = ''
-    this.flattedOptions = getFlattedOptions(this.options, this.openLevel, this.isIndependentNodes)
-    this.flattedOptionsBeforeSearch = this.flattedOptions
+    this.intersectionItemsObserver = null
     this.selectedNodes = { nodes: [], groupedNodes: [], allNodes: [] }
+    this.optionsTreeMap = getOptionsTreeMap({
+      options: this.options,
+      openLevel: this.openLevel,
+      isIndependentNodes: this.isIndependentNodes
+    })
+    this.beforeSearchStateMap = new Map()
+    this.emptyListHtmlElement = null
     this.srcElement = this.#createSrcElement()
 
     this.inputCallback = inputCallback
     this.arrowClickCallback = arrowClickCallback
     this.mouseupCallback = mouseupCallback
-
-    validateOptions(this.flattedOptions)
   }
 
   // Public methods
   updateValue(value: ValueOptionType[]) {
     this.value = value
     this.#previousSingleSelectedValue = this.isSingleSelect ? this.value : []
-    updateListValue(
-      value,
-      this.flattedOptions,
-      this.srcElement,
-      this.iconElements,
-      this.isSingleSelect,
-      this.#previousSingleSelectedValue,
-      this.expandSelected,
-      this.#isFirstValueUpdate,
-      this.isIndependentNodes,
-      this.rtl
-    )
+    updateListValue({
+      newValue: value,
+      optionsTreeMap: this.optionsTreeMap,
+      isSingleSelect: this.isSingleSelect,
+      expandSelected: this.expandSelected,
+      isFirstValueUpdate: this.#isFirstValueUpdate,
+      isIndependentNodes: this.isIndependentNodes
+    })
+    this.#updateListDOM()
     this.#isFirstValueUpdate = false
     this.#updateSelectedNodes()
   }
@@ -345,27 +169,26 @@ export class TreeselectList implements ITreeselectList {
     this.searchText = searchText
 
     if (isStartOfSearching) {
-      this.flattedOptionsBeforeSearch = JSON.parse(JSON.stringify(this.flattedOptions))
+      // This loop need to save a isClose state before searching
+      updateBeforeSearchStateMap({
+        beforeSearchStateMap: this.beforeSearchStateMap,
+        optionsTreeMap: this.optionsTreeMap
+      })
     }
 
     if (this.searchText === '') {
-      // This loop need to save a isClose state before searching
-      this.flattedOptions = this.flattedOptionsBeforeSearch.map((option) => {
-        const newOptionData = this.flattedOptions.find((newOption) => newOption.id === option.id)!
-        newOptionData.isClosed = option.isClosed
-        newOptionData.hidden = option.hidden
-
-        return newOptionData
+      // This loop need to restore a isClose state after searching
+      updateOptionsMapBySearchState({
+        beforeSearchStateMap: this.beforeSearchStateMap,
+        optionsTreeMap: this.optionsTreeMap
       })
-
-      this.flattedOptionsBeforeSearch = []
     }
 
     if (this.searchText) {
-      updateVisibleBySearchFlattedOptions(this.flattedOptions, searchText)
+      updateVisibleBySearchTreeItemOptions(this.optionsTreeMap, searchText)
     }
 
-    updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue, this.rtl)
+    this.#updateListDOM()
     this.focusFirstListElement()
   }
 
@@ -396,11 +219,9 @@ export class TreeselectList implements ITreeselectList {
   focusFirstListElement() {
     const focusedClass = 'treeselect-list__item--focused'
     const itemFocused = this.srcElement.querySelector(`.${focusedClass}`)
-    const allCheckboxes = Array.from(this.srcElement.querySelectorAll('.treeselect-list__item-checkbox')).filter(
-      (checkbox) => window.getComputedStyle(getListItemByCheckbox(checkbox)).display !== 'none'
-    )
+    const allItems = this.#getAllVisibleHtmlItems()
 
-    if (!allCheckboxes.length) {
+    if (!allItems.length) {
       return
     }
 
@@ -408,7 +229,7 @@ export class TreeselectList implements ITreeselectList {
       itemFocused.classList.remove(focusedClass)
     }
 
-    const firstItem = getListItemByCheckbox(allCheckboxes[0] as HTMLElement)
+    const [firstItem] = allItems
     firstItem.classList.add(focusedClass)
   }
 
@@ -416,7 +237,23 @@ export class TreeselectList implements ITreeselectList {
     return !!this.#lastFocusedItem
   }
 
+  destroy() {
+    if (this.intersectionItemsObserver) {
+      this.intersectionItemsObserver.disconnect()
+    }
+  }
+
   // Private methods
+  #updateListDOM() {
+    updateDOM({
+      optionsTreeMap: this.optionsTreeMap,
+      emptyListHtmlElement: this.emptyListHtmlElement,
+      iconElements: this.iconElements,
+      previousSingleSelectedValue: this.#previousSingleSelectedValue,
+      rtl: this.rtl
+    })
+  }
+
   #keyActionsLeftRight(itemFocused: HTMLElement | null, e: KeyboardEvent) {
     if (!itemFocused) {
       return
@@ -425,8 +262,8 @@ export class TreeselectList implements ITreeselectList {
     const key = e.key
     const checkbox = itemFocused.querySelector('.treeselect-list__item-checkbox')!
     const inputId = checkbox.getAttribute('input-id')
-    const option = getFlattedOptionByInputId(inputId, this.flattedOptions)!
-    const arrow = itemFocused.querySelector('.treeselect-list__item-icon')!
+    const option = getTreeItemOptionByInputId(inputId, this.optionsTreeMap)!
+    const arrow = option.arrowItemHtmlElement!
 
     if (key === 'ArrowLeft' && !option.isClosed && option.isGroup) {
       arrow.dispatchEvent(new Event('mousedown'))
@@ -442,30 +279,27 @@ export class TreeselectList implements ITreeselectList {
   }
 
   #keyActionsDownUp(itemFocused: HTMLElement | null, key: string) {
-    const allCheckboxes = Array.from(this.srcElement.querySelectorAll('.treeselect-list__item-checkbox')).filter(
-      (checkbox) => window.getComputedStyle(getListItemByCheckbox(checkbox)).display !== 'none'
-    )
+    const allItems = this.#getAllVisibleHtmlItems()
 
-    if (!allCheckboxes.length) {
+    if (!allItems.length) {
       return
     }
 
-    if (!itemFocused) {
-      const firstNode = getListItemByCheckbox(allCheckboxes[0])
-      firstNode.classList.add('treeselect-list__item--focused')
-    } else {
-      const focusedCheckboxIndex = allCheckboxes.findIndex((el) =>
-        getListItemByCheckbox(el).classList.contains('treeselect-list__item--focused')
-      )
-      const focusedNode = getListItemByCheckbox(allCheckboxes[focusedCheckboxIndex])
-      focusedNode.classList.remove('treeselect-list__item--focused')
+    const focusedClassName = 'treeselect-list__item--focused'
 
-      const nextNodeIndex = key === 'ArrowDown' ? focusedCheckboxIndex + 1 : focusedCheckboxIndex - 1
-      const defaultNodeIndex = key === 'ArrowDown' ? 0 : allCheckboxes.length - 1
-      const nextCheckbox = allCheckboxes[nextNodeIndex] ?? allCheckboxes[defaultNodeIndex]
-      const isDefaultIndex = !allCheckboxes[nextNodeIndex]
-      const nextNodeToFocus = getListItemByCheckbox(nextCheckbox)
-      nextNodeToFocus.classList.add('treeselect-list__item--focused')
+    if (!itemFocused) {
+      const [firstNode] = allItems
+      firstNode.classList.add(focusedClassName)
+    } else {
+      const focusedItemIndex = allItems.findIndex((el) => el.classList.contains(focusedClassName))
+      const focusedNode = allItems[focusedItemIndex]
+      focusedNode.classList.remove(focusedClassName)
+
+      const nextNodeIndex = key === 'ArrowDown' ? focusedItemIndex + 1 : focusedItemIndex - 1
+      const defaultNodeIndex = key === 'ArrowDown' ? 0 : allItems.length - 1
+      const isDefaultIndex = !allItems[nextNodeIndex]
+      const nextNodeToFocus = allItems[nextNodeIndex] ?? allItems[defaultNodeIndex]
+      nextNodeToFocus.classList.add(focusedClassName)
 
       const listCoord = this.srcElement.getBoundingClientRect()
       const nextCoord = nextNodeToFocus.getBoundingClientRect()
@@ -535,6 +369,10 @@ export class TreeselectList implements ITreeselectList {
     list.addEventListener('mousemove', () => this.#listMouseMove())
     list.addEventListener('mouseup', () => this.mouseupCallback(), true)
 
+    if (this.isBoostedRendering) {
+      this.intersectionItemsObserver = createIntersectionScrollObserver(list)
+    }
+
     return list
   }
 
@@ -596,6 +434,9 @@ export class TreeselectList implements ITreeselectList {
 
     emptyList.append(icon, text)
 
+    // Add emptyList to cache
+    this.emptyListHtmlElement = emptyList
+
     return emptyList
   }
 
@@ -614,7 +455,7 @@ export class TreeselectList implements ITreeselectList {
     const itemElement = this.#createItemElement(option)
 
     if (isGroup) {
-      const arrow = this.#createArrow()
+      const arrow = this.#createArrow(option)
       itemElement.appendChild(arrow)
       itemElement.classList.add('treeselect-list__item--group')
     }
@@ -637,6 +478,17 @@ export class TreeselectList implements ITreeselectList {
     itemElement.addEventListener('mouseout', () => this.#itemElementMouseout(itemElement), true)
     itemElement.addEventListener('mousedown', (e) => this.#itemElementMousedown(e, option))
 
+    // Set observer for scroll visibility
+    if (this.intersectionItemsObserver) {
+      this.intersectionItemsObserver.observe(itemElement)
+    }
+
+    // Add htmlItem to the optionsTreeMap
+    const treeOption = this.optionsTreeMap.get(option.value)
+    if (treeOption) {
+      treeOption.itemHtmlElement = itemElement
+    }
+
     return itemElement
   }
 
@@ -656,32 +508,41 @@ export class TreeselectList implements ITreeselectList {
   #itemElementMousedown(e: Event, option: OptionType) {
     e.preventDefault()
     e.stopPropagation()
-    const isDisabled = this.flattedOptions.find((f) => f.id === option.value)?.disabled
+    const treeOption = this.optionsTreeMap.get(option.value) ?? null
 
-    if (isDisabled) {
+    if (treeOption?.disabled) {
       return
     }
 
-    const checkbox = (e.target as HTMLElement).querySelector('.treeselect-list__item-checkbox') as HTMLInputElement
-    checkbox.checked = !checkbox.checked
-    this.#checkboxClickEvent(checkbox, option)
+    const checkbox = treeOption?.checkboxHtmlElement
+
+    if (checkbox) {
+      checkbox.checked = !checkbox.checked
+      this.#checkboxClickEvent(checkbox, option)
+    }
   }
 
-  #createArrow() {
+  #createArrow(option: OptionType) {
     const arrow = document.createElement('span')
     arrow.setAttribute('tabindex', '-1')
     arrow.classList.add('treeselect-list__item-icon')
     appendIconToElement(this.iconElements.arrowDown, arrow)
 
-    arrow.addEventListener('mousedown', (e) => this.#arrowMousedown(e))
+    arrow.addEventListener('mousedown', (e) => this.#arrowMousedown(e, option))
+
+    // Add arrow to the optionsTreeMap
+    const treeOption = this.optionsTreeMap.get(option.value)
+    if (treeOption) {
+      treeOption.arrowItemHtmlElement = arrow
+    }
 
     return arrow
   }
 
-  #arrowMousedown(e: Event) {
+  #arrowMousedown(e: Event, option: OptionType) {
     e.preventDefault()
     e.stopPropagation()
-    this.#arrowClickEvent(e)
+    this.#arrowClickEvent(option)
   }
 
   #createCheckbox(option: OptionType) {
@@ -698,6 +559,13 @@ export class TreeselectList implements ITreeselectList {
     checkbox.classList.add('treeselect-list__item-checkbox')
 
     checkboxContainer.append(ico, checkbox)
+
+    // Add checkbox to the optionsTreeMap
+    const treeOption = this.optionsTreeMap.get(option.value)
+    if (treeOption) {
+      treeOption.checkboxHtmlElement = checkbox
+      treeOption.checkboxIconHtmlElement = ico
+    }
 
     return checkboxContainer
   }
@@ -717,23 +585,37 @@ export class TreeselectList implements ITreeselectList {
 
   #createCounter(option: OptionType) {
     const counter = document.createElement('span')
-    const children = this.flattedOptions.filter((fo) => fo.childOf === option.value)
+    const children = this.optionsTreeMap.get(option.value)?.children ?? []
     counter.textContent = `(${children.length})`
     counter.classList.add('treeselect-list__item-label-counter')
 
     return counter
   }
 
+  #getAllVisibleHtmlItems() {
+    const allItems: HTMLElement[] = []
+    this.optionsTreeMap.forEach((option) => {
+      if (!option.hidden && option.itemHtmlElement) {
+        allItems.push(option.itemHtmlElement)
+      }
+    })
+
+    return allItems
+  }
+
   // Actions
   #checkboxClickEvent(target: HTMLInputElement, option: OptionType) {
-    const flattedOption = this.flattedOptions.find((fo) => fo.id === option.value)
-    if (!flattedOption) {
+    const treeOption = this.optionsTreeMap.get(option.value) ?? null
+
+    if (treeOption === null) {
       return
     }
 
-    if (flattedOption?.isGroup && this.disabledBranchNode) {
+    const isGroupSelectable = treeOption.isGroupSelectable ?? true
+
+    if (treeOption.isGroup && (this.disabledBranchNode || !isGroupSelectable)) {
       // We need to close/open disabled group on mousedown
-      const arrow = getArrowOfItemByCheckbox(target)
+      const arrow = treeOption.arrowItemHtmlElement
       arrow?.dispatchEvent(new Event('mousedown'))
 
       return
@@ -743,33 +625,39 @@ export class TreeselectList implements ITreeselectList {
       const [previousValue] = this.#previousSingleSelectedValue
 
       // Prevent emit the same value.
-      if (flattedOption.id === previousValue) {
+      if (treeOption.id === previousValue) {
         return
       }
 
-      this.#previousSingleSelectedValue = [flattedOption.id]
-      updateOptionsByValue([flattedOption.id], this.flattedOptions, this.isSingleSelect, this.isIndependentNodes)
+      this.#previousSingleSelectedValue = [treeOption.id]
+      updateOptionsByValue({
+        newValue: [treeOption.id],
+        optionsTreeMap: this.optionsTreeMap,
+        isSingleSelect: this.isSingleSelect,
+        isIndependentNodes: this.isIndependentNodes
+      })
     } else {
-      flattedOption.checked = target.checked
-      const resultChecked = updateOptionByCheckState(flattedOption, this.flattedOptions, this.isIndependentNodes)
+      treeOption.checked = target.checked
+      const resultChecked = updateOptionByCheckState({
+        option: treeOption,
+        optionsTreeMap: this.optionsTreeMap,
+        isIndependentNodes: this.isIndependentNodes
+      })
       target.checked = resultChecked
     }
 
-    updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue, this.rtl)
+    this.#updateListDOM()
     this.#emitInput()
   }
 
-  #arrowClickEvent(e: Event) {
-    const input = (e.target as HTMLElement)?.parentNode?.querySelector('[input-id]')
-    const inputId = input?.getAttribute('input-id') ?? null
-    const flattedOption = getFlattedOptionByInputId(inputId, this.flattedOptions)
+  #arrowClickEvent(option: OptionType) {
+    const treeOption = this.optionsTreeMap.get(option.value) ?? null
 
-    if (flattedOption) {
-      flattedOption.isClosed = !flattedOption.isClosed
-      hideShowChildrenOptions(this.flattedOptions, flattedOption)
-      updateDOM(this.flattedOptions, this.srcElement, this.iconElements, this.#previousSingleSelectedValue, this.rtl)
-
-      this.arrowClickCallback(flattedOption.id, flattedOption.isClosed)
+    if (treeOption !== null) {
+      treeOption.isClosed = !treeOption.isClosed
+      hideShowChildrenOptions(this.optionsTreeMap, treeOption)
+      this.#updateListDOM()
+      this.arrowClickCallback(treeOption.id, treeOption.isClosed)
     }
   }
 
@@ -789,14 +677,14 @@ export class TreeselectList implements ITreeselectList {
     }
   }
 
-  #sortNodes(nodes: FlattedOptionType[]) {
+  #sortNodes(nodes: TreeItem[]) {
     return this.tagsSortFn === null
       ? nodes
       : [...nodes].sort((a, b) => this.tagsSortFn!({ value: a.id, name: a.name }, { value: b.id, name: b.name }))
   }
 
   #updateSelectedNodes() {
-    const { ungroupedNodes, groupedNodes, allNodes } = getCheckedOptions(this.flattedOptions)
+    const { ungroupedNodes, groupedNodes, allNodes } = getCheckedOptions(this.optionsTreeMap)
 
     this.selectedNodes = {
       nodes: this.#sortNodes(ungroupedNodes),

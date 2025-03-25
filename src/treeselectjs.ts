@@ -1,21 +1,21 @@
 import './treeselectjs.css'
-import { ITreeselectInput } from './input/inputTypes'
-import { ITreeselectList } from './list/listTypes'
+import { type ITreeselectInput } from './input/inputTypes'
+import { type ITreeselectList } from './list/listTypes'
 import { TreeselectInput } from './input/index'
 import { TreeselectList } from './list/index'
 import {
-  ITreeselect,
-  ITreeselectParams,
-  OptionType,
-  ValueOptionType,
-  FlattedOptionType,
-  IconsType,
-  SelectedNodesType,
-  DirectionType,
-  TagsSortFnType,
-  TagsSortItem,
-  ValueType,
-  ValueInputType
+  type ITreeselect,
+  type ITreeselectParams,
+  type OptionType,
+  type ValueOptionType,
+  type InnerOptionType,
+  type IconsType,
+  type SelectedNodesType,
+  type DirectionType,
+  type TagsSortFnType,
+  type TagsSortItem,
+  type ValueType,
+  type ValueInputType
 } from './treeselectTypes'
 import { getDefaultIcons } from './svgIcons'
 
@@ -59,7 +59,7 @@ const validateProps = ({
   }
 }
 
-const getOnlyIds = (nodes: FlattedOptionType[]) => nodes.map((node) => node.id)
+const getOnlyIds = (nodes: InnerOptionType[]) => nodes.map((node) => node.id)
 
 const getDefaultValue = (value: ValueInputType) => {
   if (value === null || value === undefined) {
@@ -110,6 +110,7 @@ export default class Treeselect implements ITreeselect {
   isIndependentNodes: boolean
   rtl: boolean
   listClassName: string
+  isBoostedRendering: boolean
   iconElements: IconsType
   inputCallback: ((value: ValueType) => void) | undefined
   openCallback: ((value: ValueType) => void) | undefined
@@ -175,6 +176,7 @@ export default class Treeselect implements ITreeselect {
     isIndependentNodes,
     rtl,
     listClassName,
+    isBoostedRendering,
     iconElements,
     inputCallback,
     openCallback,
@@ -220,6 +222,7 @@ export default class Treeselect implements ITreeselect {
     this.isIndependentNodes = isIndependentNodes ?? false
     this.rtl = rtl ?? false
     this.listClassName = listClassName ?? ''
+    this.isBoostedRendering = isBoostedRendering ?? false
     this.iconElements = getDefaultIcons(iconElements)
     this.inputCallback = inputCallback
     this.openCallback = openCallback
@@ -297,6 +300,7 @@ export default class Treeselect implements ITreeselect {
       this.srcElement.innerHTML = ''
       this.srcElement = null
       this.#removeOutsideListeners(true)
+      this.#treeselectList?.destroy()
     }
   }
 
@@ -318,9 +322,9 @@ export default class Treeselect implements ITreeselect {
     nodes,
     allNodes
   }: {
-    groupedNodes?: FlattedOptionType[]
-    nodes?: FlattedOptionType[]
-    allNodes?: FlattedOptionType[]
+    groupedNodes?: InnerOptionType[]
+    nodes?: InnerOptionType[]
+    allNodes?: InnerOptionType[]
   }) {
     this.ungroupedValue = nodes ? getOnlyIds(nodes) : []
     this.groupedValue = groupedNodes ? getOnlyIds(groupedNodes) : []
@@ -342,10 +346,6 @@ export default class Treeselect implements ITreeselect {
     const container = this.parentHtmlContainer
     container.classList.add('treeselect')
 
-    if (this.rtl) {
-      container.setAttribute('dir', 'rtl')
-    }
-
     const list = new TreeselectList({
       value: [], // updateValue method calls in initMount method to set actual value
       options: this.options,
@@ -360,6 +360,7 @@ export default class Treeselect implements ITreeselect {
       isIndependentNodes: this.isIndependentNodes,
       rtl: this.rtl,
       listClassName: this.listClassName,
+      isBoostedRendering: this.isBoostedRendering,
       iconElements: this.iconElements,
       inputCallback: (value) => this.#listInputListener(value),
       arrowClickCallback: (groupId, isClosed) => this.#listArrowClickListener(groupId, isClosed),
@@ -389,6 +390,11 @@ export default class Treeselect implements ITreeselect {
       nameChangeCallback: (name) => this.#inputNameChangeListener(name)
     })
 
+    if (this.rtl) {
+      container.setAttribute('dir', 'rtl')
+      list.srcElement.setAttribute('dir', 'rtl')
+    }
+
     if (this.appendToBody) {
       this.#containerResizer = new ResizeObserver(() => this.updateListPosition())
     }
@@ -398,7 +404,7 @@ export default class Treeselect implements ITreeselect {
     return { container, list, input }
   }
 
-  #inputInputListener(value: FlattedOptionType[]) {
+  #inputInputListener(value: InnerOptionType[]) {
     const inputIds = getOnlyIds(value)
     this.#treeselectList?.updateValue(inputIds)
     const selectedNodes = this.#treeselectList?.selectedNodes ?? {}
@@ -663,6 +669,12 @@ export default class Treeselect implements ITreeselect {
     const list = this.#treeselectList?.srcElement as HTMLElement
 
     if (!container || !list) {
+      return
+    }
+
+    if (this.staticList) {
+      list.setAttribute('direction', 'bottom')
+      this.#updateDirectionClasses(false, this.appendToBody)
       return
     }
 

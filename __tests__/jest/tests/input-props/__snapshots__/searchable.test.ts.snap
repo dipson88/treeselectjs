@@ -84,7 +84,7 @@ exports[`searchable prop should be searchable by default 1`] = `
       group-container-id="1"
     >
       <div
-        class="treeselect-list__item treeselect-list__item--group treeselect-list__item--closed treeselect-list__item--hidden treeselect-list__item--focused"
+        class="treeselect-list__item treeselect-list__item--group treeselect-list__item--closed treeselect-list__item--hidden"
         group="true"
         level="0"
         style="padding-left: 0px;"
@@ -269,7 +269,7 @@ exports[`searchable prop should be searchable by default 1`] = `
       group-container-id="6"
     >
       <div
-        class="treeselect-list__item treeselect-list__item--group"
+        class="treeselect-list__item treeselect-list__item--group treeselect-list__item--focused"
         group="true"
         level="0"
         style="padding-left: 0px;"
@@ -578,7 +578,7 @@ exports[`searchable prop should show no results message 1`] = `
       group-container-id="1"
     >
       <div
-        class="treeselect-list__item treeselect-list__item--group treeselect-list__item--closed treeselect-list__item--hidden treeselect-list__item--focused"
+        class="treeselect-list__item treeselect-list__item--group treeselect-list__item--closed treeselect-list__item--focused treeselect-list__item--hidden"
         group="true"
         level="0"
         style="padding-left: 0px;"

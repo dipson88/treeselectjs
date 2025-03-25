@@ -1,5 +1,13 @@
 import { fireEvent } from '@testing-library/dom'
-import { renderTreeselect, getArrowElement, getListItems, getTagsElement, classes, noResultsText } from '../../helpers'
+import {
+  classes,
+  getArrowElement,
+  getListGroupsItems,
+  getListItems,
+  getTagsElement,
+  noResultsText,
+  renderTreeselect
+} from '../../helpers'
 
 const { list: listClasses } = classes
 
@@ -216,5 +224,67 @@ describe('options prop', () => {
 
     expect(treeselect.value).toEqual([3])
     expect(tagsElement.innerHTML).toContain('Option 3')
+  })
+
+  it('should make groups unselectable if option contains isGroupSelectable: false', () => {
+    const disabledGroupName = 'Option 2'
+    const disabledGroupValue = 2
+    const disabledItemName = 'Option 3'
+    const disabledItemValue = 3
+
+    const treeselect = renderTreeselect({
+      value: [],
+      options: [
+        {
+          value: 1,
+          name: 'Option 1',
+          children: [
+            {
+              value: disabledGroupValue,
+              name: disabledGroupName,
+              isGroupSelectable: false,
+              children: [
+                {
+                  value: 4,
+                  name: 'Option 4',
+                  children: []
+                }
+              ]
+            },
+            {
+              value: disabledItemValue,
+              name: disabledItemName,
+              isGroupSelectable: false,
+              children: []
+            }
+          ]
+        }
+      ]
+    })
+
+    treeselect.toggleOpenClose()
+
+    // Checked isGroupSelectable for group item
+    const [groupItem] = Array.from(getListGroupsItems(treeselect.parentHtmlContainer)).filter(
+      (item) => item.getAttribute('title') === disabledGroupName
+    )
+
+    fireEvent.mouseDown(groupItem)
+
+    expect(treeselect.value).toEqual([])
+    expect(groupItem.classList.contains(listClasses.itemNonSelectableGroup)).toBe(true)
+
+    // Checked isGroupSelectable for regular item
+    const [regularItem] = Array.from(getListItems(treeselect.parentHtmlContainer)).filter(
+      (item) => item.getAttribute('title') === disabledItemName
+    )
+
+    fireEvent.mouseDown(regularItem)
+
+    expect(treeselect.value).toEqual([disabledItemValue])
+    expect(regularItem.classList.contains(listClasses.itemNonSelectableGroup)).toBe(false)
+
+    // Checked html structure
+    expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })
 })

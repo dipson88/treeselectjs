@@ -1,4 +1,40 @@
-export const classes = {
+type Classes = {
+  parent: string
+  input: {
+    arrow: string
+    base: string
+    bottom: string
+    clear: string
+    edit: string
+    focused: string
+    opened: string
+    tags: string
+    tagsElement: string
+    top: string
+  }
+  list: {
+    base: string
+    bottom: string
+    bottomToBody: string
+    empty: string
+    item: string
+    itemArrow: string
+    itemChecked: string
+    itemDisabled: string
+    itemFocused: string
+    itemGroup: string
+    itemHidden: string
+    itemPartialChecked: string
+    itemScrollNotVisible: string
+    itemNonSelectableGroup: string
+    slot: string
+    top: string
+    topToBody: string
+    static: string
+  }
+}
+
+export const classes: Classes = {
   parent: 'treeselect',
   input: {
     arrow: 'treeselect-input__arrow',
@@ -25,13 +61,16 @@ export const classes = {
     itemGroup: 'treeselect-list__item--group',
     itemHidden: 'treeselect-list__item--hidden',
     itemPartialChecked: 'treeselect-list__item--partial-checked',
+    itemScrollNotVisible: 'treeselect-list__item--scroll-not-visible',
+    itemNonSelectableGroup: 'treeselect-list__item--non-selectable-group',
     slot: 'treeselect-list__slot',
     top: 'treeselect-list--top',
-    topToBody: 'treeselect-list--top-to-body'
+    topToBody: 'treeselect-list--top-to-body',
+    static: 'treeselect-list--static'
   }
 }
 
-export const classesSelectors = {
+export const classesSelectors: Classes = {
   parent: `.${classes.parent}`,
   input: {
     arrow: `.${classes.input.arrow}`,
@@ -58,8 +97,11 @@ export const classesSelectors = {
     itemGroup: `.${classes.list.itemGroup}`,
     itemHidden: `.${classes.list.itemHidden}`,
     itemPartialChecked: `.${classes.list.itemPartialChecked}`,
+    itemScrollNotVisible: `.${classes.list.itemScrollNotVisible}`,
+    itemNonSelectableGroup: `.${classes.list.itemNonSelectableGroup}`,
     slot: `.${classes.list.slot}`,
     top: `.${classes.list.top}`,
-    topToBody: `.${classes.list.topToBody}`
+    topToBody: `.${classes.list.topToBody}`,
+    static: `.${classes.list.static}`
   }
 }

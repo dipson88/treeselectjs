@@ -1,3 +1,5 @@
+import { renderExampleSection } from '../render/renderExampleSection.js'
+
 const options = [
   {
     name: 'England',
@@ -44,14 +46,18 @@ const options = [
   }
 ]
 
-const className = '.treeselect-demo-independent-nodes'
+const value = [1, 4, 7, 8]
+
+const treeselectId = 'treeselect-demo-independent-nodes'
 
 export const runIndependentNodesExample = (Treeselect) => {
-  const domElement = document.querySelector(className)
+  renderExampleSection({ sectionId: 'independent-nodes-section', options, value, treeselectId })
+
+  const domElement = document.getElementById(treeselectId)
   const treeselect = new Treeselect({
     parentHtmlContainer: domElement,
-    value: [1, 4, 7, 8],
-    options: options,
+    value,
+    options,
     isIndependentNodes: true
   })
 
