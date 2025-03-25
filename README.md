@@ -11,7 +11,7 @@ A multi-select js component with nested options.
 Build data:
 - react-treeselectjs.mjs  2.14 kB │ gzip: 0.83 kB
 - react-treeselectjs.umd.js  1.91 kB │ gzip: 0.80 kB
-- react-treeselectjs.css  6.93 kB │ gzip: 1.38 kB
+- react-treeselectjs.css  7.08 kB │ gzip: 1.41 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
@@ -36,9 +36,9 @@ Import treeselectjs (UMD)
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   
-  <script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.12.2/dist/treeselectjs.umd.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.6.1/dist/react-treeselectjs.umd.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.6.1/dist/react-treeselectjs.css" />
+  <script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.13.0/dist/treeselectjs.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.7.0/dist/react-treeselectjs.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.7.0/dist/react-treeselectjs.css" />
 </head>
 <body>
   <div id="root"></div>
@@ -139,7 +139,7 @@ export default App
 Name  | Type (default) | Description
 ------------- | ------------- | -------------
 **value**  | Array[String \| Number] ([]) | An array of `value` from `options` prop. This value will be selected on load of the treeselect. The `value` changes if you check/uncheck checkboxes or remove tags from the input.
-**options**  | Array[Object] ([]) | It is an array of objects ```{name: String, value: String \| Number, disabled?: Boolean, htmlAttr?: object, children: [] }```, where children are the same array of objects. Do not use duplicated `value` field. But you can use duplicated names. [Read more](#option-description).
+**options**  | Array[Object] ([]) | It is an array of objects ```{name: String, value: String \| Number, disabled?: Boolean, htmlAttr?: object, isGroupSelectable?: boolean, children: [] }```, where children are the same array of objects. Do not use duplicated `value` field. But you can use duplicated names. [Read more](#option-description).
 **disabled** | Boolean (false) | List will be disabled.
 **id** | String ('') | id attribute for the accessibility.
 **ariaLabel** | String ('') | ariaLabel attribute for the accessibility.
@@ -147,6 +147,7 @@ Name  | Type (default) | Description
 **isGroupedValue** | Boolean (false) | Return groups if they selected instead of separate ids. Treeselect returns only leaves ids by default.
 **isIndependentNodes** | Boolean (false) | All nodes in treeselect work as an independent entity. Check/uncheck action ignore children/parent updates workflow. Disabled nodes ignore children/parent workflow as well.
 **rtl** | Boolean (false) | RTL mode.
+**isBoostedRendering** | Boolean (false) | ***Experimental*** - Improves list rendering performance by using visibility-based optimizations and IntersectionObserver. Useful for efficiently rendering large lists.
 
 #### List settings props
 Name  | Type (default) | Description
@@ -199,6 +200,7 @@ Name  | Type | Description
 **name** | String (required!) | It is the name of the node. **Can be duplicated.**
 **disabled** | Boolean (optional) | The node will be disabled. It is an optional field, you can skip it if no need to work with disabled values.
 **htmlAttr** | Object (optional) | The object of the HTML attributes, the value of the object should be a String type. These attributes will be merged into the node HTML tag.
+**isGroupSelectable** | Boolean (optional - true) | Determines whether groups are selectable. This behavior is similar to the disabledBranchNode prop but applies specifically to groups. It does not affect regular (non-group) items.
 **children** | {name: String, value: String, disabled?: Boolean, htmlAttr?: object, children: [] }[] | Children are the same array of objects.
 
 ---
@@ -209,6 +211,7 @@ Name  | Type | Description
 3) **Value** prop inside the **options** prop should be a **String** or **Number**.
 4) If you use **isSingleSelect** prop, you should pass only a single **value** without an array.
 5) If you use **isSingleSelect** prop, you can set **showTags** to false. It helps to show treeselect as a dropdown. Also you can disable selecting of group's nodes with help of **disabledBranchNode**.
+6) If you use a large list of options and see a problem with performance, try to use **isBoostedRendering** prop.
 
 ### Support
 You can buy me a coffee if you want to support my work. Thank you!
