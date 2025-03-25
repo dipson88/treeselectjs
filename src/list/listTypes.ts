@@ -17,6 +17,7 @@ export interface TreeItem {
   isClosed: boolean
   hidden: boolean
   disabled: boolean
+  isGroupSelectable: boolean
   children: ValueOptionType[]
   checkboxHtmlElement: HTMLInputElement | null
   itemHtmlElement: HTMLElement | null

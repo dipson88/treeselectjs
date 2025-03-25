@@ -29,6 +29,7 @@ export const updateDOM = ({
     updateHiddenClass(option)
     updateLeftPaddingItems({ option, optionsTreeMap, rtl })
     updateCheckboxClass({ option, iconElements })
+    updateGroupSelectableClass(option)
   })
 
   updateEmptyListClass({ optionsTreeMap, emptyListHtmlElement })
@@ -167,4 +168,9 @@ const updateCheckboxClass = ({ option, iconElements }: { option: TreeItem; iconE
       icon.innerHTML = ''
     }
   }
+}
+
+const updateGroupSelectableClass = (option: TreeItem) => {
+  const listItem = option.itemHtmlElement
+  listItem?.classList.toggle('treeselect-list__item--non-selectable-group', !option.isGroupSelectable)
 }

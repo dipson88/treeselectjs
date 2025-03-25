@@ -611,7 +611,9 @@ export class TreeselectList implements ITreeselectList {
       return
     }
 
-    if (treeOption.isGroup && this.disabledBranchNode) {
+    const isGroupSelectable = treeOption.isGroupSelectable ?? true
+
+    if (treeOption.isGroup && (this.disabledBranchNode || !isGroupSelectable)) {
       // We need to close/open disabled group on mousedown
       const arrow = treeOption.arrowItemHtmlElement
       arrow?.dispatchEvent(new Event('mousedown'))

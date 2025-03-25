@@ -26,6 +26,7 @@ type Classes = {
     itemHidden: string
     itemPartialChecked: string
     itemScrollNotVisible: string
+    itemNonSelectableGroup: string
     slot: string
     top: string
     topToBody: string
@@ -61,6 +62,7 @@ export const classes: Classes = {
     itemHidden: 'treeselect-list__item--hidden',
     itemPartialChecked: 'treeselect-list__item--partial-checked',
     itemScrollNotVisible: 'treeselect-list__item--scroll-not-visible',
+    itemNonSelectableGroup: 'treeselect-list__item--non-selectable-group',
     slot: 'treeselect-list__slot',
     top: 'treeselect-list--top',
     topToBody: 'treeselect-list--top-to-body',
@@ -96,6 +98,7 @@ export const classesSelectors: Classes = {
     itemHidden: `.${classes.list.itemHidden}`,
     itemPartialChecked: `.${classes.list.itemPartialChecked}`,
     itemScrollNotVisible: `.${classes.list.itemScrollNotVisible}`,
+    itemNonSelectableGroup: `.${classes.list.itemNonSelectableGroup}`,
     slot: `.${classes.list.slot}`,
     top: `.${classes.list.top}`,
     topToBody: `.${classes.list.topToBody}`,

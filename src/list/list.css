@@ -159,6 +159,10 @@
   display: none;
 }
 
+.treeselect-list__item--non-selectable-group .treeselect-list__item-checkbox-container {
+  display: none;
+}
+
 /* checked styles */
 .treeselect-list__item--checked {
   background-color: #e9f1f1;

@@ -65,6 +65,7 @@ const getTreeOptions = ({
       isClosed,
       hidden,
       disabled: option.disabled ?? false,
+      isGroupSelectable: !isGroup || (option.isGroupSelectable ?? true),
       children,
       // Html elements will be added during their creation
       checkboxHtmlElement: null,
