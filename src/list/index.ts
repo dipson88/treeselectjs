@@ -28,25 +28,17 @@ import { appendIconToElement } from '../svgIcons'
 const updateListValue = ({
   newValue,
   optionsTreeMap,
-  emptyListHtmlElement,
-  iconElements,
   isSingleSelect,
-  previousSingleSelectedValue,
   expandSelected,
   isFirstValueUpdate,
-  isIndependentNodes,
-  rtl
+  isIndependentNodes
 }: {
   newValue: ValueOptionType[]
   optionsTreeMap: OptionsTreeMap
-  emptyListHtmlElement: HTMLElement | null
-  iconElements: IconsType
   isSingleSelect: boolean
-  previousSingleSelectedValue: ValueOptionType[]
   expandSelected: boolean
   isFirstValueUpdate: boolean
   isIndependentNodes: boolean
-  rtl: boolean
 }) => {
   updateOptionsByValue({
     newValue,
@@ -58,14 +50,6 @@ const updateListValue = ({
   if (isFirstValueUpdate && expandSelected) {
     expandSelectedItems(optionsTreeMap, isSingleSelect)
   }
-
-  updateDOM({
-    optionsTreeMap,
-    emptyListHtmlElement,
-    iconElements,
-    previousSingleSelectedValue,
-    rtl
-  })
 }
 
 export class TreeselectList implements ITreeselectList {
@@ -166,15 +150,12 @@ export class TreeselectList implements ITreeselectList {
     updateListValue({
       newValue: value,
       optionsTreeMap: this.optionsTreeMap,
-      emptyListHtmlElement: this.emptyListHtmlElement,
-      iconElements: this.iconElements,
       isSingleSelect: this.isSingleSelect,
-      previousSingleSelectedValue: this.#previousSingleSelectedValue,
       expandSelected: this.expandSelected,
       isFirstValueUpdate: this.#isFirstValueUpdate,
-      isIndependentNodes: this.isIndependentNodes,
-      rtl: this.rtl
+      isIndependentNodes: this.isIndependentNodes
     })
+    this.#updateListDOM()
     this.#isFirstValueUpdate = false
     this.#updateSelectedNodes()
   }
@@ -207,13 +188,7 @@ export class TreeselectList implements ITreeselectList {
       updateVisibleBySearchTreeItemOptions(this.optionsTreeMap, searchText)
     }
 
-    updateDOM({
-      optionsTreeMap: this.optionsTreeMap,
-      emptyListHtmlElement: this.emptyListHtmlElement,
-      iconElements: this.iconElements,
-      previousSingleSelectedValue: this.#previousSingleSelectedValue,
-      rtl: this.rtl
-    })
+    this.#updateListDOM()
     this.focusFirstListElement()
   }
 
@@ -269,6 +244,16 @@ export class TreeselectList implements ITreeselectList {
   }
 
   // Private methods
+  #updateListDOM() {
+    updateDOM({
+      optionsTreeMap: this.optionsTreeMap,
+      emptyListHtmlElement: this.emptyListHtmlElement,
+      iconElements: this.iconElements,
+      previousSingleSelectedValue: this.#previousSingleSelectedValue,
+      rtl: this.rtl
+    })
+  }
+
   #keyActionsLeftRight(itemFocused: HTMLElement | null, e: KeyboardEvent) {
     if (!itemFocused) {
       return
@@ -659,13 +644,7 @@ export class TreeselectList implements ITreeselectList {
       target.checked = resultChecked
     }
 
-    updateDOM({
-      optionsTreeMap: this.optionsTreeMap,
-      emptyListHtmlElement: this.emptyListHtmlElement,
-      iconElements: this.iconElements,
-      previousSingleSelectedValue: this.#previousSingleSelectedValue,
-      rtl: this.rtl
-    })
+    this.#updateListDOM()
     this.#emitInput()
   }
 
@@ -675,13 +654,7 @@ export class TreeselectList implements ITreeselectList {
     if (treeOption !== null) {
       treeOption.isClosed = !treeOption.isClosed
       hideShowChildrenOptions(this.optionsTreeMap, treeOption)
-      updateDOM({
-        optionsTreeMap: this.optionsTreeMap,
-        emptyListHtmlElement: this.emptyListHtmlElement,
-        iconElements: this.iconElements,
-        previousSingleSelectedValue: this.#previousSingleSelectedValue,
-        rtl: this.rtl
-      })
+      this.#updateListDOM()
       this.arrowClickCallback(treeOption.id, treeOption.isClosed)
     }
   }
