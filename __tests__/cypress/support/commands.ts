@@ -13,6 +13,7 @@ declare global {
       visitLargeDataPage(): void
       visitAppendToBodyPage(): void
       visitBoostRenderingPage(): void
+      visitSlotPage(): void
 
       // Actions
       treeselectClick(): void
@@ -56,6 +57,10 @@ Cypress.Commands.add('visitAppendToBodyPage', () => {
 
 Cypress.Commands.add('visitBoostRenderingPage', () => {
   cy.visit(`${baseUrl}/cypress-boost-rendering.html`)
+})
+
+Cypress.Commands.add('visitSlotPage', () => {
+  cy.visit(`${baseUrl}/cypress-slot.html`)
 })
 
 // Actions

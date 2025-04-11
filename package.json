@@ -1,6 +1,6 @@
 {
   "name": "treeselectjs",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "description": "Treeselect JS",
   "main": "./dist/treeselectjs.umd.js",
   "module": "./dist/treeselectjs.mjs",

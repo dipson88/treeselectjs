@@ -97,9 +97,33 @@ export const runBoostRenderingTest = () => {
   })
 }
 
+export const runSlotTest = () => {
+  const className = '.treeselect-demo-slot'
+  const domElement = document.querySelector(className)
+
+  if (!domElement) {
+    return
+  }
+
+  const slot = document.createElement('div')
+  slot.classList.add('treeselect-demo-slot__slot')
+  const btn = document.createElement('button')
+  btn.className = 'treeselect-demo-slot__slot-btn'
+  btn.innerText = 'Click!'
+  slot.appendChild(btn)
+
+  const treeselect = new Treeselect({
+    parentHtmlContainer: domElement,
+    value: [],
+    options: defaultOptions,
+    listSlotHtmlComponent: slot
+  })
+}
+
 runBaseTest()
 runSingleTest()
 runDisabledTest()
 runLargeDataTest()
 runAppendedToBodyTest()
 runBoostRenderingTest()
+runSlotTest()
