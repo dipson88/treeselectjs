@@ -386,7 +386,6 @@ export default class Treeselect implements ITreeselect {
       closeCallback: () => this.#closeList(),
       keydownCallback: (e) => this.#inputKeydownListener(e),
       focusCallback: () => this.#inputFocusListener(),
-      blurCallback: () => this.#inputBlurListener(),
       nameChangeCallback: (name) => this.#inputNameChangeListener(name)
     })
 
@@ -438,23 +437,8 @@ export default class Treeselect implements ITreeselect {
     if (this.#focusEvent && this.#focusEvent && this.#blurEvent) {
       document.addEventListener('mousedown', this.#focusEvent, true)
       document.addEventListener('focus', this.#focusEvent, true)
-      window.addEventListener('blur', this.#blurEvent)
+      window.addEventListener('blur', this.#blurEvent, { capture: false })
     }
-  }
-
-  #inputBlurListener() {
-    // TODO review focus system.
-    // On Blur we need to check is element focused again.
-    // Because after actions on list we call focus with help of timeout with 0.
-    // We call timeout with 1 because it should call after focus timeout.
-    setTimeout(() => {
-      const isInput = this.#treeselectInput?.srcElement.contains(document.activeElement)
-      const isList = this.#treeselectList?.srcElement.contains(document.activeElement)
-
-      if (!isInput && !isList) {
-        this.blurWindowHandler()
-      }
-    }, 1)
   }
 
   #setInputValueByListNodes(selectedNodes?: SelectedNodesType) {
@@ -627,7 +611,7 @@ export default class Treeselect implements ITreeselect {
 
     document.removeEventListener('mousedown', this.#focusEvent, true)
     document.removeEventListener('focus', this.#focusEvent, true)
-    window.removeEventListener('blur', this.#blurEvent)
+    window.removeEventListener('blur', this.#blurEvent, { capture: false })
   }
 
   #updateScrollPosition() {
@@ -651,9 +635,7 @@ export default class Treeselect implements ITreeselect {
       this.#treeselectList?.srcElement.contains(e.target as HTMLElement)
 
     if (!isInsideClick) {
-      this.#treeselectInput?.blur()
-      this.#removeOutsideListeners(false)
-      this.#updateFocusClasses(false)
+      this.blurWindowHandler()
     }
   }
 
