@@ -209,7 +209,7 @@ Name  | Params | Description
 **destroy**  | None | Deletes elements from the DOM. Call mount() to add treeselect to the DOM with previously saved internal data. If you need to recreate treeselect with default params - call ```new Treeselect(options)```.
 **focus**  | None | Focuses treeselect input without open/close state changes.
 **toggleOpenClose**  | None | Open or close treeselect list and focus treeselect input.
-
+**setDisabled**  | Boolean (true \| false) | Set disabled/enabled state of the treeselect.
 ---
 
 ### Notes

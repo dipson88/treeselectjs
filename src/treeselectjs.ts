@@ -241,6 +241,16 @@ export default class Treeselect implements ITreeselect {
     this.#initMount(value)
   }
 
+  setDisabled(bool: boolean) {
+    this.disabled = bool
+    this.#treeselectInput!.disabled = bool
+    if (this.disabled) {
+      this.srcElement!.classList.add('treeselect--disabled')
+    } else {
+      this.srcElement!.classList.remove('treeselect--disabled')
+    }
+  }
+
   mount() {
     // We need to revalidate props if user call mount method
     // because user can change props after init
