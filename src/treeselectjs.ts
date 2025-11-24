@@ -630,9 +630,14 @@ export default class Treeselect implements ITreeselect {
   }
 
   focusWindowHandler(e: Event) {
+    let target = e.target as HTMLElement;
+    if(target?.shadowRoot && e.composedPath().length > 0) {
+      target = e.composedPath()[0] as HTMLElement;
+    }
+
     const isInsideClick =
-      this.srcElement?.contains(e.target as HTMLElement) ||
-      this.#treeselectList?.srcElement.contains(e.target as HTMLElement)
+      this.srcElement?.contains(target) ||
+      this.#treeselectList?.srcElement.contains(target)
 
     if (!isInsideClick) {
       this.blurWindowHandler()
