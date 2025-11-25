@@ -1,4 +1,5 @@
 import '../../../src/treeselectjs.css'
+import treeselectCss from '../../../src/treeselectjs.css?inline'
 import Treeselect from '../../../src/treeselectjs'
 import { defaultOptions, largeOptionsList, largeNestedOptionsList, optionsWithDisabled } from '../../testHelpers'
 
@@ -120,6 +121,31 @@ export const runSlotTest = () => {
   })
 }
 
+const runShadowDomTest = () => {
+  const className = '.treeselect-shadow-root'
+  const domElement = document.querySelector(className)
+
+  if (!domElement) {
+    return
+  }
+
+  const shadow = domElement.attachShadow({ mode: 'open' })
+
+  const style = document.createElement('style')
+  style.textContent = treeselectCss
+  shadow.appendChild(style)
+
+  const treeselectContainer = document.createElement('div')
+  treeselectContainer.setAttribute('id', 'treeselect-shadow-root')
+  shadow.appendChild(treeselectContainer)
+
+  const treeselect = new Treeselect({
+    parentHtmlContainer: treeselectContainer,
+    value: [],
+    options: defaultOptions
+  })
+}
+
 runBaseTest()
 runSingleTest()
 runDisabledTest()
@@ -127,3 +153,4 @@ runLargeDataTest()
 runAppendedToBodyTest()
 runBoostRenderingTest()
 runSlotTest()
+runShadowDomTest()

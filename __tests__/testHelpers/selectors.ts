@@ -32,6 +32,9 @@ type Classes = {
     topToBody: string
     static: string
   }
+  shadowRoot: {
+    parent: string
+  }
 }
 
 export const classes: Classes = {
@@ -67,6 +70,9 @@ export const classes: Classes = {
     top: 'treeselect-list--top',
     topToBody: 'treeselect-list--top-to-body',
     static: 'treeselect-list--static'
+  },
+  shadowRoot: {
+    parent: 'treeselect-shadow-root'
   }
 }
 
@@ -103,5 +109,8 @@ export const classesSelectors: Classes = {
     top: `.${classes.list.top}`,
     topToBody: `.${classes.list.topToBody}`,
     static: `.${classes.list.static}`
+  },
+  shadowRoot: {
+    parent: `.${classes.shadowRoot.parent}`
   }
 }
