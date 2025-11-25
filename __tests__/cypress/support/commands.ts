@@ -1,6 +1,11 @@
 import { classesSelectors } from '../../testHelpers'
 
-const { parent: parentSelector, input: inputSelector, list: listSelector } = classesSelectors
+const {
+  parent: parentSelector,
+  input: inputSelector,
+  list: listSelector,
+  shadowRoot: shadowRootSelector
+} = classesSelectors
 const baseUrl = 'http://localhost:5173/__tests__/cypress/pages'
 
 declare global {
@@ -14,6 +19,7 @@ declare global {
       visitAppendToBodyPage(): void
       visitBoostRenderingPage(): void
       visitSlotPage(): void
+      visitShadowRootPage(): void
 
       // Actions
       treeselectClick(): void
@@ -30,6 +36,7 @@ declare global {
       getListItem(selector: string): Chainable<JQuery<HTMLElement>>
       getInput(): Chainable<JQuery<HTMLElement>>
       getTagsElements(): Chainable<JQuery<HTMLElement>>
+      getShadowRoot(): Chainable<JQuery<HTMLElement>>
     }
   }
 }
@@ -61,6 +68,10 @@ Cypress.Commands.add('visitBoostRenderingPage', () => {
 
 Cypress.Commands.add('visitSlotPage', () => {
   cy.visit(`${baseUrl}/cypress-slot.html`)
+})
+
+Cypress.Commands.add('visitShadowRootPage', () => {
+  cy.visit(`${baseUrl}/cypress-shadow-root.html`)
 })
 
 // Actions
@@ -113,4 +124,8 @@ Cypress.Commands.add('getInput', () => {
 
 Cypress.Commands.add('getTagsElements', () => {
   return cy.get(inputSelector.tagsElement)
+})
+
+Cypress.Commands.add('getShadowRoot', () => {
+  return cy.get(shadowRootSelector.parent).shadow()
 })
