@@ -42,8 +42,8 @@ Import treeselectjs (UMD)
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   
   <script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.13.3/dist/treeselectjs.umd.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.7.2/dist/react-treeselectjs.umd.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.7.2/dist/react-treeselectjs.css" />
+  <script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.7.3/dist/react-treeselectjs.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.7.3/dist/react-treeselectjs.css" />
 </head>
 <body>
   <div id="root"></div>

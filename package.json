@@ -1,6 +1,6 @@
 {
   "name": "react-treeselectjs",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "Treeselect React Component",
   "main": "./dist/react-treeselectjs.umd.js",
   "module": "./dist/react-treeselectjs.mjs",
