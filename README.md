@@ -17,6 +17,11 @@ Build data:
 
 ![Example img](https://github.com/dipson88/vue-treeselectjs/blob/main/treeselectjs.png?raw=true)
 
+### Support
+You can buy me a coffee if you want to support my work. Thank you!
+
+<a href="https://www.buymeacoffee.com/dipson88" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
 ### Getting Started
 ```bash
 npm install --save vue-treeselectjs
@@ -34,8 +39,8 @@ Import treeselectjs (UMD)
   <head>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.13.3/dist/treeselectjs.umd.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.8.2/dist/vue-treeselectjs.umd.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.8.2/dist/vue-treeselectjs.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.8.3/dist/vue-treeselectjs.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.8.3/dist/vue-treeselectjs.css" />
   </head>
   <body>
       <div id="app">
@@ -254,8 +259,3 @@ Name  | Type | Description
 4) If you use **isSingleSelect** prop, you should pass only a single **value** without an array.
 5) If you use **isSingleSelect** prop, you can set **showTags** to false. It helps to show treeselect as a dropdown. Also you can disable selecting of group's nodes with help of **disabledBranchNode**.
 6) If you use a large list of options and see a problem with performance, try to use **isBoostedRendering** prop.
-
-### Support
-You can buy me a coffee if you want to support my work. Thank you!
-
-<a href="https://www.buymeacoffee.com/dipson88" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
