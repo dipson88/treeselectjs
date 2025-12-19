@@ -354,7 +354,8 @@ export class TreeselectList implements ITreeselectList {
     list.classList.add('treeselect-list')
 
     if (this.listClassName.length > 0) {
-      list.classList.add(this.listClassName)
+      const listClassNames = this.listClassName.split(' ')
+      list.classList.add(...listClassNames)
     }
 
     if (this.isSingleSelect) {
