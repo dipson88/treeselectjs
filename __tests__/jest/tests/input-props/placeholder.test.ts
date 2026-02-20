@@ -4,7 +4,7 @@ describe('placeholder prop', () => {
   it('should render default placeholder', () => {
     const treeselect = renderTreeselect({
       value: [],
-      options: []
+      options: [],
     })
 
     const input = getEditElement(treeselect.parentHtmlContainer)
@@ -17,7 +17,7 @@ describe('placeholder prop', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: [],
-      placeholder
+      placeholder,
     })
 
     const input = getEditElement(treeselect.parentHtmlContainer)

@@ -5,7 +5,7 @@ const { list: listSelector } = classesSelectors
 
 const optionsVisibility = {
   visible: ['Option 495', 'Option 504'],
-  hidden: ['Option 494', 'Option 505']
+  hidden: ['Option 494', 'Option 505'],
 }
 
 const visibleSubOptions = ['SubOption 495-0', 'SubOption 495-1', 'SubOption 495-2']

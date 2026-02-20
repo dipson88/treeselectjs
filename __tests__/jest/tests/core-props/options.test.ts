@@ -6,7 +6,7 @@ import {
   getListItems,
   getTagsElement,
   noResultsText,
-  renderTreeselect
+  renderTreeselect,
 } from '../../helpers'
 
 const { list: listClasses } = classes
@@ -15,7 +15,7 @@ describe('options prop', () => {
   it('should render a Treeselect with empty options', () => {
     const treeselect = renderTreeselect({
       value: [],
-      options: []
+      options: [],
     })
 
     const arrow = getArrowElement(treeselect.parentHtmlContainer)
@@ -31,8 +31,8 @@ describe('options prop', () => {
       options: [
         { value: 1, name: 'Option 1', children: [] },
         { value: 2, name: 'Option 2', children: [] },
-        { value: 3, name: 'Option 3', children: [] }
-      ]
+        { value: 3, name: 'Option 3', children: [] },
+      ],
     })
 
     const arrow = getArrowElement(treeselect.parentHtmlContainer)
@@ -49,8 +49,8 @@ describe('options prop', () => {
       options: [
         { value: 1, name: 'Option 1', children: [], htmlAttr: { test: 'test-data-1' } },
         { value: 2, name: 'Option 2', children: [] },
-        { value: 3, name: 'Option 3', children: [] }
-      ]
+        { value: 3, name: 'Option 3', children: [] },
+      ],
     })
 
     const arrow = getArrowElement(treeselect.parentHtmlContainer)
@@ -70,10 +70,10 @@ describe('options prop', () => {
           name: 'Option 1',
           children: [
             { value: 2, name: 'Option 2', children: [], htmlAttr: { test: 'test-data-2' } },
-            { value: 3, name: 'Option 3', children: [] }
-          ]
-        }
-      ]
+            { value: 3, name: 'Option 3', children: [] },
+          ],
+        },
+      ],
     })
 
     const arrow = getArrowElement(treeselect.parentHtmlContainer)
@@ -91,8 +91,8 @@ describe('options prop', () => {
       options: [
         { value: 1, name: 'Option 1', children: [], disabled: true },
         { value: 2, name: 'Option 2', children: [] },
-        { value: 3, name: 'Option 3', children: [] }
-      ]
+        { value: 3, name: 'Option 3', children: [] },
+      ],
     })
 
     const arrow = getArrowElement(treeselect.parentHtmlContainer)
@@ -108,8 +108,8 @@ describe('options prop', () => {
       options: [
         { value: 1, name: 'Option 1', children: [], disabled: true },
         { value: 2, name: 'Option 2', children: [] },
-        { value: 3, name: 'Option 3', children: [] }
-      ]
+        { value: 3, name: 'Option 3', children: [] },
+      ],
     })
 
     const arrow = getArrowElement(treeselect.parentHtmlContainer)
@@ -131,10 +131,10 @@ describe('options prop', () => {
           name: 'Option 1',
           children: [
             { value: 2, name: 'Option 2', children: [] },
-            { value: 3, name: 'Option 3', children: [] }
-          ]
-        }
-      ]
+            { value: 3, name: 'Option 3', children: [] },
+          ],
+        },
+      ],
     })
 
     const arrow = getArrowElement(treeselect.parentHtmlContainer)
@@ -155,10 +155,10 @@ describe('options prop', () => {
           name: 'Option 1',
           children: [
             { value: 2, name: 'Option 2', children: [], disabled: true },
-            { value: 3, name: 'Option 3', children: [] }
-          ]
-        }
-      ]
+            { value: 3, name: 'Option 3', children: [] },
+          ],
+        },
+      ],
     })
 
     const arrow = getArrowElement(treeselect.parentHtmlContainer)
@@ -181,10 +181,10 @@ describe('options prop', () => {
           name: 'Option 1',
           children: [
             { value: 2, name: 'Option 2', children: [] },
-            { value: 3, name: 'Option 3', children: [] }
-          ]
-        }
-      ]
+            { value: 3, name: 'Option 3', children: [] },
+          ],
+        },
+      ],
     })
 
     const arrow = getArrowElement(treeselect.parentHtmlContainer)
@@ -209,10 +209,10 @@ describe('options prop', () => {
           name: 'Option 1',
           children: [
             { value: 2, name: 'Option 2', children: [], disabled: true },
-            { value: 3, name: 'Option 3', children: [] }
-          ]
-        }
-      ]
+            { value: 3, name: 'Option 3', children: [] },
+          ],
+        },
+      ],
     })
 
     const arrow = getArrowElement(treeselect.parentHtmlContainer)
@@ -247,26 +247,26 @@ describe('options prop', () => {
                 {
                   value: 4,
                   name: 'Option 4',
-                  children: []
-                }
-              ]
+                  children: [],
+                },
+              ],
             },
             {
               value: disabledItemValue,
               name: disabledItemName,
               isGroupSelectable: false,
-              children: []
-            }
-          ]
-        }
-      ]
+              children: [],
+            },
+          ],
+        },
+      ],
     })
 
     treeselect.toggleOpenClose()
 
     // Checked isGroupSelectable for group item
     const [groupItem] = Array.from(getListGroupsItems(treeselect.parentHtmlContainer)).filter(
-      (item) => item.getAttribute('title') === disabledGroupName
+      (item) => item.getAttribute('title') === disabledGroupName,
     )
 
     fireEvent.mouseDown(groupItem)
@@ -276,7 +276,7 @@ describe('options prop', () => {
 
     // Checked isGroupSelectable for regular item
     const [regularItem] = Array.from(getListItems(treeselect.parentHtmlContainer)).filter(
-      (item) => item.getAttribute('title') === disabledItemName
+      (item) => item.getAttribute('title') === disabledItemName,
     )
 
     fireEvent.mouseDown(regularItem)

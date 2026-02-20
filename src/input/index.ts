@@ -1,5 +1,5 @@
-import { type ValueOptionType, type InnerOptionType, type IconsType } from '../treeselectTypes'
-import { type ITreeselectInputParams, type ITreeselectInput } from './inputTypes'
+import type { ValueOptionType, InnerOptionType, IconsType } from '../treeselectTypes'
+import type { ITreeselectInputParams, ITreeselectInput } from './inputTypes'
 import { appendIconToElement } from '../svgIcons'
 
 const getTagsSelectedName = (value: InnerOptionType[]) => {
@@ -68,7 +68,7 @@ export class TreeselectInput implements ITreeselectInput {
     closeCallback,
     keydownCallback,
     focusCallback,
-    nameChangeCallback
+    nameChangeCallback,
   }: ITreeselectInputParams) {
     this.value = value
     this.showTags = showTags
@@ -102,7 +102,7 @@ export class TreeselectInput implements ITreeselectInput {
     this.srcElement = this.#createTreeselectInput({
       htmlTagsSection: this.#htmlTagsSection,
       htmlEditControl: this.#htmlEditControl,
-      htmlOperators: this.#htmlOperators
+      htmlOperators: this.#htmlOperators,
     })
 
     this.#updateDOM()
@@ -240,7 +240,7 @@ export class TreeselectInput implements ITreeselectInput {
   #createTreeselectInput({
     htmlTagsSection,
     htmlEditControl,
-    htmlOperators
+    htmlOperators,
   }: {
     htmlTagsSection: HTMLElement
     htmlEditControl: HTMLElement

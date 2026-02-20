@@ -1,5 +1,5 @@
-import { type ValueOptionType, type IconsType } from '../../treeselectTypes'
-import { type OptionsTreeMap, type TreeItem } from '../listTypes'
+import type { ValueOptionType, IconsType } from '../../treeselectTypes'
+import type { OptionsTreeMap, TreeItem } from '../listTypes'
 import { appendIconToElement } from '../../svgIcons'
 
 export const updateDOM = ({
@@ -7,7 +7,7 @@ export const updateDOM = ({
   emptyListHtmlElement,
   iconElements,
   previousSingleSelectedValue,
-  rtl
+  rtl,
 }: {
   optionsTreeMap: OptionsTreeMap
   emptyListHtmlElement: HTMLElement | null
@@ -38,7 +38,7 @@ export const updateDOM = ({
 const updateLeftPaddingItems = ({
   option,
   optionsTreeMap,
-  rtl
+  rtl,
 }: {
   option: TreeItem
   optionsTreeMap: OptionsTreeMap
@@ -84,7 +84,7 @@ const updateLeftPaddingItems = ({
 
 const updateEmptyListClass = ({
   optionsTreeMap,
-  emptyListHtmlElement
+  emptyListHtmlElement,
 }: {
   optionsTreeMap: OptionsTreeMap
   emptyListHtmlElement: HTMLElement | null
@@ -117,7 +117,7 @@ export const setAttributesFromHtmlAttr = (itemElement: HTMLDivElement, htmlAttr?
 
 const updateCheckedClass = ({
   option,
-  previousSingleSelectedValue
+  previousSingleSelectedValue,
 }: {
   option: TreeItem
   previousSingleSelectedValue: ValueOptionType[]

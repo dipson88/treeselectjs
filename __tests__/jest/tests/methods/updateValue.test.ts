@@ -4,7 +4,7 @@ const values = { Option1: 1, Option2: 2, Option3: 3 }
 const options = [
   { value: values.Option1, name: 'Option 1', children: [] },
   { value: values.Option2, name: 'Option 2', children: [] },
-  { value: values.Option3, name: 'Option 3', children: [] }
+  { value: values.Option3, name: 'Option 3', children: [] },
 ]
 
 describe('updateValue method', () => {
@@ -12,7 +12,7 @@ describe('updateValue method', () => {
     const newValues = [values.Option1, values.Option2]
     const treeselect = renderTreeselect({
       value: [],
-      options
+      options,
     })
 
     treeselect.updateValue(newValues)
@@ -26,7 +26,7 @@ describe('updateValue method', () => {
   it("shouldn't update invalid value", () => {
     const treeselect = renderTreeselect({
       value: [],
-      options
+      options,
     })
 
     treeselect.updateValue([values.Option1, 4])

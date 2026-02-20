@@ -49,7 +49,7 @@ export const classes: Classes = {
     opened: 'treeselect-input--opened',
     tags: 'treeselect-input__tags',
     tagsElement: 'treeselect-input__tags-element',
-    top: 'treeselect-input--top'
+    top: 'treeselect-input--top',
   },
   list: {
     base: 'treeselect-list',
@@ -69,11 +69,11 @@ export const classes: Classes = {
     slot: 'treeselect-list__slot',
     top: 'treeselect-list--top',
     topToBody: 'treeselect-list--top-to-body',
-    static: 'treeselect-list--static'
+    static: 'treeselect-list--static',
   },
   shadowRoot: {
-    parent: 'treeselect-shadow-root'
-  }
+    parent: 'treeselect-shadow-root',
+  },
 }
 
 export const classesSelectors: Classes = {
@@ -88,7 +88,7 @@ export const classesSelectors: Classes = {
     opened: `.${classes.input.opened}`,
     tags: `.${classes.input.tags}`,
     tagsElement: `.${classes.input.tagsElement}`,
-    top: `.${classes.input.top}`
+    top: `.${classes.input.top}`,
   },
   list: {
     base: `.${classes.list.base}`,
@@ -108,9 +108,9 @@ export const classesSelectors: Classes = {
     slot: `.${classes.list.slot}`,
     top: `.${classes.list.top}`,
     topToBody: `.${classes.list.topToBody}`,
-    static: `.${classes.list.static}`
+    static: `.${classes.list.static}`,
   },
   shadowRoot: {
-    parent: `.${classes.shadowRoot.parent}`
-  }
+    parent: `.${classes.shadowRoot.parent}`,
+  },
 }

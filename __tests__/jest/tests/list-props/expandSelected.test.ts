@@ -6,7 +6,7 @@ describe('expandSelected prop', () => {
   it('should not expand selected items by default', () => {
     const treeselect = renderTreeselect({
       value: [optionsValues.BrightonItem, optionsValues.LyonItem],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     treeselect.toggleOpenClose()
@@ -18,7 +18,7 @@ describe('expandSelected prop', () => {
     const treeselect = renderTreeselect({
       value: [optionsValues.BrightonItem, optionsValues.LyonItem],
       options: defaultOptions,
-      expandSelected: true
+      expandSelected: true,
     })
 
     treeselect.toggleOpenClose()
@@ -31,7 +31,7 @@ describe('expandSelected prop', () => {
       value: optionsValues.WestEndItem,
       options: defaultOptions,
       expandSelected: true,
-      isSingleSelect: true
+      isSingleSelect: true,
     })
 
     treeselect.toggleOpenClose()
@@ -43,14 +43,14 @@ describe('expandSelected prop', () => {
       optionNames.ChelseaItem,
       optionNames.WestEndItem,
       optionNames.BrightonItem,
-      optionNames.FranceGroup
+      optionNames.FranceGroup,
     ]
     const itemsToHide = [optionNames.LyonItem, optionNames.ParisItem]
 
     items.forEach((item) => {
-      if (itemsToShow.includes(item.textContent!)) {
+      if (itemsToShow.includes(item.textContent)) {
         expect(item.classList.contains(listClasses.itemHidden)).toBe(false)
-      } else if (itemsToHide.includes(item.textContent!)) {
+      } else if (itemsToHide.includes(item.textContent)) {
         expect(item.classList.contains(listClasses.itemHidden)).toBe(true)
       }
     })
@@ -63,7 +63,7 @@ describe('expandSelected prop', () => {
       value: [optionsValues.BrightonItem],
       options: defaultOptions,
       expandSelected: true,
-      isIndependentNodes: true
+      isIndependentNodes: true,
     })
 
     treeselect.toggleOpenClose()
@@ -73,14 +73,14 @@ describe('expandSelected prop', () => {
       optionNames.EnglandGroup,
       optionNames.LondonGroup,
       optionNames.BrightonItem,
-      optionNames.FranceGroup
+      optionNames.FranceGroup,
     ]
     const itemsToHide = [optionNames.ChelseaItem, optionNames.WestEndItem, optionNames.LyonItem, optionNames.ParisItem]
 
     items.forEach((item) => {
-      if (itemsToShow.includes(item.textContent!)) {
+      if (itemsToShow.includes(item.textContent)) {
         expect(item.classList.contains(listClasses.itemHidden)).toBe(false)
-      } else if (itemsToHide.includes(item.textContent!)) {
+      } else if (itemsToHide.includes(item.textContent)) {
         expect(item.classList.contains(listClasses.itemHidden)).toBe(true)
       }
     })

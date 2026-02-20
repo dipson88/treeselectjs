@@ -1,16 +1,10 @@
-import {
-  type IconsType,
-  type OptionType,
-  type SelectedNodesType,
-  type TagsSortFnType,
-  type ValueOptionType
-} from '../treeselectTypes'
-import {
-  type BeforeSearchStateMap,
-  type ITreeselectList,
-  type ITreeselectListParams,
-  type OptionsTreeMap,
-  type TreeItem
+import type { IconsType, OptionType, SelectedNodesType, TagsSortFnType, ValueOptionType } from '../treeselectTypes'
+import type {
+  BeforeSearchStateMap,
+  ITreeselectList,
+  ITreeselectListParams,
+  OptionsTreeMap,
+  TreeItem,
 } from './listTypes'
 import { getOptionsTreeMap, getTreeItemOptionByInputId, getCheckedOptions } from './helpers/listOptionsHelper'
 import { updateOptionByCheckState, updateOptionsByValue } from './helpers/listCheckStateHelper'
@@ -20,7 +14,7 @@ import {
   hideShowChildrenOptions,
   updateBeforeSearchStateMap,
   updateOptionsMapBySearchState,
-  updateVisibleBySearchTreeItemOptions
+  updateVisibleBySearchTreeItemOptions,
 } from './helpers/listVisibilityStateHelper'
 import { updateDOM, setAttributesFromHtmlAttr } from './helpers/domHelper'
 import { appendIconToElement } from '../svgIcons'
@@ -31,7 +25,7 @@ const updateListValue = ({
   isSingleSelect,
   expandSelected,
   isFirstValueUpdate,
-  isIndependentNodes
+  isIndependentNodes,
 }: {
   newValue: ValueOptionType[]
   optionsTreeMap: OptionsTreeMap
@@ -44,7 +38,7 @@ const updateListValue = ({
     newValue,
     optionsTreeMap,
     isSingleSelect,
-    isIndependentNodes
+    isIndependentNodes,
   })
 
   if (isFirstValueUpdate && expandSelected) {
@@ -108,7 +102,7 @@ export class TreeselectList implements ITreeselectList {
     isBoostedRendering,
     inputCallback,
     arrowClickCallback,
-    mouseupCallback
+    mouseupCallback,
   }: ITreeselectListParams) {
     this.options = options
     this.value = value
@@ -132,7 +126,7 @@ export class TreeselectList implements ITreeselectList {
     this.optionsTreeMap = getOptionsTreeMap({
       options: this.options,
       openLevel: this.openLevel,
-      isIndependentNodes: this.isIndependentNodes
+      isIndependentNodes: this.isIndependentNodes,
     })
     this.beforeSearchStateMap = new Map()
     this.emptyListHtmlElement = null
@@ -153,7 +147,7 @@ export class TreeselectList implements ITreeselectList {
       isSingleSelect: this.isSingleSelect,
       expandSelected: this.expandSelected,
       isFirstValueUpdate: this.#isFirstValueUpdate,
-      isIndependentNodes: this.isIndependentNodes
+      isIndependentNodes: this.isIndependentNodes,
     })
     this.#updateListDOM()
     this.#isFirstValueUpdate = false
@@ -172,7 +166,7 @@ export class TreeselectList implements ITreeselectList {
       // This loop need to save a isClose state before searching
       updateBeforeSearchStateMap({
         beforeSearchStateMap: this.beforeSearchStateMap,
-        optionsTreeMap: this.optionsTreeMap
+        optionsTreeMap: this.optionsTreeMap,
       })
     }
 
@@ -180,7 +174,7 @@ export class TreeselectList implements ITreeselectList {
       // This loop need to restore a isClose state after searching
       updateOptionsMapBySearchState({
         beforeSearchStateMap: this.beforeSearchStateMap,
-        optionsTreeMap: this.optionsTreeMap
+        optionsTreeMap: this.optionsTreeMap,
       })
     }
 
@@ -250,7 +244,7 @@ export class TreeselectList implements ITreeselectList {
       emptyListHtmlElement: this.emptyListHtmlElement,
       iconElements: this.iconElements,
       previousSingleSelectedValue: this.#previousSingleSelectedValue,
-      rtl: this.rtl
+      rtl: this.rtl,
     })
   }
 
@@ -260,10 +254,14 @@ export class TreeselectList implements ITreeselectList {
     }
 
     const key = e.key
-    const checkbox = itemFocused.querySelector('.treeselect-list__item-checkbox')!
-    const inputId = checkbox.getAttribute('input-id')
-    const option = getTreeItemOptionByInputId(inputId, this.optionsTreeMap)!
-    const arrow = option.arrowItemHtmlElement!
+    const checkbox = itemFocused.querySelector('.treeselect-list__item-checkbox') ?? null
+    const inputId = checkbox?.getAttribute('input-id') ?? null
+    const option = getTreeItemOptionByInputId(inputId, this.optionsTreeMap) ?? null
+    const arrow = option?.arrowItemHtmlElement ?? null
+
+    if (option === null || arrow === null) {
+      return
+    }
 
     if (key === 'ArrowLeft' && !option.isClosed && option.isGroup) {
       arrow.dispatchEvent(new Event('mousedown'))
@@ -635,14 +633,14 @@ export class TreeselectList implements ITreeselectList {
         newValue: [treeOption.id],
         optionsTreeMap: this.optionsTreeMap,
         isSingleSelect: this.isSingleSelect,
-        isIndependentNodes: this.isIndependentNodes
+        isIndependentNodes: this.isIndependentNodes,
       })
     } else {
       treeOption.checked = target.checked
       const resultChecked = updateOptionByCheckState({
         option: treeOption,
         optionsTreeMap: this.optionsTreeMap,
-        isIndependentNodes: this.isIndependentNodes
+        isIndependentNodes: this.isIndependentNodes,
       })
       target.checked = resultChecked
     }
@@ -669,7 +667,9 @@ export class TreeselectList implements ITreeselectList {
       const itemsFocused = Array.from(this.srcElement.querySelectorAll(`.${focusedClassName}`))
 
       if (itemsFocused.length) {
-        itemsFocused.forEach((el) => el.classList.remove(focusedClassName))
+        itemsFocused.forEach((el) => {
+          el.classList.remove(focusedClassName)
+        })
       }
 
       itemElement.classList.add(focusedClassName)
@@ -679,9 +679,10 @@ export class TreeselectList implements ITreeselectList {
   }
 
   #sortNodes(nodes: TreeItem[]) {
-    return this.tagsSortFn === null
+    const sortFn = this.tagsSortFn ?? null
+    return sortFn === null
       ? nodes
-      : [...nodes].sort((a, b) => this.tagsSortFn!({ value: a.id, name: a.name }, { value: b.id, name: b.name }))
+      : [...nodes].sort((a, b) => sortFn({ value: a.id, name: a.name }, { value: b.id, name: b.name }))
   }
 
   #updateSelectedNodes() {
@@ -690,7 +691,7 @@ export class TreeselectList implements ITreeselectList {
     this.selectedNodes = {
       nodes: this.#sortNodes(ungroupedNodes),
       groupedNodes: this.#sortNodes(groupedNodes),
-      allNodes: this.#sortNodes(allNodes)
+      allNodes: this.#sortNodes(allNodes),
     }
   }
 

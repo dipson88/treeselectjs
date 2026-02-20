@@ -4,7 +4,7 @@ describe('focus method', () => {
   it('should focus on the input', async () => {
     const treeselect = renderTreeselect({
       value: [],
-      options: []
+      options: [],
     })
 
     treeselect.focus()

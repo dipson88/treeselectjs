@@ -7,7 +7,7 @@ describe('id prop', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: [],
-      id
+      id,
     })
 
     const input = getEditElement(treeselect.parentHtmlContainer)

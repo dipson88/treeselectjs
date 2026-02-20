@@ -4,7 +4,7 @@ describe('parentHtmlContainer prop', () => {
   it('should render a Treeselect component', () => {
     const treeselect = renderTreeselect({
       value: [],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     treeselect.toggleOpenClose()

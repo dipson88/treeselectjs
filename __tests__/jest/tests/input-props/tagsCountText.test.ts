@@ -5,7 +5,7 @@ describe('tagsCountText prop', () => {
     const treeselect = renderTreeselect({
       value: [optionsValues.EnglandGroup, optionsValues.FranceGroup],
       options: defaultOptions,
-      showTags: false
+      showTags: false,
     })
 
     const tagsElement = getTagsElement(treeselect.parentHtmlContainer)
@@ -17,7 +17,7 @@ describe('tagsCountText prop', () => {
       value: [optionsValues.EnglandGroup, optionsValues.FranceGroup],
       options: defaultOptions,
       showTags: false,
-      tagsCountText: 'test elements'
+      tagsCountText: 'test elements',
     })
 
     const tagsElement = getTagsElement(treeselect.parentHtmlContainer)

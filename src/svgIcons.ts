@@ -1,4 +1,4 @@
-import { type IconsType } from './treeselectTypes'
+import type { IconsType } from './treeselectTypes'
 
 export const icons: IconsType = {
   arrowUp:
@@ -16,7 +16,7 @@ export const icons: IconsType = {
   check:
     '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>',
   partialCheck:
-    '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>'
+    '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>',
 }
 
 export const appendIconToElement = (icon: string | HTMLElement, element: HTMLElement) => {

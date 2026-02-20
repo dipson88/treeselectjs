@@ -1,4 +1,4 @@
-import { type InnerOptionType, type IconsType } from '../treeselectTypes'
+import type { InnerOptionType, IconsType } from '../treeselectTypes'
 
 export interface ITreeselectInputParams {
   value: InnerOptionType[]

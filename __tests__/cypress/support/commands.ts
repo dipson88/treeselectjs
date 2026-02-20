@@ -4,7 +4,7 @@ const {
   parent: parentSelector,
   input: inputSelector,
   list: listSelector,
-  shadowRoot: shadowRootSelector
+  shadowRoot: shadowRootSelector,
 } = classesSelectors
 const baseUrl = 'http://localhost:5173/__tests__/cypress/pages'
 

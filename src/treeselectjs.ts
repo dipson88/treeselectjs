@@ -1,33 +1,33 @@
 import './treeselectjs.css'
-import { type ITreeselectInput } from './input/inputTypes'
-import { type ITreeselectList } from './list/listTypes'
+import type { ITreeselectInput } from './input/inputTypes'
+import type { ITreeselectList } from './list/listTypes'
 import { TreeselectInput } from './input/index'
 import { TreeselectList } from './list/index'
-import {
-  type ITreeselect,
-  type ITreeselectParams,
-  type OptionType,
-  type ValueOptionType,
-  type InnerOptionType,
-  type IconsType,
-  type SelectedNodesType,
-  type DirectionType,
-  type TagsSortFnType,
-  type TagsSortItem,
-  type ValueType,
-  type ValueInputType
+import type {
+  ITreeselect,
+  ITreeselectParams,
+  OptionType,
+  ValueOptionType,
+  InnerOptionType,
+  IconsType,
+  SelectedNodesType,
+  DirectionType,
+  TagsSortFnType,
+  TagsSortItem,
+  ValueType,
+  ValueInputType,
 } from './treeselectTypes'
 import { getDefaultIcons } from './svgIcons'
 
-export {
-  type ValueType,
-  type ValueInputType,
-  type OptionType,
-  type DirectionType,
-  type IconsType,
-  type ITreeselectParams,
-  type TagsSortFnType,
-  type TagsSortItem
+export type {
+  ValueType,
+  ValueInputType,
+  OptionType,
+  DirectionType,
+  IconsType,
+  ITreeselectParams,
+  TagsSortFnType,
+  TagsSortItem,
 }
 
 const validateProps = ({
@@ -36,7 +36,7 @@ const validateProps = ({
   appendToBody,
   isSingleSelect,
   value,
-  direction
+  direction,
 }: Partial<ITreeselectParams>) => {
   if (!parentHtmlContainer) {
     console.error('Validation: parentHtmlContainer prop is required!')
@@ -183,14 +183,14 @@ export default class Treeselect implements ITreeselect {
     closeCallback,
     nameChangeCallback,
     searchCallback,
-    openCloseGroupCallback
+    openCloseGroupCallback,
   }: ITreeselectParams) {
     validateProps({
       parentHtmlContainer,
       value,
       staticList,
       appendToBody,
-      isSingleSelect
+      isSingleSelect,
     })
 
     this.parentHtmlContainer = parentHtmlContainer
@@ -249,7 +249,7 @@ export default class Treeselect implements ITreeselect {
       value: this.value,
       staticList: this.staticList,
       appendToBody: this.appendToBody,
-      isSingleSelect: this.isSingleSelect
+      isSingleSelect: this.isSingleSelect,
     })
     // We need to re-merge icons if icons were changed
     // And user call mount method
@@ -320,7 +320,7 @@ export default class Treeselect implements ITreeselect {
   #updateInnerValues({
     groupedNodes,
     nodes,
-    allNodes
+    allNodes,
   }: {
     groupedNodes?: InnerOptionType[]
     nodes?: InnerOptionType[]
@@ -364,7 +364,7 @@ export default class Treeselect implements ITreeselect {
       iconElements: this.iconElements,
       inputCallback: (value) => this.#listInputListener(value),
       arrowClickCallback: (groupId, isClosed) => this.#listArrowClickListener(groupId, isClosed),
-      mouseupCallback: () => this.#treeselectInput?.focus()
+      mouseupCallback: () => this.#treeselectInput?.focus(),
     })
 
     const input = new TreeselectInput({
@@ -386,7 +386,7 @@ export default class Treeselect implements ITreeselect {
       closeCallback: () => this.#closeList(),
       keydownCallback: (e) => this.#inputKeydownListener(e),
       focusCallback: () => this.#inputFocusListener(),
-      nameChangeCallback: (name) => this.#inputNameChangeListener(name)
+      nameChangeCallback: (name) => this.#inputNameChangeListener(name),
     })
 
     if (this.rtl) {
@@ -669,7 +669,7 @@ export default class Treeselect implements ITreeselect {
       x: containerX,
       y: containerY,
       height: containerHeight,
-      width: containerWidth
+      width: containerWidth,
     } = container.getBoundingClientRect()
     const windowHeight = window.innerHeight
 

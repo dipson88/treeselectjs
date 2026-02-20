@@ -4,7 +4,7 @@ const values = { Option1: 1, Option2: 2, Option3: 3 }
 const options = [
   { value: values.Option1, name: 'Option 1', children: [] },
   { value: values.Option2, name: 'Option 2', children: [] },
-  { value: values.Option3, name: 'Option 3', children: [] }
+  { value: values.Option3, name: 'Option 3', children: [] },
 ]
 
 describe('mount method', () => {
@@ -13,7 +13,7 @@ describe('mount method', () => {
     const ariaLabel = 'test-aria-label'
     const treeselect = renderTreeselect({
       value: [],
-      options: options
+      options: options,
     })
 
     treeselect.value = newValue

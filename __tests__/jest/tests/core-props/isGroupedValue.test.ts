@@ -4,7 +4,7 @@ describe('isGroupedValue prop', () => {
   it('should not group values by default', () => {
     const treeselect = renderTreeselect({
       value: [optionsValues.EnglandGroup],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     expect(treeselect.value).toEqual([optionsValues.ChelseaItem, optionsValues.WestEndItem, optionsValues.BrightonItem])
@@ -14,7 +14,7 @@ describe('isGroupedValue prop', () => {
     const treeselect = renderTreeselect({
       isGroupedValue: true,
       value: [optionsValues.EnglandGroup],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     expect(treeselect.value).toEqual([optionsValues.EnglandGroup])

@@ -44,12 +44,12 @@
 }
 
 /* rtl */
-[dir='rtl'] .treeselect-input {
+[dir="rtl"] .treeselect-input {
   padding-right: 4px;
   padding-left: 40px;
 }
 
-[dir='rtl'] .treeselect-input__operators {
+[dir="rtl"] .treeselect-input__operators {
   right: unset;
   left: 2px;
 }

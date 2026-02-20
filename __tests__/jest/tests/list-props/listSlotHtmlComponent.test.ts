@@ -9,7 +9,7 @@ describe('listSlotHtmlComponent prop', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: defaultOptions,
-      listSlotHtmlComponent: slotElement
+      listSlotHtmlComponent: slotElement,
     })
 
     treeselect.toggleOpenClose()

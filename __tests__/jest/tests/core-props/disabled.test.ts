@@ -8,7 +8,7 @@ describe('disabled prop', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: [],
-      disabled: true
+      disabled: true,
     })
 
     expect(treeselect.parentHtmlContainer).toMatchSnapshot()
@@ -18,7 +18,7 @@ describe('disabled prop', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: [],
-      disabled: true
+      disabled: true,
     })
 
     const arrow = getArrowElement(treeselect.parentHtmlContainer)
@@ -30,7 +30,7 @@ describe('disabled prop', () => {
     const treeselect = renderTreeselect({
       value: [1],
       options: [{ value: 1, name: 'Option 1', children: [] }],
-      disabled: true
+      disabled: true,
     })
 
     const tagsElement = getTagsElement(treeselect.parentHtmlContainer)

@@ -1,10 +1,10 @@
-import { type ValueOptionType } from '../../treeselectTypes'
-import { type TreeItem, type OptionsTreeMap, type BeforeSearchStateMap } from '../listTypes'
+import type { ValueOptionType } from '../../treeselectTypes'
+import type { TreeItem, OptionsTreeMap, BeforeSearchStateMap } from '../listTypes'
 import { getDirectChildrenOptions } from './listOptionsHelper'
 
 export const hideShowChildrenOptions = (
   optionsTreeMap: OptionsTreeMap,
-  { id, isClosed }: Pick<TreeItem, 'id' | 'isClosed'>
+  { id, isClosed }: Pick<TreeItem, 'id' | 'isClosed'>,
 ) => {
   const allChildrenOptions = getDirectChildrenOptions({ id, optionsTreeMap })
 
@@ -96,7 +96,7 @@ const openShowAllParents = (childOf: ValueOptionType, optionsTreeMap: OptionsTre
 
 export const updateOptionsMapBySearchState = ({
   optionsTreeMap,
-  beforeSearchStateMap
+  beforeSearchStateMap,
 }: {
   optionsTreeMap: OptionsTreeMap
   beforeSearchStateMap: BeforeSearchStateMap
@@ -115,7 +115,7 @@ export const updateOptionsMapBySearchState = ({
 
 export const updateBeforeSearchStateMap = ({
   optionsTreeMap,
-  beforeSearchStateMap
+  beforeSearchStateMap,
 }: {
   optionsTreeMap: OptionsTreeMap
   beforeSearchStateMap: BeforeSearchStateMap
@@ -125,7 +125,7 @@ export const updateBeforeSearchStateMap = ({
   optionsTreeMap.forEach((option) => {
     beforeSearchStateMap.set(option.id, {
       hidden: option.hidden,
-      isClosed: option.isClosed
+      isClosed: option.isClosed,
     })
   })
 }
@@ -137,5 +137,5 @@ export const createIntersectionScrollObserver = (srcElementList: HTMLElement) =>
         entry.target.classList.toggle('treeselect-list__item--scroll-not-visible', !entry.isIntersecting)
       })
     },
-    { root: srcElementList, threshold: 0.5 }
+    { root: srcElementList, threshold: 0.5 },
   )

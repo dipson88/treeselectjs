@@ -5,7 +5,7 @@ describe('rtl prop', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: defaultOptions,
-      rtl: true
+      rtl: true,
     })
 
     expect(treeselect.parentHtmlContainer.getAttribute('dir')).toBe('rtl')
@@ -17,12 +17,17 @@ describe('rtl prop', () => {
       value: [],
       options: defaultOptions,
       rtl: true,
-      appendToBody: true
+      appendToBody: true,
     })
 
     treeselect.toggleOpenClose()
 
-    const list = document.querySelector(classesSelectors.list.base)!
+    const list = document.querySelector(classesSelectors.list.base)
+
+    if (!list) {
+      throw new Error(`${classesSelectors.list.base} element not found`)
+    }
+
     expect(list.getAttribute('dir')).toBe('rtl')
     expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })
