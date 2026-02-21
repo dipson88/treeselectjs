@@ -27,9 +27,6 @@
     "enabled": true,
     "rules": {
       "recommended": true,
-      "complexity": {
-        "noImportantStyles": "off"
-      },
       "correctness": {
         "useParseIntRadix": "off"
       }
