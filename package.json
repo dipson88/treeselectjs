@@ -69,11 +69,11 @@
     "vite": "^7.3.1",
     "vite-plugin-dts": "^4.5.4"
   },
-  "files": [
-    "dist"
-  ],
   "overrides": {
     "ajv": ">=8.18.0",
     "minimatch": ">=10.2.1"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
