@@ -1,6 +1,7 @@
 import type { ValueOptionType, InnerOptionType, IconsType } from '../treeselectTypes'
 import type { ITreeselectInputParams, ITreeselectInput } from './inputTypes'
-import { appendIconToElement } from '../svgIcons'
+import { removeClass, setClass } from '../helpers/classHelper'
+import { appendIconToElement } from '../helpers/svgIcons'
 
 const getTagsSelectedName = (value: InnerOptionType[]) => {
   return value.reduce((acc, { name }, index) => {
@@ -205,22 +206,22 @@ export class TreeselectInput implements ITreeselectInput {
   #updateEditControl() {
     if (this.value?.length) {
       this.#htmlEditControl.removeAttribute('placeholder')
-      this.srcElement.classList.remove('treeselect-input--value-not-selected')
+      removeClass(this.srcElement, 'treeselect-input--value-not-selected')
     } else {
       this.#htmlEditControl.setAttribute('placeholder', this.placeholder)
-      this.srcElement.classList.add('treeselect-input--value-not-selected')
+      setClass(this.srcElement, 'treeselect-input--value-not-selected')
     }
 
     if (!this.searchable) {
-      this.srcElement.classList.add('treeselect-input--unsearchable')
+      setClass(this.srcElement, 'treeselect-input--unsearchable')
     } else {
-      this.srcElement.classList.remove('treeselect-input--unsearchable')
+      removeClass(this.srcElement, 'treeselect-input--unsearchable')
     }
 
     if (this.isSingleSelect) {
-      this.srcElement.classList.add('treeselect-input--is-single-select')
+      setClass(this.srcElement, 'treeselect-input--is-single-select')
     } else {
-      this.srcElement.classList.remove('treeselect-input--is-single-select')
+      removeClass(this.srcElement, 'treeselect-input--is-single-select')
     }
 
     this.#htmlEditControl.value = this.searchText

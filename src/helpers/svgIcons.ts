@@ -1,4 +1,4 @@
-import type { IconsType } from './treeselectTypes'
+import type { IconsType } from '../treeselectTypes'
 
 export const icons: IconsType = {
   arrowUp:

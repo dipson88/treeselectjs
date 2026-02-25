@@ -3,6 +3,13 @@ import type { ITreeselectInput } from './input/inputTypes'
 import type { ITreeselectList } from './list/listTypes'
 import { TreeselectInput } from './input/index'
 import { TreeselectList } from './list/index'
+import {
+  DEFAULT_EMPTY_TEXT,
+  DEFAULT_PLACEHOLDER,
+  DEFAULT_TAGS_COUNT_TEXT,
+  SEARCH_DEBOUNCE_MS,
+} from './helpers/constants'
+import { removeClass, setClass } from './helpers/classHelper'
 import type {
   ITreeselect,
   ITreeselectParams,
@@ -17,7 +24,7 @@ import type {
   ValueType,
   ValueInputType,
 } from './treeselectTypes'
-import { getDefaultIcons } from './svgIcons'
+import { getDefaultIcons } from './helpers/svgIcons'
 
 export type {
   ValueType,
@@ -79,9 +86,15 @@ const getResultValue = (value: ValueOptionType[], isSingleSelect: boolean): Valu
   return value
 }
 
+/**
+ * Tree-select component: hierarchical options, single/multi select, tags, search.
+ * Create with `new Treeselect(params)` then call `mount()` to render.
+ * @see ITreeselectParams for constructor options
+ */
 export default class Treeselect implements ITreeselect {
   // Props
   parentHtmlContainer: HTMLElement
+  /** Current value: single id (single select), array of ids (multi), or null. */
   value: ValueType
   options: OptionType[]
   openLevel: number
@@ -123,8 +136,11 @@ export default class Treeselect implements ITreeselect {
   ungroupedValue: ValueOptionType[]
   groupedValue: ValueOptionType[]
   allValue: ValueOptionType[]
+  /** True when the dropdown list is open. */
   isListOpened: boolean
+  /** Selected option label (single select). */
   selectedName: string
+  /** Root DOM element of the treeselect (null after destroy). */
   srcElement: HTMLElement | null
 
   // Components
@@ -146,6 +162,9 @@ export default class Treeselect implements ITreeselect {
   #focusEvent: EventListenerOrEventListenerObject | null = null
   #blurEvent: EventListenerOrEventListenerObject | null = null
 
+  /**
+   * @param params - Configuration and callbacks; only parentHtmlContainer is required
+   */
   constructor({
     parentHtmlContainer,
     value,
@@ -200,16 +219,16 @@ export default class Treeselect implements ITreeselect {
     this.appendToBody = appendToBody ?? false
     this.alwaysOpen = !!(alwaysOpen && !disabled)
     this.showTags = showTags ?? true
-    this.tagsCountText = tagsCountText ?? 'elements selected'
+    this.tagsCountText = tagsCountText ?? DEFAULT_TAGS_COUNT_TEXT
     this.tagsSortFn = tagsSortFn ?? null
     this.clearable = clearable ?? true
     this.searchable = searchable ?? true
-    this.placeholder = placeholder ?? 'Search...'
+    this.placeholder = placeholder ?? DEFAULT_PLACEHOLDER
     this.grouped = grouped ?? true
     this.isGroupedValue = isGroupedValue ?? false
     this.listSlotHtmlComponent = listSlotHtmlComponent ?? null
     this.disabled = disabled ?? false
-    this.emptyText = emptyText ?? 'No results found...'
+    this.emptyText = emptyText ?? DEFAULT_EMPTY_TEXT
     this.staticList = !!(staticList && !this.appendToBody)
     this.id = id ?? ''
     this.ariaLabel = ariaLabel ?? ''
@@ -241,6 +260,7 @@ export default class Treeselect implements ITreeselect {
     this.#initMount(value)
   }
 
+  /** Renders the treeselect into parentHtmlContainer. Call after constructor or to re-mount. */
   mount() {
     // We need to revalidate props if user call mount method
     // because user can change props after init
@@ -276,14 +296,15 @@ export default class Treeselect implements ITreeselect {
     }
 
     if (this.disabled) {
-      this.srcElement.classList.add('treeselect--disabled')
+      setClass(this.srcElement, 'treeselect--disabled')
     } else {
-      this.srcElement.classList.remove('treeselect--disabled')
+      removeClass(this.srcElement, 'treeselect--disabled')
     }
 
     this.updateValue(initValue ?? this.value)
   }
 
+  /** Sets the current value (single id, array of ids, or null). Updates UI and callbacks. */
   updateValue(newValue: ValueInputType) {
     const value = getDefaultValue(newValue)
     const list = this.#treeselectList
@@ -294,6 +315,7 @@ export default class Treeselect implements ITreeselect {
     }
   }
 
+  /** Removes the component from DOM and clears listeners. Call before removing the container. */
   destroy() {
     if (this.srcElement) {
       this.#closeList()
@@ -301,15 +323,18 @@ export default class Treeselect implements ITreeselect {
       this.srcElement = null
       this.#removeOutsideListeners(true)
       this.#treeselectList?.destroy()
+      clearTimeout(this.#searchTimer)
     }
   }
 
+  /** Moves focus to the treeselect input. */
   focus() {
     if (this.#treeselectInput) {
       this.#treeselectInput.focus()
     }
   }
 
+  /** Opens the list if closed, closes if open. */
   toggleOpenClose() {
     if (this.#treeselectInput) {
       this.#treeselectInput.openClose()
@@ -418,7 +443,6 @@ export default class Treeselect implements ITreeselect {
   }
 
   #inputSearchListener(value: string) {
-    // debounce for input 350ms
     if (this.#searchTimer) {
       clearTimeout(this.#searchTimer)
     }
@@ -426,7 +450,7 @@ export default class Treeselect implements ITreeselect {
     this.#searchTimer = window.setTimeout(() => {
       this.#treeselectList?.updateSearchValue(value)
       this.updateListPosition()
-    }, 350)
+    }, SEARCH_DEBOUNCE_MS)
 
     this.#emitSearch(value)
   }
@@ -434,7 +458,7 @@ export default class Treeselect implements ITreeselect {
   #inputFocusListener() {
     this.#updateFocusClasses(true)
 
-    if (this.#focusEvent && this.#focusEvent && this.#blurEvent) {
+    if (this.#focusEvent && this.#blurEvent) {
       document.addEventListener('mousedown', this.#focusEvent, true)
       document.addEventListener('focus', this.#focusEvent, true)
       window.addEventListener('blur', this.#blurEvent, { capture: false })
@@ -559,15 +583,15 @@ export default class Treeselect implements ITreeselect {
     const bottomClass = appendToBody ? 'treeselect-list--bottom-to-body' : 'treeselect-list--bottom'
 
     if (isTop) {
-      this.#treeselectList.srcElement.classList.add(topClass)
-      this.#treeselectList.srcElement.classList.remove(bottomClass)
-      this.#treeselectInput.srcElement.classList.add('treeselect-input--top')
-      this.#treeselectInput.srcElement.classList.remove('treeselect-input--bottom')
+      setClass(this.#treeselectList.srcElement, topClass)
+      removeClass(this.#treeselectList.srcElement, bottomClass)
+      setClass(this.#treeselectInput.srcElement, 'treeselect-input--top')
+      removeClass(this.#treeselectInput.srcElement, 'treeselect-input--bottom')
     } else {
-      this.#treeselectList.srcElement.classList.remove(topClass)
-      this.#treeselectList.srcElement.classList.add(bottomClass)
-      this.#treeselectInput.srcElement.classList.remove('treeselect-input--top')
-      this.#treeselectInput.srcElement.classList.add('treeselect-input--bottom')
+      removeClass(this.#treeselectList.srcElement, topClass)
+      setClass(this.#treeselectList.srcElement, bottomClass)
+      removeClass(this.#treeselectInput.srcElement, 'treeselect-input--top')
+      setClass(this.#treeselectInput.srcElement, 'treeselect-input--bottom')
     }
   }
 
@@ -577,25 +601,25 @@ export default class Treeselect implements ITreeselect {
     }
 
     if (isFocus) {
-      this.#treeselectInput.srcElement.classList.add('treeselect-input--focused')
-      this.#treeselectList.srcElement.classList.add('treeselect-list--focused')
+      setClass(this.#treeselectInput.srcElement, 'treeselect-input--focused')
+      setClass(this.#treeselectList.srcElement, 'treeselect-list--focused')
     } else {
-      this.#treeselectInput.srcElement.classList.remove('treeselect-input--focused')
-      this.#treeselectList.srcElement.classList.remove('treeselect-list--focused')
+      removeClass(this.#treeselectInput.srcElement, 'treeselect-input--focused')
+      removeClass(this.#treeselectList.srcElement, 'treeselect-list--focused')
     }
   }
 
   #updateOpenCloseClasses(isOpen: boolean) {
     if (isOpen) {
-      this.#treeselectInput?.srcElement.classList.add('treeselect-input--opened')
+      setClass(this.#treeselectInput?.srcElement, 'treeselect-input--opened')
     } else {
-      this.#treeselectInput?.srcElement.classList.remove('treeselect-input--opened')
+      removeClass(this.#treeselectInput?.srcElement, 'treeselect-input--opened')
     }
 
     if (this.staticList) {
-      this.#treeselectList?.srcElement.classList.add('treeselect-list--static')
+      setClass(this.#treeselectList?.srcElement, 'treeselect-list--static')
     } else {
-      this.#treeselectList?.srcElement.classList.remove('treeselect-list--static')
+      removeClass(this.#treeselectList?.srcElement, 'treeselect-list--static')
     }
   }
 

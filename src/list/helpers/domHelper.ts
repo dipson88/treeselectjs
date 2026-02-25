@@ -1,6 +1,7 @@
 import type { ValueOptionType, IconsType } from '../../treeselectTypes'
 import type { OptionsTreeMap, TreeItem } from '../listTypes'
-import { appendIconToElement } from '../../svgIcons'
+import { DEFAULT_ITEM_PADDING, ZERO_LEVEL_ITEM_PADDING } from '../../helpers/constants'
+import { appendIconToElement } from '../../helpers/svgIcons'
 
 export const updateDOM = ({
   optionsTreeMap,
@@ -45,8 +46,6 @@ const updateLeftPaddingItems = ({
   rtl: boolean
 }) => {
   const isZeroLevel = option.level === 0
-  const defaultPadding = 20
-  const zeroLevelItemPadding = 5
   let padding = '0'
 
   if (isZeroLevel) {
@@ -59,12 +58,13 @@ const updateLeftPaddingItems = ({
       }
     }
 
-    const itemPadding = !option.isGroup && isGroupsExistOnLevel ? `${defaultPadding}px` : `${zeroLevelItemPadding}px`
+    const itemPadding =
+      !option.isGroup && isGroupsExistOnLevel ? `${DEFAULT_ITEM_PADDING}px` : `${ZERO_LEVEL_ITEM_PADDING}px`
     padding = option.isGroup ? '0' : itemPadding
   } else {
     padding = option.isGroup
-      ? `${option.level * defaultPadding}px`
-      : `${option.level * defaultPadding + defaultPadding}px`
+      ? `${option.level * DEFAULT_ITEM_PADDING}px`
+      : `${option.level * DEFAULT_ITEM_PADDING + DEFAULT_ITEM_PADDING}px`
   }
 
   const listItem = option.itemHtmlElement
@@ -101,13 +101,13 @@ const updateEmptyListClass = ({
   emptyListHtmlElement?.classList.toggle('treeselect-list__empty--hidden', isNotEmpty)
 }
 
-export const setAttributesFromHtmlAttr = (itemElement: HTMLDivElement, htmlAttr?: object) => {
+export const setAttributesFromHtmlAttr = (itemElement: HTMLDivElement, htmlAttr?: Record<string, string>) => {
   if (!htmlAttr) {
     return
   }
 
   Object.keys(htmlAttr).forEach((key) => {
-    const value = htmlAttr[key as keyof object]
+    const value = htmlAttr[key as keyof Record<string, string>]
 
     if (typeof value === 'string') {
       itemElement.setAttribute(key, value)

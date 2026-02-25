@@ -1,4 +1,4 @@
-import type { InnerOptionType, IconsType } from '../treeselectTypes'
+import type { InnerOptionType, IconsType, ValueOptionType } from '../treeselectTypes'
 
 export interface ITreeselectInputParams {
   value: InnerOptionType[]
@@ -29,7 +29,7 @@ export interface ITreeselectInput extends ITreeselectInputParams {
   focus: () => void
   blur: () => void
   updateValue: (newValue: InnerOptionType[]) => void
-  removeItem: (id: string) => void
+  removeItem: (id: ValueOptionType) => void
   clear: () => void
   openClose: () => void
   clearSearch: () => void

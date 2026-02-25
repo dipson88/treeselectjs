@@ -1,4 +1,7 @@
 import type { IconsType, OptionType, SelectedNodesType, TagsSortFnType, ValueOptionType } from '../treeselectTypes'
+import { DEFAULT_EMPTY_TEXT } from '../helpers/constants'
+import { removeClass, setClass } from '../helpers/classHelper'
+import { appendIconToElement } from '../helpers/svgIcons'
 import type {
   BeforeSearchStateMap,
   ITreeselectList,
@@ -17,7 +20,6 @@ import {
   updateVisibleBySearchTreeItemOptions,
 } from './helpers/listVisibilityStateHelper'
 import { updateDOM, setAttributesFromHtmlAttr } from './helpers/domHelper'
-import { appendIconToElement } from '../svgIcons'
 
 const updateListValue = ({
   newValue,
@@ -109,7 +111,7 @@ export class TreeselectList implements ITreeselectList {
     this.openLevel = openLevel ?? 0
     this.listSlotHtmlComponent = listSlotHtmlComponent ?? null
     this.tagsSortFn = tagsSortFn ?? null
-    this.emptyText = emptyText ?? 'No results found...'
+    this.emptyText = emptyText ?? DEFAULT_EMPTY_TEXT
     this.isSingleSelect = isSingleSelect ?? false
     this.showCount = showCount ?? false
     this.disabledBranchNode = disabledBranchNode ?? false
@@ -220,11 +222,11 @@ export class TreeselectList implements ITreeselectList {
     }
 
     if (itemFocused) {
-      itemFocused.classList.remove(focusedClass)
+      removeClass(itemFocused, focusedClass)
     }
 
     const [firstItem] = allItems
-    firstItem.classList.add(focusedClass)
+    setClass(firstItem, focusedClass)
   }
 
   isLastFocusedElementExist() {
@@ -287,17 +289,17 @@ export class TreeselectList implements ITreeselectList {
 
     if (!itemFocused) {
       const [firstNode] = allItems
-      firstNode.classList.add(focusedClassName)
+      setClass(firstNode, focusedClassName)
     } else {
       const focusedItemIndex = allItems.findIndex((el) => el.classList.contains(focusedClassName))
       const focusedNode = allItems[focusedItemIndex]
-      focusedNode.classList.remove(focusedClassName)
+      removeClass(focusedNode, focusedClassName)
 
       const nextNodeIndex = key === 'ArrowDown' ? focusedItemIndex + 1 : focusedItemIndex - 1
       const defaultNodeIndex = key === 'ArrowDown' ? 0 : allItems.length - 1
       const isDefaultIndex = !allItems[nextNodeIndex]
       const nextNodeToFocus = allItems[nextNodeIndex] ?? allItems[defaultNodeIndex]
-      nextNodeToFocus.classList.add(focusedClassName)
+      setClass(nextNodeToFocus, focusedClassName)
 
       const listCoord = this.srcElement.getBoundingClientRect()
       const nextCoord = nextNodeToFocus.getBoundingClientRect()
@@ -379,7 +381,7 @@ export class TreeselectList implements ITreeselectList {
     e.stopPropagation()
 
     if (this.#lastFocusedItem && this.#isMouseActionsAvailable) {
-      this.#lastFocusedItem.classList.add('treeselect-list__item--focused')
+      setClass(this.#lastFocusedItem, 'treeselect-list__item--focused')
     }
   }
 
@@ -668,13 +670,13 @@ export class TreeselectList implements ITreeselectList {
 
       if (itemsFocused.length) {
         itemsFocused.forEach((el) => {
-          el.classList.remove(focusedClassName)
+          removeClass(el, focusedClassName)
         })
       }
 
-      itemElement.classList.add(focusedClassName)
+      setClass(itemElement, focusedClassName)
     } else {
-      itemElement.classList.remove(focusedClassName)
+      removeClass(itemElement, focusedClassName)
     }
   }
 
