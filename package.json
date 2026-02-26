@@ -1,6 +1,6 @@
 {
   "name": "treeselectjs",
-  "version": "0.13.4-beta.1",
+  "version": "0.14.0",
   "description": "Treeselect JS",
   "main": "./dist/treeselectjs.umd.js",
   "module": "./dist/treeselectjs.mjs",
@@ -28,6 +28,7 @@
     "format": "biome format --write",
     "lint": "biome lint",
     "lint:fix": "biome lint --write",
+    "check": "biome check --write",
     "jest:watch": "jest --watch",
     "jest:run": "jest",
     "cypress:open": "cypress open",
