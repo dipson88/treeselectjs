@@ -30,13 +30,13 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import Treeselect, { TreeselectValue } from './Treeselect.vue'
+import Treeselect, { type TreeselectValue } from './Treeselect.vue'
 import 'treeselectjs/dist/treeselectjs.css'
 
 export default defineComponent({
   name: 'App',
   components: {
-    Treeselect
+    Treeselect,
   },
   setup() {
     const options = ref([
@@ -51,21 +51,21 @@ export default defineComponent({
               {
                 name: 'Chelsea',
                 value: 3,
-                children: []
+                children: [],
               },
               {
                 name: 'West End',
                 value: 4,
-                children: []
-              }
-            ]
+                children: [],
+              },
+            ],
           },
           {
             name: 'Brighton',
             value: 5,
-            children: []
-          }
-        ]
+            children: [],
+          },
+        ],
       },
       {
         name: 'France',
@@ -74,15 +74,15 @@ export default defineComponent({
           {
             name: 'Paris',
             value: 7,
-            children: []
+            children: [],
           },
           {
             name: 'Lyon',
             value: 8,
-            children: []
-          }
-        ]
-      }
+            children: [],
+          },
+        ],
+      },
     ])
 
     const modelValue = ref<TreeselectValue>([3])
@@ -96,8 +96,8 @@ export default defineComponent({
     return {
       onInput,
       options,
-      modelValue
+      modelValue,
     }
-  }
+  },
 })
 </script>

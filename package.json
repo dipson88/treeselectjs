@@ -1,6 +1,6 @@
 {
   "name": "vue-treeselectjs",
-  "version": "0.8.3",
+  "version": "0.9.0",
   "description": "Treeselect Vue Component",
   "main": "./dist/vue-treeselectjs.umd.js",
   "module": "./dist/vue-treeselectjs.mjs",
@@ -8,12 +8,12 @@
   "exports": {
     ".": {
       "import": {
-        "default": "./dist/vue-treeselectjs.mjs",
-        "types": "./dist/Treeselect.d.ts"
+        "types": "./dist/Treeselect.d.ts",
+        "default": "./dist/vue-treeselectjs.mjs"
       },
       "require": {
-        "default": "./dist/vue-treeselectjs.umd.js",
-        "types": "./dist/Treeselect.d.ts"
+        "types": "./dist/Treeselect.d.ts",
+        "default": "./dist/vue-treeselectjs.umd.js"
       }
     },
     "./dist/vue-treeselectjs.css": {
@@ -25,12 +25,12 @@
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "prettier": "prettier --w src",
-    "lint": "eslint src --ext .ts,.vue"
+    "lint": "biome lint .",
+    "check": "biome check --write ."
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dipson88/vue-treeselectjs.git"
+    "url": "git+https://github.com/dipson88/vue-treeselectjs.git"
   },
   "keywords": [
     "vue",
@@ -51,28 +51,23 @@
   },
   "homepage": "https://github.com/dipson88/vue-treeselectjs#readme",
   "dependencies": {
-    "treeselectjs": "^0.13.3"
+    "treeselectjs": "^0.14.0"
   },
   "devDependencies": {
-    "@types/node": "^18.15.11",
-    "@typescript-eslint/eslint-plugin": "^5.59.0",
-    "@typescript-eslint/parser": "^5.59.0",
-    "@vitejs/plugin-vue": "^4.1.0",
-    "@vue/eslint-config-typescript": "^11.0.2",
-    "eslint": "^8.38.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-vue": "^9.11.0",
-    "prettier": "^2.8.7",
-    "typescript": "^4.9.3",
-    "vite": "^4.2.0",
-    "vite-plugin-dts": "^2.3.0",
-    "vue": "^3.2.47",
-    "vue-eslint-parser": "^9.1.1",
-    "vue-tsc": "^1.2.0"
+    "@types/node": "^25.3.0",
+    "@biomejs/biome": "^2.4.4",
+    "@vitejs/plugin-vue": "^6.0.4",
+    "typescript": "^5.8.2",
+    "vite": "^7.3.1",
+    "vite-plugin-dts": "^4.5.4",
+    "vue": "^3.5.29",
+    "vue-tsc": "^3.2.5"
   },
   "peerDependencies": {
     "vue": "^3.x"
+  },
+  "overrides": {
+    "minimatch": ">=10.2.4"
   },
   "files": [
     "dist"
