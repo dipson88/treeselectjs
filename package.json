@@ -71,8 +71,7 @@
     "vite-plugin-dts": "^4.5.4"
   },
   "overrides": {
-    "ajv": ">=8.18.0",
-    "minimatch": ">=10.2.1"
+    "minimatch": ">=10.2.4"
   },
   "files": [
     "dist"
