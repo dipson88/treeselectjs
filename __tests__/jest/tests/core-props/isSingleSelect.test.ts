@@ -5,7 +5,7 @@ describe('isSingleSelect prop', () => {
     const treeselect = renderTreeselect({
       isSingleSelect: true,
       value: optionsValues.ChelseaItem,
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     treeselect.toggleOpenClose()
@@ -18,7 +18,7 @@ describe('isSingleSelect prop', () => {
     const treeselect = renderTreeselect({
       isSingleSelect: true,
       value: optionsValues.EnglandGroup,
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     treeselect.toggleOpenClose()

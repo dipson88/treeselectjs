@@ -6,13 +6,13 @@ describe('openLevel prop', () => {
   it('groups should be closed by default', () => {
     const treeselect = renderTreeselect({
       value: [],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     treeselect.toggleOpenClose()
 
     const topGroups = Array.from(getListItems(treeselect.parentHtmlContainer)).filter(
-      (item) => !item.classList.contains(listClasses.itemHidden)
+      (item) => !item.classList.contains(listClasses.itemHidden),
     )
 
     expect(topGroups).toHaveLength(2)
@@ -23,13 +23,13 @@ describe('openLevel prop', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: defaultOptions,
-      openLevel: 10
+      openLevel: 10,
     })
 
     treeselect.toggleOpenClose()
 
     const hiddenItems = Array.from(getListItems(treeselect.parentHtmlContainer)).filter((item) =>
-      item.classList.contains(listClasses.itemHidden)
+      item.classList.contains(listClasses.itemHidden),
     )
 
     expect(hiddenItems).toHaveLength(0)

@@ -7,7 +7,7 @@ describe('ariaLabel prop', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: [],
-      ariaLabel
+      ariaLabel,
     })
 
     const input = getEditElement(treeselect.parentHtmlContainer)

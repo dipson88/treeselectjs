@@ -9,13 +9,18 @@ A multi-select js component with nested options.
 - Typescript support
 
 Build data:
-- treeselectjs.mjs  51.89 kB │ gzip: 11.67 kB
-- treeselectjs.umd.js  41.92 kB │ gzip: 10.43 kB
-- treeselectjs.css  7.08 kB │ gzip:  1.41 kB
+- treeselectjs.mjs  46.21 kB │ gzip: 10.82 kB
+- treeselectjs.umd.js  36.09 kB │ gzip: 9.38 kB
+- treeselectjs.css  8.24 kB │ gzip: 1.54 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
 ![Example img](https://github.com/dipson88/treeselectjs/blob/main/treeselectjs.png?raw=true)
+
+### Support
+You can buy me a coffee if you want to support my work. Thank you!
+
+<a href="https://www.buymeacoffee.com/dipson88" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 ### Getting Started
 ```bash
@@ -30,8 +35,8 @@ import Treeselect from 'treeselectjs'
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.13.3/dist/treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.13.3/dist/treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.14.0/dist/treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.14.0/dist/treeselectjs.css" />
 ...
 <script>
   ...
@@ -222,8 +227,3 @@ Name  | Params | Description
 7) If you use **isSingleSelect** prop, you should pass only a single **value** without an array.
 8) If you use **isSingleSelect** prop, you can set **showTags** to false. It helps to show treeselect as a dropdown. Also you can disable selecting of group's nodes with help of **disabledBranchNode**.
 9) If you use a large list of options and see a problem with performance, try to use **isBoostedRendering** prop.
-
-### Support
-You can buy me a coffee if you want to support my work. Thank you!
-
-<a href="https://www.buymeacoffee.com/dipson88" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>

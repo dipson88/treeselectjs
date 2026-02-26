@@ -6,7 +6,7 @@ import {
   getListItems,
   getNoResultsElement,
   optionNames,
-  renderTreeselect
+  renderTreeselect,
 } from '../../helpers'
 
 const { list: listClasses } = classes
@@ -17,7 +17,7 @@ describe('searchable prop', () => {
   it('should be searchable by default', async () => {
     const treeselect = renderTreeselect({
       value: [],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     const input = getEditElement(treeselect.parentHtmlContainer)
@@ -25,12 +25,12 @@ describe('searchable prop', () => {
     await awaitInput()
 
     const listItems = Array.from(getListItems(treeselect.parentHtmlContainer)).filter(
-      (item) => !item.classList.contains(listClasses.itemHidden)
+      (item) => !item.classList.contains(listClasses.itemHidden),
     )
     const visibleItems = [optionNames.FranceGroup, optionNames.ParisItem]
 
     expect(listItems).toHaveLength(2)
-    expect(listItems.every((item) => visibleItems.includes(item.textContent!))).toBe(true)
+    expect(listItems.every((item) => visibleItems.includes(item.textContent))).toBe(true)
     expect(treeselect.parentHtmlContainer).toMatchSnapshot()
   })
 
@@ -38,7 +38,7 @@ describe('searchable prop', () => {
     const treeselect = renderTreeselect({
       searchable: false,
       value: [],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     const input = getEditElement(treeselect.parentHtmlContainer)
@@ -46,7 +46,7 @@ describe('searchable prop', () => {
     await awaitInput()
 
     const listItems = Array.from(getListItems(treeselect.parentHtmlContainer)).filter(
-      (item) => !item.classList.contains(listClasses.itemHidden)
+      (item) => !item.classList.contains(listClasses.itemHidden),
     )
 
     expect(listItems).toHaveLength(0)
@@ -56,7 +56,7 @@ describe('searchable prop', () => {
   it('should show no results message', async () => {
     const treeselect = renderTreeselect({
       value: [],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     const input = getEditElement(treeselect.parentHtmlContainer)
@@ -64,7 +64,7 @@ describe('searchable prop', () => {
     await awaitInput()
 
     const listItems = Array.from(getListItems(treeselect.parentHtmlContainer)).filter(
-      (item) => !item.classList.contains(listClasses.itemHidden)
+      (item) => !item.classList.contains(listClasses.itemHidden),
     )
 
     const emptyElement = getNoResultsElement(treeselect.parentHtmlContainer)

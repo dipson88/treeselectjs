@@ -11,10 +11,10 @@ export const runBaseTest = () => {
     return
   }
 
-  const treeselect = new Treeselect({
+  new Treeselect({
     parentHtmlContainer: domElement,
     value: [4, 7, 8],
-    options: defaultOptions
+    options: defaultOptions,
   })
 }
 
@@ -26,12 +26,12 @@ export const runSingleTest = () => {
     return
   }
 
-  const treeselect = new Treeselect({
+  new Treeselect({
     parentHtmlContainer: domElement,
     value: 4,
     options: defaultOptions,
     isSingleSelect: true,
-    showTags: false
+    showTags: false,
   })
 }
 
@@ -43,10 +43,10 @@ export const runDisabledTest = () => {
     return
   }
 
-  const treeselect = new Treeselect({
+  new Treeselect({
     parentHtmlContainer: domElement,
     value: [],
-    options: optionsWithDisabled
+    options: optionsWithDisabled,
   })
 }
 
@@ -58,11 +58,11 @@ export const runLargeDataTest = () => {
     return
   }
 
-  const treeselect = new Treeselect({
+  new Treeselect({
     parentHtmlContainer: domElement,
     value: [],
     options: largeOptionsList,
-    saveScrollPosition: true
+    saveScrollPosition: true,
   })
 }
 
@@ -74,11 +74,11 @@ export const runAppendedToBodyTest = () => {
     return
   }
 
-  const treeselect = new Treeselect({
+  new Treeselect({
     parentHtmlContainer: domElement,
     value: [],
     options: defaultOptions,
-    appendToBody: true
+    appendToBody: true,
   })
 }
 
@@ -90,11 +90,11 @@ export const runBoostRenderingTest = () => {
     return
   }
 
-  const treeselect = new Treeselect({
+  new Treeselect({
     parentHtmlContainer: domElement,
     value: [],
     options: largeNestedOptionsList,
-    isBoostedRendering: true
+    isBoostedRendering: true,
   })
 }
 
@@ -113,11 +113,11 @@ export const runSlotTest = () => {
   btn.innerText = 'Click!'
   slot.appendChild(btn)
 
-  const treeselect = new Treeselect({
+  new Treeselect({
     parentHtmlContainer: domElement,
     value: [],
     options: defaultOptions,
-    listSlotHtmlComponent: slot
+    listSlotHtmlComponent: slot,
   })
 }
 
@@ -139,10 +139,10 @@ const runShadowDomTest = () => {
   treeselectContainer.setAttribute('id', 'treeselect-shadow-root')
   shadow.appendChild(treeselectContainer)
 
-  const treeselect = new Treeselect({
+  new Treeselect({
     parentHtmlContainer: treeselectContainer,
     value: [],
-    options: defaultOptions
+    options: defaultOptions,
   })
 }
 

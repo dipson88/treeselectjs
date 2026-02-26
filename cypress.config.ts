@@ -8,6 +8,6 @@ export default defineConfig({
     specPattern: '__tests__/cypress/**/*.cy.ts',
     supportFile: '__tests__/cypress/support/e2e.ts',
     supportFolder: '__tests__/cypress/support',
-    videosFolder: '__tests__/cypress/videos'
-  }
+    videosFolder: '__tests__/cypress/videos',
+  },
 })

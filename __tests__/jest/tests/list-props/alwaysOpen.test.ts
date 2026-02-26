@@ -4,7 +4,7 @@ describe('alwaysOpen prop', () => {
   it('should be closed by default', () => {
     const treeselect = renderTreeselect({
       value: [],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     const list = getListElement(treeselect.parentHtmlContainer)
@@ -17,7 +17,7 @@ describe('alwaysOpen prop', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: defaultOptions,
-      alwaysOpen: true
+      alwaysOpen: true,
     })
 
     const list = getListElement(treeselect.parentHtmlContainer)

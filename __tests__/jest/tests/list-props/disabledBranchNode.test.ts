@@ -6,13 +6,13 @@ describe('disabledBranchNode prop', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: defaultOptions,
-      openLevel: 5
+      openLevel: 5,
     })
 
     treeselect.toggleOpenClose()
 
     const [groupItem] = Array.from(getListGroupsItems(treeselect.parentHtmlContainer)).filter(
-      (item) => item.getAttribute('title') === optionNames.FranceGroup
+      (item) => item.getAttribute('title') === optionNames.FranceGroup,
     )
 
     fireEvent.mouseDown(groupItem)
@@ -30,13 +30,13 @@ describe('disabledBranchNode prop', () => {
       value: [],
       options: defaultOptions,
       openLevel: 5,
-      disabledBranchNode: true
+      disabledBranchNode: true,
     })
 
     treeselect.toggleOpenClose()
 
     const [groupItem] = Array.from(getListGroupsItems(treeselect.parentHtmlContainer)).filter(
-      (item) => item.getAttribute('title') === optionNames.FranceGroup
+      (item) => item.getAttribute('title') === optionNames.FranceGroup,
     )
 
     fireEvent.mouseDown(groupItem)

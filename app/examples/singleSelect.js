@@ -12,21 +12,21 @@ const options = [
           {
             name: 'Chelsea',
             value: 3,
-            children: []
+            children: [],
           },
           {
             name: 'West End',
             value: 4,
-            children: []
-          }
-        ]
+            children: [],
+          },
+        ],
       },
       {
         name: 'Brighton',
         value: 5,
-        children: []
-      }
-    ]
+        children: [],
+      },
+    ],
   },
   {
     name: 'France',
@@ -35,15 +35,15 @@ const options = [
       {
         name: 'Paris',
         value: 7,
-        children: []
+        children: [],
       },
       {
         name: 'Lyon',
         value: 8,
-        children: []
-      }
-    ]
-  }
+        children: [],
+      },
+    ],
+  },
 ]
 
 const value = 4
@@ -59,7 +59,7 @@ export const runSingleSelectExample = (Treeselect) => {
     value,
     options,
     isSingleSelect: true,
-    showTags: false
+    showTags: false,
   })
 
   treeselect.srcElement.addEventListener('input', (e) => {

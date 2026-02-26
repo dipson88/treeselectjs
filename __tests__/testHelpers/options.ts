@@ -6,7 +6,7 @@ export const optionNames = {
   BrightonItem: 'Brighton',
   FranceGroup: 'France',
   ParisItem: 'Paris',
-  LyonItem: 'Lyon'
+  LyonItem: 'Lyon',
 }
 
 export const optionsValues = {
@@ -17,7 +17,7 @@ export const optionsValues = {
   BrightonItem: 5,
   FranceGroup: 6,
   ParisItem: 7,
-  LyonItem: 8
+  LyonItem: 8,
 }
 
 export const noResultsText = 'No results found...'
@@ -34,21 +34,21 @@ export const defaultOptions = [
           {
             name: optionNames.ChelseaItem,
             value: optionsValues.ChelseaItem,
-            children: []
+            children: [],
           },
           {
             name: optionNames.WestEndItem,
             value: optionsValues.WestEndItem,
-            children: []
-          }
-        ]
+            children: [],
+          },
+        ],
       },
       {
         name: optionNames.BrightonItem,
         value: optionsValues.BrightonItem,
-        children: []
-      }
-    ]
+        children: [],
+      },
+    ],
   },
   {
     name: optionNames.FranceGroup,
@@ -57,15 +57,15 @@ export const defaultOptions = [
       {
         name: optionNames.ParisItem,
         value: optionsValues.ParisItem,
-        children: []
+        children: [],
       },
       {
         name: optionNames.LyonItem,
         value: optionsValues.LyonItem,
-        children: []
-      }
-    ]
-  }
+        children: [],
+      },
+    ],
+  },
 ]
 
 export const optionsWithDisabled = [
@@ -81,21 +81,21 @@ export const optionsWithDisabled = [
             name: optionNames.ChelseaItem,
             value: optionsValues.ChelseaItem,
             children: [],
-            disabled: true
+            disabled: true,
           },
           {
             name: optionNames.WestEndItem,
             value: optionsValues.WestEndItem,
-            children: []
-          }
-        ]
+            children: [],
+          },
+        ],
       },
       {
         name: optionNames.BrightonItem,
         value: optionsValues.BrightonItem,
-        children: []
-      }
-    ]
+        children: [],
+      },
+    ],
   },
   {
     name: optionNames.FranceGroup,
@@ -105,21 +105,21 @@ export const optionsWithDisabled = [
       {
         name: optionNames.ParisItem,
         value: optionsValues.ParisItem,
-        children: []
+        children: [],
       },
       {
         name: optionNames.LyonItem,
         value: optionsValues.LyonItem,
-        children: []
-      }
-    ]
-  }
+        children: [],
+      },
+    ],
+  },
 ]
 
 export const largeOptionsList = Array.from({ length: 30 }, (_, index) => ({
   name: `Option ${index}`,
   value: index,
-  children: []
+  children: [],
 }))
 
 export const largeNestedOptionsList = Array.from({ length: 1000 }, (_, index) => ({
@@ -131,7 +131,7 @@ export const largeNestedOptionsList = Array.from({ length: 1000 }, (_, index) =>
     children: Array.from({ length: 3 }, (_, subSubIndex) => ({
       name: `SubSubOption ${index}-${subIndex}-${subSubIndex}`,
       value: `${index}-${subIndex}-${subSubIndex}`,
-      children: []
-    }))
-  }))
+      children: [],
+    })),
+  })),
 }))

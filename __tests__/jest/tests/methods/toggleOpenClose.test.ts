@@ -4,7 +4,7 @@ describe('toggleOpenClose method', () => {
   it('should open and close the dropdown', () => {
     const treeselect = renderTreeselect({
       value: [],
-      options: []
+      options: [],
     })
 
     treeselect.toggleOpenClose()

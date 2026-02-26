@@ -1,10 +1,4 @@
-import {
-  type ValueOptionType,
-  type OptionType,
-  type IconsType,
-  type SelectedNodesType,
-  type TagsSortFnType
-} from '../treeselectTypes'
+import type { ValueOptionType, OptionType, IconsType, SelectedNodesType, TagsSortFnType } from '../treeselectTypes'
 
 export interface TreeItem {
   id: string | number

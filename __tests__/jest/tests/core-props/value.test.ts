@@ -4,7 +4,7 @@ describe('value prop', () => {
   it('should render a Treeselect with empty tags', () => {
     const treeselect = renderTreeselect({
       value: [],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
@@ -18,7 +18,7 @@ describe('value prop', () => {
   it('should render a Treeselect with one tag', () => {
     const treeselect = renderTreeselect({
       value: [optionsValues.BrightonItem],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
@@ -32,7 +32,7 @@ describe('value prop', () => {
   it('should render a Treeselect with multiple tags', () => {
     const treeselect = renderTreeselect({
       value: [optionsValues.ChelseaItem, optionsValues.BrightonItem],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
@@ -46,7 +46,7 @@ describe('value prop', () => {
   it('should not contain non existent tags', () => {
     const treeselect = renderTreeselect({
       value: [100],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
@@ -59,7 +59,7 @@ describe('value prop', () => {
   it('should not contain duplicate tags', () => {
     const treeselect = renderTreeselect({
       value: [optionsValues.ChelseaItem, optionsValues.ChelseaItem],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
@@ -75,7 +75,7 @@ describe('value prop', () => {
     const treeselect = renderTreeselect({
       isSingleSelect: true,
       value: null,
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
@@ -90,7 +90,7 @@ describe('value prop', () => {
     const treeselect = renderTreeselect({
       isSingleSelect: true,
       value: optionsValues.ChelseaItem,
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
@@ -105,7 +105,7 @@ describe('value prop', () => {
     const treeselect = renderTreeselect({
       isSingleSelect: true,
       value: 100,
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     const tagsElements = getTagsElements(treeselect.parentHtmlContainer)

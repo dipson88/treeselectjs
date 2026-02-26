@@ -10,7 +10,7 @@ a.treeselect-demo-slot__slot {
 }
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   background-color: #fbfbfb;
   margin: 0;
 }
@@ -63,7 +63,6 @@ body {
   max-width: 400px;
   border: 1px solid #e5e5e5;
   border-radius: 10px 0 0 10px;
-  margin-top: 0;
   font-size: 12px;
   white-space: pre-wrap;
   max-height: 400px;

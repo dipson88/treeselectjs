@@ -4,7 +4,7 @@ describe('emptyText prop', () => {
   it('should render the empty text by default', () => {
     const treeselect = renderTreeselect({
       value: [],
-      options: []
+      options: [],
     })
 
     treeselect.toggleOpenClose()
@@ -20,7 +20,7 @@ describe('emptyText prop', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: [],
-      emptyText: newNotResultsText
+      emptyText: newNotResultsText,
     })
 
     treeselect.toggleOpenClose()
