@@ -17,6 +17,11 @@ Build data:
 
 ![Example img](https://github.com/dipson88/treeselectjs/blob/main/treeselectjs.png?raw=true)
 
+### Support
+You can buy me a coffee if you want to support my work. Thank you!
+
+<a href="https://www.buymeacoffee.com/dipson88" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
 ### Getting Started
 ```bash
 npm install --save treeselectjs
@@ -222,8 +227,3 @@ Name  | Params | Description
 7) If you use **isSingleSelect** prop, you should pass only a single **value** without an array.
 8) If you use **isSingleSelect** prop, you can set **showTags** to false. It helps to show treeselect as a dropdown. Also you can disable selecting of group's nodes with help of **disabledBranchNode**.
 9) If you use a large list of options and see a problem with performance, try to use **isBoostedRendering** prop.
-
-### Support
-You can buy me a coffee if you want to support my work. Thank you!
-
-<a href="https://www.buymeacoffee.com/dipson88" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
