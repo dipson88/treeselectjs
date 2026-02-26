@@ -4,7 +4,7 @@ describe('showCount prop', () => {
   it('should not show count by default', () => {
     const treeselect = renderTreeselect({
       value: [],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     treeselect.toggleOpenClose()
@@ -20,7 +20,7 @@ describe('showCount prop', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: defaultOptions,
-      showCount: true
+      showCount: true,
     })
 
     treeselect.toggleOpenClose()

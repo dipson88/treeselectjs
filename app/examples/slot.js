@@ -12,22 +12,22 @@ const options = [
           {
             name: 'Chelsea',
             value: 3,
-            children: []
+            children: [],
           },
           {
             name: 'West End',
             value: 4,
-            children: []
-          }
-        ]
+            children: [],
+          },
+        ],
       },
       {
         name: 'Brighton',
         value: 5,
-        children: []
-      }
-    ]
-  }
+        children: [],
+      },
+    ],
+  },
 ]
 
 const value = []
@@ -45,7 +45,7 @@ export const runSlotExample = (Treeselect) => {
     parentHtmlContainer: domElement,
     value,
     options,
-    listSlotHtmlComponent: slot
+    listSlotHtmlComponent: slot,
   })
 
   treeselect.srcElement.addEventListener('input', (e) => {

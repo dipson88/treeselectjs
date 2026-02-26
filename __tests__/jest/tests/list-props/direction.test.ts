@@ -5,7 +5,7 @@ describe('direction prop', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: defaultOptions,
-      direction: 'top'
+      direction: 'top',
     })
 
     document.body.style.paddingTop = '300px'
@@ -22,7 +22,7 @@ describe('direction prop', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: defaultOptions,
-      direction: 'bottom'
+      direction: 'bottom',
     })
 
     document.body.style.paddingBottom = '300px'
@@ -39,7 +39,7 @@ describe('direction prop', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: defaultOptions,
-      direction: 'auto'
+      direction: 'auto',
     })
 
     treeselect.toggleOpenClose()

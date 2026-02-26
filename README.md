@@ -9,13 +9,18 @@ A multi-select js component with nested options.
 - Typescript support
 
 Build data:
-- treeselectjs.mjs  51.89 kB │ gzip: 11.67 kB
-- treeselectjs.umd.js  41.92 kB │ gzip: 10.43 kB
-- treeselectjs.css  7.08 kB │ gzip:  1.41 kB
+- treeselectjs.mjs  46.21 kB │ gzip: 10.82 kB
+- treeselectjs.umd.js  36.09 kB │ gzip: 9.38 kB
+- treeselectjs.css  8.24 kB │ gzip: 1.54 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
 ![Example img](https://github.com/dipson88/treeselectjs/blob/main/treeselectjs.png?raw=true)
+
+### Support
+You can buy me a coffee if you want to support my work. Thank you!
+
+<a href="https://www.buymeacoffee.com/dipson88" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 ### Getting Started
 ```bash
@@ -30,8 +35,8 @@ import Treeselect from 'treeselectjs'
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.13.3/dist/treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.13.3/dist/treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.14.0/dist/treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.14.0/dist/treeselectjs.css" />
 ...
 <script>
   ...
@@ -111,7 +116,6 @@ slot.addEventListener('click', (e) => {
   alert('Slot click!')
 })
 ```
----
 
 ### Props
 
@@ -136,7 +140,7 @@ Name  | Type (default) | Description
 **disabledBranchNode** | Boolean (false) | It is impossible to select groups. You can select only leaves.
 **openLevel**  | Number (0) | All groups will be opened to this level.
 **appendToBody**  | Boolean (false) | List will be appended to the body instead of the input container.
-**alwaysOpen**  | Boolean (false) | List will be always opened. You can use it for comfortable style changing. If you what to use it as an opened list, turn `staticList` to `true`.
+**alwaysOpen**  | Boolean (false) | List will be always opened. You can use it for comfortable style changing. If you want to use it as an opened list, turn `staticList` to `true`.
 **showCount** | Boolean (false) | Shows count of children near the group's name.
 **staticList** | Boolean (false) | Add the list as a static DOM element. List doesn't overlap content. This prop will be ignored if you use `appendToBody`.
 **emptyText** | String ('No results found...') | A empty list text.
@@ -162,7 +166,7 @@ Check [Emits](#Emits) section for more info.
 
 Name  | Type (default) | Description
 ------------- | ------------- | -------------
-**inputCallback** | (value) => void (undefined) | Callback method for `input` if you don't want to to eventListener.
+**inputCallback** | (value) => void (undefined) | Callback method for `input` if you don't want to use eventListener.
 **openCallback** | (value) => void (undefined) | Callback method for `open` if you don't want to use eventListener.
 **closeCallback** | (value) => void (undefined) | Callback method for `close` if you don't want to use eventListener.
 **nameChangeCallback** | (name) => void (undefined) | Callback method for `name-change` if you don't want to use eventListener.
@@ -212,6 +216,49 @@ Name  | Params | Description
 
 ---
 
+### Customizing colors
+
+The component uses CSS custom properties (variables) for colors. Override them on the `.treeselect` container to match your theme:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `--treeselect-border-color` | `#d7dde4` | Border color of input and list |
+| `--treeselect-bg` | `#ffffff` | Background of the input |
+| `--treeselect-border-focus` | `#101010` | Border color when focused |
+| `--treeselect-tag-bg` | `#d7dde4` | Background of selected tags |
+| `--treeselect-tag-bg-hover` | `#c5c7cb` | Tag background on hover |
+| `--treeselect-tag-remove-hover` | `#eb4c42` | Remove (×) icon color on hover |
+| `--treeselect-icon` | `#c5c7cb` | Arrow and clear icons |
+| `--treeselect-icon-hover` | `#838790` | Icons on hover |
+| `--treeselect-item-counter` | `#838790` | Group item count text |
+| `--treeselect-item-focus-bg` | `#f0ffff` | List item background when focused |
+| `--treeselect-item-selected-bg` | `#e9f1f1` | List item background when selected |
+| `--treeselect-item-disabled-text` | `#c5cbca` | Disabled item text color |
+| `--treeselect-checkbox-bg` | `#ffffff` | Checkbox background |
+| `--treeselect-checkbox-border-color` | `#d7dde4` | Checkbox border color |
+| `--treeselect-checkbox-checked-bg` | `#52c67e` | Checkbox fill when checked |
+| `--treeselect-checkbox-checked-icon` | `#ffffff` | Checkmark color |
+
+Example:
+
+```css
+body {
+  .treeselect {
+    --treeselect-border-color: #444;
+    --treeselect-bg: #1e1e1e;
+    --treeselect-border-focus: #6cb6ff;
+    --treeselect-tag-bg: #333;
+    --treeselect-tag-bg-hover: #444;
+    --treeselect-item-focus-bg: #2a2a2a;
+    --treeselect-item-selected-bg: #2d3a3a;
+    --treeselect-checkbox-checked-bg: #52c67e;
+    /* override other variables as needed */
+  }
+}
+```
+
+---
+
 ### Notes
 1) If you want to change the padding of the element you can use CSS selector. I've added **'group'** and **'level'** attributes, but you have to use **!important**.
 2) If you want to update props, set props to the entity of the class and then call **mount()** method.
@@ -222,8 +269,3 @@ Name  | Params | Description
 7) If you use **isSingleSelect** prop, you should pass only a single **value** without an array.
 8) If you use **isSingleSelect** prop, you can set **showTags** to false. It helps to show treeselect as a dropdown. Also you can disable selecting of group's nodes with help of **disabledBranchNode**.
 9) If you use a large list of options and see a problem with performance, try to use **isBoostedRendering** prop.
-
-### Support
-You can buy me a coffee if you want to support my work. Thank you!
-
-<a href="https://www.buymeacoffee.com/dipson88" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>

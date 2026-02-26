@@ -4,7 +4,7 @@ describe('grouped prop', () => {
   it('should grouped by default', () => {
     const treeselect = renderTreeselect({
       value: [optionsValues.EnglandGroup],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
@@ -17,7 +17,7 @@ describe('grouped prop', () => {
     const treeselect = renderTreeselect({
       grouped: false,
       value: [optionsValues.EnglandGroup],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     const tagsElements = getTagsElements(treeselect.parentHtmlContainer)

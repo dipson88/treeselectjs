@@ -1,12 +1,12 @@
-import { type ValueOptionType } from '../../treeselectTypes'
-import { type TreeItem, type OptionsTreeMap } from '../listTypes'
+import type { ValueOptionType } from '../../treeselectTypes'
+import type { TreeItem, OptionsTreeMap } from '../listTypes'
 import { getDirectChildrenOptions } from './listOptionsHelper'
 
 export const updateOptionsByValue = ({
   newValue,
   optionsTreeMap,
   isSingleSelect,
-  isIndependentNodes
+  isIndependentNodes,
 }: {
   newValue: ValueOptionType[]
   optionsTreeMap: OptionsTreeMap
@@ -29,7 +29,7 @@ export const updateOptionsByValue = ({
     const resultChecked = updateOptionByCheckState({
       option,
       optionsTreeMap,
-      isIndependentNodes
+      isIndependentNodes,
     })
     option.checked = resultChecked
   })
@@ -38,7 +38,7 @@ export const updateOptionsByValue = ({
 export const updateOptionByCheckState = ({
   option: { id, checked },
   optionsTreeMap,
-  isIndependentNodes
+  isIndependentNodes,
 }: {
   option: Pick<TreeItem, 'id' | 'checked'>
   optionsTreeMap: OptionsTreeMap
@@ -59,11 +59,11 @@ export const updateOptionByCheckState = ({
   const resultCheckedState = updateTreeItemOptionStateWithChildren({
     checked,
     currentOption,
-    optionsTreeMap
+    optionsTreeMap,
   })
   updateParentTreeItemOptions({
     childOption: currentOption,
-    optionsTreeMap
+    optionsTreeMap,
   })
 
   return resultCheckedState
@@ -72,7 +72,7 @@ export const updateOptionByCheckState = ({
 const updateTreeItemOptionStateWithChildren = ({
   checked,
   currentOption,
-  optionsTreeMap
+  optionsTreeMap,
 }: {
   checked: boolean
   currentOption: TreeItem
@@ -94,7 +94,7 @@ const updateTreeItemOptionStateWithChildren = ({
     checkUncheckAllChildren({
       option: currentOption,
       children: childrenOptions,
-      optionsTreeMap
+      optionsTreeMap,
     })
 
     return currentOption.checked
@@ -102,7 +102,7 @@ const updateTreeItemOptionStateWithChildren = ({
 
   const canWeCheckAllChildren = !isSomeChildrenDisabled({
     children: childrenOptions,
-    optionsTreeMap
+    optionsTreeMap,
   })
 
   if (canWeCheckAllChildren) {
@@ -111,7 +111,7 @@ const updateTreeItemOptionStateWithChildren = ({
     checkUncheckAllChildren({
       option: currentOption,
       children: childrenOptions,
-      optionsTreeMap
+      optionsTreeMap,
     })
 
     return currentOption.checked
@@ -134,7 +134,7 @@ const updateTreeItemOptionStateWithChildren = ({
     updateTreeItemOptionStateWithChildren({
       checked,
       currentOption: options,
-      optionsTreeMap
+      optionsTreeMap,
     })
   })
 
@@ -143,7 +143,7 @@ const updateTreeItemOptionStateWithChildren = ({
 
 const updateParentTreeItemOptions = ({
   childOption,
-  optionsTreeMap
+  optionsTreeMap,
 }: {
   childOption: TreeItem
   optionsTreeMap: OptionsTreeMap
@@ -157,13 +157,13 @@ const updateParentTreeItemOptions = ({
   updateParentOption({ parentOption, optionsTreeMap })
   updateParentTreeItemOptions({
     childOption: parentOption,
-    optionsTreeMap
+    optionsTreeMap,
   })
 }
 
 const updateParentOption = ({
   parentOption,
-  optionsTreeMap
+  optionsTreeMap,
 }: {
   parentOption: TreeItem
   optionsTreeMap: OptionsTreeMap
@@ -204,7 +204,7 @@ const updateParentOption = ({
 const checkUncheckAllChildren = ({
   option: { checked, disabled },
   children,
-  optionsTreeMap
+  optionsTreeMap,
 }: {
   option: Pick<TreeItem, 'checked' | 'disabled'>
   children: TreeItem[]
@@ -219,14 +219,14 @@ const checkUncheckAllChildren = ({
     checkUncheckAllChildren({
       option: { checked, disabled },
       children: subChildren,
-      optionsTreeMap
+      optionsTreeMap,
     })
   })
 }
 
 const isSomeChildrenDisabled = ({
   children,
-  optionsTreeMap
+  optionsTreeMap,
 }: {
   children: TreeItem[]
   optionsTreeMap: OptionsTreeMap

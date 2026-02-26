@@ -1,11 +1,11 @@
-import { type OptionType, type ValueOptionType } from '../../treeselectTypes'
-import { TreeItem, type OptionsTreeMap } from '../listTypes'
+import type { OptionType, ValueOptionType } from '../../treeselectTypes'
+import type { TreeItem, OptionsTreeMap } from '../listTypes'
 import { updateOptionByCheckState } from './listCheckStateHelper'
 
 export const getOptionsTreeMap = ({
   options,
   openLevel,
-  isIndependentNodes
+  isIndependentNodes,
 }: {
   options: OptionType[]
   openLevel: number
@@ -19,7 +19,7 @@ export const getOptionsTreeMap = ({
     options,
     openLevel,
     groupId: defaultParams.groupId,
-    level: defaultParams.level
+    level: defaultParams.level,
   })
 
   adjustTreeItemOptions({ optionsTreeMap, isIndependentNodes })
@@ -32,7 +32,7 @@ const getTreeOptions = ({
   options,
   openLevel,
   groupId,
-  level
+  level,
 }: {
   optionsTreeMap: OptionsTreeMap
   options: OptionType[]
@@ -50,7 +50,7 @@ const getTreeOptions = ({
 
     if (optionsTreeMap.has(optionId)) {
       console.error(
-        `Validation: You have duplicated option value: ${optionId}! You should use unique values. Duplicates will lead to unexpected behavior.`
+        `Validation: You have duplicated option value: ${optionId}! You should use unique values. Duplicates will lead to unexpected behavior.`,
       )
     }
 
@@ -71,7 +71,7 @@ const getTreeOptions = ({
       checkboxHtmlElement: null,
       itemHtmlElement: null,
       arrowItemHtmlElement: null,
-      checkboxIconHtmlElement: null
+      checkboxIconHtmlElement: null,
     })
 
     if (isGroup) {
@@ -80,7 +80,7 @@ const getTreeOptions = ({
         options: option.children,
         openLevel,
         groupId: optionId,
-        level: level + 1
+        level: level + 1,
       })
     }
   })
@@ -96,7 +96,7 @@ export const getTreeItemOptionByInputId = (inputId: string | null, optionsTreeMa
 
 export const getDirectChildrenOptions = ({
   id,
-  optionsTreeMap
+  optionsTreeMap,
 }: {
   id: ValueOptionType
   optionsTreeMap: OptionsTreeMap
@@ -144,7 +144,7 @@ export const getCheckedOptions = (optionsTreeMap: OptionsTreeMap) => {
 
 const adjustTreeItemOptions = ({
   optionsTreeMap,
-  isIndependentNodes
+  isIndependentNodes,
 }: {
   optionsTreeMap: OptionsTreeMap
   isIndependentNodes: boolean
@@ -158,11 +158,11 @@ const adjustTreeItemOptions = ({
     }
   })
 
-  disabledNodes.forEach(({ id }) =>
+  disabledNodes.forEach(({ id }) => {
     updateOptionByCheckState({
       option: { id, checked: false },
       optionsTreeMap,
-      isIndependentNodes
+      isIndependentNodes,
     })
-  )
+  })
 }

@@ -10,13 +10,13 @@ describe('emits-callbacks method', () => {
       options: [
         { value: 1, name: '1', children: [] },
         { value: 2, name: '2', children: [] },
-        { value: 3, name: '3', children: [] }
+        { value: 3, name: '3', children: [] },
       ],
-      inputCallback: inputFn
+      inputCallback: inputFn,
     })
 
-    treeselect.srcElement?.addEventListener('input', (e: any) => {
-      inputFn(e.detail)
+    treeselect.srcElement?.addEventListener('input', (e) => {
+      inputFn((e as CustomEvent).detail)
     })
 
     const tags = getTagsElements(treeselect.parentHtmlContainer)
@@ -31,11 +31,11 @@ describe('emits-callbacks method', () => {
     const treeselect = renderTreeselect({
       value: [1],
       options: [{ value: 1, name: '1', children: [] }],
-      openCallback: openFn
+      openCallback: openFn,
     })
 
-    treeselect.srcElement?.addEventListener('open', (e: any) => {
-      openFn(e.detail)
+    treeselect.srcElement?.addEventListener('open', (e) => {
+      openFn((e as CustomEvent).detail)
     })
 
     const arrow = getArrowElement(treeselect.parentHtmlContainer)
@@ -50,11 +50,11 @@ describe('emits-callbacks method', () => {
     const treeselect = renderTreeselect({
       value: [1],
       options: [{ value: 1, name: '1', children: [] }],
-      closeCallback: closeFn
+      closeCallback: closeFn,
     })
 
-    treeselect.srcElement?.addEventListener('close', (e: any) => {
-      closeFn(e.detail)
+    treeselect.srcElement?.addEventListener('close', (e) => {
+      closeFn((e as CustomEvent).detail)
     })
 
     const arrow = getArrowElement(treeselect.parentHtmlContainer)
@@ -70,11 +70,11 @@ describe('emits-callbacks method', () => {
     const treeselect = renderTreeselect({
       value: [1],
       options: [{ value: 1, name: '1', children: [] }],
-      searchCallback: searchFn
+      searchCallback: searchFn,
     })
 
-    treeselect.srcElement?.addEventListener('search', (e: any) => {
-      searchFn(e.detail)
+    treeselect.srcElement?.addEventListener('search', (e) => {
+      searchFn((e as CustomEvent).detail)
     })
 
     const input = getEditElement(treeselect.parentHtmlContainer)
@@ -91,13 +91,13 @@ describe('emits-callbacks method', () => {
       options: [
         { value: 1, name: '1', children: [] },
         { value: 2, name: '2', children: [] },
-        { value: 3, name: '3', children: [] }
+        { value: 3, name: '3', children: [] },
       ],
-      nameChangeCallback: nameChangeFn
+      nameChangeCallback: nameChangeFn,
     })
 
-    treeselect.srcElement?.addEventListener('name-change', (e: any) => {
-      nameChangeFn(e.detail)
+    treeselect.srcElement?.addEventListener('name-change', (e) => {
+      nameChangeFn((e as CustomEvent).detail)
     })
 
     const tags = getTagsElements(treeselect.parentHtmlContainer)
@@ -119,15 +119,15 @@ describe('emits-callbacks method', () => {
           name: '1',
           children: [
             { value: 2, name: '2', children: [] },
-            { value: 3, name: '3', children: [] }
-          ]
-        }
+            { value: 3, name: '3', children: [] },
+          ],
+        },
       ],
-      openCloseGroupCallback: openCloseGroupFn
+      openCloseGroupCallback: openCloseGroupFn,
     })
 
-    treeselect.srcElement?.addEventListener('open-close-group', (e: any) => {
-      openCloseGroupListener(e.detail)
+    treeselect.srcElement?.addEventListener('open-close-group', (e) => {
+      openCloseGroupListener((e as CustomEvent).detail)
     })
 
     const arrow = getArrowElement(treeselect.parentHtmlContainer)

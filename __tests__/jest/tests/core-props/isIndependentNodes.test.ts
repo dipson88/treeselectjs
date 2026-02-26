@@ -4,7 +4,7 @@ describe('isIndependentNodes prop', () => {
   it('should not be independent nodes by default', () => {
     const treeselect = renderTreeselect({
       value: [optionsValues.EnglandGroup],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     treeselect.toggleOpenClose()
@@ -16,7 +16,7 @@ describe('isIndependentNodes prop', () => {
     const treeselect = renderTreeselect({
       isIndependentNodes: true,
       value: [optionsValues.EnglandGroup, optionsValues.BrightonItem],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     treeselect.toggleOpenClose()

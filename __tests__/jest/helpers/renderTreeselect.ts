@@ -1,4 +1,4 @@
-import Treeselect, { ITreeselectParams } from '../../../src/treeselectjs'
+import Treeselect, { type ITreeselectParams } from '../../../src/treeselectjs'
 
 export const renderTreeselect = (params: Omit<ITreeselectParams, 'parentHtmlContainer'>) => {
   document.body.innerHTML = '<div id="test-container"></div>'
@@ -6,6 +6,6 @@ export const renderTreeselect = (params: Omit<ITreeselectParams, 'parentHtmlCont
 
   return new Treeselect({
     parentHtmlContainer: container,
-    ...params
+    ...params,
   })
 }

@@ -1,7 +1,25 @@
-@import './input/input.css';
-@import './list/list.css';
+@import "./input/input.css";
+@import "./list/list.css";
 
 .treeselect {
+  /* Color variables – override these to customize the component */
+  --treeselect-border-color: #d7dde4;
+  --treeselect-bg: #ffffff;
+  --treeselect-border-focus: #101010;
+  --treeselect-tag-bg: #d7dde4;
+  --treeselect-tag-bg-hover: #c5c7cb;
+  --treeselect-tag-remove-hover: #eb4c42;
+  --treeselect-icon: #c5c7cb;
+  --treeselect-icon-hover: #838790;
+  --treeselect-item-counter: #838790;
+  --treeselect-item-focus-bg: #f0ffff;
+  --treeselect-item-selected-bg: #e9f1f1;
+  --treeselect-item-disabled-text: #c5cbca;
+  --treeselect-checkbox-bg: #ffffff;
+  --treeselect-checkbox-border-color: #d7dde4;
+  --treeselect-checkbox-checked-bg: #52c67e;
+  --treeselect-checkbox-checked-icon: #ffffff;
+
   width: 100%;
   position: relative;
   box-sizing: border-box;
@@ -28,7 +46,7 @@
 }
 
 .treeselect-input--focused {
-  border-color: #101010;
+  border-color: var(--treeselect-border-focus);
 }
 
 .treeselect-input--opened.treeselect-input--top {
@@ -44,19 +62,19 @@
 }
 
 .treeselect-list--focused {
-  border-color: #101010;
+  border-color: var(--treeselect-border-focus);
 }
 
 .treeselect-list--top,
 .treeselect-list--top-to-body {
-  border-bottom-color: #d7dde4;
+  border-bottom-color: var(--treeselect-border-color);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
 .treeselect-list--bottom,
 .treeselect-list--bottom-to-body {
-  border-top-color: #d7dde4;
+  border-top-color: var(--treeselect-border-color);
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }

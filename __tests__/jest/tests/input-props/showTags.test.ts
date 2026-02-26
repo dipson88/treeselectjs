@@ -4,7 +4,7 @@ describe('showTags prop', () => {
   it('should show tags by default', () => {
     const treeselect = renderTreeselect({
       value: [optionsValues.EnglandGroup],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     expect(treeselect.parentHtmlContainer).toMatchSnapshot()
@@ -14,7 +14,7 @@ describe('showTags prop', () => {
     const treeselect = renderTreeselect({
       value: [optionsValues.EnglandGroup],
       showTags: false,
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     expect(treeselect.parentHtmlContainer).toMatchSnapshot()
@@ -24,7 +24,7 @@ describe('showTags prop', () => {
     const treeselect = renderTreeselect({
       value: [optionsValues.EnglandGroup, optionsValues.FranceGroup],
       showTags: false,
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     expect(treeselect.parentHtmlContainer).toMatchSnapshot()

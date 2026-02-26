@@ -5,7 +5,7 @@ describe('clearable prop', () => {
   it('should render a clear button', () => {
     const treeselect = renderTreeselect({
       value: [optionsValues.LondonGroup, optionsValues.FranceGroup],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     const clearElement = getClearElement(treeselect.parentHtmlContainer)
@@ -16,7 +16,7 @@ describe('clearable prop', () => {
     const treeselect = renderTreeselect({
       clearable: false,
       value: [optionsValues.LondonGroup, optionsValues.FranceGroup],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     const clearElement = getClearElement(treeselect.parentHtmlContainer)
@@ -26,7 +26,7 @@ describe('clearable prop', () => {
   it('should clear the value when the clear button is clicked', () => {
     const treeselect = renderTreeselect({
       value: [optionsValues.LondonGroup, optionsValues.FranceGroup],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     const clearElement = getClearElement(treeselect.parentHtmlContainer)

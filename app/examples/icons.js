@@ -114,7 +114,7 @@ export const runIconsExample = (Treeselect) => {
 
 const icons = {
   check: 'ico-check',
-  shield: 'ico-shield'
+  shield: 'ico-shield',
 }
 
 const options = [
@@ -130,22 +130,22 @@ const options = [
           {
             name: 'Chelsea',
             value: 3,
-            children: []
+            children: [],
           },
           {
             name: 'West End',
             value: 4,
             children: [],
-            htmlAttr: { ico: icons.check }
-          }
-        ]
+            htmlAttr: { ico: icons.check },
+          },
+        ],
       },
       {
         name: 'Brighton',
         value: 5,
-        children: []
-      }
-    ]
+        children: [],
+      },
+    ],
   },
   {
     name: 'France',
@@ -156,15 +156,15 @@ const options = [
         name: 'Paris',
         value: 7,
         children: [],
-        htmlAttr: { ico: icons.shield }
+        htmlAttr: { ico: icons.shield },
       },
       {
         name: 'Lyon',
         value: 8,
-        children: []
-      }
-    ]
-  }
+        children: [],
+      },
+    ],
+  },
 ]
 
 const svgCheck = `<svg style="position: absolute;top:0;left: 2px;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" height="20px" width="20px" version="1.1" id="Capa_1" viewBox="0 0 229.5 229.5" xml:space="preserve">
@@ -215,7 +215,7 @@ export const runIconsExample = (Treeselect) => {
           item.insertBefore(iconElement, item.childNodes[countOfChildNodes - 1])
         }
       })
-    }
+    },
   })
 
   treeselect.srcElement.addEventListener('input', (e) => {

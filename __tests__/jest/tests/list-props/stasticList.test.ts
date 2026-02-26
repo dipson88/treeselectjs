@@ -4,7 +4,7 @@ describe('staticList prop', () => {
   it('should not be static by default', () => {
     const treeselect = renderTreeselect({
       value: [],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     const list = getListElement(treeselect.parentHtmlContainer)
@@ -16,7 +16,7 @@ describe('staticList prop', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: defaultOptions,
-      staticList: true
+      staticList: true,
     })
 
     treeselect.toggleOpenClose()
@@ -34,7 +34,7 @@ describe('staticList prop', () => {
       options: defaultOptions,
       direction: 'top',
       alwaysOpen: true,
-      staticList: true
+      staticList: true,
     })
 
     const list = getListElement(treeselect.parentHtmlContainer)
@@ -51,7 +51,7 @@ describe('staticList prop', () => {
       value: [],
       options: defaultOptions,
       staticList: true,
-      appendToBody: true
+      appendToBody: true,
     })
 
     treeselect.toggleOpenClose()
@@ -64,7 +64,7 @@ describe('staticList prop', () => {
       value: [],
       options: defaultOptions,
       alwaysOpen: true,
-      staticList: true
+      staticList: true,
     })
 
     const list = getListElement(treeselect.parentHtmlContainer)

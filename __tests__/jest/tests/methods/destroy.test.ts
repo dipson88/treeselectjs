@@ -4,7 +4,7 @@ describe('destroy method', () => {
   it('should remove treeselect form the DOM', () => {
     const treeselect = renderTreeselect({
       value: [],
-      options: defaultOptions
+      options: defaultOptions,
     })
 
     treeselect.destroy()

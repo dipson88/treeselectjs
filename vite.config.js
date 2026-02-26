@@ -1,4 +1,4 @@
-import { resolve } from 'path'
+import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 
@@ -8,7 +8,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/treeselectjs.ts'),
       name: 'treeselectjs',
-      fileName: 'treeselectjs'
+      fileName: 'treeselectjs',
     },
     rollupOptions: {
       output: {
@@ -20,19 +20,19 @@ export default defineConfig({
           return assetInfo.names[0]
         },
         globals: {
-          treeselectjs: 'Treeselect'
-        }
-      }
-    }
+          treeselectjs: 'Treeselect',
+        },
+      },
+    },
   },
   server: {
-    open: './app/index.html'
+    open: './app/index.html',
   },
   plugins: [
     dts({
       insertTypesEntry: true,
       rollupTypes: true,
-      tsconfigPath: './tsconfig.app.json'
-    })
-  ]
+      tsconfigPath: './tsconfig.app.json',
+    }),
+  ],
 })

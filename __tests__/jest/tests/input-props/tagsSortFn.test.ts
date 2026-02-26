@@ -1,23 +1,23 @@
 import { renderTreeselect, getTagsElements } from '../../helpers'
-import { TagsSortItem } from './../../../../src/treeselectTypes'
+import type { TagsSortItem } from './../../../../src/treeselectTypes'
 
 const { brighton, chelsea, paris } = {
   chelsea: { value: 1, name: 'Chelsea' },
   brighton: { value: 2, name: 'Brighton' },
-  paris: { value: 3, name: 'Paris' }
+  paris: { value: 3, name: 'Paris' },
 }
 
 const mixedOptions = [
   { value: paris.value, name: paris.name, children: [] },
   { value: brighton.value, name: brighton.name, children: [] },
-  { value: chelsea.value, name: chelsea.name, children: [] }
+  { value: chelsea.value, name: chelsea.name, children: [] },
 ]
 
 describe('tagsSortFn prop', () => {
   it('should use sorting by options list by default', () => {
     const treeselect = renderTreeselect({
       value: [paris.value, brighton.value, chelsea.value],
-      options: mixedOptions
+      options: mixedOptions,
     })
 
     const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
@@ -34,7 +34,7 @@ describe('tagsSortFn prop', () => {
     const treeselect = renderTreeselect({
       value: [paris.value, brighton.value, chelsea.value],
       tagsSortFn: sortNodesByName,
-      options: mixedOptions
+      options: mixedOptions,
     })
 
     const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
@@ -50,8 +50,8 @@ describe('tagsSortFn prop', () => {
       const aValue = parseFloat(a.value.toString())
       const bValue = parseFloat(b.value.toString())
 
-      const isAValueNumber = !isNaN(aValue)
-      const isBValueNumber = !isNaN(bValue)
+      const isAValueNumber = !Number.isNaN(aValue)
+      const isBValueNumber = !Number.isNaN(bValue)
 
       if (isAValueNumber && isBValueNumber) {
         return aValue - bValue
@@ -67,7 +67,7 @@ describe('tagsSortFn prop', () => {
     const treeselect = renderTreeselect({
       value: [paris.value, brighton.value, chelsea.value],
       options: mixedOptions,
-      tagsSortFn: sortNodesByValue
+      tagsSortFn: sortNodesByValue,
     })
 
     const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
@@ -90,7 +90,7 @@ describe('tagsSortFn prop', () => {
     const treeselect = renderTreeselect({
       value,
       tagsSortFn: sortNodesByOrder,
-      options: mixedOptions
+      options: mixedOptions,
     })
 
     const tagsElements = getTagsElements(treeselect.parentHtmlContainer)
@@ -114,7 +114,7 @@ describe('tagsSortFn prop', () => {
     const treeselect = renderTreeselect({
       value: [],
       tagsSortFn: sortNodesByOrder,
-      options: mixedOptions
+      options: mixedOptions,
     })
 
     value = [paris.value]

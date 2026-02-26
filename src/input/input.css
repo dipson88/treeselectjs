@@ -1,7 +1,7 @@
 .treeselect-input {
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid #d7dde4;
+  border: 1px solid var(--treeselect-border-color);
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -10,7 +10,7 @@
   padding-right: 40px;
   position: relative;
   min-height: 37px;
-  background-color: #ffffff;
+  background-color: var(--treeselect-bg);
   cursor: text;
 }
 
@@ -44,12 +44,12 @@
 }
 
 /* rtl */
-[dir='rtl'] .treeselect-input {
+[dir="rtl"] .treeselect-input {
   padding-right: 4px;
   padding-left: 40px;
 }
 
-[dir='rtl'] .treeselect-input__operators {
+[dir="rtl"] .treeselect-input__operators {
   right: unset;
   left: 2px;
 }
@@ -68,7 +68,7 @@
 .treeselect-input__tags-element {
   display: inline-flex;
   align-items: center;
-  background-color: #d7dde4;
+  background-color: var(--treeselect-tag-bg);
   cursor: pointer;
   padding: 2px 5px;
   border-radius: 2px;
@@ -78,11 +78,11 @@
 }
 
 .treeselect-input__tags-element:hover {
-  background-color: #c5c7cb;
+  background-color: var(--treeselect-tag-bg-hover);
 }
 
 .treeselect-input__tags-element:hover .treeselect-input__tags-cross svg {
-  stroke: #eb4c42;
+  stroke: var(--treeselect-tag-remove-hover);
 }
 
 .treeselect-input__tags-name {
@@ -109,6 +109,7 @@
 }
 
 .treeselect-input__edit {
+  background-color: var(--treeselect-bg);
   flex: 1;
   border: none;
   font-size: 14px;
@@ -147,14 +148,14 @@
 }
 
 .treeselect-input__clear svg {
-  stroke: #c5c7cb;
+  stroke: var(--treeselect-icon);
   width: 17px;
   min-width: 17px;
   height: 20px;
 }
 
 .treeselect-input__clear:hover svg {
-  stroke: #838790;
+  stroke: var(--treeselect-icon-hover);
 }
 
 .treeselect-input__arrow {
@@ -163,12 +164,12 @@
 }
 
 .treeselect-input__arrow svg {
-  stroke: #c5c7cb;
+  stroke: var(--treeselect-icon);
   width: 20px;
   min-width: 20px;
   height: 20px;
 }
 
 .treeselect-input__arrow:hover svg {
-  stroke: #838790;
+  stroke: var(--treeselect-icon-hover);
 }

@@ -6,7 +6,7 @@ describe('listClassName prop', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: defaultOptions,
-      listClassName
+      listClassName,
     })
 
     treeselect.toggleOpenClose()
@@ -23,7 +23,7 @@ describe('listClassName prop', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: defaultOptions,
-      listClassName
+      listClassName,
     })
 
     treeselect.toggleOpenClose()

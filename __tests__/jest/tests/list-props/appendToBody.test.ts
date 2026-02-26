@@ -7,7 +7,7 @@ describe('appendToBody prop', () => {
     const treeselect = renderTreeselect({
       value: [],
       options: defaultOptions,
-      appendToBody: true
+      appendToBody: true,
     })
 
     treeselect.toggleOpenClose()
