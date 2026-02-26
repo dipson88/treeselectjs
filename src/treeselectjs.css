@@ -14,9 +14,11 @@
   --treeselect-item-counter: #838790;
   --treeselect-item-focus-bg: #f0ffff;
   --treeselect-item-selected-bg: #e9f1f1;
+  --treeselect-item-disabled-text: #c5cbca;
+  --treeselect-checkbox-bg: #ffffff;
+  --treeselect-checkbox-border-color: #d7dde4;
   --treeselect-checkbox-checked-bg: #52c67e;
   --treeselect-checkbox-checked-icon: #ffffff;
-  --treeselect-disabled-text: #c5c7cb;
 
   width: 100%;
   position: relative;

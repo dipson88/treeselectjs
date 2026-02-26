@@ -87,79 +87,79 @@ export interface ITreeselect {
  * All properties except `parentHtmlContainer` are optional.
  */
 export interface ITreeselectParams {
-  /** Container element where the treeselect will be mounted (required). */
+  /** HTML element (e.g. div) that will be replaced by the treeselect container (required). */
   parentHtmlContainer: HTMLElement
-  /** Initial value: single id, array of ids, or null/undefined. */
+  /** Array of `value` from options to select on load. Use updateValue or set treeselect.value and call mount to update. Changes when checkboxes/tags change. */
   value?: ValueInputType
-  /** Tree of options (nested via `children`). */
+  /** Array of option objects { name, value, disabled?, htmlAttr?, isGroupSelectable?, children }. No duplicated values; names may duplicate. See Option description. */
   options?: OptionType[]
-  /** Number of group levels open by default (0 = all collapsed). */
+  /** All groups will be opened to this level (0 = all collapsed). */
   openLevel?: number
-  /** If true, list is rendered in document body and positioned dynamically. */
+  /** List will be appended to the body instead of the input container. */
   appendToBody?: boolean
-  /** If true, list is always open (no open/close toggle). */
+  /** List is always opened. Use for styling; for a fixed open list set staticList to true. */
   alwaysOpen?: boolean
-  /** If true, selected items are shown as tags. */
+  /** Selected values appear as tags. If false, shows '{count} elements selected' (use tagsCountText). Single selection shows the element name. */
   showTags?: boolean
-  /** Text for multi-select count (e.g. "5 elements selected"). */
+  /** Text shown after count when showTags is false: '{count} {tagsCountText}'. */
   tagsCountText?: string
-  /** Custom sort for tags; null = default order. */
+  /** Defines sort order for tags in the input. TagsSortItem: { value, name }. Use null for default order. */
   tagsSortFn?: TagsSortFnType
-  /** If true, clear button is shown when value is set. */
+  /** Clear icon is available when value is set. */
   clearable?: boolean
-  /** If true, search/filter input is available. */
+  /** Search/filter input is available. */
   searchable?: boolean
-  /** Placeholder for the search input. */
+  /** Placeholder text for the search input. */
   placeholder?: string
-  /** If true, value is returned grouped by parent groups. */
+  /** Show groups in the input and group leaves when the whole group is selected. */
   grouped?: boolean
-  /** If true, value is in grouped form. */
+  /** Return selected groups instead of leaf ids only. By default only leaf ids are returned. */
   isGroupedValue?: boolean
-  /** Optional custom slot (e.g. custom header) inside the list. */
+  /** HTML element appended to the end of the list (e.g. custom footer/slot). */
   listSlotHtmlComponent?: HTMLElement | null
-  /** If true, control is disabled. */
+  /** List/control is disabled. */
   disabled?: boolean
-  /** Text shown when no options match search. */
+  /** Text shown when the list is empty (e.g. no results). */
   emptyText?: string
-  /** If true, list is static (not positioned as dropdown). Use with appendToBody: false. */
+  /** List is a static DOM element (no overlay). Ignored if appendToBody is true. */
   staticList?: boolean
-  /** Id for the main input (e.g. for labels). */
+  /** id attribute for the main input (accessibility). */
   id?: string
-  /** Aria-label for the search input (accessibility). */
+  /** aria-label attribute for the search input (accessibility). */
   ariaLabel?: string
-  /** If true, only one option can be selected. */
+  /** Single-value select: one option only, no checkboxes. Pass one id; showTags: false shows treeselect as dropdown. */
   isSingleSelect?: boolean
-  /** If true, group rows show count of selected children. */
+  /** Show count of children next to the group name. */
   showCount?: boolean
-  /** If true, selecting a group does not select its children. */
+  /** Groups cannot be selected; only leaves can be selected. */
   disabledBranchNode?: boolean
-  /** List position: 'auto' | 'top' | 'bottom'. */
+  /** Force list direction. Supported: 'auto', 'top', 'bottom'. */
   direction?: DirectionType
-  /** If true, groups containing selected items are expanded on open. */
+  /** Groups that contain checked values are expanded on init/open. */
   expandSelected?: boolean
-  /** If true, list scroll position is restored when reopened. */
+  /** Restore list scroll position when reopened. If false, scroll resets to 0 and first item is focused. */
   saveScrollPosition?: boolean
-  /** If true, options are treated as flat (no parent-child selection link). */
+  /** Nodes are independent: check/uncheck does not update children/parent. Disabled nodes also ignore parent/child workflow. */
   isIndependentNodes?: boolean
-  /** If true, RTL layout is applied. */
+  /** RTL mode. */
   rtl?: boolean
-  /** Extra CSS class(es) for the list container. */
+  /** Class name(s) for the list container. Useful for styling when using appendToBody. */
   listClassName?: string
-  /** If true, list uses intersection observer for large trees (performance). */
+  /** Experimental: improves list performance for large trees (visibility + IntersectionObserver). */
   isBoostedRendering?: boolean
-  /** Custom icons (SVG string or HTMLElement) for arrow, check, clear, etc. */
+  /** Object of SVG icons (arrowUp, arrowDown, arrowRight, attention, clear, cross, check, partialCheck). Use HTMLElement or string. Update styles after reset; use alwaysOpen for easier styling. */
   iconElements?: Partial<IconsType>
-  /** Called when selected value changes (value: current value). */
+  /** Callback for input (selected value) instead of eventListener. */
   inputCallback?: (value: ValueType) => void
-  /** Called when list opens. */
+  /** Callback for open instead of eventListener. */
   openCallback?: (value: ValueType) => void
-  /** Called when list closes. */
+  /** Callback for close instead of eventListener. */
   closeCallback?: (value: ValueType) => void
-  /** Called when selected label text changes (e.g. single select). */
+  /** Callback for name-change (selected name in input) instead of eventListener. */
   nameChangeCallback?: (name: string) => void
-  /** Called when user types in search (search string). */
+  /** Callback for search (typed value) instead of eventListener. */
   searchCallback?: (value: string) => void
-  /** Called when a group is expanded/collapsed (groupId, isClosed). */
+  /** Callback for open-close-group (groupId, isClosed) instead of eventListener. */
   openCloseGroupCallback?: (groupId: ValueOptionType, isClosed: boolean) => void
 }
 

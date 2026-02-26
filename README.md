@@ -140,7 +140,7 @@ Name  | Type (default) | Description
 **disabledBranchNode** | Boolean (false) | It is impossible to select groups. You can select only leaves.
 **openLevel**  | Number (0) | All groups will be opened to this level.
 **appendToBody**  | Boolean (false) | List will be appended to the body instead of the input container.
-**alwaysOpen**  | Boolean (false) | List will be always opened. You can use it for comfortable style changing. If you what to use it as an opened list, turn `staticList` to `true`.
+**alwaysOpen**  | Boolean (false) | List will be always opened. You can use it for comfortable style changing. If you want to use it as an opened list, turn `staticList` to `true`.
 **showCount** | Boolean (false) | Shows count of children near the group's name.
 **staticList** | Boolean (false) | Add the list as a static DOM element. List doesn't overlap content. This prop will be ignored if you use `appendToBody`.
 **emptyText** | String ('No results found...') | A empty list text.
@@ -166,7 +166,7 @@ Check [Emits](#Emits) section for more info.
 
 Name  | Type (default) | Description
 ------------- | ------------- | -------------
-**inputCallback** | (value) => void (undefined) | Callback method for `input` if you don't want to to eventListener.
+**inputCallback** | (value) => void (undefined) | Callback method for `input` if you don't want to use eventListener.
 **openCallback** | (value) => void (undefined) | Callback method for `open` if you don't want to use eventListener.
 **closeCallback** | (value) => void (undefined) | Callback method for `close` if you don't want to use eventListener.
 **nameChangeCallback** | (name) => void (undefined) | Callback method for `name-change` if you don't want to use eventListener.
@@ -233,9 +233,11 @@ The component uses CSS custom properties (variables) for colors. Override them o
 | `--treeselect-item-counter` | `#838790` | Group item count text |
 | `--treeselect-item-focus-bg` | `#f0ffff` | List item background when focused |
 | `--treeselect-item-selected-bg` | `#e9f1f1` | List item background when selected |
+| `--treeselect-item-disabled-text` | `#c5cbca` | Disabled item text color |
+| `--treeselect-checkbox-bg` | `#ffffff` | Checkbox background |
+| `--treeselect-checkbox-border-color` | `#d7dde4` | Checkbox border color |
 | `--treeselect-checkbox-checked-bg` | `#52c67e` | Checkbox fill when checked |
 | `--treeselect-checkbox-checked-icon` | `#ffffff` | Checkmark color |
-| `--treeselect-disabled-text` | `#c5c7cb` | Disabled state text color |
 
 Example:
 

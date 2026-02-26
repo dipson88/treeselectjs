@@ -64,10 +64,10 @@
   width: 20px;
   height: 20px;
   min-width: 20px;
-  border: 1px solid var(--treeselect-border-color);
+  border: 1px solid var(--treeselect-checkbox-border-color);
   border-radius: 3px;
   position: relative;
-  background-color: var(--treeselect-bg);
+  background-color: var(--treeselect-checkbox-bg);
   pointer-events: none;
   box-sizing: border-box;
 }
@@ -195,7 +195,7 @@
 }
 
 .treeselect-list__item--disabled .treeselect-list__item-label {
-  color: var(--treeselect-disabled-text);
+  color: var(--treeselect-item-disabled-text);
 }
 
 /* rtl */

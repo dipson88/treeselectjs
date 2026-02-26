@@ -109,6 +109,7 @@
 }
 
 .treeselect-input__edit {
+  background-color: var(--treeselect-bg);
   flex: 1;
   border: none;
   font-size: 14px;
