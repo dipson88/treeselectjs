@@ -116,7 +116,6 @@ slot.addEventListener('click', (e) => {
   alert('Slot click!')
 })
 ```
----
 
 ### Props
 
@@ -214,6 +213,47 @@ Name  | Params | Description
 **destroy**  | None | Deletes elements from the DOM. Call mount() to add treeselect to the DOM with previously saved internal data. If you need to recreate treeselect with default params - call ```new Treeselect(options)```.
 **focus**  | None | Focuses treeselect input without open/close state changes.
 **toggleOpenClose**  | None | Open or close treeselect list and focus treeselect input.
+
+---
+
+### Customizing colors
+
+The component uses CSS custom properties (variables) for colors. Override them on the `.treeselect` container to match your theme:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `--treeselect-border-color` | `#d7dde4` | Border color of input and list |
+| `--treeselect-bg` | `#ffffff` | Background of the input |
+| `--treeselect-border-focus` | `#101010` | Border color when focused |
+| `--treeselect-tag-bg` | `#d7dde4` | Background of selected tags |
+| `--treeselect-tag-bg-hover` | `#c5c7cb` | Tag background on hover |
+| `--treeselect-tag-remove-hover` | `#eb4c42` | Remove (×) icon color on hover |
+| `--treeselect-icon` | `#c5c7cb` | Arrow and clear icons |
+| `--treeselect-icon-hover` | `#838790` | Icons on hover |
+| `--treeselect-item-counter` | `#838790` | Group item count text |
+| `--treeselect-item-focus-bg` | `#f0ffff` | List item background when focused |
+| `--treeselect-item-selected-bg` | `#e9f1f1` | List item background when selected |
+| `--treeselect-checkbox-checked-bg` | `#52c67e` | Checkbox fill when checked |
+| `--treeselect-checkbox-checked-icon` | `#ffffff` | Checkmark color |
+| `--treeselect-disabled-text` | `#c5c7cb` | Disabled state text color |
+
+Example:
+
+```css
+body {
+  .treeselect {
+    --treeselect-border-color: #444;
+    --treeselect-bg: #1e1e1e;
+    --treeselect-border-focus: #6cb6ff;
+    --treeselect-tag-bg: #333;
+    --treeselect-tag-bg-hover: #444;
+    --treeselect-item-focus-bg: #2a2a2a;
+    --treeselect-item-selected-bg: #2d3a3a;
+    --treeselect-checkbox-checked-bg: #52c67e;
+    /* override other variables as needed */
+  }
+}
+```
 
 ---
 
