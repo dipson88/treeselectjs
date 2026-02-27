@@ -9,9 +9,9 @@ A multi-select js component with nested options.
 - Typescript support
 
 Build data:
-- react-treeselectjs.mjs  2.14 kB │ gzip: 0.83 kB
-- react-treeselectjs.umd.js  1.91 kB │ gzip: 0.80 kB
-- react-treeselectjs.css  7.08 kB │ gzip: 1.41 kB
+- react-treeselectjs.mjs  2.04 kB │ gzip: 0.79 kB
+- react-treeselectjs.umd.js  1.86 kB │ gzip: 0.77 kB
+- react-treeselectjs.css  8.48 kB │ gzip: 1.58 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
@@ -27,13 +27,13 @@ You can buy me a coffee if you want to support my work. Thank you!
 npm install --save react-treeselectjs
 ```
 Import react-treeselectjs (ES)
-```
+```ts
 import Treeselect from 'react-treeselectjs'
 import 'react-treeselectjs/dist/react-treeselectjs.css'
 ```
 
 Import treeselectjs (UMD)
-```
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,9 +41,9 @@ Import treeselectjs (UMD)
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   
-  <script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.13.3/dist/treeselectjs.umd.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.7.3/dist/react-treeselectjs.umd.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.7.3/dist/react-treeselectjs.css" />
+  <script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.14.1/dist/treeselectjs.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.8.0/dist/react-treeselectjs.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-treeselectjs@0.8.0/dist/react-treeselectjs.css" />
 </head>
 <body>
   <div id="root"></div>
@@ -58,12 +58,12 @@ Import treeselectjs (UMD)
 ```
 
 All Available Imports
-```
+```ts
 import Treeselect, { DirectionType, IconsType, OptionType, TreeselectProps, TreeselectValue } from 'react-treeselectjs'
 ```
 
 Example
-```
+```tsx
 import React, { useCallback } from 'react'
 import Treeselect, { TreeselectValue } from 'react-treeselectjs'
 import 'react-treeselectjs/dist/react-treeselectjs.css'
@@ -128,7 +128,7 @@ function App() {
         onInput={onInput}
       >
         {/* Use slot if you need */}
-        <a className="treeselect-demo__slot" href="">Click!</a>'
+        <a className="treeselect-demo__slot" href="">Click!</a>
       </Treeselect>
     </div>
   )
@@ -160,9 +160,9 @@ Name  | Type (default) | Description
 **disabledBranchNode** | Boolean (false) | It is impossible to select groups. You can select only leaves.
 **openLevel**  | Number (0) | All groups will be opened to this level.
 **appendToBody**  | Boolean (false) | List will be appended to the body instead of the input container.
-**alwaysOpen**  | Boolean (false) | List will be always opened. You can use it for comfortable style changing. If you what to use it as an opened list, turn `staticList` to `true`.
+**alwaysOpen**  | Boolean (false) | List will be always opened. You can use it for comfortable style changing. If you want to use it as an opened list, turn `staticList` to `true`.
 **staticList** | Boolean (false) | Add the list as a static DOM element. List doesn't overlap content. This prop will be ignored if you use `appendToBody`.
-**emptyText** | String ('No results found...') | A empty list text.
+**emptyText** | String ('No results found...') | Text shown when the list is empty.
 **direction** | String (auto) | A force direction for the list. Supported values: `auto`, `top`, `bottom`.
 **expandSelected** | Boolean (false) | All groups which have checked values will be expanded on the init.
 **saveScrollPosition** | Boolean (true) | The list saves the last scroll position before close. If you open the list your scroll will be on the previous position. If you set the value to `false` - the scroll will have position 0 and the first item will be focused every time.
@@ -172,7 +172,7 @@ Name  | Type (default) | Description
 Name  | Type (default) | Description
 ------------- | ------------- | -------------
 **showTags**  | Boolean (true) | Selected values look like tags. The false value shows results as '{count} elements selected'. You can change text if you use `tagsCountText` prop. For one selected element, you will see a name of this element.
-**tagsCountText**  | String ('elements selected') | This text will be shown if you use 'showTags'. This text will be inserted after the count of the selected elements - ```'{count} {tagsCountText}'```.
+**tagsCountText**  | String ('elements selected') | This text is shown when `showTags` is false. It is inserted after the count of the selected elements - ```'{count} {tagsCountText}'```.
 **showCount** | Boolean (false) | Shows count of children near the group's name.
 **tagsSortFn** | `(a: TagsSortItem, b: TagsSortItem) => number` \| `null` (null) | Defines the sorting order for tags in the input field.<br>`TagsSortItem` - `{ value: ValueOptionType, name: string }`.
 **clearable**  | Boolean (true) | Clear icon is available.
@@ -198,7 +198,7 @@ Name  | Type (default) | Description
 ---
 
 ### Option description
-Is is description of the one option of the [`options`](#core-props) prop:
+This is a description of one option of the [`options`](#core-props) prop:
 Name  | Type | Description
 ------------- | ------------- | -------------
 **value** | String \| Number (required!) | It is a value of the node. **It should be unique!**
@@ -208,11 +208,50 @@ Name  | Type | Description
 **isGroupSelectable** | Boolean (optional - true) | Determines whether groups are selectable. This behavior is similar to the disabledBranchNode prop but applies specifically to groups. It does not affect regular (non-group) items.
 **children** | {name: String, value: String, disabled?: Boolean, htmlAttr?: object, children: [] }[] | Children are the same array of objects.
 
+### Customizing colors
+
+The component uses CSS custom properties (variables) for colors. Variables are defined on `:root`. **Override them on `:root`** (or `body`) so they apply to both the input and the dropdown list—especially when using **appendToBody**, since the list is then rendered outside the `.treeselect` container.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `--treeselectjs-border-color` | `#d7dde4` | Border color of input and list |
+| `--treeselectjs-bg` | `#ffffff` | Background of the input |
+| `--treeselectjs-border-focus` | `#101010` | Border color when focused |
+| `--treeselectjs-tag-bg` | `#d7dde4` | Background of selected tags |
+| `--treeselectjs-tag-bg-hover` | `#c5c7cb` | Tag background on hover |
+| `--treeselectjs-tag-remove-hover` | `#eb4c42` | Remove (×) icon color on hover |
+| `--treeselectjs-icon` | `#c5c7cb` | Arrow and clear icons |
+| `--treeselectjs-icon-hover` | `#838790` | Icons on hover |
+| `--treeselectjs-item-counter` | `#838790` | Group item count text |
+| `--treeselectjs-item-focus-bg` | `#f0ffff` | List item background when focused |
+| `--treeselectjs-item-selected-bg` | `#e9f1f1` | List item background when selected |
+| `--treeselectjs-item-disabled-text` | `#c5cbca` | Disabled item text color |
+| `--treeselectjs-checkbox-bg` | `#ffffff` | Checkbox background |
+| `--treeselectjs-checkbox-border-color` | `#d7dde4` | Checkbox border color |
+| `--treeselectjs-checkbox-checked-bg` | `#52c67e` | Checkbox fill when checked |
+| `--treeselectjs-checkbox-checked-icon` | `#ffffff` | Checkmark color |
+
+Example:
+
+```css
+body {
+  --treeselectjs-border-color: #444;
+  --treeselectjs-bg: #1e1e1e;
+  --treeselectjs-border-focus: #6cb6ff;
+  --treeselectjs-tag-bg: #333;
+  --treeselectjs-tag-bg-hover: #444;
+  --treeselectjs-item-focus-bg: #2a2a2a;
+  --treeselectjs-item-selected-bg: #2d3a3a;
+  --treeselectjs-checkbox-checked-bg: #52c67e;
+  /* override other variables as needed */
+}
+```
+
 ---
 
 ### Notes
 1) If you want to change the padding of the element you can use CSS selector. I've added **'group'** and **'level'** attributes, but you have to use **!important**.
-2) Do not use **duplicated** values for the options. You will see a error with duplicated values. But you can use duplicated names.
+2) Do not use **duplicated** values for the options. You will see an error with duplicated values. But you can use duplicated names.
 3) **Value** prop inside the **options** prop should be a **String** or **Number**.
 4) If you use **isSingleSelect** prop, you should pass only a single **value** without an array.
 5) If you use **isSingleSelect** prop, you can set **showTags** to false. It helps to show treeselect as a dropdown. Also you can disable selecting of group's nodes with help of **disabledBranchNode**.

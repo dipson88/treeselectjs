@@ -1,8 +1,10 @@
-import React, { PropsWithChildren, useEffect, useRef } from 'react'
-import TreeselectJS, { ValueInputType, ITreeselectParams } from 'treeselectjs'
+// Keep React in scope for JSX/runtime compatibility (e.g. older bundlers or tooling)
+// biome-ignore lint/correctness/noUnusedImports: React may be required by JSX transform or tooling
+import React, { type PropsWithChildren, useEffect, useRef } from 'react'
+import TreeselectJS, { type ValueInputType, type ITreeselectParams } from 'treeselectjs'
 import 'treeselectjs/dist/treeselectjs.css'
 
-export { type DirectionType, type IconsType, type OptionType } from 'treeselectjs'
+export type { DirectionType, IconsType, OptionType } from 'treeselectjs'
 
 export type TreeselectValue = ValueInputType
 
@@ -34,10 +36,10 @@ const callbackKeysDictionary = {
   onClose: 'closeCallback',
   onNameChange: 'nameChangeCallback',
   onSearch: 'searchCallback',
-  onOpenCloseGroup: 'openCloseGroupCallback'
+  onOpenCloseGroup: 'openCloseGroupCallback',
 }
 
-const isDifferentValues = (firstValue: any, secondValue: any) => {
+const isDifferentValues = (firstValue: unknown, secondValue: unknown) => {
   return JSON.stringify(firstValue) !== JSON.stringify(secondValue)
 }
 
@@ -57,7 +59,7 @@ const Treeselect = (props: PropsWithChildren<TreeselectProps>) => {
       const isWithRender = keysWithoutRender.includes(key)
 
       if (!isWithRender && !isTheSameValue) {
-        // @ts-ignore
+        // @ts-expect-error
         treeselect.current[key] = props[key]
         isAnyChanged = true
       }
@@ -86,6 +88,8 @@ const Treeselect = (props: PropsWithChildren<TreeselectProps>) => {
     }
   }, [props.id])
 
+  // Run only when options change; props.value used only to sync value after options update
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentional — do not re-run on props.value change
   useEffect(() => {
     if (treeselect.current) {
       const isValueChanged = isDifferentValues(treeselect.current.options, props.options)
@@ -112,6 +116,8 @@ const Treeselect = (props: PropsWithChildren<TreeselectProps>) => {
     }
   }, [props.iconElements])
 
+  // Mount once, destroy on unmount; props synced via treeselect.current and other useEffects
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentional — run only on mount ([]), not on every prop change
   useEffect(() => {
     treeselect.current = new TreeselectJS({
       parentHtmlContainer: treeselectRef.current as HTMLDivElement,
@@ -122,7 +128,7 @@ const Treeselect = (props: PropsWithChildren<TreeselectProps>) => {
       closeCallback: props.onClose,
       nameChangeCallback: props.onNameChange,
       searchCallback: props.onSearch,
-      openCloseGroupCallback: props.onOpenCloseGroup
+      openCloseGroupCallback: props.onOpenCloseGroup,
     })
 
     return () => {
@@ -133,10 +139,7 @@ const Treeselect = (props: PropsWithChildren<TreeselectProps>) => {
   return (
     <>
       <div ref={treeselectRef} />
-      <div
-        ref={treeselectAfterListSlotRef}
-        className="treeselect-after-list-slot"
-      >
+      <div ref={treeselectAfterListSlotRef} className="treeselect-after-list-slot">
         {props.children}
       </div>
     </>
