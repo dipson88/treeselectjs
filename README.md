@@ -11,7 +11,7 @@ A multi-select js component with nested options.
 Build data:
 - treeselectjs.mjs  46.21 kB │ gzip: 10.82 kB
 - treeselectjs.umd.js  36.09 kB │ gzip: 9.38 kB
-- treeselectjs.css  8.24 kB │ gzip: 1.54 kB
+- treeselectjs.css  8.48 kB │ gzip: 1.58 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
@@ -35,8 +35,8 @@ import Treeselect from 'treeselectjs'
 
 Import treeselectjs (UMD)
 ```
-<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.14.0/dist/treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.14.0/dist/treeselectjs.css" />
+<script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.14.1/dist/treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs@0.14.1/dist/treeselectjs.css" />
 ...
 <script>
   ...
@@ -214,46 +214,42 @@ Name  | Params | Description
 **focus**  | None | Focuses treeselect input without open/close state changes.
 **toggleOpenClose**  | None | Open or close treeselect list and focus treeselect input.
 
----
-
 ### Customizing colors
 
-The component uses CSS custom properties (variables) for colors. Override them on the `.treeselect` container to match your theme:
+The component uses CSS custom properties (variables) for colors. Variables are defined on `:root`. **Override them on `:root`** (or `body`) so they apply to both the input and the dropdown list—especially when using **appendToBody**, since the list is then rendered outside the `.treeselect` container.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `--treeselect-border-color` | `#d7dde4` | Border color of input and list |
-| `--treeselect-bg` | `#ffffff` | Background of the input |
-| `--treeselect-border-focus` | `#101010` | Border color when focused |
-| `--treeselect-tag-bg` | `#d7dde4` | Background of selected tags |
-| `--treeselect-tag-bg-hover` | `#c5c7cb` | Tag background on hover |
-| `--treeselect-tag-remove-hover` | `#eb4c42` | Remove (×) icon color on hover |
-| `--treeselect-icon` | `#c5c7cb` | Arrow and clear icons |
-| `--treeselect-icon-hover` | `#838790` | Icons on hover |
-| `--treeselect-item-counter` | `#838790` | Group item count text |
-| `--treeselect-item-focus-bg` | `#f0ffff` | List item background when focused |
-| `--treeselect-item-selected-bg` | `#e9f1f1` | List item background when selected |
-| `--treeselect-item-disabled-text` | `#c5cbca` | Disabled item text color |
-| `--treeselect-checkbox-bg` | `#ffffff` | Checkbox background |
-| `--treeselect-checkbox-border-color` | `#d7dde4` | Checkbox border color |
-| `--treeselect-checkbox-checked-bg` | `#52c67e` | Checkbox fill when checked |
-| `--treeselect-checkbox-checked-icon` | `#ffffff` | Checkmark color |
+| `--treeselectjs-border-color` | `#d7dde4` | Border color of input and list |
+| `--treeselectjs-bg` | `#ffffff` | Background of the input |
+| `--treeselectjs-border-focus` | `#101010` | Border color when focused |
+| `--treeselectjs-tag-bg` | `#d7dde4` | Background of selected tags |
+| `--treeselectjs-tag-bg-hover` | `#c5c7cb` | Tag background on hover |
+| `--treeselectjs-tag-remove-hover` | `#eb4c42` | Remove (×) icon color on hover |
+| `--treeselectjs-icon` | `#c5c7cb` | Arrow and clear icons |
+| `--treeselectjs-icon-hover` | `#838790` | Icons on hover |
+| `--treeselectjs-item-counter` | `#838790` | Group item count text |
+| `--treeselectjs-item-focus-bg` | `#f0ffff` | List item background when focused |
+| `--treeselectjs-item-selected-bg` | `#e9f1f1` | List item background when selected |
+| `--treeselectjs-item-disabled-text` | `#c5cbca` | Disabled item text color |
+| `--treeselectjs-checkbox-bg` | `#ffffff` | Checkbox background |
+| `--treeselectjs-checkbox-border-color` | `#d7dde4` | Checkbox border color |
+| `--treeselectjs-checkbox-checked-bg` | `#52c67e` | Checkbox fill when checked |
+| `--treeselectjs-checkbox-checked-icon` | `#ffffff` | Checkmark color |
 
 Example:
 
 ```css
 body {
-  .treeselect {
-    --treeselect-border-color: #444;
-    --treeselect-bg: #1e1e1e;
-    --treeselect-border-focus: #6cb6ff;
-    --treeselect-tag-bg: #333;
-    --treeselect-tag-bg-hover: #444;
-    --treeselect-item-focus-bg: #2a2a2a;
-    --treeselect-item-selected-bg: #2d3a3a;
-    --treeselect-checkbox-checked-bg: #52c67e;
-    /* override other variables as needed */
-  }
+  --treeselectjs-border-color: #444;
+  --treeselectjs-bg: #1e1e1e;
+  --treeselectjs-border-focus: #6cb6ff;
+  --treeselectjs-tag-bg: #333;
+  --treeselectjs-tag-bg-hover: #444;
+  --treeselectjs-item-focus-bg: #2a2a2a;
+  --treeselectjs-item-selected-bg: #2d3a3a;
+  --treeselectjs-checkbox-checked-bg: #52c67e;
+  /* override other variables as needed */
 }
 ```
 

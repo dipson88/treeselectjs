@@ -1,7 +1,7 @@
 .treeselect-input {
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid var(--treeselect-border-color);
+  border: 1px solid var(--treeselectjs-border-color);
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -10,7 +10,7 @@
   padding-right: 40px;
   position: relative;
   min-height: 37px;
-  background-color: var(--treeselect-bg);
+  background-color: var(--treeselectjs-bg);
   cursor: text;
 }
 
@@ -68,7 +68,7 @@
 .treeselect-input__tags-element {
   display: inline-flex;
   align-items: center;
-  background-color: var(--treeselect-tag-bg);
+  background-color: var(--treeselectjs-tag-bg);
   cursor: pointer;
   padding: 2px 5px;
   border-radius: 2px;
@@ -78,11 +78,11 @@
 }
 
 .treeselect-input__tags-element:hover {
-  background-color: var(--treeselect-tag-bg-hover);
+  background-color: var(--treeselectjs-tag-bg-hover);
 }
 
 .treeselect-input__tags-element:hover .treeselect-input__tags-cross svg {
-  stroke: var(--treeselect-tag-remove-hover);
+  stroke: var(--treeselectjs-tag-remove-hover);
 }
 
 .treeselect-input__tags-name {
@@ -109,7 +109,7 @@
 }
 
 .treeselect-input__edit {
-  background-color: var(--treeselect-bg);
+  background-color: var(--treeselectjs-bg);
   flex: 1;
   border: none;
   font-size: 14px;
@@ -148,14 +148,14 @@
 }
 
 .treeselect-input__clear svg {
-  stroke: var(--treeselect-icon);
+  stroke: var(--treeselectjs-icon);
   width: 17px;
   min-width: 17px;
   height: 20px;
 }
 
 .treeselect-input__clear:hover svg {
-  stroke: var(--treeselect-icon-hover);
+  stroke: var(--treeselectjs-icon-hover);
 }
 
 .treeselect-input__arrow {
@@ -164,12 +164,12 @@
 }
 
 .treeselect-input__arrow svg {
-  stroke: var(--treeselect-icon);
+  stroke: var(--treeselectjs-icon);
   width: 20px;
   min-width: 20px;
   height: 20px;
 }
 
 .treeselect-input__arrow:hover svg {
-  stroke: var(--treeselect-icon-hover);
+  stroke: var(--treeselectjs-icon-hover);
 }
