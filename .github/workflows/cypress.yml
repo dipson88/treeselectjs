@@ -1,12 +1,16 @@
-name: Cypress Tests
+name: Core Cypress Tests
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+    paths:
+      - "packages/treeselectjs/**"
+      - ".github/workflows/cypress.yml"
   pull_request:
-    branches:
-      - main
+    branches: [main]
+    paths:
+      - "packages/treeselectjs/**"
+      - ".github/workflows/cypress.yml"
 
 jobs:
   cypress-tests:
@@ -15,24 +19,31 @@ jobs:
     steps:
       # Checkout the repository
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Set up Node.js
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
+          cache: "pnpm"
 
-      # Install dependencies
+      # Set up pnpm
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.28.0
+
+      # Install dependencies (workspace root)
       - name: Install dependencies
-        run: npm install
+        run: pnpm install --frozen-lockfile
 
-      # Start the dev server in the background
+      # Start the dev server in the background (core package)
       - name: Start dev server
-        run: npm run dev &
+        run: pnpm --filter treeselectjs run dev &
         env:
           NODE_ENV: development
 
-      # Run Cypress tests
-      - name: Run Cypress tests
-        run: npm run cypress:run
+      # Run Cypress tests (core package)
+      - name: Run Cypress tests (core package)
+        run: pnpm --filter treeselectjs run cypress:run
