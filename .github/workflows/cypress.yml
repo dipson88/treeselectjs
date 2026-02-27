@@ -38,6 +38,19 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # Cache Cypress binary to avoid re-downloading
+      - name: Cache Cypress binary
+        uses: actions/cache@v4
+        id: cypress-cache
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-13-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      # Install Cypress binary if not cached (required in CI)
+      - name: Install Cypress binary
+        if: steps.cypress-cache.outputs.cache-hit != 'true'
+        run: pnpm --filter treeselectjs exec cypress install
+
       # Start dev server, wait for it, then run Cypress (single step so server stays alive)
       - name: Run Cypress tests (core package)
         run: |
