@@ -21,6 +21,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Set up pnpm (must be before setup-node when using cache: "pnpm")
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.28.0
+
       # Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -28,22 +34,15 @@ jobs:
           node-version: "20"
           cache: "pnpm"
 
-      # Set up pnpm
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10.28.0
-
       # Install dependencies (workspace root)
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # Start the dev server in the background (core package)
-      - name: Start dev server
-        run: pnpm --filter treeselectjs run dev &
+      # Start dev server, wait for it, then run Cypress (single step so server stays alive)
+      - name: Run Cypress tests (core package)
+        run: |
+          pnpm --filter treeselectjs run dev &
+          npx wait-on@latest http://localhost:5173 --timeout 60000
+          pnpm --filter treeselectjs run cypress:run
         env:
           NODE_ENV: development
-
-      # Run Cypress tests (core package)
-      - name: Run Cypress tests (core package)
-        run: pnpm --filter treeselectjs run cypress:run
