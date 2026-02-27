@@ -1,25 +1,27 @@
 @import "./input/input.css";
 @import "./list/list.css";
 
-.treeselect {
+:root {
   /* Color variables – override these to customize the component */
-  --treeselect-border-color: #d7dde4;
-  --treeselect-bg: #ffffff;
-  --treeselect-border-focus: #101010;
-  --treeselect-tag-bg: #d7dde4;
-  --treeselect-tag-bg-hover: #c5c7cb;
-  --treeselect-tag-remove-hover: #eb4c42;
-  --treeselect-icon: #c5c7cb;
-  --treeselect-icon-hover: #838790;
-  --treeselect-item-counter: #838790;
-  --treeselect-item-focus-bg: #f0ffff;
-  --treeselect-item-selected-bg: #e9f1f1;
-  --treeselect-item-disabled-text: #c5cbca;
-  --treeselect-checkbox-bg: #ffffff;
-  --treeselect-checkbox-border-color: #d7dde4;
-  --treeselect-checkbox-checked-bg: #52c67e;
-  --treeselect-checkbox-checked-icon: #ffffff;
+  --treeselectjs-border-color: #d7dde4;
+  --treeselectjs-bg: #ffffff;
+  --treeselectjs-border-focus: #101010;
+  --treeselectjs-tag-bg: #d7dde4;
+  --treeselectjs-tag-bg-hover: #c5c7cb;
+  --treeselectjs-tag-remove-hover: #eb4c42;
+  --treeselectjs-icon: #c5c7cb;
+  --treeselectjs-icon-hover: #838790;
+  --treeselectjs-item-counter: #838790;
+  --treeselectjs-item-focus-bg: #f0ffff;
+  --treeselectjs-item-selected-bg: #e9f1f1;
+  --treeselectjs-item-disabled-text: #c5cbca;
+  --treeselectjs-checkbox-bg: #ffffff;
+  --treeselectjs-checkbox-border-color: #d7dde4;
+  --treeselectjs-checkbox-checked-bg: #52c67e;
+  --treeselectjs-checkbox-checked-icon: #ffffff;
+}
 
+.treeselect {
   width: 100%;
   position: relative;
   box-sizing: border-box;
@@ -46,7 +48,7 @@
 }
 
 .treeselect-input--focused {
-  border-color: var(--treeselect-border-focus);
+  border-color: var(--treeselectjs-border-focus);
 }
 
 .treeselect-input--opened.treeselect-input--top {
@@ -62,19 +64,19 @@
 }
 
 .treeselect-list--focused {
-  border-color: var(--treeselect-border-focus);
+  border-color: var(--treeselectjs-border-focus);
 }
 
 .treeselect-list--top,
 .treeselect-list--top-to-body {
-  border-bottom-color: var(--treeselect-border-color);
+  border-bottom-color: var(--treeselectjs-border-color);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
 .treeselect-list--bottom,
 .treeselect-list--bottom-to-body {
-  border-top-color: var(--treeselect-border-color);
+  border-top-color: var(--treeselectjs-border-color);
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
