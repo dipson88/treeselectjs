@@ -5,13 +5,13 @@ It is a wrapper for https://www.npmjs.com/package/treeselectjs
 A multi-select js component with nested options.
 
 - Full key support (ArrowUp, ArrowDown, Space, ArrowLeft, ArrowRight, Enter)
-- Screen sensitive direction
+- Screen-sensitive direction
 - Typescript support
 
-Build data:
+Bundle sizes:
 - vue-treeselectjs.mjs  4.63 kB │ gzip: 1.55 kB
 - vue-treeselectjs.umd.js  3.58 kB │ gzip: 1.41 kB
-- vue-treeselectjs.css  8.45 kB │ gzip: 1.58 kB
+- vue-treeselectjs.css  8.54 kB │ gzip: 1.59 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
@@ -27,20 +27,22 @@ You can buy me a coffee if you want to support my work. Thank you!
 npm install --save vue-treeselectjs
 ```
 Import vue-treeselectjs (ES)
-```
+
+```js
 import Treeselect from 'vue-treeselectjs'
 import 'vue-treeselectjs/dist/vue-treeselectjs.css'
 ```
 
 Import vue-treeselectjs (UMD)
-```
+
+```html
 <!DOCTYPE html>
 <html>
   <head>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.14.0/dist/treeselectjs.umd.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.9.0/dist/vue-treeselectjs.umd.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.9.0/dist/vue-treeselectjs.css" />
+    <script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.14.1/dist/treeselectjs.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.9.1/dist/vue-treeselectjs.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.9.1/dist/vue-treeselectjs.css" />
   </head>
   <body>
       <div id="app">
@@ -62,12 +64,14 @@ Import vue-treeselectjs (UMD)
 ```
 
 All Available Imports
-```
+
+```ts
 import Treeselect, { DirectionType, IconsType, OptionType, TreeselectValue, ... } from 'vue-treeselectjs'
 ```
 
 Example
-```
+
+```vue
 <template>
   <div class="App">
     <!-- Option 1 -->
@@ -224,12 +228,12 @@ Name  | Type (default) | Description
 **close** | (value) => void (undefined) | Returns selected values when the list is closed.
 **name-change** | (name) => void (undefined) | Returns the selected name in the input when it changes.
 **search**  | (value) => void (undefined) | Returns the search string when the user types. You can build autocomplete with this emit.
-**open-close-group** | ({ groupId, isClosed }: { groupId: ValueOptionType, isClosed: boolean }) => void (undefined) | Returns groupId and open/closed status when a group is expanded or collapsed.
+**open-close-group** | ({ groupId, isClosed }: { groupId: TreeselectValue, isClosed: boolean }) => void (undefined) | Returns groupId and open/closed status when a group is expanded or collapsed.
 
 #### Additional props
 Name  | Type (default) | Description
 ------------- | ------------- | -------------
-**iconElements** | Object({ arrowUp, ... }) | Object contains all svg icons. You can use HTMLElement or a String to reset values from the default Object. Object: ```iconElements: { arrowUp, arrowDown, arrowRight, attention, clear, cross, check, partialCheck }```. After reset of icon you have to update styles if it is necessary, use `alwaysOpen` prop for more comfortable work with styles changes.
+**iconElements** | Object({ arrowUp, ... }) | Object containing all SVG icons. You can use HTMLElement or a String to reset values from the default Object. Object: ```iconElements: { arrowUp, arrowDown, arrowRight, attention, clear, cross, check, partialCheck }```. After reset of icon you have to update styles if it is necessary, use `alwaysOpen` prop for more comfortable work with styles changes.
 
 ---
 
@@ -249,57 +253,55 @@ Name  | Type | Description
 **disabled** | Boolean (optional) | The node will be disabled. It is an optional field, you can skip it if no need to work with disabled values.
 **htmlAttr** | Object (optional) | The object of the HTML attributes, the value of the object should be a String type. These attributes will be merged into the node HTML tag.
 **isGroupSelectable** | Boolean (optional - true) | Determines whether groups are selectable. This behavior is similar to the disabledBranchNode prop but applies specifically to groups. It does not affect regular (non-group) items.
-**children** | {name: String, value: String, disabled?: Boolean, htmlAttr?: object, children: [] }[] | Children are the same array of objects.
+**children** | { name: String, value: String \| Number, disabled?: Boolean, htmlAttr?: object, children: [] }[] | Children are the same array of objects.
 
 ---
 
 ### Customizing colors
 
-The component uses CSS custom properties (variables) for colors. Override them on the `.treeselect` container to match your theme:
+The component uses CSS custom properties (variables) for colors. Variables are defined on `:root`. **Override them on `:root`** (or `body`) so they apply to both the input and the dropdown list—especially when using **appendToBody**, since the list is then rendered outside the `.treeselect` container.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `--treeselect-border-color` | `#d7dde4` | Border color of input and list |
-| `--treeselect-bg` | `#ffffff` | Background of the input |
-| `--treeselect-border-focus` | `#101010` | Border color when focused |
-| `--treeselect-tag-bg` | `#d7dde4` | Background of selected tags |
-| `--treeselect-tag-bg-hover` | `#c5c7cb` | Tag background on hover |
-| `--treeselect-tag-remove-hover` | `#eb4c42` | Remove (×) icon color on hover |
-| `--treeselect-icon` | `#c5c7cb` | Arrow and clear icons |
-| `--treeselect-icon-hover` | `#838790` | Icons on hover |
-| `--treeselect-item-counter` | `#838790` | Group item count text |
-| `--treeselect-item-focus-bg` | `#f0ffff` | List item background when focused |
-| `--treeselect-item-selected-bg` | `#e9f1f1` | List item background when selected |
-| `--treeselect-item-disabled-text` | `#c5cbca` | Disabled item text color |
-| `--treeselect-checkbox-bg` | `#ffffff` | Checkbox background |
-| `--treeselect-checkbox-border-color` | `#d7dde4` | Checkbox border color |
-| `--treeselect-checkbox-checked-bg` | `#52c67e` | Checkbox fill when checked |
-| `--treeselect-checkbox-checked-icon` | `#ffffff` | Checkmark color |
+| `--treeselectjs-border-color` | `#d7dde4` | Border color of input and list |
+| `--treeselectjs-bg` | `#ffffff` | Background of the input |
+| `--treeselectjs-border-focus` | `#101010` | Border color when focused |
+| `--treeselectjs-tag-bg` | `#d7dde4` | Background of selected tags |
+| `--treeselectjs-tag-bg-hover` | `#c5c7cb` | Tag background on hover |
+| `--treeselectjs-tag-remove-hover` | `#eb4c42` | Remove (×) icon color on hover |
+| `--treeselectjs-icon` | `#c5c7cb` | Arrow and clear icons |
+| `--treeselectjs-icon-hover` | `#838790` | Icons on hover |
+| `--treeselectjs-item-counter` | `#838790` | Group item count text |
+| `--treeselectjs-item-focus-bg` | `#f0ffff` | List item background when focused |
+| `--treeselectjs-item-selected-bg` | `#e9f1f1` | List item background when selected |
+| `--treeselectjs-item-disabled-text` | `#c5cbca` | Disabled item text color |
+| `--treeselectjs-checkbox-bg` | `#ffffff` | Checkbox background |
+| `--treeselectjs-checkbox-border-color` | `#d7dde4` | Checkbox border color |
+| `--treeselectjs-checkbox-checked-bg` | `#52c67e` | Checkbox fill when checked |
+| `--treeselectjs-checkbox-checked-icon` | `#ffffff` | Checkmark color |
 
 Example:
 
 ```css
 body {
-  .treeselect {
-    --treeselect-border-color: #444;
-    --treeselect-bg: #1e1e1e;
-    --treeselect-border-focus: #6cb6ff;
-    --treeselect-tag-bg: #333;
-    --treeselect-tag-bg-hover: #444;
-    --treeselect-item-focus-bg: #2a2a2a;
-    --treeselect-item-selected-bg: #2d3a3a;
-    --treeselect-checkbox-checked-bg: #52c67e;
-    /* override other variables as needed */
-  }
+  --treeselectjs-border-color: #444;
+  --treeselectjs-bg: #1e1e1e;
+  --treeselectjs-border-focus: #6cb6ff;
+  --treeselectjs-tag-bg: #333;
+  --treeselectjs-tag-bg-hover: #444;
+  --treeselectjs-item-focus-bg: #2a2a2a;
+  --treeselectjs-item-selected-bg: #2d3a3a;
+  --treeselectjs-checkbox-checked-bg: #52c67e;
+  /* override other variables as needed */
 }
 ```
 
 ---
 
 ### Notes
-1) If you want to change the padding of the element you can use CSS selector. I've added **'group'** and **'level'** attributes, but you have to use **!important**.
+1) If you want to change the padding of the element you can use a CSS selector. I've added **'group'** and **'level'** attributes, but you have to use **!important**.
 2) Do not use **duplicated** values for the options. You will see an error with duplicated values. But you can use duplicated names.
 3) **Value** prop inside the **options** prop should be a **String** or **Number**.
 4) If you use **isSingleSelect** prop, you should pass only a single **value** without an array.
-5) If you use **isSingleSelect** prop, you can set **showTags** to false. It helps to show treeselect as a dropdown. Also you can disable selecting of group's nodes with help of **disabledBranchNode**.
+5) If you use **isSingleSelect** prop, you can set **showTags** to false. It helps to show treeselect as a dropdown. You can also disable selecting group nodes with **disabledBranchNode**.
 6) If you use a large list of options and see a problem with performance, try to use **isBoostedRendering** prop.
