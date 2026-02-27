@@ -1,0 +1,78 @@
+{
+  "name": "react-treeselectjs",
+  "version": "0.8.0",
+  "description": "Treeselect React Component",
+  "main": "./dist/react-treeselectjs.umd.js",
+  "module": "./dist/react-treeselectjs.mjs",
+  "types": "./dist/react-treeselectjs.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/Treeselect.d.ts",
+        "default": "./dist/react-treeselectjs.mjs"
+      },
+      "require": {
+        "types": "./dist/Treeselect.d.ts",
+        "default": "./dist/react-treeselectjs.umd.js"
+      }
+    },
+    "./dist/react-treeselectjs.css": {
+      "import": "./dist/react-treeselectjs.css",
+      "require": "./dist/react-treeselectjs.css"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "biome check .",
+    "check": "biome check --write ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dipson88/react-treeselectjs.git"
+  },
+  "keywords": [
+    "react",
+    "treeselectjs",
+    "treeselect",
+    "select",
+    "groupselect",
+    "js",
+    "ts",
+    "typescript",
+    "multi-select",
+    "multiple-select"
+  ],
+  "author": "Dzmitry Zhuraukou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dipson88/react-treeselectjs/issues"
+  },
+  "homepage": "https://github.com/dipson88/react-treeselectjs#readme",
+  "dependencies": {
+    "treeselectjs": "^0.14.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.4",
+    "@types/node": "^25.3.0",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^5.1.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.8.2",
+    "vite": "^7.3.1",
+    "vite-plugin-dts": "^4.5.4"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
+  },
+  "overrides": {
+    "minimatch": ">=10.2.4"
+  },
+  "files": [
+    "dist"
+  ]
+}
