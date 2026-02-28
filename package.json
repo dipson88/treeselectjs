@@ -1,79 +1,15 @@
 {
-  "name": "treeselectjs",
-  "version": "0.14.1",
-  "description": "Treeselect JS",
-  "main": "./dist/treeselectjs.umd.js",
-  "module": "./dist/treeselectjs.mjs",
-  "types": "./dist/treeselectjs.d.ts",
-  "exports": {
-    ".": {
-      "import": {
-        "types": "./dist/treeselectjs.d.ts",
-        "default": "./dist/treeselectjs.mjs"
-      },
-      "require": {
-        "types": "./dist/treeselectjs.d.ts",
-        "default": "./dist/treeselectjs.umd.js"
-      }
-    },
-    "./dist/treeselectjs.css": {
-      "import": "./dist/treeselectjs.css",
-      "require": "./dist/treeselectjs.css"
-    }
-  },
+  "name": "treeselectjs-monorepo",
+  "private": true,
+  "packageManager": "pnpm@10.30.3",
   "scripts": {
-    "dev": "vite --port 5173",
-    "build": "tsc && vite build",
-    "typecheck": "tsc --project tsconfig.app.json --noEmit && tsc --project tsconfig.jest.json --noEmit && tsc --project tsconfig.cypress.json --noEmit",
-    "format": "biome format --write",
-    "lint": "biome lint",
-    "lint:fix": "biome lint --write",
-    "check": "biome check --write",
-    "jest:watch": "jest --watch",
-    "jest:run": "jest",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
-    "test": "npm run typecheck && npm run jest:run && npm run cypress:run"
+    "build": "pnpm -r build",
+    "dev": "pnpm -r --parallel dev",
+    "check": "pnpm -r check"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dipson88/treeselectjs.git"
-  },
-  "keywords": [
-    "treeselect",
-    "select",
-    "groupselect",
-    "js",
-    "ts",
-    "typescript",
-    "vanilla"
-  ],
-  "author": "Dzmitry Zhuraukou",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/dipson88/treeselectjs/issues"
-  },
-  "homepage": "https://github.com/dipson88/treeselectjs#readme",
-  "devDependencies": {
-    "@biomejs/biome": "^2.4.4",
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@types/jest": "^29.5.14",
-    "cypress": "^13.17.0",
-    "identity-obj-proxy": "^3.0.0",
-    "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
-    "resize-observer-polyfill": "^1.5.1",
-    "ts-jest": "^29.4.6",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.2",
-    "vite": "^7.3.1",
-    "vite-plugin-dts": "^4.5.4"
-  },
-  "overrides": {
-    "minimatch": ">=10.2.4"
-  },
-  "files": [
-    "dist"
-  ]
+  "pnpm": {
+    "overrides": {
+      "minimatch": ">=10.2.4"
+    }
+  }
 }

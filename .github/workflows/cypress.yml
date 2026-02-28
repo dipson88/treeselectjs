@@ -1,12 +1,16 @@
-name: Cypress Tests
+name: Core Cypress Tests
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+    paths:
+      - "packages/treeselectjs/**"
+      - ".github/workflows/cypress.yml"
   pull_request:
-    branches:
-      - main
+    branches: [main]
+    paths:
+      - "packages/treeselectjs/**"
+      - ".github/workflows/cypress.yml"
 
 jobs:
   cypress-tests:
@@ -15,24 +19,47 @@ jobs:
     steps:
       # Checkout the repository
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      # Set up pnpm (must be before setup-node when using cache: "pnpm")
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.30.3
 
       # Set up Node.js
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
+          cache: "pnpm"
 
-      # Install dependencies
+      # Install dependencies (workspace root)
       - name: Install dependencies
-        run: npm install
+        run: pnpm install --frozen-lockfile
 
-      # Start the dev server in the background
-      - name: Start dev server
-        run: npm run dev &
+      # Cache Cypress binary to avoid re-downloading
+      - name: Cache Cypress binary
+        uses: actions/cache@v4
+        id: cypress-cache
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-13-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      # Install Cypress binary if not cached (required in CI)
+      - name: Install Cypress binary
+        if: steps.cypress-cache.outputs.cache-hit != 'true'
+        run: pnpm --filter treeselectjs exec cypress install
+
+      # Start dev server, wait for it, then run Cypress (single step so server stays alive)
+      - name: Run Cypress tests (core package)
+        run: |
+          pnpm --filter treeselectjs run dev:ci &
+          for i in $(seq 1 60); do
+            if curl -sf http://127.0.0.1:5173/__tests__/cypress/pages/cypress-base.html >/dev/null; then break; fi
+            if [ "$i" -eq 60 ]; then echo "Dev server did not become ready"; exit 1; fi
+            sleep 1
+          done
+          pnpm --filter treeselectjs run cypress:run
         env:
           NODE_ENV: development
-
-      # Run Cypress tests
-      - name: Run Cypress tests
-        run: npm run cypress:run

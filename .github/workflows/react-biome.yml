@@ -1,19 +1,19 @@
-name: Core Build
+name: React Biome Lint
 
 on:
   push:
     branches: [main]
     paths:
-      - "packages/treeselectjs/**"
-      - ".github/workflows/build.yml"
+      - "packages/react-treeselectjs/**"
+      - ".github/workflows/react-biome.yml"
   pull_request:
     branches: [main]
     paths:
-      - "packages/treeselectjs/**"
-      - ".github/workflows/build.yml"
+      - "packages/react-treeselectjs/**"
+      - ".github/workflows/react-biome.yml"
 
 jobs:
-  build-test:
+  biome-lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -34,5 +34,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run build (core package)
-        run: pnpm --filter treeselectjs run build
+      - name: Run lint (react package)
+        run: pnpm --filter react-treeselectjs run lint
