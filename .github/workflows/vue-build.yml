@@ -35,4 +35,4 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Run build (vue package)
-        run: pnpm --filter vue-treeselectjs run build
+        run: pnpm --filter vue-treeselectjs... run build
