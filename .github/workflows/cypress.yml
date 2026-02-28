@@ -56,7 +56,7 @@ jobs:
         run: |
           pnpm --filter treeselectjs run dev:ci &
           for i in $(seq 1 60); do
-            if curl -sf http://127.0.0.1:5173/ >/dev/null; then break; fi
+            if curl -sf http://127.0.0.1:5173/__tests__/cypress/pages/cypress-base.html >/dev/null; then break; fi
             if [ "$i" -eq 60 ]; then echo "Dev server did not become ready"; exit 1; fi
             sleep 1
           done
