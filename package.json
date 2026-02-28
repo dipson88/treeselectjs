@@ -5,6 +5,6 @@
   "scripts": {
     "build": "pnpm -r build",
     "dev": "pnpm -r --parallel dev",
-    "test": "pnpm -r test"
+    "check": "pnpm -r check"
   }
 }
