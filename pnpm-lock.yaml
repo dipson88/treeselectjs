@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  minimatch: '>=10.2.4'
+
 importers:
 
   .: {}
@@ -11,8 +14,8 @@ importers:
   packages/react-treeselectjs:
     dependencies:
       treeselectjs:
-        specifier: ^0.14.1
-        version: 0.14.1
+        specifier: workspace:*
+        version: link:../treeselectjs
     devDependencies:
       '@biomejs/biome':
         specifier: ^2.4.4
@@ -93,8 +96,8 @@ importers:
   packages/vue-treeselectjs:
     dependencies:
       treeselectjs:
-        specifier: ^0.14.1
-        version: 0.14.1
+        specifier: workspace:*
+        version: link:../treeselectjs
     devDependencies:
       '@biomejs/biome':
         specifier: ^2.4.4
@@ -1120,9 +1123,6 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0
 
-  balanced-match@1.0.2:
-    resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
-
   balanced-match@4.0.4:
     resolution: {integrity: sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA==}
     engines: {node: 18 || 20 || >=22}
@@ -1143,12 +1143,6 @@ packages:
 
   bluebird@3.7.2:
     resolution: {integrity: sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==}
-
-  brace-expansion@1.1.12:
-    resolution: {integrity: sha512-9T9UjW3r0UW5c1Q7GTwllptXwhvYmEzFhzMfZ9H7FQWt+uZePjZPjBP/W1ZEyZ1twGWom5/56TF4lPcqjnDHcg==}
-
-  brace-expansion@2.0.2:
-    resolution: {integrity: sha512-Jt0vHyM+jmUBqojB7E1NIYadt0vI0Qxjxd2TErW94wDz+E2LAm5vKMXXwg6ZZBTHPuUlDgQHKXvjGBdfcF1ZDQ==}
 
   brace-expansion@5.0.4:
     resolution: {integrity: sha512-h+DEnpVvxmfVefa4jFbCf5HdH5YMDXRsmKflpf1pILZWRFlTbJpxeU55nJl4Smt5HQaGzg1o6RHFPJaOqnmBDg==}
@@ -1283,9 +1277,6 @@ packages:
 
   compare-versions@6.1.1:
     resolution: {integrity: sha512-4hm4VPpIecmlg59CHXnRDnqGplJFrbLG4aFEl5vl6cK1u76ws3LLvX7ikFnTDl5vo39sjWD6AaDPYodJp/NNHg==}
-
-  concat-map@0.0.1:
-    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
   confbox@0.1.8:
     resolution: {integrity: sha512-RMtmw0iFkeR4YV+fUOSucriAQNb9g8zFR52MWCtl+cCZOFRNL6zeB395vPzFhEjjn4fMxXudmELnl/KF/WrK6w==}
@@ -2112,16 +2103,9 @@ packages:
     resolution: {integrity: sha512-I9jwMn07Sy/IwOj3zVkVik2JTvgpaykDZEigL6Rx6N9LbMywwUSMtxET+7lVoDLLd3O3IXwJwvuuns8UB/HeAg==}
     engines: {node: '>=4'}
 
-  minimatch@10.2.1:
-    resolution: {integrity: sha512-MClCe8IL5nRRmawL6ib/eT4oLyeKMGCghibcDWK+J0hh0Q8kqSdia6BvbRMVk6mPa6WqUa5uR2oxt6C5jd533A==}
-    engines: {node: 20 || >=22}
-
-  minimatch@3.1.5:
-    resolution: {integrity: sha512-VgjWUsnnT6n+NUk6eZq77zeFdpW2LWDzP6zFGrCbHXiYNul5Dzqk2HHQ5uFH2DNW5Xbp8+jVzaeNt94ssEEl4w==}
-
-  minimatch@9.0.9:
-    resolution: {integrity: sha512-OBwBN9AL4dqmETlpS2zasx+vTeWclWzkblfZk7KTA5j3jeOONz/tRCnZomUyvNg83wL5Zv9Ss6HMJXAgL8R2Yg==}
-    engines: {node: '>=16 || 14 >=14.17'}
+  minimatch@10.2.4:
+    resolution: {integrity: sha512-oRjTw/97aTBN0RHbYCdtF1MQfvusSIBQM0IZEgzl6426+8jSC0nF1a/GmnVLpfB9yyr6g6FTqWqiZVbxrtaCIg==}
+    engines: {node: 18 || 20 || >=22}
 
   minimist@1.2.8:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
@@ -2568,9 +2552,6 @@ packages:
   tree-kill@1.2.2:
     resolution: {integrity: sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==}
     hasBin: true
-
-  treeselectjs@0.14.1:
-    resolution: {integrity: sha512-6AWLJQFVQNBxlKYyzOjzc0OfZAvRu9tlEA5eZMnPXmgYYpH5L59SYCyjZxaxxyMvnlWsG+xckwIExzueYhy7qA==}
 
   ts-jest@29.4.6:
     resolution: {integrity: sha512-fSpWtOO/1AjSNQguk43hb/JCo16oJDnMJf3CdEGNkqsEX3t0KX96xvyX1D7PfLCpVoKu4MfVrqUkFyblYoY4lA==}
@@ -3420,7 +3401,7 @@ snapshots:
       '@rushstack/ts-command-line': 5.3.3(@types/node@25.3.2)
       diff: 8.0.3
       lodash: 4.17.23
-      minimatch: 10.2.1
+      minimatch: 10.2.4
       resolve: 1.22.11
       semver: 7.5.4
       source-map: 0.6.1
@@ -3761,7 +3742,7 @@ snapshots:
       '@vue/compiler-vue2': 2.7.16
       '@vue/shared': 3.5.29
       alien-signals: 0.4.14
-      minimatch: 9.0.9
+      minimatch: 10.2.4
       muggle-string: 0.4.1
       path-browserify: 1.0.1
     optionalDependencies:
@@ -3950,8 +3931,6 @@ snapshots:
       babel-plugin-jest-hoist: 29.6.3
       babel-preset-current-node-syntax: 1.2.0(@babel/core@7.29.0)
 
-  balanced-match@1.0.2: {}
-
   balanced-match@4.0.4: {}
 
   base64-js@1.5.1: {}
@@ -3965,15 +3944,6 @@ snapshots:
   blob-util@2.0.2: {}
 
   bluebird@3.7.2: {}
-
-  brace-expansion@1.1.12:
-    dependencies:
-      balanced-match: 1.0.2
-      concat-map: 0.0.1
-
-  brace-expansion@2.0.2:
-    dependencies:
-      balanced-match: 1.0.2
 
   brace-expansion@5.0.4:
     dependencies:
@@ -4089,8 +4059,6 @@ snapshots:
   common-tags@1.8.2: {}
 
   compare-versions@6.1.1: {}
-
-  concat-map@0.0.1: {}
 
   confbox@0.1.8: {}
 
@@ -4493,7 +4461,7 @@ snapshots:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 3.1.5
+      minimatch: 10.2.4
       once: 1.4.0
       path-is-absolute: 1.0.1
 
@@ -5154,17 +5122,9 @@ snapshots:
 
   min-indent@1.0.1: {}
 
-  minimatch@10.2.1:
+  minimatch@10.2.4:
     dependencies:
       brace-expansion: 5.0.4
-
-  minimatch@3.1.5:
-    dependencies:
-      brace-expansion: 1.1.12
-
-  minimatch@9.0.9:
-    dependencies:
-      brace-expansion: 2.0.2
 
   minimist@1.2.8: {}
 
@@ -5561,7 +5521,7 @@ snapshots:
     dependencies:
       '@istanbuljs/schema': 0.1.3
       glob: 7.2.3
-      minimatch: 3.1.5
+      minimatch: 10.2.4
 
   throttleit@1.0.1: {}
 
@@ -5602,8 +5562,6 @@ snapshots:
       punycode: 2.3.1
 
   tree-kill@1.2.2: {}
-
-  treeselectjs@0.14.1: {}
 
   ts-jest@29.4.6(@babel/core@7.29.0)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.29.0))(jest-util@29.7.0)(jest@29.7.0(@types/node@25.3.2)(ts-node@10.9.2(@types/node@25.3.2)(typescript@5.9.3)))(typescript@5.9.3):
     dependencies:

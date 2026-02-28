@@ -51,7 +51,7 @@
   },
   "homepage": "https://github.com/dipson88/react-treeselectjs#readme",
   "dependencies": {
-    "treeselectjs": "^0.14.1"
+    "treeselectjs": "workspace:*"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.4",

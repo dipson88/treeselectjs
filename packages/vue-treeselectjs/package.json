@@ -51,7 +51,7 @@
   },
   "homepage": "https://github.com/dipson88/vue-treeselectjs#readme",
   "dependencies": {
-    "treeselectjs": "^0.14.1"
+    "treeselectjs": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^25.3.0",
