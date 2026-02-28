@@ -2,6 +2,11 @@ name: Deploy to GitHub Pages
 
 on:
   workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - "packages/treeselectjs/demo/**"
+      - ".github/workflows/github-pages.yml"
 
 permissions:
   contents: read
@@ -33,5 +38,6 @@ jobs:
           path: "packages/treeselectjs/demo"
 
       - name: Deploy to GitHub Pages
+        if: github.event_name == 'workflow_dispatch'
         id: deployment
         uses: actions/deploy-pages@v4
