@@ -54,8 +54,9 @@ jobs:
       # Start dev server, wait for it, then run Cypress (single step so server stays alive)
       - name: Run Cypress tests (core package)
         run: |
-          pnpm --filter treeselectjs run dev &
-          npx wait-on@latest http://localhost:5173 --timeout 60000
+          pnpm --filter treeselectjs run dev:ci &
+          sleep 5
+          npx wait-on@latest http://127.0.0.1:5173 --timeout 60000
           pnpm --filter treeselectjs run cypress:run
         env:
           NODE_ENV: development

@@ -23,6 +23,7 @@
   },
   "scripts": {
     "dev": "vite --port 5173",
+    "dev:ci": "vite --port 5173 --host 127.0.0.1",
     "build": "tsc && vite build",
     "typecheck": "tsc --project tsconfig.app.json --noEmit && tsc --project tsconfig.jest.json --noEmit && tsc --project tsconfig.cypress.json --noEmit",
     "format": "biome format --write",
