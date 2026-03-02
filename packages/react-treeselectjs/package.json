@@ -30,7 +30,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dipson88/react-treeselectjs.git"
+    "url": "git+https://github.com/dipson88/treeselectjs.git",
+    "directory": "packages/react-treeselectjs"
   },
   "keywords": [
     "react",
@@ -47,9 +48,9 @@
   "author": "Dzmitry Zhuraukou",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dipson88/react-treeselectjs/issues"
+    "url": "https://github.com/dipson88/treeselectjs/issues"
   },
-  "homepage": "https://github.com/dipson88/react-treeselectjs#readme",
+  "homepage": "https://github.com/dipson88/treeselectjs/tree/main/packages/react-treeselectjs#readme",
   "dependencies": {
     "treeselectjs": "workspace:*"
   },

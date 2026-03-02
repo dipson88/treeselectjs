@@ -38,7 +38,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dipson88/treeselectjs.git"
+    "url": "git+https://github.com/dipson88/treeselectjs.git",
+    "directory": "packages/treeselectjs"
   },
   "keywords": [
     "treeselect",
@@ -54,7 +55,7 @@
   "bugs": {
     "url": "https://github.com/dipson88/treeselectjs/issues"
   },
-  "homepage": "https://github.com/dipson88/treeselectjs#readme",
+  "homepage": "https://github.com/dipson88/treeselectjs/tree/main/packages/treeselectjs#readme",
   "devDependencies": {
     "@biomejs/biome": "^2.4.4",
     "@testing-library/dom": "^10.4.0",

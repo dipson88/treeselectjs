@@ -40,9 +40,9 @@ Import vue-treeselectjs (UMD)
 <html>
   <head>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/treeselectjs@0.14.1/dist/treeselectjs.umd.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.9.1/dist/vue-treeselectjs.umd.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-treeselectjs@0.9.1/dist/vue-treeselectjs.css" />
+    <script src="https://cdn.jsdelivr.net/npm/treeselectjs/dist/treeselectjs.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs/dist/vue-treeselectjs.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-treeselectjs/dist/vue-treeselectjs.css" />
   </head>
   <body>
       <div id="app">

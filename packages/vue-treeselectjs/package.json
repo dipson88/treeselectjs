@@ -30,7 +30,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dipson88/vue-treeselectjs.git"
+    "url": "git+https://github.com/dipson88/treeselectjs.git",
+    "directory": "packages/vue-treeselectjs"
   },
   "keywords": [
     "vue",
@@ -47,9 +48,9 @@
   "author": "Dzmitry Zhuraukou",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dipson88/vue-treeselectjs/issues"
+    "url": "https://github.com/dipson88/treeselectjs/issues"
   },
-  "homepage": "https://github.com/dipson88/vue-treeselectjs#readme",
+  "homepage": "https://github.com/dipson88/treeselectjs/tree/main/packages/vue-treeselectjs#readme",
   "dependencies": {
     "treeselectjs": "workspace:*"
   },
