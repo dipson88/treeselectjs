@@ -8,11 +8,11 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/Treeselect.d.ts",
+        "types": "./dist/react-treeselectjs.d.ts",
         "default": "./dist/react-treeselectjs.mjs"
       },
       "require": {
-        "types": "./dist/Treeselect.d.ts",
+        "types": "./dist/react-treeselectjs.d.ts",
         "default": "./dist/react-treeselectjs.umd.js"
       }
     },

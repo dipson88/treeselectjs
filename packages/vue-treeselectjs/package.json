@@ -4,15 +4,15 @@
   "description": "Treeselect Vue Component",
   "main": "./dist/vue-treeselectjs.umd.js",
   "module": "./dist/vue-treeselectjs.mjs",
-  "types": "./dist/Treeselect.d.ts",
+  "types": "./dist/vue-treeselectjs.d.ts",
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/Treeselect.d.ts",
+        "types": "./dist/vue-treeselectjs.d.ts",
         "default": "./dist/vue-treeselectjs.mjs"
       },
       "require": {
-        "types": "./dist/Treeselect.d.ts",
+        "types": "./dist/vue-treeselectjs.d.ts",
         "default": "./dist/vue-treeselectjs.umd.js"
       }
     },

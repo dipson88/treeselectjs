@@ -1,10 +1,11 @@
 import { resolve } from 'node:path'
-import { rmSync } from 'node:fs'
+import { renameSync, rmSync } from 'node:fs'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import dts from 'vite-plugin-dts'
 
 const distDir = resolve(__dirname, 'dist')
+
 const removeAppDeclarations = () => ({
   name: 'remove-app-declarations',
   closeBundle() {
@@ -14,6 +15,17 @@ const removeAppDeclarations = () => ({
       } catch {
         /* ignore */
       }
+    }
+  },
+})
+
+const renameDtsFile = () => ({
+  name: 'rename-dts-file',
+  writeBundle() {
+    try {
+      renameSync(resolve(distDir, 'Treeselect.d.ts'), resolve(distDir, 'react-treeselectjs.d.ts'))
+    } catch {
+      /* ignore */
     }
   },
 })
@@ -51,5 +63,6 @@ export default defineConfig({
     }),
     dts(),
     removeAppDeclarations(),
+    renameDtsFile(),
   ],
 })
