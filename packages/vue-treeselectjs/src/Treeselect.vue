@@ -111,7 +111,7 @@ const keysWithoutRender = ['modelValue', 'options', 'id', 'iconElements']
  * Vue 3 wrapper for treeselectjs: hierarchical single/multi select with tags and search.
  * All options from ITreeselectParams are supported as props (except value → use modelValue).
  * Emits: update:modelValue, input, open, close, name-change, search, open-close-group.
- * @see https://github.com/dipson88/vue-treeselectjs
+ * @see https://github.com/dipson88/treeselectjs/tree/main/packages/vue-treeselectjs
  * @see ITreeselectParams in treeselectjs for option details
  */
 export default defineComponent({

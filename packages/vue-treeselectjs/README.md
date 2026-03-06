@@ -15,7 +15,7 @@ Bundle sizes:
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
-![Example img](https://github.com/dipson88/vue-treeselectjs/blob/main/treeselectjs.png?raw=true)
+![Example img](https://github.com/dipson88/treeselectjs/blob/main/assets/treeselectjs.png?raw=true)
 
 ### Support
 You can buy me a coffee if you want to support my work. Thank you!
@@ -305,3 +305,6 @@ body {
 4) If you use **isSingleSelect** prop, you should pass only a single **value** without an array.
 5) If you use **isSingleSelect** prop, you can set **showTags** to false. It helps to show treeselect as a dropdown. You can also disable selecting group nodes with **disabledBranchNode**.
 6) If you use a large list of options and see a problem with performance, try to use **isBoostedRendering** prop.
+
+### License
+MIT

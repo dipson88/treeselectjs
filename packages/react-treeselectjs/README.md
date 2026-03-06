@@ -2,7 +2,7 @@
 
 It is a wrapper for https://www.npmjs.com/package/treeselectjs
 
-A multi-select js component with nested options.
+A multi-select JS component with nested options.
 
 - Full key support (ArrowUp, ArrowDown, Space, ArrowLeft, ArrowRight, Enter)
 - Screen sensitive direction
@@ -186,8 +186,8 @@ Name  | Type (default) | Description
 **onInput** | (value) => void (undefined) | Returns selected values, action is triggered on change the list value.
 **onOpen** | (value) => void (undefined) | Returns selected values, action is triggered on opening the list.
 **onClose** | (value) => void (undefined) | Returns selected values, action is triggered on closing the list.
-**onNameChange** | (name) => void (undefined) | Returns selected name inside the input, action is triggered on on change the list.
-**onSearch**  | String | Returns entered search value, action is triggered on change search value during the typing. You can try create something like autocomplete with help of this event.
+**onNameChange** | (name) => void (undefined) | Returns selected name inside the input, action is triggered on change of the list.
+**onSearch** | (value) => void (undefined) | Returns entered search value, action is triggered when the user types. You can try to create something like autocomplete with help of this event.
 **onOpenCloseGroup** | (groupId: ValueOptionType, isClosed: boolean) => void (undefined) | Returns groupId and closed/open status of this group, action is triggered on open/close group in the list.
 
 #### Additional props
@@ -198,7 +198,7 @@ Name  | Type (default) | Description
 ---
 
 ### Option description
-This is a description of one option of the [`options`](#core-props) prop:
+This is the description of one option in the [`options`](#core-props) prop:
 Name  | Type | Description
 ------------- | ------------- | -------------
 **value** | String \| Number (required!) | It is a value of the node. **It should be unique!**
@@ -255,4 +255,7 @@ body {
 3) **Value** prop inside the **options** prop should be a **String** or **Number**.
 4) If you use **isSingleSelect** prop, you should pass only a single **value** without an array.
 5) If you use **isSingleSelect** prop, you can set **showTags** to false. It helps to show treeselect as a dropdown. Also you can disable selecting of group's nodes with help of **disabledBranchNode**.
-6) If you use a large list of options and see a problem with performance, try to use **isBoostedRendering** prop
+6) If you use a large list of options and see a problem with performance, try to use **isBoostedRendering** prop.
+
+### License
+MIT

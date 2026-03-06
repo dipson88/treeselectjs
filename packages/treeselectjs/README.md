@@ -1,6 +1,6 @@
-# Treeselect JS component 
+# Treeselect JS component
 
-A multi-select js component with nested options.
+A multi-select JS component with nested options.
 
 - React wrapper - https://www.npmjs.com/package/react-treeselectjs
 - Vue wrapper - https://www.npmjs.com/package/vue-treeselectjs
@@ -27,14 +27,14 @@ You can buy me a coffee if you want to support my work. Thank you!
 npm install --save treeselectjs
 ```
 Import treeselectjs (ES)
-```
+```js
 import Treeselect from 'treeselectjs'
 
 @import 'treeselectjs/dist/treeselectjs.css' // Styles
 ```
 
 Import treeselectjs (UMD)
-```
+```html
 <script src="https://cdn.jsdelivr.net/npm/treeselectjs/dist/treeselectjs.umd.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs/dist/treeselectjs.css" />
 ...
@@ -46,7 +46,7 @@ Import treeselectjs (UMD)
 ```
 
 Example
-```
+```js
 import Treeselect from 'treeselectjs'
 
 const options = [
@@ -122,7 +122,7 @@ slot.addEventListener('click', (e) => {
 #### Core props
 Name  | Type (default) | Description
 ------------- | ------------- | -------------
-**parentHtmlContainer**  | HTMLElement (required!) | It should be a HTML element (div), it will be changed to the list container.
+**parentHtmlContainer**  | HTMLElement (required!) | It should be an HTML element (e.g. a div); it will be used as the list container.
 **value**  | Array[String \| Number] ([]) | An array of `value` from `options` prop. This value will be selected on load of the treeselect. You can call `updateValue` to update prop or set value `treeselect.value` and call `mount`. The `value` changes if you check/uncheck checkboxes or remove tags from the input.
 **options**  | Array[Object] ([]) | It is an array of objects ```{name: String, value: String \| Number, disabled?: Boolean, htmlAttr?: object, isGroupSelectable?: boolean, children: [] }```, where children are the same array of objects. Do not use duplicated `value` field. But you can use duplicated names. [Read more](#option-description).
 **disabled** | Boolean (false) | List will be disabled.
@@ -143,8 +143,8 @@ Name  | Type (default) | Description
 **alwaysOpen**  | Boolean (false) | List will be always opened. You can use it for comfortable style changing. If you want to use it as an opened list, turn `staticList` to `true`.
 **showCount** | Boolean (false) | Shows count of children near the group's name.
 **staticList** | Boolean (false) | Add the list as a static DOM element. List doesn't overlap content. This prop will be ignored if you use `appendToBody`.
-**emptyText** | String ('No results found...') | A empty list text.
-**listSlotHtmlComponent** | HTMLElement (null) | It should be a HTML element, it will be append to the end of the list.
+**emptyText** | String ('No results found...') | An empty list text.
+**listSlotHtmlComponent** | HTMLElement (null) | It should be an HTML element; it will be appended to the end of the list.
 **direction** | String (auto) | A force direction for the list. Supported values: `auto`, `top`, `bottom`.
 **expandSelected** | Boolean (false) | All groups which have checked values will be expanded on the init.
 **saveScrollPosition** | Boolean (true) | The list saves the last scroll position before close. If you open the list your scroll will be on the previous position. If you set the value to `false` - the scroll will have position 0 and the first item will be focused every time.
@@ -154,7 +154,7 @@ Name  | Type (default) | Description
 Name  | Type (default) | Description
 ------------- | ------------- | -------------
 **showTags**  | Boolean (true) | Selected values look like tags. The false value shows results as '{count} elements selected'. You can change text if you use `tagsCountText` prop. For one selected element, you will see a name of this element.
-**tagsCountText**  | String ('elements selected') | This text will be shown if you use 'showTags'. This text will be inserted after the count of the selected elements - ```'{count} {tagsCountText}'```.
+**tagsCountText**  | String ('elements selected') | Shown when `showTags` is false; inserted after the count: `'{count} {tagsCountText}'`.
 **tagsSortFn** | `(a: TagsSortItem, b: TagsSortItem) => number` \| `null` (null) | Defines the sorting order for tags in the input field.<br>`TagsSortItem` - `{ value: ValueOptionType, name: string }`.
 **clearable**  | Boolean (true) | Clear icon is available.
 **searchable**  | Boolean (true) | Search is available.
@@ -181,7 +181,7 @@ Name  | Type (default) | Description
 ---
 
 ### Option description
-Is is description of the one option of the [`options`](#core-props) prop:
+This is the description of one option in the [`options`](#core-props) prop:
 Name  | Type | Description
 ------------- | ------------- | -------------
 **value** | String \| Number (required!) | It is a value of the node. **It should be unique!**
@@ -260,8 +260,11 @@ body {
 2) If you want to update props, set props to the entity of the class and then call **mount()** method.
 3) Use **updateValue()** method to update only the value.
 4) If you need to delete List from the DOM when you don't need treeselect anymore - call **destroy()**.
-5) Do not use **duplicated** values for the options. You will see a error with duplicated values. But you can use duplicated names.
+5) Do not use **duplicated** values for the options. You will see an error with duplicated values. But you can use duplicated names.
 6) **Value** prop inside the **options** prop should be a **String** or **Number**.
 7) If you use **isSingleSelect** prop, you should pass only a single **value** without an array.
 8) If you use **isSingleSelect** prop, you can set **showTags** to false. It helps to show treeselect as a dropdown. Also you can disable selecting of group's nodes with help of **disabledBranchNode**.
 9) If you use a large list of options and see a problem with performance, try to use **isBoostedRendering** prop.
+
+### License
+MIT

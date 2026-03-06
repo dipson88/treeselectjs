@@ -2,13 +2,15 @@
 
 This repository is a monorepo containing the core `treeselectjs` library and framework wrappers.
 
-A multi-select JS component with nested options.
+Treeselect JS - a multi-select JS component with nested options.
 - Typescript Core Library - https://www.npmjs.com/package/treeselectjs
 - React wrapper - https://www.npmjs.com/package/react-treeselectjs
 - Vue wrapper - https://www.npmjs.com/package/vue-treeselectjs
 - Full key support (ArrowUp, ArrowDown, Space, ArrowLeft, ArrowRight, Enter)
 - Screen sensitive direction
 - Typescript support
+
+**Live Demo:** https://dipson88.github.io/treeselectjs/
 
 ![Example img](https://github.com/dipson88/treeselectjs/blob/main/assets/treeselectjs.png?raw=true)
 
@@ -20,16 +22,261 @@ You can buy me a coffee if you want to support my work. Thank you!
 ## Packages
 
 - **treeselectjs** — TS core library  
-  Path: [packages/treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/treeselectjs)  
+  Path and README: [packages/treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/treeselectjs)  
   NPM: [treeselectjs](https://www.npmjs.com/package/treeselectjs)
 
 - **react-treeselectjs** — React wrapper  
-  Path: [packages/react-treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/react-treeselectjs)  
+  Path and README: [packages/react-treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/react-treeselectjs)  
   NPM: [react-treeselectjs](https://www.npmjs.com/package/react-treeselectjs)
 
 - **vue-treeselectjs** — Vue wrapper  
-  Path: [packages/vue-treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/vue-treeselectjs)  
+  Path and README: [packages/vue-treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/vue-treeselectjs)  
   NPM: [vue-treeselectjs](https://www.npmjs.com/package/vue-treeselectjs)
+
+
+### Getting Started
+```bash
+npm install --save treeselectjs
+```
+Import treeselectjs (ES)
+```js
+import Treeselect from 'treeselectjs'
+
+@import 'treeselectjs/dist/treeselectjs.css' // Styles
+```
+
+Import treeselectjs (UMD)
+```html
+<script src="https://cdn.jsdelivr.net/npm/treeselectjs/dist/treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs/dist/treeselectjs.css" />
+...
+<script>
+  ...
+  const treeselect = new Treeselect({ ...props })
+  ...
+</script>
+```
+
+Example
+```js
+import Treeselect from 'treeselectjs'
+
+const options = [
+  {
+    name: 'England',
+    value: 1,
+    children: [
+      {
+        name: 'London',
+        value: 2,
+        children: [
+          {
+            name: 'Chelsea',
+            value: 3,
+            children: []
+          },
+          {
+            name: 'West End',
+            value: 4,
+            children: []
+          }
+        ]
+      },
+      {
+        name: 'Brighton',
+        value: 5,
+        children: []
+      }
+    ]
+  },
+  {
+    name: 'France',
+    value: 6,
+    children: [
+      {
+        name: 'Paris',
+        value: 7,
+        children: []
+      },
+      {
+        name: 'Lyon',
+        value: 8,
+        children: []
+      }
+    ]
+  }
+]
+
+// Use slot if you need
+const slot = document.createElement('div')
+slot.innerHTML='<a class="treeselect-demo__slot" href="">Click!</a>'
+
+const domElement = document.querySelector('.treeselect-demo')
+const treeselect = new Treeselect({
+  parentHtmlContainer: domElement,
+  value: [4, 7, 8],
+  options: options,
+  listSlotHtmlComponent: slot
+})
+
+treeselect.srcElement.addEventListener('input', (e) => {
+  console.log('Selected value:', e.detail)
+})
+
+slot.addEventListener('click', (e) => {
+  e.preventDefault()
+  alert('Slot click!')
+})
+```
+
+### Props
+
+#### Core props
+Name  | Type (default) | Description
+------------- | ------------- | -------------
+**parentHtmlContainer**  | HTMLElement (required!) | It should be a HTML element (div), it will be changed to the list container.
+**value**  | Array[String \| Number] ([]) | An array of `value` from `options` prop. This value will be selected on load of the treeselect. You can call `updateValue` to update prop or set value `treeselect.value` and call `mount`. The `value` changes if you check/uncheck checkboxes or remove tags from the input.
+**options**  | Array[Object] ([]) | It is an array of objects ```{name: String, value: String \| Number, disabled?: Boolean, htmlAttr?: object, isGroupSelectable?: boolean, children: [] }```, where children are the same array of objects. Do not use duplicated `value` field. But you can use duplicated names. [Read more](#option-description).
+**disabled** | Boolean (false) | List will be disabled.
+**id** | String ('') | id attribute for the accessibility.
+**ariaLabel** | String ('') | ariaLabel attribute for the accessibility.
+**isSingleSelect** | Boolean (false) | Converts multi-select to the single value select. Checkboxes will be removed. You should pass only one id instead of array of values. Also you can set **showTags** to false. It helps to show treeselect as a dropdown.
+**isGroupedValue** | Boolean (false) | Return groups if they selected instead of separate ids. Treeselect returns only leaves ids by default.
+**isIndependentNodes** | Boolean (false) | All nodes in treeselect work as an independent entity. Check/uncheck action ignore children/parent updates workflow. Disabled nodes ignore children/parent workflow as well.
+**rtl** | Boolean (false) | RTL mode.
+**isBoostedRendering** | Boolean (false) | ***Experimental*** - Improves list rendering performance by using visibility-based optimizations and IntersectionObserver. Useful for efficiently rendering large lists.
+
+#### List settings props
+Name  | Type (default) | Description
+------------- | ------------- | -------------
+**disabledBranchNode** | Boolean (false) | It is impossible to select groups. You can select only leaves.
+**openLevel**  | Number (0) | All groups will be opened to this level.
+**appendToBody**  | Boolean (false) | List will be appended to the body instead of the input container.
+**alwaysOpen**  | Boolean (false) | List will be always opened. You can use it for comfortable style changing. If you want to use it as an opened list, turn `staticList` to `true`.
+**showCount** | Boolean (false) | Shows count of children near the group's name.
+**staticList** | Boolean (false) | Add the list as a static DOM element. List doesn't overlap content. This prop will be ignored if you use `appendToBody`.
+**emptyText** | String ('No results found...') | An empty list text.
+**listSlotHtmlComponent** | HTMLElement (null) | It should be a HTML element, it will be append to the end of the list.
+**direction** | String (auto) | A force direction for the list. Supported values: `auto`, `top`, `bottom`.
+**expandSelected** | Boolean (false) | All groups which have checked values will be expanded on the init.
+**saveScrollPosition** | Boolean (true) | The list saves the last scroll position before close. If you open the list your scroll will be on the previous position. If you set the value to `false` - the scroll will have position 0 and the first item will be focused every time.
+**listClassName** | String ('') | A class name for list. Useful to change styles for `appendToBody` mode.
+
+#### Input settings props
+Name  | Type (default) | Description
+------------- | ------------- | -------------
+**showTags**  | Boolean (true) | Selected values look like tags. The false value shows results as '{count} elements selected'. You can change text if you use `tagsCountText` prop. For one selected element, you will see a name of this element.
+**tagsCountText**  | String ('elements selected') | This text will be shown if you use 'showTags'. This text will be inserted after the count of the selected elements - ```'{count} {tagsCountText}'```.
+**tagsSortFn** | `(a: TagsSortItem, b: TagsSortItem) => number` \| `null` (null) | Defines the sorting order for tags in the input field.<br>`TagsSortItem` - `{ value: ValueOptionType, name: string }`.
+**clearable**  | Boolean (true) | Clear icon is available.
+**searchable**  | Boolean (true) | Search is available.
+**placeholder**  | String ('Search...') | Placeholder text.
+**grouped** | Boolean (true) | Show groups in the input and group leafs if all group selected.
+
+#### Callback props
+Check [Emits](#Emits) section for more info.
+
+Name  | Type (default) | Description
+------------- | ------------- | -------------
+**inputCallback** | (value) => void (undefined) | Callback method for `input` if you don't want to use eventListener.
+**openCallback** | (value) => void (undefined) | Callback method for `open` if you don't want to use eventListener.
+**closeCallback** | (value) => void (undefined) | Callback method for `close` if you don't want to use eventListener.
+**nameChangeCallback** | (name) => void (undefined) | Callback method for `name-change` if you don't want to use eventListener.
+**searchCallback** | (value) => void (undefined) | Callback method for `search` if you don't want to use eventListener.
+**openCloseGroupCallback** | (groupId: ValueOptionType, isClosed: boolean) => void (undefined) | Callback method for `open-close-group` if you don't want to use eventListener.
+
+#### Additional props
+Name  | Type (default) | Description
+------------- | ------------- | -------------
+**iconElements** | Object({ arrowUp, ... }) | Object contains all svg icons. You can use HTMLElement or a String to reset values from the default Object. Object: ```iconElements: { arrowUp, arrowDown, arrowRight, attention, clear, cross, check, partialCheck }```. After reset of icon you have to update styles if it is necessary, use `alwaysOpen` prop for more comfortable work with styles changes.
+
+---
+
+### Option description
+This is the description of one option in the [`options`](#core-props) prop:
+Name  | Type | Description
+------------- | ------------- | -------------
+**value** | String \| Number (required!) | It is a value of the node. **It should be unique!**
+**name** | String (required!) | It is the name of the node. **Can be duplicated.**
+**disabled** | Boolean (optional) | The node will be disabled. It is an optional field, you can skip it if no need to work with disabled values.
+**htmlAttr** | Object (optional) | The object of the HTML attributes, the value of the object should be a String type. These attributes will be merged into the node HTML tag.
+**isGroupSelectable** | Boolean (optional - true) | Determines whether groups are selectable. This behavior is similar to the disabledBranchNode prop but applies specifically to groups. It does not affect regular (non-group) items.
+**children** | {name: String, value: String, disabled?: Boolean, htmlAttr?: object, children: [] }[] | Children are the same array of objects.
+
+---
+
+### Emits
+Name  | Return Type | Description
+------------- | ------------- | -------------
+**input**  | Array[String \| Number] | Returns selected values, action is triggered on change the list value. Add `eventListener` or use `inputCallback` prop to get value.
+**open**  | Array[String \| Number] | Returns selected values, action is triggered on opening the list. Add `eventListener` or use `openCallback` prop to get value.
+**close**  | Array[String \| Number] | Returns selected values, action is triggered on closing the list. Add `eventListener` or use `closeCallback` prop to get value.
+**name-change**  | String | Returns selected name inside the input, action is triggered on on change the list. Add `eventListener` or use `nameChangeCallback` prop to get name.
+**search**  | String | Returns entered search value, action is triggered on change search value during the typing. Add `eventListener` or use `searchCallback` prop to get value. You can try create something like autocomplete with help of this event.
+**open-close-group**  | { groupId: [String \| Number], isClosed: Boolean } | Returns groupId and closed/open status of this group, action is triggered on open/close group in the list. Add `eventListener` or use `openCloseGroupCallback` prop to get value.
+
+---
+
+### Methods
+Name  | Params | Description
+------------- | ------------- | -------------
+**updateValue**  | Array[String \| Number] | Update selected values.
+**mount**  | None | Helps to remount and update settings. Change settings that you need (treeselect.appendToBody = true), then call mount().
+**destroy**  | None | Deletes elements from the DOM. Call mount() to add treeselect to the DOM with previously saved internal data. If you need to recreate treeselect with default params - call ```new Treeselect(options)```.
+**focus**  | None | Focuses treeselect input without open/close state changes.
+**toggleOpenClose**  | None | Open or close treeselect list and focus treeselect input.
+
+### Customizing colors
+
+The component uses CSS custom properties (variables) for colors. Variables are defined on `:root`. **Override them on `:root`** (or `body`) so they apply to both the input and the dropdown list—especially when using **appendToBody**, since the list is then rendered outside the `.treeselect` container.
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `--treeselectjs-border-color` | `#d7dde4` | Border color of input and list |
+| `--treeselectjs-bg` | `#ffffff` | Background of the input |
+| `--treeselectjs-border-focus` | `#101010` | Border color when focused |
+| `--treeselectjs-tag-bg` | `#d7dde4` | Background of selected tags |
+| `--treeselectjs-tag-bg-hover` | `#c5c7cb` | Tag background on hover |
+| `--treeselectjs-tag-remove-hover` | `#eb4c42` | Remove (×) icon color on hover |
+| `--treeselectjs-icon` | `#c5c7cb` | Arrow and clear icons |
+| `--treeselectjs-icon-hover` | `#838790` | Icons on hover |
+| `--treeselectjs-item-counter` | `#838790` | Group item count text |
+| `--treeselectjs-item-focus-bg` | `#f0ffff` | List item background when focused |
+| `--treeselectjs-item-selected-bg` | `#e9f1f1` | List item background when selected |
+| `--treeselectjs-item-disabled-text` | `#c5cbca` | Disabled item text color |
+| `--treeselectjs-checkbox-bg` | `#ffffff` | Checkbox background |
+| `--treeselectjs-checkbox-border-color` | `#d7dde4` | Checkbox border color |
+| `--treeselectjs-checkbox-checked-bg` | `#52c67e` | Checkbox fill when checked |
+| `--treeselectjs-checkbox-checked-icon` | `#ffffff` | Checkmark color |
+
+Example:
+
+```css
+body {
+  --treeselectjs-border-color: #444;
+  --treeselectjs-bg: #1e1e1e;
+  --treeselectjs-border-focus: #6cb6ff;
+  --treeselectjs-tag-bg: #333;
+  --treeselectjs-tag-bg-hover: #444;
+  --treeselectjs-item-focus-bg: #2a2a2a;
+  --treeselectjs-item-selected-bg: #2d3a3a;
+  --treeselectjs-checkbox-checked-bg: #52c67e;
+  /* override other variables as needed */
+}
+```
+
+---
+
+### Notes
+1) If you want to change the padding of the element you can use CSS selector. I've added **'group'** and **'level'** attributes, but you have to use **!important**.
+2) If you want to update props, set props to the entity of the class and then call **mount()** method.
+3) Use **updateValue()** method to update only the value.
+4) If you need to delete List from the DOM when you don't need treeselect anymore - call **destroy()**.
+5) Do not use **duplicated** values for the options. You will see an error with duplicated values. But you can use duplicated names.
+6) **Value** prop inside the **options** prop should be a **String** or **Number**.
+7) If you use **isSingleSelect** prop, you should pass only a single **value** without an array.
+8) If you use **isSingleSelect** prop, you can set **showTags** to false. It helps to show treeselect as a dropdown. Also you can disable selecting of group's nodes with help of **disabledBranchNode**.
+9) If you use a large list of options and see a problem with performance, try to use **isBoostedRendering** prop.
 
 ## Development
 
@@ -54,6 +301,7 @@ pnpm install
 | `pnpm version-packages` | Bump versions from changesets |
 | `pnpm release` | Publish packages to npm |
 | `pnpm release:beta` | Build and publish packages to npm with the `beta` tag (for pre-release versions; install with `npm install <package>@beta`) |
+
 
 ### License
 MIT
