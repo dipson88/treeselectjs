@@ -1,32 +1,38 @@
-name: Jest Tests
+name: Core Jest Tests
 
 on:
   push:
-    branches:
-      - 'main'
+    branches: [main]
+    paths:
+      - "packages/treeselectjs/**"
+      - ".github/workflows/jest.yml"
   pull_request:
-    branches:
-      - 'main'
+    branches: [main]
+    paths:
+      - "packages/treeselectjs/**"
+      - ".github/workflows/jest.yml"
 
 jobs:
   jest-tests:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # Step 2: Set up Node.js environment
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
         with:
-          node-version: '20'
+          version: 10.30.3
 
-      # Step 3: Install dependencies
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
       - name: Install dependencies
-        run: npm install
+        run: pnpm install --frozen-lockfile
 
-      # Step 4: Run Jest tests
-      - name: Run Jest tests
-        run: npm run jest:run
+      - name: Run Jest tests (core package)
+        run: pnpm --filter treeselectjs run jest:run
