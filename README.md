@@ -299,8 +299,7 @@ pnpm install
 | `pnpm check` | Lint/check all packages |
 | `pnpm changeset` | Add a changeset for a release |
 | `pnpm version-packages` | Bump versions from changesets |
-| `pnpm release` | Publish packages to npm |
-| `pnpm release:beta` | Build and publish packages to npm with the `beta` tag (for pre-release versions; install with `npm install <package>@beta`) |
+| `pnpm release` | Build and publish packages to npm (in pre mode publishes to the `beta` tag; see `.changeset/README.md`) |
 
 
 ### License

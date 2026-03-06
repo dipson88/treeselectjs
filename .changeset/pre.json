@@ -1,0 +1,12 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "react-treeselectjs": "0.8.0",
+    "treeselectjs": "0.14.1",
+    "vue-treeselectjs": "0.9.1"
+  },
+  "changesets": [
+    "metal-roses-mix"
+  ]
+}
