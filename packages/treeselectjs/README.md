@@ -15,7 +15,7 @@ Build data:
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
-![Example img](https://github.com/dipson88/treeselectjs/blob/main/treeselectjs.png?raw=true)
+![Example img](https://github.com/dipson88/treeselectjs/blob/main/assets/treeselectjs.png?raw=true)
 
 ### Support
 You can buy me a coffee if you want to support my work. Thank you!
