@@ -1,5 +1,11 @@
 # vue-treeselectjs
 
+## 0.9.2
+
+### Patch Changes
+
+- treeselectjs@0.14.2
+
 ## 0.9.2-beta.0
 
 ### Patch Changes
