@@ -26,11 +26,20 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
+      - name: Prepare deployment folder
+        run: |
+          mkdir -p deploy
+          cp -r packages/treeselectjs/demo/* deploy/
+          cp -r packages/treeselectjs/app deploy/
+          cp -r packages/treeselectjs/public deploy/
+          sed -i "s|'../app/|'./app/|g" deploy/index.js
+          sed -i 's|"../app/|"./app/|g' deploy/index.js
+          sed -i 's|../app/|./app/|g' deploy/index.css
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Set this to the folder you want to deploy (e.g. dist, build, docs)
-          path: "packages/treeselectjs/demo"
+          path: "deploy"
 
       - name: Deploy to GitHub Pages
         id: deployment
