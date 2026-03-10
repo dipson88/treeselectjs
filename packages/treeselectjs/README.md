@@ -1,14 +1,17 @@
-# Treeselect JS monorepo
+# Treeselect JS component
 
-This repository is a monorepo containing the core `treeselectjs` library and framework wrappers.
+A multi-select JS component with nested options.
 
-Treeselect JS - a multi-select JS component with nested options.
-- Typescript Core Library - https://www.npmjs.com/package/treeselectjs
 - React wrapper - https://www.npmjs.com/package/react-treeselectjs
 - Vue wrapper - https://www.npmjs.com/package/vue-treeselectjs
 - Full key support (ArrowUp, ArrowDown, Space, ArrowLeft, ArrowRight, Enter)
 - Screen sensitive direction
 - Typescript support
+
+Build data:
+- treeselectjs.mjs  46.21 kB │ gzip: 10.82 kB
+- treeselectjs.umd.js  36.09 kB │ gzip: 9.38 kB
+- treeselectjs.css  8.48 kB │ gzip: 1.58 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
@@ -19,59 +22,30 @@ You can buy me a coffee if you want to support my work. Thank you!
 
 <a href="https://www.buymeacoffee.com/dipson88" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
-## Packages
-
-- **treeselectjs** — TS core library  
-  Path and README: [packages/treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/treeselectjs)  
-  NPM: [treeselectjs](https://www.npmjs.com/package/treeselectjs)  
-  Changelog: [CHANGELOG.md](https://github.com/dipson88/treeselectjs/blob/main/packages/treeselectjs/CHANGELOG.md)
-
-- **react-treeselectjs** — React wrapper  
-  Path and README: [packages/react-treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/react-treeselectjs)  
-  NPM: [react-treeselectjs](https://www.npmjs.com/package/react-treeselectjs)  
-  Changelog: [CHANGELOG.md](https://github.com/dipson88/treeselectjs/blob/main/packages/react-treeselectjs/CHANGELOG.md)
-
-- **vue-treeselectjs** — Vue wrapper  
-  Path and README: [packages/vue-treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/vue-treeselectjs)  
-  NPM: [vue-treeselectjs](https://www.npmjs.com/package/vue-treeselectjs)  
-  Changelog: [CHANGELOG.md](https://github.com/dipson88/treeselectjs/blob/main/packages/vue-treeselectjs/CHANGELOG.md)
-
-
 ### Getting Started
-
-#### treeselectjs (core)
 ```bash
 npm install --save treeselectjs
 ```
+Import treeselectjs (ES)
 ```js
 import Treeselect from 'treeselectjs'
-import 'treeselectjs/dist/treeselectjs.css'
-```
-Full API, UMD usage, and options: [packages/treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/treeselectjs)
 
-#### react-treeselectjs
-```bash
-npm install --save react-treeselectjs
+@import 'treeselectjs/dist/treeselectjs.css' // Styles
 ```
-```ts
-import Treeselect from 'react-treeselectjs'
-import 'react-treeselectjs/dist/react-treeselectjs.css'
-```
-Full API and examples: [packages/react-treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/react-treeselectjs)
 
-#### vue-treeselectjs
-```bash
-npm install --save vue-treeselectjs
+Import treeselectjs (UMD)
+```html
+<script src="https://cdn.jsdelivr.net/npm/treeselectjs/dist/treeselectjs.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs/dist/treeselectjs.css" />
+...
+<script>
+  ...
+  const treeselect = new Treeselect({ ...props })
+  ...
+</script>
 ```
-```js
-import Treeselect from 'vue-treeselectjs'
-import 'vue-treeselectjs/dist/vue-treeselectjs.css'
-```
-Full API and examples: [packages/vue-treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/vue-treeselectjs)
 
----
-
-### Core library (treeselectjs) example
+Example
 ```js
 import Treeselect from 'treeselectjs'
 
@@ -143,14 +117,12 @@ slot.addEventListener('click', (e) => {
 })
 ```
 
-### Props (core treeselectjs API)
-
-The following props apply to the core `treeselectjs` library. For React and Vue, see each package’s README for component props and usage.
+### Props
 
 #### Core props
 Name  | Type (default) | Description
 ------------- | ------------- | -------------
-**parentHtmlContainer**  | HTMLElement (required!) | It should be a HTML element (div), it will be changed to the list container.
+**parentHtmlContainer**  | HTMLElement (required!) | It should be an HTML element (e.g. a div); it will be used as the list container.
 **value**  | Array[String \| Number] ([]) | An array of `value` from `options` prop. This value will be selected on load of the treeselect. You can call `updateValue` to update prop or set value `treeselect.value` and call `mount`. The `value` changes if you check/uncheck checkboxes or remove tags from the input.
 **options**  | Array[Object] ([]) | It is an array of objects ```{name: String, value: String \| Number, disabled?: Boolean, htmlAttr?: object, isGroupSelectable?: boolean, children: [] }```, where children are the same array of objects. Do not use duplicated `value` field. But you can use duplicated names. [Read more](#option-description).
 **disabled** | Boolean (false) | List will be disabled.
@@ -172,7 +144,7 @@ Name  | Type (default) | Description
 **showCount** | Boolean (false) | Shows count of children near the group's name.
 **staticList** | Boolean (false) | Add the list as a static DOM element. List doesn't overlap content. This prop will be ignored if you use `appendToBody`.
 **emptyText** | String ('No results found...') | An empty list text.
-**listSlotHtmlComponent** | HTMLElement (null) | It should be a HTML element, it will be append to the end of the list.
+**listSlotHtmlComponent** | HTMLElement (null) | It should be an HTML element; it will be appended to the end of the list.
 **direction** | String (auto) | A force direction for the list. Supported values: `auto`, `top`, `bottom`.
 **expandSelected** | Boolean (false) | All groups which have checked values will be expanded on the init.
 **saveScrollPosition** | Boolean (true) | The list saves the last scroll position before close. If you open the list your scroll will be on the previous position. If you set the value to `false` - the scroll will have position 0 and the first item will be focused every time.
@@ -182,7 +154,7 @@ Name  | Type (default) | Description
 Name  | Type (default) | Description
 ------------- | ------------- | -------------
 **showTags**  | Boolean (true) | Selected values look like tags. The false value shows results as '{count} elements selected'. You can change text if you use `tagsCountText` prop. For one selected element, you will see a name of this element.
-**tagsCountText**  | String ('elements selected') | This text will be shown if you use 'showTags'. This text will be inserted after the count of the selected elements - ```'{count} {tagsCountText}'```.
+**tagsCountText**  | String ('elements selected') | Shown when `showTags` is false; inserted after the count: `'{count} {tagsCountText}'`.
 **tagsSortFn** | `(a: TagsSortItem, b: TagsSortItem) => number` \| `null` (null) | Defines the sorting order for tags in the input field.<br>`TagsSortItem` - `{ value: ValueOptionType, name: string }`.
 **clearable**  | Boolean (true) | Clear icon is available.
 **searchable**  | Boolean (true) | Search is available.
@@ -293,30 +265,6 @@ body {
 7) If you use **isSingleSelect** prop, you should pass only a single **value** without an array.
 8) If you use **isSingleSelect** prop, you can set **showTags** to false. It helps to show treeselect as a dropdown. Also you can disable selecting of group's nodes with help of **disabledBranchNode**.
 9) If you use a large list of options and see a problem with performance, try to use **isBoostedRendering** prop.
-
-## Development
-
-### Requirements
-- Node.js 20+
-- pnpm (via Corepack: `corepack enable`)
-
-### Install
-```bash
-git clone https://github.com/dipson88/treeselectjs.git
-cd treeselectjs
-pnpm install
-```
-
-### Scripts
-| Command | Description |
-|---------|-------------|
-| `pnpm build` | Build all packages |
-| `pnpm dev` | Run dev mode for all packages in parallel |
-| `pnpm check` | Lint/check all packages |
-| `pnpm changeset` | Add a changeset for a release |
-| `pnpm version-packages` | Bump versions from changesets |
-| `pnpm release` | Build and publish packages to npm (in pre mode publishes to the `beta` tag; see `.changeset/README.md`) |
-
 
 ### License
 MIT

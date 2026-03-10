@@ -1,14 +1,17 @@
-# Treeselect JS monorepo
+# Treeselect JS React component
 
-This repository is a monorepo containing the core `treeselectjs` library and framework wrappers.
+It is a wrapper for https://www.npmjs.com/package/treeselectjs
 
-Treeselect JS - a multi-select JS component with nested options.
-- Typescript Core Library - https://www.npmjs.com/package/treeselectjs
-- React wrapper - https://www.npmjs.com/package/react-treeselectjs
-- Vue wrapper - https://www.npmjs.com/package/vue-treeselectjs
+A multi-select JS component with nested options.
+
 - Full key support (ArrowUp, ArrowDown, Space, ArrowLeft, ArrowRight, Enter)
 - Screen sensitive direction
 - Typescript support
+
+Build data:
+- react-treeselectjs.mjs  2.04 kB │ gzip: 0.79 kB
+- react-treeselectjs.umd.js  1.86 kB │ gzip: 0.77 kB
+- react-treeselectjs.css  8.48 kB │ gzip: 1.58 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 
@@ -19,61 +22,51 @@ You can buy me a coffee if you want to support my work. Thank you!
 
 <a href="https://www.buymeacoffee.com/dipson88" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
-## Packages
-
-- **treeselectjs** — TS core library  
-  Path and README: [packages/treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/treeselectjs)  
-  NPM: [treeselectjs](https://www.npmjs.com/package/treeselectjs)  
-  Changelog: [CHANGELOG.md](https://github.com/dipson88/treeselectjs/blob/main/packages/treeselectjs/CHANGELOG.md)
-
-- **react-treeselectjs** — React wrapper  
-  Path and README: [packages/react-treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/react-treeselectjs)  
-  NPM: [react-treeselectjs](https://www.npmjs.com/package/react-treeselectjs)  
-  Changelog: [CHANGELOG.md](https://github.com/dipson88/treeselectjs/blob/main/packages/react-treeselectjs/CHANGELOG.md)
-
-- **vue-treeselectjs** — Vue wrapper  
-  Path and README: [packages/vue-treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/vue-treeselectjs)  
-  NPM: [vue-treeselectjs](https://www.npmjs.com/package/vue-treeselectjs)  
-  Changelog: [CHANGELOG.md](https://github.com/dipson88/treeselectjs/blob/main/packages/vue-treeselectjs/CHANGELOG.md)
-
-
 ### Getting Started
-
-#### treeselectjs (core)
-```bash
-npm install --save treeselectjs
-```
-```js
-import Treeselect from 'treeselectjs'
-import 'treeselectjs/dist/treeselectjs.css'
-```
-Full API, UMD usage, and options: [packages/treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/treeselectjs)
-
-#### react-treeselectjs
 ```bash
 npm install --save react-treeselectjs
 ```
+Import react-treeselectjs (ES)
 ```ts
 import Treeselect from 'react-treeselectjs'
 import 'react-treeselectjs/dist/react-treeselectjs.css'
 ```
-Full API and examples: [packages/react-treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/react-treeselectjs)
 
-#### vue-treeselectjs
-```bash
-npm install --save vue-treeselectjs
+Import treeselectjs (UMD)
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/treeselectjs/dist/treeselectjs.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-treeselectjs/dist/react-treeselectjs.umd.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-treeselectjs/dist/react-treeselectjs.css" />
+</head>
+<body>
+  <div id="root"></div>
+  
+  <script type="text/babel">
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<ReactTreeselect />);
+  </script>
+</body>
+</html>
 ```
-```js
-import Treeselect from 'vue-treeselectjs'
-import 'vue-treeselectjs/dist/vue-treeselectjs.css'
+
+All Available Imports
+```ts
+import Treeselect, { DirectionType, IconsType, OptionType, TreeselectProps, TreeselectValue } from 'react-treeselectjs'
 ```
-Full API and examples: [packages/vue-treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/vue-treeselectjs)
 
----
-
-### Core library (treeselectjs) example
-```js
-import Treeselect from 'treeselectjs'
+Example
+```tsx
+import React, { useCallback } from 'react'
+import Treeselect, { TreeselectValue } from 'react-treeselectjs'
+import 'react-treeselectjs/dist/react-treeselectjs.css'
 
 const options = [
   {
@@ -121,37 +114,36 @@ const options = [
   }
 ]
 
-// Use slot if you need
-const slot = document.createElement('div')
-slot.innerHTML='<a class="treeselect-demo__slot" href="">Click!</a>'
+function App() {
+  // Also for value type, you can use value: string | number | (string | number)[] | null | undefined
+  const onInput = useCallback((value: TreeselectValue) => {
+    console.log('onInput', value)
+  }, [])
 
-const domElement = document.querySelector('.treeselect-demo')
-const treeselect = new Treeselect({
-  parentHtmlContainer: domElement,
-  value: [4, 7, 8],
-  options: options,
-  listSlotHtmlComponent: slot
-})
+  return (
+    <div>
+      <Treeselect
+        options={options}
+        value={[4, 7, 8]}
+        onInput={onInput}
+      >
+        {/* Use slot if you need */}
+        <a className="treeselect-demo__slot" href="">Click!</a>
+      </Treeselect>
+    </div>
+  )
+}
 
-treeselect.srcElement.addEventListener('input', (e) => {
-  console.log('Selected value:', e.detail)
-})
-
-slot.addEventListener('click', (e) => {
-  e.preventDefault()
-  alert('Slot click!')
-})
+export default App
 ```
+---
 
-### Props (core treeselectjs API)
-
-The following props apply to the core `treeselectjs` library. For React and Vue, see each package’s README for component props and usage.
+### Props
 
 #### Core props
 Name  | Type (default) | Description
 ------------- | ------------- | -------------
-**parentHtmlContainer**  | HTMLElement (required!) | It should be a HTML element (div), it will be changed to the list container.
-**value**  | Array[String \| Number] ([]) | An array of `value` from `options` prop. This value will be selected on load of the treeselect. You can call `updateValue` to update prop or set value `treeselect.value` and call `mount`. The `value` changes if you check/uncheck checkboxes or remove tags from the input.
+**value**  | Array[String \| Number] ([]) | An array of `value` from `options` prop. This value will be selected on load of the treeselect. The `value` changes if you check/uncheck checkboxes or remove tags from the input.
 **options**  | Array[Object] ([]) | It is an array of objects ```{name: String, value: String \| Number, disabled?: Boolean, htmlAttr?: object, isGroupSelectable?: boolean, children: [] }```, where children are the same array of objects. Do not use duplicated `value` field. But you can use duplicated names. [Read more](#option-description).
 **disabled** | Boolean (false) | List will be disabled.
 **id** | String ('') | id attribute for the accessibility.
@@ -169,10 +161,8 @@ Name  | Type (default) | Description
 **openLevel**  | Number (0) | All groups will be opened to this level.
 **appendToBody**  | Boolean (false) | List will be appended to the body instead of the input container.
 **alwaysOpen**  | Boolean (false) | List will be always opened. You can use it for comfortable style changing. If you want to use it as an opened list, turn `staticList` to `true`.
-**showCount** | Boolean (false) | Shows count of children near the group's name.
 **staticList** | Boolean (false) | Add the list as a static DOM element. List doesn't overlap content. This prop will be ignored if you use `appendToBody`.
-**emptyText** | String ('No results found...') | An empty list text.
-**listSlotHtmlComponent** | HTMLElement (null) | It should be a HTML element, it will be append to the end of the list.
+**emptyText** | String ('No results found...') | Text shown when the list is empty.
 **direction** | String (auto) | A force direction for the list. Supported values: `auto`, `top`, `bottom`.
 **expandSelected** | Boolean (false) | All groups which have checked values will be expanded on the init.
 **saveScrollPosition** | Boolean (true) | The list saves the last scroll position before close. If you open the list your scroll will be on the previous position. If you set the value to `false` - the scroll will have position 0 and the first item will be focused every time.
@@ -182,7 +172,8 @@ Name  | Type (default) | Description
 Name  | Type (default) | Description
 ------------- | ------------- | -------------
 **showTags**  | Boolean (true) | Selected values look like tags. The false value shows results as '{count} elements selected'. You can change text if you use `tagsCountText` prop. For one selected element, you will see a name of this element.
-**tagsCountText**  | String ('elements selected') | This text will be shown if you use 'showTags'. This text will be inserted after the count of the selected elements - ```'{count} {tagsCountText}'```.
+**tagsCountText**  | String ('elements selected') | This text is shown when `showTags` is false. It is inserted after the count of the selected elements - ```'{count} {tagsCountText}'```.
+**showCount** | Boolean (false) | Shows count of children near the group's name.
 **tagsSortFn** | `(a: TagsSortItem, b: TagsSortItem) => number` \| `null` (null) | Defines the sorting order for tags in the input field.<br>`TagsSortItem` - `{ value: ValueOptionType, name: string }`.
 **clearable**  | Boolean (true) | Clear icon is available.
 **searchable**  | Boolean (true) | Search is available.
@@ -190,16 +181,14 @@ Name  | Type (default) | Description
 **grouped** | Boolean (true) | Show groups in the input and group leafs if all group selected.
 
 #### Callback props
-Check [Emits](#Emits) section for more info.
-
 Name  | Type (default) | Description
 ------------- | ------------- | -------------
-**inputCallback** | (value) => void (undefined) | Callback method for `input` if you don't want to use eventListener.
-**openCallback** | (value) => void (undefined) | Callback method for `open` if you don't want to use eventListener.
-**closeCallback** | (value) => void (undefined) | Callback method for `close` if you don't want to use eventListener.
-**nameChangeCallback** | (name) => void (undefined) | Callback method for `name-change` if you don't want to use eventListener.
-**searchCallback** | (value) => void (undefined) | Callback method for `search` if you don't want to use eventListener.
-**openCloseGroupCallback** | (groupId: ValueOptionType, isClosed: boolean) => void (undefined) | Callback method for `open-close-group` if you don't want to use eventListener.
+**onInput** | (value) => void (undefined) | Returns selected values, action is triggered on change the list value.
+**onOpen** | (value) => void (undefined) | Returns selected values, action is triggered on opening the list.
+**onClose** | (value) => void (undefined) | Returns selected values, action is triggered on closing the list.
+**onNameChange** | (name) => void (undefined) | Returns selected name inside the input, action is triggered on change of the list.
+**onSearch** | (value) => void (undefined) | Returns entered search value, action is triggered when the user types. You can try to create something like autocomplete with help of this event.
+**onOpenCloseGroup** | (groupId: ValueOptionType, isClosed: boolean) => void (undefined) | Returns groupId and closed/open status of this group, action is triggered on open/close group in the list.
 
 #### Additional props
 Name  | Type (default) | Description
@@ -218,29 +207,6 @@ Name  | Type | Description
 **htmlAttr** | Object (optional) | The object of the HTML attributes, the value of the object should be a String type. These attributes will be merged into the node HTML tag.
 **isGroupSelectable** | Boolean (optional - true) | Determines whether groups are selectable. This behavior is similar to the disabledBranchNode prop but applies specifically to groups. It does not affect regular (non-group) items.
 **children** | {name: String, value: String, disabled?: Boolean, htmlAttr?: object, children: [] }[] | Children are the same array of objects.
-
----
-
-### Emits
-Name  | Return Type | Description
-------------- | ------------- | -------------
-**input**  | Array[String \| Number] | Returns selected values, action is triggered on change the list value. Add `eventListener` or use `inputCallback` prop to get value.
-**open**  | Array[String \| Number] | Returns selected values, action is triggered on opening the list. Add `eventListener` or use `openCallback` prop to get value.
-**close**  | Array[String \| Number] | Returns selected values, action is triggered on closing the list. Add `eventListener` or use `closeCallback` prop to get value.
-**name-change**  | String | Returns selected name inside the input, action is triggered on on change the list. Add `eventListener` or use `nameChangeCallback` prop to get name.
-**search**  | String | Returns entered search value, action is triggered on change search value during the typing. Add `eventListener` or use `searchCallback` prop to get value. You can try create something like autocomplete with help of this event.
-**open-close-group**  | { groupId: [String \| Number], isClosed: Boolean } | Returns groupId and closed/open status of this group, action is triggered on open/close group in the list. Add `eventListener` or use `openCloseGroupCallback` prop to get value.
-
----
-
-### Methods
-Name  | Params | Description
-------------- | ------------- | -------------
-**updateValue**  | Array[String \| Number] | Update selected values.
-**mount**  | None | Helps to remount and update settings. Change settings that you need (treeselect.appendToBody = true), then call mount().
-**destroy**  | None | Deletes elements from the DOM. Call mount() to add treeselect to the DOM with previously saved internal data. If you need to recreate treeselect with default params - call ```new Treeselect(options)```.
-**focus**  | None | Focuses treeselect input without open/close state changes.
-**toggleOpenClose**  | None | Open or close treeselect list and focus treeselect input.
 
 ### Customizing colors
 
@@ -285,38 +251,11 @@ body {
 
 ### Notes
 1) If you want to change the padding of the element you can use CSS selector. I've added **'group'** and **'level'** attributes, but you have to use **!important**.
-2) If you want to update props, set props to the entity of the class and then call **mount()** method.
-3) Use **updateValue()** method to update only the value.
-4) If you need to delete List from the DOM when you don't need treeselect anymore - call **destroy()**.
-5) Do not use **duplicated** values for the options. You will see an error with duplicated values. But you can use duplicated names.
-6) **Value** prop inside the **options** prop should be a **String** or **Number**.
-7) If you use **isSingleSelect** prop, you should pass only a single **value** without an array.
-8) If you use **isSingleSelect** prop, you can set **showTags** to false. It helps to show treeselect as a dropdown. Also you can disable selecting of group's nodes with help of **disabledBranchNode**.
-9) If you use a large list of options and see a problem with performance, try to use **isBoostedRendering** prop.
-
-## Development
-
-### Requirements
-- Node.js 20+
-- pnpm (via Corepack: `corepack enable`)
-
-### Install
-```bash
-git clone https://github.com/dipson88/treeselectjs.git
-cd treeselectjs
-pnpm install
-```
-
-### Scripts
-| Command | Description |
-|---------|-------------|
-| `pnpm build` | Build all packages |
-| `pnpm dev` | Run dev mode for all packages in parallel |
-| `pnpm check` | Lint/check all packages |
-| `pnpm changeset` | Add a changeset for a release |
-| `pnpm version-packages` | Bump versions from changesets |
-| `pnpm release` | Build and publish packages to npm (in pre mode publishes to the `beta` tag; see `.changeset/README.md`) |
-
+2) Do not use **duplicated** values for the options. You will see an error with duplicated values. But you can use duplicated names.
+3) **Value** prop inside the **options** prop should be a **String** or **Number**.
+4) If you use **isSingleSelect** prop, you should pass only a single **value** without an array.
+5) If you use **isSingleSelect** prop, you can set **showTags** to false. It helps to show treeselect as a dropdown. Also you can disable selecting of group's nodes with help of **disabledBranchNode**.
+6) If you use a large list of options and see a problem with performance, try to use **isBoostedRendering** prop.
 
 ### License
 MIT

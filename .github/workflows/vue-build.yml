@@ -1,19 +1,19 @@
-name: Core Build
+name: Vue Build
 
 on:
   push:
     branches: [main]
     paths:
-      - "packages/treeselectjs/**"
-      - ".github/workflows/build.yml"
+      - "packages/vue-treeselectjs/**"
+      - ".github/workflows/vue-build.yml"
   pull_request:
     branches: [main]
     paths:
-      - "packages/treeselectjs/**"
-      - ".github/workflows/build.yml"
+      - "packages/vue-treeselectjs/**"
+      - ".github/workflows/vue-build.yml"
 
 jobs:
-  build-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -34,5 +34,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run build (core package)
-        run: pnpm --filter treeselectjs run build
+      - name: Run build (vue package)
+        run: pnpm --filter vue-treeselectjs... run build
