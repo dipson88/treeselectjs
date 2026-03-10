@@ -23,41 +23,55 @@ You can buy me a coffee if you want to support my work. Thank you!
 
 - **treeselectjs** — TS core library  
   Path and README: [packages/treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/treeselectjs)  
-  NPM: [treeselectjs](https://www.npmjs.com/package/treeselectjs)
+  NPM: [treeselectjs](https://www.npmjs.com/package/treeselectjs)  
+  Changelog: [CHANGELOG.md](https://github.com/dipson88/treeselectjs/blob/main/packages/treeselectjs/CHANGELOG.md)
 
 - **react-treeselectjs** — React wrapper  
   Path and README: [packages/react-treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/react-treeselectjs)  
-  NPM: [react-treeselectjs](https://www.npmjs.com/package/react-treeselectjs)
+  NPM: [react-treeselectjs](https://www.npmjs.com/package/react-treeselectjs)  
+  Changelog: [CHANGELOG.md](https://github.com/dipson88/treeselectjs/blob/main/packages/react-treeselectjs/CHANGELOG.md)
 
 - **vue-treeselectjs** — Vue wrapper  
   Path and README: [packages/vue-treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/vue-treeselectjs)  
-  NPM: [vue-treeselectjs](https://www.npmjs.com/package/vue-treeselectjs)
+  NPM: [vue-treeselectjs](https://www.npmjs.com/package/vue-treeselectjs)  
+  Changelog: [CHANGELOG.md](https://github.com/dipson88/treeselectjs/blob/main/packages/vue-treeselectjs/CHANGELOG.md)
 
 
 ### Getting Started
+
+#### treeselectjs (core)
 ```bash
 npm install --save treeselectjs
 ```
-Import treeselectjs (ES)
 ```js
 import Treeselect from 'treeselectjs'
-
-@import 'treeselectjs/dist/treeselectjs.css' // Styles
+import 'treeselectjs/dist/treeselectjs.css'
 ```
+Full API, UMD usage, and options: [packages/treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/treeselectjs)
 
-Import treeselectjs (UMD)
-```html
-<script src="https://cdn.jsdelivr.net/npm/treeselectjs/dist/treeselectjs.umd.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/treeselectjs/dist/treeselectjs.css" />
-...
-<script>
-  ...
-  const treeselect = new Treeselect({ ...props })
-  ...
-</script>
+#### react-treeselectjs
+```bash
+npm install --save react-treeselectjs
 ```
+```ts
+import Treeselect from 'react-treeselectjs'
+import 'react-treeselectjs/dist/react-treeselectjs.css'
+```
+Full API and examples: [packages/react-treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/react-treeselectjs)
 
-Example
+#### vue-treeselectjs
+```bash
+npm install --save vue-treeselectjs
+```
+```js
+import Treeselect from 'vue-treeselectjs'
+import 'vue-treeselectjs/dist/vue-treeselectjs.css'
+```
+Full API and examples: [packages/vue-treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/vue-treeselectjs)
+
+---
+
+### Core library (treeselectjs) example
 ```js
 import Treeselect from 'treeselectjs'
 
@@ -129,7 +143,9 @@ slot.addEventListener('click', (e) => {
 })
 ```
 
-### Props
+### Props (core treeselectjs API)
+
+The following props apply to the core `treeselectjs` library. For React and Vue, see each package’s README for component props and usage.
 
 #### Core props
 Name  | Type (default) | Description
