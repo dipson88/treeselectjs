@@ -67,9 +67,6 @@
   "peerDependencies": {
     "vue": "^3.x"
   },
-  "overrides": {
-    "minimatch": ">=10.2.4"
-  },
   "files": [
     "dist"
   ]
