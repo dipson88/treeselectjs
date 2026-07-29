@@ -1,7 +1,7 @@
 {
   "name": "treeselectjs-monorepo",
   "private": true,
-  "packageManager": "pnpm@11.5.1",
+  "packageManager": "pnpm@11.7.0",
   "scripts": {
     "build": "pnpm -r build",
     "dev": "pnpm -r --parallel dev",
@@ -10,6 +10,7 @@
     "version-packages": "changeset version",
     "release": "pnpm build && changeset publish",
     "clear-dist": "node .script/removeDist.js",
+    "clear-modules": "node .script/removeNodeModules.js",
     "clear-all": "node .script/removeDist.js && node .script/removeNodeModules.js"
   },
   "devDependencies": {
