@@ -8,15 +8,9 @@ minimumReleaseAgeExclude:
   - lodash@4.17.24
   - uuid@11.1.1
   - qs@6.15.2
-  - brace-expansion@2.1.2
-  - brace-expansion@1.1.16
-  - brace-expansion@5.0.7
-  - fast-uri@3.1.4
-  - postcss@8.5.18
-  - brace-expansion@5.0.8
-  - fast-uri@3.1.3
+  - fast-uri@3.1.5
+  - brace-expansion@5.0.9
 overrides:
-  brace-expansion@<=5.0.7: ^5.0.8
   lodash@<=4.17.23: ^4.17.24
   lodash@>=4.0.0 <=4.17.23: ^4.17.24
   minimatch@>=10.0.0 <10.2.3: ^10.2.3

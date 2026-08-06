@@ -49,6 +49,10 @@ Cap the whole loop at roughly 5 full cycles. If it's still not converging by the
 Once `pnpm audit` is clean (or you've stopped per the rules above):
 
 - Run `pnpm build` first.
+- Check whether the dependency/override changes moved any bundle sizes, using each package's own build output as the source of truth:
+  1. From the `pnpm build` output, note the printed size + gzip size for each `dist/*.mjs`/`*.umd.js`/`*.css` file, per package (e.g. `dist/treeselectjs.mjs  46.21 kB │ gzip: 10.82 kB`).
+  2. For each package (`packages/treeselectjs`, `packages/react-treeselectjs`, `packages/vue-treeselectjs`), open its `README.md` and find its size-listing section — the heading differs per package (`Build data:` in treeselectjs/react-treeselectjs, `Bundle sizes:` in vue-treeselectjs) — and compare each listed file's size/gzip numbers against the fresh build output.
+  3. If a package's numbers are unchanged, note it as unchanged. If any differ, update that README's lines to the new build output values, and record the before/after for the summary.
 - Run `pnpm --filter treeselectjs run typecheck` and `pnpm --filter treeselectjs run jest:run`.
 - Run the Cypress e2e suite — it needs the demo dev server up on port 5173 first (`cypress:run` alone will fail with connection-refused otherwise):
   1. Check nothing is already listening on port 5173 before starting a new one.
@@ -57,5 +61,5 @@ Once `pnpm audit` is clean (or you've stopped per the rules above):
   4. Run `pnpm --filter treeselectjs run cypress:run`.
   5. Stop the background dev server afterwards regardless of pass/fail, so it doesn't leak between runs or block a later port-5173 use.
   - If the dependency/override changes bumped `cypress` or `vite` themselves, pay extra attention to this step — that's exactly the kind of change that can silently break e2e without affecting jest/typecheck.
-- Summarize what changed: which packages were bumped by the update pass, which overrides were added (and why), and any vulnerabilities or test failures left unresolved.
+- Summarize what changed: which packages were bumped by the update pass, which overrides were added (and why), which package bundle sizes changed (if any, per the README check above), and any vulnerabilities or test failures left unresolved.
 - Do not commit automatically — leave the changes staged/unstaged for the user to review, unless they explicitly ask you to commit.
