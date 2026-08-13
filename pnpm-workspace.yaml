@@ -3,10 +3,4 @@ packages:
 allowBuilds:
   cypress: true
   esbuild: true
-minimumReleaseAgeExclude:
-  - minimatch@10.2.3
-  - lodash@4.17.24
-overrides:
-  lodash@<=4.17.23: ^4.17.24
-  lodash@>=4.0.0 <=4.17.23: ^4.17.24
-  minimatch@>=10.0.0 <10.2.3: ^10.2.3
+  unrs-resolver: true

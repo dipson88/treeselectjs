@@ -62,7 +62,7 @@
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/user-event": "^14.6.4",
     "@testing-library/vue": "^8.1.0",
-    "@types/node": "^25.9.5",
+    "@types/node": "^26.2.0",
     "@vitejs/plugin-vue": "^6.0.8",
     "jsdom": "^30.0.1",
     "resize-observer-polyfill": "^1.5.1",

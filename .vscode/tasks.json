@@ -1,0 +1,103 @@
+{
+  "version": "2.0.0",
+  "inputs": [
+    {
+      "id": "buildFilter",
+      "type": "pickString",
+      "description": "Package to build",
+      "default": "-r",
+      "options": [
+        { "label": "all", "value": "-r" },
+        { "label": "treeselectjs", "value": "--filter treeselectjs" },
+        { "label": "vue-treeselectjs", "value": "--filter vue-treeselectjs" },
+        { "label": "react-treeselectjs", "value": "--filter react-treeselectjs" }
+      ]
+    },
+    {
+      "id": "checkFilter",
+      "type": "pickString",
+      "description": "Package to check",
+      "default": "-r",
+      "options": [
+        { "label": "all", "value": "-r" },
+        { "label": "treeselectjs", "value": "--filter treeselectjs" },
+        { "label": "vue-treeselectjs", "value": "--filter vue-treeselectjs" },
+        { "label": "react-treeselectjs", "value": "--filter react-treeselectjs" }
+      ]
+    },
+    {
+      "id": "devFilter",
+      "type": "pickString",
+      "description": "Package to run dev for",
+      "default": "-r --parallel",
+      "options": [
+        { "label": "all", "value": "-r --parallel" },
+        { "label": "treeselectjs", "value": "--filter treeselectjs" },
+        { "label": "vue-treeselectjs", "value": "--filter vue-treeselectjs" },
+        { "label": "react-treeselectjs", "value": "--filter react-treeselectjs" }
+      ]
+    },
+    {
+      "id": "testFilter",
+      "type": "pickString",
+      "description": "Package to test",
+      "default": "-r",
+      "options": [
+        { "label": "all", "value": "-r" },
+        { "label": "treeselectjs", "value": "--filter treeselectjs" },
+        { "label": "vue-treeselectjs", "value": "--filter vue-treeselectjs" },
+        { "label": "react-treeselectjs", "value": "--filter react-treeselectjs" }
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "label": "Clear All",
+      "type": "shell",
+      "command": "pnpm run clear-all",
+      "icon": { "id": "trash", "color": "terminal.ansiRed" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Build",
+      "type": "shell",
+      "command": "pnpm ${input:buildFilter} run build",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "icon": { "id": "package", "color": "terminal.ansiBlue" },
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Check",
+      "type": "shell",
+      "command": "pnpm ${input:checkFilter} run check",
+      "icon": { "id": "checklist", "color": "terminal.ansiGreen" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Dev",
+      "type": "shell",
+      "command": "pnpm ${input:devFilter} run dev",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "icon": { "id": "play", "color": "terminal.ansiYellow" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Test",
+      "type": "shell",
+      "command": "pnpm ${input:testFilter} run test",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "icon": { "id": "beaker", "color": "terminal.ansiMagenta" },
+      "problemMatcher": ["$tsc"]
+    }
+  ]
+}
