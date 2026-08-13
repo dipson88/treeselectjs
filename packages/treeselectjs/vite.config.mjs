@@ -6,7 +6,7 @@ export default defineConfig({
   build: {
     copyPublicDir: false,
     lib: {
-      entry: resolve(__dirname, 'src/treeselectjs.ts'),
+      entry: resolve(import.meta.dirname, 'src/treeselectjs.ts'),
       name: 'treeselectjs',
       fileName: 'treeselectjs',
     },
@@ -31,7 +31,7 @@ export default defineConfig({
   plugins: [
     dts({
       insertTypesEntry: true,
-      rollupTypes: true,
+      bundleTypes: true,
       tsconfigPath: './tsconfig.app.json',
     }),
   ],

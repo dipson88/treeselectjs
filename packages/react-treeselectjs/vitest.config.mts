@@ -1,14 +1,18 @@
 import { resolve } from 'node:path'
 import { defineConfig } from 'vitest/config'
-import vue from '@vitejs/plugin-vue'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   resolve: {
     alias: {
-      'treeselectjs-test-helpers': resolve(__dirname, '../treeselectjs/__tests__/testHelpers'),
+      'treeselectjs-test-helpers': resolve(import.meta.dirname, '../treeselectjs/__tests__/testHelpers'),
     },
   },
-  plugins: [vue()],
+  plugins: [
+    react({
+      jsxRuntime: 'classic',
+    }),
+  ],
   test: {
     environment: 'jsdom',
     setupFiles: ['./__tests__/vitest/setup.ts'],
