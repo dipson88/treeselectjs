@@ -1,0 +1,44 @@
+name: Vue Vitest Tests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "packages/vue-treeselectjs/**"
+      - ".github/workflows/vue-vitest.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "packages/vue-treeselectjs/**"
+      - ".github/workflows/vue-vitest.yml"
+
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+jobs:
+  vitest-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v5
+        with:
+          version: 11.21.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build core package (treeselectjs)
+        run: pnpm --filter treeselectjs run build
+
+      - name: Run Vitest tests (vue package)
+        run: pnpm --filter vue-treeselectjs run test

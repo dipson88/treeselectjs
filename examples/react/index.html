@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Treeselect JS — React CDN demo</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/react-treeselectjs/dist/react-treeselectjs.css"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/react@18/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/treeselectjs/dist/treeselectjs.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-treeselectjs/dist/react-treeselectjs.umd.js"></script>
+    <style>
+      body {
+        font-family: sans-serif;
+        max-width: 480px;
+        margin: 60px auto;
+      }
+      .treeselect-demo__slot {
+        display: block;
+        padding: 8px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useCallback } = React;
+      const ReactTreeselect = window.ReactTreeselect;
+
+      const options = [
+        {
+          name: "England",
+          value: 1,
+          children: [
+            {
+              name: "London",
+              value: 2,
+              children: [
+                { name: "Chelsea", value: 3, children: [] },
+                { name: "West End", value: 4, children: [] },
+              ],
+            },
+            { name: "Brighton", value: 5, children: [] },
+          ],
+        },
+        {
+          name: "France",
+          value: 6,
+          children: [
+            { name: "Paris", value: 7, children: [] },
+            { name: "Lyon", value: 8, children: [] },
+          ],
+        },
+      ];
+
+      function App() {
+        // Also for value type, you can use value: string | number | (string | number)[] | null | undefined
+        const onInput = useCallback((value) => {
+          console.log("onInput", value);
+        }, []);
+
+        return (
+          <div>
+            <h1>Treeselect JS (React)</h1>
+            <ReactTreeselect
+              options={options}
+              value={[4, 7, 8]}
+              onInput={onInput}
+            >
+              {/* Use slot if you need */}
+              <a className="treeselect-demo__slot" href="">
+                Click!
+              </a>
+            </ReactTreeselect>
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>

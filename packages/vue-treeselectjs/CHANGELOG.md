@@ -1,5 +1,37 @@
 # vue-treeselectjs
 
+## 1.0.0
+
+First stable release.
+
+### Major Changes
+
+- First stable 1.0.0 release, published alongside the stable `treeselectjs@1.0.0` core package. No API changes from `0.9.2`.
+
+### Patch Changes
+
+- Fixed the UMD build exposing `window['vue-treeselectjs']` instead of `window.VueTreeselect`, and removed a dead `globals` entry left over from a copy-pasted config.
+- Updated dependencies
+  - treeselectjs@1.0.0
+
+## 1.0.0-beta.1
+
+### Patch Changes
+
+- Updated dependencies
+  - treeselectjs@1.0.0-beta.1
+
+## 1.0.0-beta.0
+
+### Major Changes
+
+- Release 1.0.0
+
+### Patch Changes
+
+- Updated dependencies
+  - treeselectjs@1.0.0-beta.0
+
 ## 0.9.2
 
 ### Patch Changes

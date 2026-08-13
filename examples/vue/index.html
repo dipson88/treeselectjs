@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Treeselect JS — Vue CDN demo</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/vue-treeselectjs/dist/vue-treeselectjs.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/treeselectjs/dist/treeselectjs.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-treeselectjs/dist/vue-treeselectjs.umd.js"></script>
+    <style>
+      body {
+        font-family: sans-serif;
+        max-width: 480px;
+        margin: 60px auto;
+      }
+      .App > * + * {
+        margin-top: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Treeselect JS (Vue)</h1>
+      <div class="App">
+        <!-- Option 1 -->
+        <Treeselect
+          :model-value="modelValue"
+          :options="options"
+          @update:modelValue="onInput"
+        >
+          <div>Slot Content</div>
+        </Treeselect>
+
+        <!-- Option 2 -->
+        <Treeselect v-model="modelValue" :options="options">
+          <div>Slot Content</div>
+        </Treeselect>
+
+        <!-- Option 3 -->
+        <Treeselect
+          :model-value="modelValue"
+          :options="options"
+          @input="onInput"
+        >
+          <div>Slot Content</div>
+        </Treeselect>
+      </div>
+    </div>
+
+    <script>
+      const { createApp, ref } = Vue;
+      const Treeselect = window.VueTreeselect;
+
+      createApp({
+        components: { Treeselect },
+        setup() {
+          const options = ref([
+            {
+              name: "England",
+              value: 1,
+              children: [
+                {
+                  name: "London",
+                  value: 2,
+                  children: [
+                    { name: "Chelsea", value: 3, children: [] },
+                    { name: "West End", value: 4, children: [] },
+                  ],
+                },
+                { name: "Brighton", value: 5, children: [] },
+              ],
+            },
+            {
+              name: "France",
+              value: 6,
+              children: [
+                { name: "Paris", value: 7, children: [] },
+                { name: "Lyon", value: 8, children: [] },
+              ],
+            },
+          ]);
+
+          const modelValue = ref([3]);
+
+          // Also for value type, you can use: string | number | (string | number)[] | null
+          const onInput = (value) => {
+            console.log("onInput", value);
+          };
+
+          return {
+            onInput,
+            options,
+            modelValue,
+          };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

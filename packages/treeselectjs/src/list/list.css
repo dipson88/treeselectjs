@@ -154,7 +154,8 @@
 }
 
 /* disabled-branch-node styles */
-.treeselect-list.treeselect-list--disabled-branch-node .treeselect-list__item--group
+.treeselect-list.treeselect-list--disabled-branch-node
+  .treeselect-list__item--group
   .treeselect-list__item-checkbox-container {
   display: none;
 }

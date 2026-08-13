@@ -9,9 +9,9 @@ A multi-select js component with nested options.
 - Typescript support
 
 Bundle sizes:
-- vue-treeselectjs.mjs  4.63 kB │ gzip: 1.55 kB
-- vue-treeselectjs.umd.js  3.58 kB │ gzip: 1.41 kB
-- vue-treeselectjs.css  8.54 kB │ gzip: 1.59 kB
+- vue-treeselectjs.mjs  4.38 kB │ gzip: 1.54 kB
+- vue-treeselectjs.umd.js  4.15 kB │ gzip: 1.63 kB
+- vue-treeselectjs.css  8.49 kB │ gzip: 1.58 kB
 
 **Live Demo:** https://dipson88.github.io/treeselectjs/
 

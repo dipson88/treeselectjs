@@ -1,6 +1,7 @@
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
+  allowCypressEnv: false,
   e2e: {
     downloadsFolder: '__tests__/cypress/downloads',
     fileServerFolder: '__tests__/cypress/fixtures',

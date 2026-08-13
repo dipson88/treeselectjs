@@ -1,10 +1,10 @@
 import { resolve } from 'node:path'
 import { renameSync, rmSync } from 'node:fs'
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import vue from '@vitejs/plugin-vue'
 import dts from 'vite-plugin-dts'
 
-const distDir = resolve(__dirname, 'dist')
+const distDir = resolve(import.meta.dirname, 'dist')
 
 const removeAppDeclarations = () => ({
   name: 'remove-app-declarations',
@@ -23,7 +23,7 @@ const renameDtsFile = () => ({
   name: 'rename-dts-file',
   writeBundle() {
     try {
-      renameSync(resolve(distDir, 'Treeselect.d.ts'), resolve(distDir, 'react-treeselectjs.d.ts'))
+      renameSync(resolve(distDir, 'Treeselect.d.ts'), resolve(distDir, 'vue-treeselectjs.d.ts'))
     } catch {
       /* ignore */
     }
@@ -33,35 +33,35 @@ const renameDtsFile = () => ({
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/Treeselect.tsx'),
-      name: 'react-treeselectjs',
-      fileName: 'react-treeselectjs',
+      entry: resolve(import.meta.dirname, 'src/Treeselect.vue'),
+      name: 'VueTreeselect',
+      fileName: 'vue-treeselectjs',
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'treeselectjs'],
+      external: ['vue', 'treeselectjs'],
       output: {
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name === 'style.css') {
-            return 'react-treeselectjs.css'
+          if (assetInfo.names.includes('style.css')) {
+            return 'vue-treeselectjs.css'
           }
 
-          return assetInfo.name
+          return assetInfo.names[0]
         },
         globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM',
+          vue: 'Vue',
           treeselectjs: 'Treeselect',
-          'react-treeselectjs': 'ReactTreeselect',
         },
       },
     },
   },
   plugins: [
-    react({
-      // Using the classic runtime to avoid JSX in the bundle. This needs to be tested over time.
-      jsxRuntime: 'classic',
+    vue(),
+    dts({
+      cleanVueFileName: true,
+      // tsconfig.json's "include" also covers __tests__ (for typecheck), but the
+      // declaration output should only ever reflect the published src/ entry point.
+      include: ['src/**/*.ts', 'src/**/*.vue'],
     }),
-    dts(),
     removeAppDeclarations(),
     renameDtsFile(),
   ],
