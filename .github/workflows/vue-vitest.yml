@@ -37,5 +37,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build core package (treeselectjs)
+        run: pnpm --filter treeselectjs run build
+
       - name: Run Vitest tests (vue package)
         run: pnpm --filter vue-treeselectjs run test
