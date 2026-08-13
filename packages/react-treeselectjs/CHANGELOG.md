@@ -1,5 +1,16 @@
 # react-treeselectjs
 
+## 1.0.0-beta.0
+
+### Major Changes
+
+- Release 1.0.0
+
+### Patch Changes
+
+- Updated dependencies
+  - treeselectjs@1.0.0-beta.0
+
 ## 0.8.1
 
 ### Patch Changes
