@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Treeselect JS — Vanilla CDN demo</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/treeselectjs/dist/treeselectjs.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/treeselectjs/dist/treeselectjs.umd.js"></script>
+    <style>
+      body {
+        font-family: sans-serif;
+        max-width: 480px;
+        margin: 60px auto;
+      }
+      .treeselect-demo__slot {
+        display: block;
+        padding: 8px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Treeselect JS (vanilla)</h1>
+    <div id="treeselect"></div>
+
+    <script>
+      const options = [
+        {
+          name: "England",
+          value: 1,
+          children: [
+            {
+              name: "London",
+              value: 2,
+              children: [
+                { name: "Chelsea", value: 3, children: [] },
+                { name: "West End", value: 4, children: [] },
+              ],
+            },
+            { name: "Brighton", value: 5, children: [] },
+          ],
+        },
+        {
+          name: "France",
+          value: 6,
+          children: [
+            { name: "Paris", value: 7, children: [] },
+            { name: "Lyon", value: 8, children: [] },
+          ],
+        },
+      ];
+
+      // Use slot if you need
+      const slot = document.createElement("div");
+      slot.innerHTML = '<a class="treeselect-demo__slot" href="">Click!</a>';
+
+      const treeselect = new window.Treeselect({
+        parentHtmlContainer: document.getElementById("treeselect"),
+        value: [4, 7, 8],
+        options: options,
+        listSlotHtmlComponent: slot,
+      });
+
+      treeselect.srcElement.addEventListener("input", (e) => {
+        console.log("Selected value:", e.detail);
+      });
+
+      slot.addEventListener("click", (e) => {
+        e.preventDefault();
+        alert("Slot click!");
+      });
+    </script>
+  </body>
+</html>
