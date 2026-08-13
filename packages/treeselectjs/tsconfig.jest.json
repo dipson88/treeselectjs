@@ -4,5 +4,10 @@
     "isolatedModules": false,
     "types": ["jest", "node"]
   },
-  "include": ["__tests__/jest/**/*.test.ts", "__tests__/jest/**/*.spec.ts", "__tests__/testHelpers/**/*.ts", "__tests__/jest/**/*.ts"]
+  "include": [
+    "__tests__/jest/**/*.test.ts",
+    "__tests__/jest/**/*.spec.ts",
+    "__tests__/testHelpers/**/*.ts",
+    "__tests__/jest/**/*.ts"
+  ]
 }
