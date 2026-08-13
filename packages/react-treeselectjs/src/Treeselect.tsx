@@ -1,6 +1,6 @@
 // Keep React in scope for JSX/runtime compatibility (e.g. older bundlers or tooling)
 // biome-ignore lint/correctness/noUnusedImports: React may be required by JSX transform or tooling
-import React, { type PropsWithChildren, useEffect, useRef } from 'react'
+import React, { type PropsWithChildren, useEffect, useLayoutEffect, useRef } from 'react'
 import TreeselectJS, { type ValueInputType, type ITreeselectParams } from 'treeselectjs'
 import 'treeselectjs/dist/treeselectjs.css'
 
@@ -116,9 +116,15 @@ const Treeselect = (props: PropsWithChildren<TreeselectProps>) => {
     }
   }, [props.iconElements])
 
-  // Mount once, destroy on unmount; props synced via treeselect.current and other useEffects
+  // Mount once, destroy on unmount; props synced via treeselect.current and other useEffects.
+  // useLayoutEffect (not useEffect) so destroy() runs synchronously before React removes the
+  // fragment's DOM nodes - TreeselectJS reparents listSlotHtmlComponent into the list markup,
+  // and a deferred (passive) cleanup would run after React already tried to remove that node
+  // from its original position, throwing a NotFoundError.
   // biome-ignore lint/correctness/useExhaustiveDependencies: intentional — run only on mount ([]), not on every prop change
-  useEffect(() => {
+  useLayoutEffect(() => {
+    const afterListSlotOriginalParent = treeselectAfterListSlotRef.current?.parentElement ?? null
+
     treeselect.current = new TreeselectJS({
       parentHtmlContainer: treeselectRef.current as HTMLDivElement,
       listSlotHtmlComponent: treeselectAfterListSlotRef.current as HTMLDivElement,
@@ -132,6 +138,14 @@ const Treeselect = (props: PropsWithChildren<TreeselectProps>) => {
     })
 
     return () => {
+      // TreeselectJS moves treeselectAfterListSlotRef.current into the dropdown's own
+      // markup while open/mounted. Put it back under its original React-rendered parent
+      // before destroy() runs, so React's own unmount can still find and remove it from
+      // where it originally placed it (otherwise removeChild throws NotFoundError).
+      if (treeselectAfterListSlotRef.current && afterListSlotOriginalParent) {
+        afterListSlotOriginalParent.appendChild(treeselectAfterListSlotRef.current)
+      }
+
       treeselect.current?.destroy()
     }
   }, [])

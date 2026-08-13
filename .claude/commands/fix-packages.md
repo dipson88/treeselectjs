@@ -54,6 +54,7 @@ Once `pnpm audit` is clean (or you've stopped per the rules above):
   2. For each package (`packages/treeselectjs`, `packages/react-treeselectjs`, `packages/vue-treeselectjs`), open its `README.md` and find its size-listing section — the heading differs per package (`Build data:` in treeselectjs/react-treeselectjs, `Bundle sizes:` in vue-treeselectjs) — and compare each listed file's size/gzip numbers against the fresh build output.
   3. If a package's numbers are unchanged, note it as unchanged. If any differ, update that README's lines to the new build output values, and record the before/after for the summary.
 - Run `pnpm --filter treeselectjs run typecheck` and `pnpm --filter treeselectjs run jest:run`.
+- Run `pnpm --filter react-treeselectjs run test` and `pnpm --filter vue-treeselectjs run test` (Vitest suites covering the React/Vue wrapper packages).
 - Run the Cypress e2e suite — it needs the demo dev server up on port 5173 first (`cypress:run` alone will fail with connection-refused otherwise):
   1. Check nothing is already listening on port 5173 before starting a new one.
   2. Start the dev server in the background: `pnpm --filter treeselectjs run dev:ci` (binds `127.0.0.1:5173`; use a background shell so it doesn't block).
@@ -61,5 +62,6 @@ Once `pnpm audit` is clean (or you've stopped per the rules above):
   4. Run `pnpm --filter treeselectjs run cypress:run`.
   5. Stop the background dev server afterwards regardless of pass/fail, so it doesn't leak between runs or block a later port-5173 use.
   - If the dependency/override changes bumped `cypress` or `vite` themselves, pay extra attention to this step — that's exactly the kind of change that can silently break e2e without affecting jest/typecheck.
+  - Similarly, if `vitest`, `@testing-library/*`, or the framework packages (`react`, `vue`) themselves were bumped, pay extra attention to the wrapper test results from the step above.
 - Summarize what changed: which packages were bumped by the update pass, which overrides were added (and why), which package bundle sizes changed (if any, per the README check above), and any vulnerabilities or test failures left unresolved.
 - Do not commit automatically — leave the changes staged/unstaged for the user to review, unless they explicitly ask you to commit.

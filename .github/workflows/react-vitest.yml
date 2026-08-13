@@ -1,22 +1,22 @@
-name: React Build
+name: React Vitest Tests
 
 on:
   push:
     branches: [main]
     paths:
       - "packages/react-treeselectjs/**"
-      - ".github/workflows/react-build.yml"
+      - ".github/workflows/react-vitest.yml"
   pull_request:
     branches: [main]
     paths:
       - "packages/react-treeselectjs/**"
-      - ".github/workflows/react-build.yml"
+      - ".github/workflows/react-vitest.yml"
 
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 jobs:
-  build:
+  vitest-tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,5 +37,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run build (react package)
-        run: pnpm --filter react-treeselectjs... run build
+      - name: Run Vitest tests (react package)
+        run: pnpm --filter react-treeselectjs run test

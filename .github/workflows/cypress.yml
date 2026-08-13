@@ -28,7 +28,7 @@ jobs:
       - name: Set up pnpm
         uses: pnpm/action-setup@v5
         with:
-          version: 11.7.0
+          version: 11.21.0
 
       # Set up Node.js
       - name: Set up Node.js
@@ -47,7 +47,7 @@ jobs:
         id: cypress-cache
         with:
           path: ~/.cache/Cypress
-          key: cypress-13-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          key: cypress-15-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
 
       # Install Cypress binary if not cached (required in CI)
       - name: Install Cypress binary

@@ -41,11 +41,11 @@ export default defineConfig({
       external: ['react', 'react-dom', 'treeselectjs'],
       output: {
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name === 'style.css') {
+          if (assetInfo.names.includes('style.css')) {
             return 'react-treeselectjs.css'
           }
 
-          return assetInfo.name
+          return assetInfo.names[0]
         },
         globals: {
           react: 'React',
@@ -61,7 +61,11 @@ export default defineConfig({
       // Using the classic runtime to avoid JSX in the bundle. This needs to be tested over time.
       jsxRuntime: 'classic',
     }),
-    dts(),
+    dts({
+      // tsconfig.json's "include" also covers __tests__ (for typecheck), but the
+      // declaration output should only ever reflect the published src/ entry point.
+      include: ['src/**/*.ts', 'src/**/*.tsx'],
+    }),
     removeAppDeclarations(),
     renameDtsFile(),
   ],

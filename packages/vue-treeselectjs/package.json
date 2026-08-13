@@ -26,7 +26,10 @@
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "lint": "biome lint .",
-    "check": "biome check --write ."
+    "check": "biome check --write .",
+    "typecheck": "vue-tsc --project tsconfig.json --noEmit && vue-tsc --project tsconfig.node.json --noEmit",
+    "test": "pnpm typecheck && vitest run",
+    "test:watch": "vitest"
   },
   "repository": {
     "type": "git",
@@ -56,11 +59,17 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.4",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/user-event": "^14.6.4",
+    "@testing-library/vue": "^8.1.0",
     "@types/node": "^25.3.2",
     "@vitejs/plugin-vue": "^6.0.4",
+    "jsdom": "^30.0.1",
+    "resize-observer-polyfill": "^1.5.1",
     "typescript": "^5.9.3",
     "vite": "^7.3.6",
     "vite-plugin-dts": "^4.5.4",
+    "vitest": "^4.1.10",
     "vue": "^3.5.29",
     "vue-tsc": "^3.2.5"
   },

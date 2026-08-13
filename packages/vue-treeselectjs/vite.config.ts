@@ -59,6 +59,9 @@ export default defineConfig({
     vue(),
     dts({
       cleanVueFileName: true,
+      // tsconfig.json's "include" also covers __tests__ (for typecheck), but the
+      // declaration output should only ever reflect the published src/ entry point.
+      include: ['src/**/*.ts', 'src/**/*.vue'],
     }),
     removeAppDeclarations(),
     renameDtsFile(),

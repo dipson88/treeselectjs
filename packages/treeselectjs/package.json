@@ -34,7 +34,7 @@
     "jest:run": "jest",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test": "npm run typecheck && npm run jest:run && npm run cypress:run"
+    "test": "pnpm typecheck && pnpm jest:run && pnpm cypress:run"
   },
   "repository": {
     "type": "git",
@@ -62,7 +62,7 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.19.13",
-    "cypress": "^13.17.0",
+    "cypress": "^15.20.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
