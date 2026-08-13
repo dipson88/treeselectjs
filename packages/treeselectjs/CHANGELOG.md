@@ -1,5 +1,11 @@
 # treeselectjs
 
+## 1.0.0-beta.1
+
+### Patch Changes
+
+- Fix UMD build exposing `window.treeselectjs` instead of `window.Treeselect`, which broke the documented `new Treeselect(...)` usage from a plain `<script>` tag.
+
 ## 1.0.0-beta.0
 
 ### Major Changes

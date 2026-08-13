@@ -1,5 +1,12 @@
 # vue-treeselectjs
 
+## 1.0.0-beta.1
+
+### Patch Changes
+
+- Updated dependencies
+  - treeselectjs@1.0.0-beta.1
+
 ## 1.0.0-beta.0
 
 ### Major Changes

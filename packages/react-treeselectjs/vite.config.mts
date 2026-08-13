@@ -34,7 +34,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(import.meta.dirname, 'src/Treeselect.tsx'),
-      name: 'react-treeselectjs',
+      name: 'ReactTreeselect',
       fileName: 'react-treeselectjs',
     },
     rollupOptions: {
@@ -51,7 +51,6 @@ export default defineConfig({
           react: 'React',
           'react-dom': 'ReactDOM',
           treeselectjs: 'Treeselect',
-          'react-treeselectjs': 'ReactTreeselect',
         },
       },
     },

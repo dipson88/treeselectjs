@@ -34,7 +34,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(import.meta.dirname, 'src/Treeselect.vue'),
-      name: 'vue-treeselectjs',
+      name: 'VueTreeselect',
       fileName: 'vue-treeselectjs',
     },
     rollupOptions: {
@@ -50,7 +50,6 @@ export default defineConfig({
         globals: {
           vue: 'Vue',
           treeselectjs: 'Treeselect',
-          'vue-treeselectjs': 'VueTreeselect',
         },
       },
     },

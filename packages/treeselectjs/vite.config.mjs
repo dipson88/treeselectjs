@@ -7,7 +7,7 @@ export default defineConfig({
     copyPublicDir: false,
     lib: {
       entry: resolve(import.meta.dirname, 'src/treeselectjs.ts'),
-      name: 'treeselectjs',
+      name: 'Treeselect',
       fileName: 'treeselectjs',
     },
     rollupOptions: {
@@ -18,9 +18,6 @@ export default defineConfig({
           }
 
           return assetInfo.names[0]
-        },
-        globals: {
-          treeselectjs: 'Treeselect',
         },
       },
     },
