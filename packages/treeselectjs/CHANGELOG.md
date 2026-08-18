@@ -1,5 +1,11 @@
 # treeselectjs
 
+## 1.0.1
+
+### Patch Changes
+
+- Improve npm package descriptions, keywords, and README introductions for tree select, React, and Vue search discovery.
+
 ## 1.0.0
 
 First stable release.

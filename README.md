@@ -2,10 +2,11 @@
 
 This repository is a monorepo containing the core `treeselectjs` library and framework wrappers.
 
-Treeselect JS - a multi-select JS component with nested options.
-- Typescript Core Library - https://www.npmjs.com/package/treeselectjs
-- React wrapper - https://www.npmjs.com/package/react-treeselectjs
-- Vue wrapper - https://www.npmjs.com/package/vue-treeselectjs
+Treeselect JS is a JavaScript and TypeScript tree select component for nested options, searchable dropdowns, checkboxes, and multi-select inputs.
+
+- TypeScript core tree select library - https://www.npmjs.com/package/treeselectjs
+- React tree select wrapper - https://www.npmjs.com/package/react-treeselectjs
+- Vue 3 tree select wrapper - https://www.npmjs.com/package/vue-treeselectjs
 - Full key support (ArrowUp, ArrowDown, Space, ArrowLeft, ArrowRight, Enter)
 - Screen sensitive direction
 - Typescript support
@@ -21,17 +22,17 @@ You can buy me a coffee if you want to support my work. Thank you!
 
 ## Packages
 
-- **treeselectjs** — TS core library  
+- **treeselectjs** — TypeScript core tree select library  
   Path and README: [packages/treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/treeselectjs)  
   NPM: [treeselectjs](https://www.npmjs.com/package/treeselectjs)  
   Changelog: [CHANGELOG.md](https://github.com/dipson88/treeselectjs/blob/main/packages/treeselectjs/CHANGELOG.md)
 
-- **react-treeselectjs** — React wrapper  
+- **react-treeselectjs** — React tree select wrapper for nested options and multi-select dropdowns  
   Path and README: [packages/react-treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/react-treeselectjs)  
   NPM: [react-treeselectjs](https://www.npmjs.com/package/react-treeselectjs)  
   Changelog: [CHANGELOG.md](https://github.com/dipson88/treeselectjs/blob/main/packages/react-treeselectjs/CHANGELOG.md)
 
-- **vue-treeselectjs** — Vue wrapper  
+- **vue-treeselectjs** — Vue 3 tree select wrapper for nested options and multi-select dropdowns  
   Path and README: [packages/vue-treeselectjs](https://github.com/dipson88/treeselectjs/tree/main/packages/vue-treeselectjs)  
   NPM: [vue-treeselectjs](https://www.npmjs.com/package/vue-treeselectjs)  
   Changelog: [CHANGELOG.md](https://github.com/dipson88/treeselectjs/blob/main/packages/vue-treeselectjs/CHANGELOG.md)

@@ -1,8 +1,8 @@
 # Treeselect JS React component
 
-It is a wrapper for https://www.npmjs.com/package/treeselectjs
+react-treeselectjs is a React tree select component powered by the core https://www.npmjs.com/package/treeselectjs package.
 
-A multi-select JS component with nested options.
+Use it for nested options, searchable dropdowns, checkboxes, and multi-select inputs in React applications.
 
 - Full key support (ArrowUp, ArrowDown, Space, ArrowLeft, ArrowRight, Enter)
 - Screen sensitive direction
