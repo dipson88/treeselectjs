@@ -1,9 +1,11 @@
 # Treeselect JS component
 
-A multi-select JS component with nested options.
+treeselectjs is a vanilla JavaScript and TypeScript tree select component for nested options, searchable dropdowns, checkboxes, and multi-select inputs.
 
-- React wrapper - https://www.npmjs.com/package/react-treeselectjs
-- Vue wrapper - https://www.npmjs.com/package/vue-treeselectjs
+Framework wrappers are available for React and Vue:
+
+- React tree select wrapper - https://www.npmjs.com/package/react-treeselectjs
+- Vue 3 tree select wrapper - https://www.npmjs.com/package/vue-treeselectjs
 - Full key support (ArrowUp, ArrowDown, Space, ArrowLeft, ArrowRight, Enter)
 - Screen sensitive direction
 - Typescript support
