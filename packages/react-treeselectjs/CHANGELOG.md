@@ -1,5 +1,11 @@
 # react-treeselectjs
 
+## 1.0.1
+
+### Patch Changes
+
+- Fix React wrapper prop sync after re-renders: toggling `disabled` now updates the disabled class, removing `iconElements` restores default icons, and callbacks such as `onInput` stay attached. Defaults are applied when props are omitted, and README bundle sizes are updated.
+
 ## 1.0.0
 
 First stable release.
