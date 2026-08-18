@@ -44,6 +44,23 @@ describe('React Treeselect wrapper', () => {
     expect(container.querySelectorAll(inputSelectors.tagsElement).length).toBe(1)
   })
 
+  it('uses the latest onInput callback after rerender', () => {
+    const firstOnInput = vi.fn()
+    const secondOnInput = vi.fn()
+    const { container, rerender } = render(<Treeselect options={defaultOptions} value={[]} onInput={firstOnInput} />)
+
+    rerender(<Treeselect options={defaultOptions} value={[]} onInput={secondOnInput} />)
+
+    const arrow = container.querySelector(inputSelectors.arrow) as HTMLElement
+    fireEvent.mouseDown(arrow)
+
+    const chelseaItem = findItemByTitle(container, optionNames.ChelseaItem)
+    fireEvent.mouseDown(chelseaItem)
+
+    expect(firstOnInput).not.toHaveBeenCalled()
+    expect(secondOnInput).toHaveBeenCalledWith([optionsValues.ChelseaItem])
+  })
+
   it('pre-selects the node passed via the value prop', () => {
     const { container } = render(<Treeselect options={defaultOptions} value={[optionsValues.ChelseaItem]} />)
 
@@ -76,6 +93,30 @@ describe('React Treeselect wrapper', () => {
     const { container } = render(<Treeselect options={defaultOptions} value={[]} disabled />)
 
     expect(container.querySelector(classesSelectors.parent)).toHaveClass('treeselect--disabled')
+  })
+
+  it('removes the disabled class when disabled prop is removed', () => {
+    const { container, rerender } = render(<Treeselect options={defaultOptions} value={[]} disabled />)
+
+    expect(container.querySelector(classesSelectors.parent)).toHaveClass('treeselect--disabled')
+
+    rerender(<Treeselect options={defaultOptions} value={[]} />)
+
+    expect(container.querySelector(classesSelectors.parent)).not.toHaveClass('treeselect--disabled')
+  })
+
+  it('restores default icons when iconElements prop is removed', () => {
+    const customArrowDown = '<span data-testid="custom-arrow-down">custom</span>'
+    const { container, rerender } = render(
+      <Treeselect options={defaultOptions} value={[]} iconElements={{ arrowDown: customArrowDown }} />,
+    )
+
+    expect(container.querySelector('[data-testid="custom-arrow-down"]')).toBeInTheDocument()
+
+    rerender(<Treeselect options={defaultOptions} value={[]} />)
+
+    expect(container.querySelector('[data-testid="custom-arrow-down"]')).not.toBeInTheDocument()
+    expect(container.querySelector(`${inputSelectors.arrow} svg`)).toBeInTheDocument()
   })
 
   it('re-syncs the rendered tree when options/value change after mount', () => {
