@@ -16,6 +16,8 @@ const runApp = (Treeselect) => {
   runIndependentNodesExample(Treeselect)
   runIconsExample(Treeselect)
 
+  globalThis.hljs?.highlightAll()
+
   document.body.classList.add('loaded')
 }
 

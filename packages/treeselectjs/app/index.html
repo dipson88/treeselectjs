@@ -5,8 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="../public/tree.png" />
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.2/build/styles/atom-one-light.min.css" />
     <link rel="stylesheet" href="./app.css" />
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.2/build/highlight.min.js"></script>
     <script type="module" src="./app.js"></script>
     <title>Treeselect JS App</title>
     <meta
@@ -17,6 +19,18 @@
   </head>
   <body>
     <main class="root">
+      <header class="site-header">
+        <a class="site-brand" href="./" aria-label="Treeselect JS home">
+          <span class="site-brand__mark">T</span>
+          <span>Treeselect JS</span>
+        </a>
+        <nav class="site-nav" aria-label="Project links">
+          <a class="site-nav__link" href="https://github.com/dipson88/treeselectjs/tree/main/packages/treeselectjs#readme" target="_blank" rel="noreferrer">Docs</a>
+          <a class="site-nav__link" href="https://github.com/dipson88/treeselectjs" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="site-nav__link" href="https://www.npmjs.com/package/treeselectjs" target="_blank" rel="noreferrer">npm</a>
+        </nav>
+      </header>
+
       <h1 class="root__title">Treeselect JS Demo</h1>
 
       <!-- Default section -->
