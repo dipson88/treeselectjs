@@ -7,6 +7,7 @@ import { runDisabledExample } from './examples/disabled.js'
 import { runSingleSelectExample } from './examples/singleSelect.js'
 import { runIndependentNodesExample } from './examples/independentNodes.js'
 import { runIconsExample } from './examples/icons.js'
+import { setupCodeCopyButtons } from './render/setupCodeCopyButtons.js'
 
 const runApp = (Treeselect) => {
   runDefaultExample(Treeselect)
@@ -17,6 +18,7 @@ const runApp = (Treeselect) => {
   runIconsExample(Treeselect)
 
   globalThis.hljs?.highlightAll()
+  setupCodeCopyButtons()
 
   document.body.classList.add('loaded')
 }
