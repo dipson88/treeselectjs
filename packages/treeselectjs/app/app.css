@@ -112,6 +112,16 @@ body {
   outline: none;
 }
 
+.site-nav__link--coffee {
+  padding: 0 8px;
+}
+
+.site-nav__coffee-image {
+  width: auto;
+  height: 24px;
+  display: block;
+}
+
 .section {
   min-height: 445px;
   width: 100%;
