@@ -4,6 +4,7 @@ import { runDisabledExample } from '../app/examples/disabled.js'
 import { runSingleSelectExample } from '../app/examples/singleSelect.js'
 import { runIndependentNodesExample } from '../app/examples/independentNodes.js'
 import { runIconsExample } from '../app/examples/icons.js'
+import { setupCodeCopyButtons } from '../app/render/setupCodeCopyButtons.js'
 
 // Treeselect is available via the link in the index.html file (treeselectjs.umd.js)
 const Treeselect = globalThis.Treeselect
@@ -19,6 +20,9 @@ const runApp = (Treeselect) => {
   runSingleSelectExample(Treeselect)
   runIndependentNodesExample(Treeselect)
   runIconsExample(Treeselect)
+
+  globalThis.hljs?.highlightAll()
+  setupCodeCopyButtons()
 
   document.body.classList.add('loaded')
 }
