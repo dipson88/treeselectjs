@@ -67,7 +67,7 @@
   "bugs": {
     "url": "https://github.com/dipson88/treeselectjs/issues"
   },
-  "homepage": "https://github.com/dipson88/treeselectjs/tree/main/packages/vue-treeselectjs#readme",
+  "homepage": "https://dipson88.github.io/treeselectjs",
   "dependencies": {
     "treeselectjs": "workspace:*"
   },

@@ -68,7 +68,7 @@
   "bugs": {
     "url": "https://github.com/dipson88/treeselectjs/issues"
   },
-  "homepage": "https://github.com/dipson88/treeselectjs/tree/main/packages/treeselectjs#readme",
+  "homepage": "https://dipson88.github.io/treeselectjs",
   "devDependencies": {
     "@biomejs/biome": "^2.5.8",
     "@microsoft/api-extractor": "^7.58.12",
