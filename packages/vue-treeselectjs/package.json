@@ -1,6 +1,6 @@
 {
   "name": "vue-treeselectjs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Vue 3 tree select component with nested options, search, checkboxes, and multi-select support",
   "main": "./dist/vue-treeselectjs.umd.js",
   "module": "./dist/vue-treeselectjs.mjs",

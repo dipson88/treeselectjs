@@ -1,5 +1,13 @@
 # vue-treeselectjs
 
+## 1.0.2
+
+### Patch Changes
+
+- Update package homepage metadata to point users to the Treeselect JS demo site.
+- Updated dependencies
+  - treeselectjs@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes

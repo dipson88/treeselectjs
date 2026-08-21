@@ -1,6 +1,6 @@
 {
   "name": "react-treeselectjs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "React tree select component with nested options, search, checkboxes, and multi-select support",
   "main": "./dist/react-treeselectjs.umd.js",
   "module": "./dist/react-treeselectjs.mjs",

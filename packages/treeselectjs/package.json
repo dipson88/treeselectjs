@@ -1,6 +1,6 @@
 {
   "name": "treeselectjs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Vanilla JavaScript and TypeScript tree select component with nested options, search, checkboxes, and multi-select support",
   "main": "./dist/treeselectjs.umd.js",
   "module": "./dist/treeselectjs.mjs",
