@@ -137,7 +137,8 @@ export const getCheckedOptions = (optionsTreeMap: OptionsTreeMap) => {
     }
   })
 
-  const groupedNodes = allNodes.filter((node) => !allGroupedNodes.some(({ id }) => id === node.childOf))
+  const checkedGroupIds = new Set(allGroupedNodes.map(({ id }) => id))
+  const groupedNodes = allNodes.filter((node) => !checkedGroupIds.has(node.childOf))
 
   return { ungroupedNodes, groupedNodes, allNodes }
 }

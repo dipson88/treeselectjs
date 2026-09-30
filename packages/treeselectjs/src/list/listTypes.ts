@@ -57,5 +57,6 @@ export interface ITreeselectList extends ITreeselectListParams {
   callKeyAction: (e: KeyboardEvent) => void
   focusFirstListElement: () => void
   isLastFocusedElementExist: () => boolean
+  ensureRendered: () => void
   destroy: () => void
 }
