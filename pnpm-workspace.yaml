@@ -5,10 +5,3 @@ allowBuilds:
   esbuild: true
   unrs-resolver: true
 auditConfig: {}
-minimumReleaseAgeExclude:
-  - source-map-js@1.2.2
-  - '@vue/server-renderer@3.5.42'
-  - shell-quote@1.11.0
-  - handlebars@4.7.10
-overrides:
-  '@vue/server-renderer@<3.5.42': ^3.5.42
