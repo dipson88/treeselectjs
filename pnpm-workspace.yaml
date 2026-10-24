@@ -4,4 +4,9 @@ allowBuilds:
   cypress: true
   esbuild: true
   unrs-resolver: true
-auditConfig: {}
+minimumReleaseAgeExclude:
+  - undici@8.12.2
+  - fast-uri@3.1.9
+overrides:
+  fast-uri@>=3.0.0 <3.1.9: ^3.1.9
+  fast-uri@>=3.1.3 <3.1.9: ^3.1.9
