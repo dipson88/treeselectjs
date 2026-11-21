@@ -523,6 +523,8 @@ export default class Treeselect implements ITreeselect {
       return
     }
 
+    this.#treeselectList.ensureRendered()
+
     if (this.appendToBody) {
       document.body.appendChild(this.#treeselectList.srcElement)
       this.#containerResizer?.observe(this.srcElement)

@@ -480,7 +480,7 @@ exports[`staticList prop should correctly render static list with alwaysOpen 1`]
       group-container-id="1"
     >
       <div
-        class="treeselect-list__item treeselect-list__item--group treeselect-list__item--focused treeselect-list__item--closed"
+        class="treeselect-list__item treeselect-list__item--group treeselect-list__item--closed treeselect-list__item--focused"
         group="true"
         level="0"
         style="padding-left: 0px;"

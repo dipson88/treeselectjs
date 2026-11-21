@@ -19,14 +19,31 @@ export const icons: IconsType = {
     '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 25 25" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>',
 }
 
+const iconTemplates = new Map<string, HTMLTemplateElement>()
+const appliedIcons = new WeakMap<HTMLElement, string | HTMLElement>()
+
 export const appendIconToElement = (icon: string | HTMLElement, element: HTMLElement) => {
-  element.innerHTML = ''
+  appliedIcons.set(element, icon)
 
   if (typeof icon === 'string') {
-    element.innerHTML = icon
+    let template = iconTemplates.get(icon)
+
+    if (!template) {
+      template = document.createElement('template')
+      template.innerHTML = icon
+      iconTemplates.set(icon, template)
+    }
+
+    element.replaceChildren(template.content.cloneNode(true))
   } else {
-    const insertedIcon = icon.cloneNode(true)
-    element.appendChild(insertedIcon)
+    element.replaceChildren(icon.cloneNode(true))
+  }
+}
+
+export const updateIconIfChanged = (icon: string | HTMLElement, element: HTMLElement) => {
+  // An element without an applied icon is empty, i.e. has the '' icon
+  if ((appliedIcons.get(element) ?? '') !== icon) {
+    appendIconToElement(icon, element)
   }
 }
 

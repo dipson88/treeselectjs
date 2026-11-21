@@ -1,20 +1,18 @@
 import type { ValueOptionType, IconsType } from '../../treeselectTypes'
 import type { OptionsTreeMap, TreeItem } from '../listTypes'
 import { DEFAULT_ITEM_PADDING, ZERO_LEVEL_ITEM_PADDING } from '../../helpers/constants'
-import { appendIconToElement } from '../../helpers/svgIcons'
+import { updateIconIfChanged } from '../../helpers/svgIcons'
 
 export const updateDOM = ({
   optionsTreeMap,
   emptyListHtmlElement,
   iconElements,
   previousSingleSelectedValue,
-  rtl,
 }: {
   optionsTreeMap: OptionsTreeMap
   emptyListHtmlElement: HTMLElement | null
   iconElements: IconsType
   previousSingleSelectedValue: ValueOptionType[]
-  rtl: boolean
 }) => {
   optionsTreeMap.forEach((option) => {
     const input = option.checkboxHtmlElement
@@ -28,7 +26,6 @@ export const updateDOM = ({
     updateDisabledCheckedClass(option)
     updateClosedClass({ option, iconElements })
     updateHiddenClass(option)
-    updateLeftPaddingItems({ option, optionsTreeMap, rtl })
     updateCheckboxClass({ option, iconElements })
     updateGroupSelectableClass(option)
   })
@@ -36,50 +33,44 @@ export const updateDOM = ({
   updateEmptyListClass({ optionsTreeMap, emptyListHtmlElement })
 }
 
-const updateLeftPaddingItems = ({
-  option,
-  optionsTreeMap,
-  rtl,
-}: {
-  option: TreeItem
-  optionsTreeMap: OptionsTreeMap
-  rtl: boolean
-}) => {
-  const isZeroLevel = option.level === 0
-  let padding = '0'
+// level and isGroup never change, so this runs once after the items are built instead of in updateDOM
+export const updateLeftPaddingItems = ({ optionsTreeMap, rtl }: { optionsTreeMap: OptionsTreeMap; rtl: boolean }) => {
+  let isGroupsExistOnZeroLevel = false
 
-  if (isZeroLevel) {
-    let isGroupsExistOnLevel = false
-
-    for (const [_, item] of optionsTreeMap) {
-      if (item.isGroup && item.level === option.level) {
-        isGroupsExistOnLevel = true
-        break
-      }
+  for (const [_, item] of optionsTreeMap) {
+    if (item.isGroup && item.level === 0) {
+      isGroupsExistOnZeroLevel = true
+      break
     }
-
-    const itemPadding =
-      !option.isGroup && isGroupsExistOnLevel ? `${DEFAULT_ITEM_PADDING}px` : `${ZERO_LEVEL_ITEM_PADDING}px`
-    padding = option.isGroup ? '0' : itemPadding
-  } else {
-    padding = option.isGroup
-      ? `${option.level * DEFAULT_ITEM_PADDING}px`
-      : `${option.level * DEFAULT_ITEM_PADDING + DEFAULT_ITEM_PADDING}px`
   }
 
-  const listItem = option.itemHtmlElement
+  optionsTreeMap.forEach((option) => {
+    let padding = '0'
 
-  if (listItem) {
-    if (rtl) {
-      listItem.style.paddingRight = padding
+    if (option.level === 0) {
+      const itemPadding =
+        !option.isGroup && isGroupsExistOnZeroLevel ? `${DEFAULT_ITEM_PADDING}px` : `${ZERO_LEVEL_ITEM_PADDING}px`
+      padding = option.isGroup ? '0' : itemPadding
     } else {
-      listItem.style.paddingLeft = padding
+      padding = option.isGroup
+        ? `${option.level * DEFAULT_ITEM_PADDING}px`
+        : `${option.level * DEFAULT_ITEM_PADDING + DEFAULT_ITEM_PADDING}px`
     }
 
-    // We can use css selectors to reset params with !important
-    listItem.setAttribute('level', option.level.toString())
-    listItem.setAttribute('group', option.isGroup.toString())
-  }
+    const listItem = option.itemHtmlElement
+
+    if (listItem) {
+      if (rtl) {
+        listItem.style.paddingRight = padding
+      } else {
+        listItem.style.paddingLeft = padding
+      }
+
+      // We can use css selectors to reset params with !important
+      listItem.setAttribute('level', option.level.toString())
+      listItem.setAttribute('group', option.isGroup.toString())
+    }
+  })
 }
 
 const updateEmptyListClass = ({
@@ -144,7 +135,7 @@ const updateClosedClass = ({ option, iconElements }: { option: TreeItem; iconEle
 
   if (option.isGroup && arrowIcon) {
     const iconInnerElement = option.isClosed ? iconElements.arrowRight : iconElements.arrowDown
-    appendIconToElement(iconInnerElement, arrowIcon)
+    updateIconIfChanged(iconInnerElement, arrowIcon)
 
     const listItem = option.itemHtmlElement
     listItem?.classList.toggle('treeselect-list__item--closed', option.isClosed)
@@ -161,11 +152,11 @@ const updateCheckboxClass = ({ option, iconElements }: { option: TreeItem; iconE
 
   if (icon) {
     if (option.checked) {
-      appendIconToElement(iconElements.check, icon)
+      updateIconIfChanged(iconElements.check, icon)
     } else if (option.isPartialChecked) {
-      appendIconToElement(iconElements.partialCheck, icon)
+      updateIconIfChanged(iconElements.partialCheck, icon)
     } else {
-      icon.innerHTML = ''
+      updateIconIfChanged('', icon)
     }
   }
 }
